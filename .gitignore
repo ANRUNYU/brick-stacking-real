@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.offline_deps/
+*.egg-info/
+build/
+dist/
+artifacts/
+data/recordings/
+data/synthetic/
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
+.env

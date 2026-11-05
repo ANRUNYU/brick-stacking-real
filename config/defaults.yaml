@@ -1,0 +1,21 @@
+schema_version: 1
+project:
+  dry_run: true
+  environment: offline
+operation:
+  mode: DEVELOPMENT_TEST
+  manual_intervention_allowed: true
+vision:
+  min_area_px: 30
+  min_valid_depth_ratio: 0.65
+  min_depth_m: 0.1
+  max_depth_m: 3.0
+  nominal_edge_m: 0.050
+  span_relative_tolerance: 0.25
+  max_depth_spread_m: 0.008
+  # Synthetic indoor starting profile; not an approved real-camera profile.
+  hsv:
+    red: [[[0, 100, 70], [10, 255, 255]], [[170, 100, 70], [179, 255, 255]]]
+    yellow: [[[20, 100, 70], [35, 255, 255]]]
+    green: [[[40, 100, 70], [85, 255, 255]]]
+    blue: [[[95, 100, 70], [130, 255, 255]]]

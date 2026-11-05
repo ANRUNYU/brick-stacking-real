@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "brick-stacking-real"
+version = "0.2.0"
+description = "Offline-first perception and geometry for real brick stacking"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26,<3", "opencv-python-headless>=4.10,<6", "PyYAML>=6,<7"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10"]
+
+[project.scripts]
+brick-stacking-offline = "brick_stacking.app.offline_runner:main"
+brick-stacking-task-mock = "brick_stacking.app.task_runner:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-ra -m 'not hardware and not motion'"
+markers = ["unit: pure algorithm", "integration: offline multi-module", "regression: previous failure", "e2e: offline workflow", "hardware: explicit device access", "motion: physical movement", "slow: long running"]

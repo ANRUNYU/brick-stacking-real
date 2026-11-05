@@ -1,0 +1,22 @@
+schema_version: 1
+project: {dry_run: true, environment: offline}
+operation: {mode: DEVELOPMENT_TEST, manual_intervention_allowed: true}
+scene:
+  provenance: synthetic
+  frame_id: synthetic_table
+  nominal_edge_m: 0.05
+  layers: [4, 3, 2, 1]
+  colors_by_layer: [red, yellow, blue, green]
+  center_xy_m: [0.0, 0.0]
+  yaw_rad: 0.0
+task:
+  max_grasp_retries: 2
+  max_observation_age_s: 0.5
+  xy_tolerance_m: 0.006
+  z_tolerance_m: 0.006
+  stable_spread_m: 0.004
+  stability_samples: 7
+  stability_span_s: 3.0
+  synthetic_tick_s: 0.51
+  handoff_enabled: false
+  # All numbers are software fixture values, not validated real settings.

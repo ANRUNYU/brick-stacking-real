@@ -1,0 +1,14 @@
+schema_version: 1
+development: {os: Windows, core_language: Python, hardware_access: false}
+testing:
+  os: Ubuntu
+  os_version: '24.04'
+  ros_distro: jazzy
+  source: user_confirmed_20261105
+  python_minor: '3.12'
+  architecture: null
+  robot_host: null
+  ssh_user: null
+  sdk_commits_installed: null
+  hardware_authorized: false
+# No credentials, CAN identities or guessed network endpoints.

@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "repository": "https://github.com/linker-bot/linker-sim-assets",
+      "commit": "d0224b8da58802fe7cb2e35dcc9771693c4543b6",
+      "verified_on": "2026-11-05",
+      "source_type": "official_sdk",
+      "hardware_tested": false,
+      "files": [
+        {
+          "path": "README.md",
+          "git_blob_sha": "6dcd57feed8639ee755ce3c23df18bc15f482e6e"
+        },
+        {
+          "path": "src/linker_robot_assets/assets/components/arms/p7/meta.yaml",
+          "git_blob_sha": "a4e25f399f72350c486b7d5fb837791250e675da"
+        },
+        {
+          "path": "src/linker_robot_assets/assets/components/arms/p7/variants/left/arm.urdf",
+          "git_blob_sha": "184bda430b239e077082fc6ea52e92131f6a730d"
+        },
+        {
+          "path": "src/linker_robot_assets/assets/components/arms/p7/variants/right/arm.urdf",
+          "git_blob_sha": "d55997243e2b73c707f8974066744e68a7bee089"
+        },
+        {
+          "path": "src/linker_robot_assets/assets/components/hands/linkerhand_o6/linkerhand_o6_left.urdf",
+          "git_blob_sha": "ac1a5af9dbe7c067e5a503486ee0386479261576"
+        },
+        {
+          "path": "src/linker_robot_assets/assets/components/hands/linkerhand_o6/linkerhand_o6_right.urdf",
+          "git_blob_sha": "d124f2fb37b8d3aac14c3647c9017dac9e73d878"
+        },
+        {
+          "path": "src/linker_robot_assets/assets/components/hands/linkerhand_o6/meta.yaml",
+          "git_blob_sha": "15f77f81f2dfc617e572801617f5da948e395639"
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/linker-bot/linkerbot-python-sdk",
+      "commit": "927290b8e27f9e2df3cc5b0a0776c36e2fb5175e",
+      "verified_on": "2026-11-05",
+      "source_type": "official_sdk",
+      "hardware_tested": false,
+      "files": [
+        {
+          "path": "LICENSE",
+          "git_blob_sha": "166c82390c81f099f41a97074fdb05aabf622de2"
+        },
+        {
+          "path": "README.md",
+          "git_blob_sha": "9b7844539aa5728ea0fcda7626bbc7f249016bd9"
+        },
+        {
+          "path": "docs/zh/src/reference/o6/angle.md",
+          "git_blob_sha": "67178fb73b2388e11ac8cb234bedbe598328814a"
+        },
+        {
+          "path": "docs/zh/src/reference/p7/motion.md",
+          "git_blob_sha": "674cbf5fb3ca1bb3844534fab058222a4110c9e6"
+        },
+        {
+          "path": "src/linkerbot/arm/p7/p7.py",
+          "git_blob_sha": "bfda3cda026c4a7fd3b38337be5ab41f59212bb8"
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/linker-bot/linkerhand-ros2-sdk",
+      "commit": "0035f236c98b644aba6d9e972359df3fa1af4342",
+      "verified_on": "2026-11-05",
+      "source_type": "official_sdk",
+      "hardware_tested": false,
+      "files": [
+        {
+          "path": "LICENSE",
+          "git_blob_sha": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64"
+        },
+        {
+          "path": "README.md",
+          "git_blob_sha": "ffedb622d33685556d066dc5ab519d813c01a347"
+        },
+        {
+          "path": "doc/Topic-Reference.md",
+          "git_blob_sha": "a7d3a262ba76a2d86cb4b5fd003159fbf935cdbf"
+        }
+      ]
+    }
+  ]
+}
