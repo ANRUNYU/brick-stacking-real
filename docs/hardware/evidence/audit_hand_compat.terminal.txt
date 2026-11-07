@@ -1,0 +1,96 @@
+HAND_ERROR can1 No data received within 500ms
+qwer@qwer-ThinkPad-L14-Gen-2:~$ uid=1000(qwer) gid=1000(qwer) 组=1000(qwer),4(ad
+[23;80Hdm),24(cdrom),27(sudo),30(dip),46(plugdev),100(users),114(lpadmin),123(lxd)      
+crw-rw-r-- 1 root root 189, 187 11月  6 21:57 /dev/bus/usb/002/060
+crw-rw-r-- 1 root root 189, 188 11月  6 21:57 /dev/bus/usb/002/061
+crw-rw-r-- 1 root root 189, 189 11月  6 21:57 /dev/bus/usb/002/062
+70-snap.firefox.rules
+70-snap.snapd-desktop-integration.rules
+90-robot-can.rules
+70-snap.snap-store.rules
+70-snap.snapd.rules
+70-snap.firmware-updater.rules
+find: 警告：您在参数 -iname 之后指定了全局选项 -maxdepth，但全局选项不是位置选项
+[23;79H项，也就是说，-maxdepth 对在它之前和之后指定的测试均有效。请在其他参数之前指定全局
+[23;79H局选项。
+brick_vision_venv/lib/python3.12/site-packages/pyorbbecsdk
+brick_vision_venv/lib/python3.12/site-packages/pyorbbecsdk/libOrbbecSDK.so      
+brick_vision_venv/lib/python3.12/site-packages/pyorbbecsdk/OrbbecSDKConfig.md   
+brick_vision_venv/lib/python3.12/site-packages/pyorbbecsdk/OrbbecSDKConfig.xml  
+brick_vision_venv/lib/python3.12/site-packages/pyorbbecsdk/pyorbbecsdk.pyi      
+brick_vision_venv/lib/python3.12/site-packages/pyorbbecsdk/libOrbbecSDK.so.2    
+brick_vision_venv/lib/python3.12/site-packages/pyorbbecsdk/libOrbbecSDK.so.2.10.
+[23;80H.6
+brick_vision_venv/lib/python3.12/site-packages/pyorbbecsdk/pyorbbecsdk.cpython-3
+[23;80H312-x86_64-linux-gnu.so
+brick_vision_venv/lib/python3.12/site-packages/pyorbbecsdk2-2.1.3.dist-info     
+qwer@qwer-ThinkPad-L14-Gen-2:~$[1C60:        self.version = None
+67:        self.get_version()
+191:        self.send_frame(0x01, self.joint_angles, sleep=0.003)
+222:    def get_normal_force(self):
+225:    def get_tangential_force(self):
+228:    def get_tangential_force_dir(self):
+231:    def get_approach_inc(self):
+235:    def get_motor_temperature(self):
+239:    def get_motor_fault_code(self):
+259:            if frame_type == 0x01:   # 0x01
+328:            elif frame_type == 0x64: # O6 version number
+329:                self.version = list(response_data)
+330:            elif frame_type == 0xC2: # O6 version number
+331:                self.version = list(response_data)
+332:            elif frame_type == 0xC0:
+386:    def get_version(self):
+389:        if self.version is None:
+390:            self.send_frame(0xC2, [],sleep=0.1)
+392:        return self.version
+394:    def get_current_status(self):
+395:        self.send_frame(0x01, [],sleep=0.003)
+398:    def get_current_pub_status(self):
+401:    def get_speed(self):
+406:    def get_current(self):
+413:    def get_torque(self):
+418:    def get_touch_type(self):
+436:    def get_touch(self):
+445:    def get_matrix_touch(self):
+454:    def get_matrix_touch_v2(self):
+462:    def get_thumb_matrix_touch(self,sleep_time=0.002):
+466:    def get_index_matrix_touch(self,sleep_time=0.002):
+470:    def get_middle_matrix_touch(self,sleep_time=0.002):
+474:    def get_ring_matrix_touch(self,sleep_time=0.002):
+478:    def get_little_matrix_touch(self,sleep_time=0.002):
+482:    def get_palm_matrix_touch(self,sleep_time=0.002):
+490:    def get_force(self):
+494:    def get_temperature(self):
+499:    def get_fault(self):
+504:    def get_finger_order(self):
+515:    def get_serial_number(self):
+517:            self.send_frame(0xC0,[],sleep=0.005)
+/sys/bus/usb/devices/2-3.4.2
+Orbbec(R) Gemini(TM)
+AY6M8630086
+/sys/bus/usb/devices/2-3.4.3
+Orbbec Gemini 335L
+CP2L863000KL
+/sys/bus/usb/devices/2-3.4.4
+Orbbec(R) Gemini(TM)
+AY6M86300GH
+    def _on_message(self, msg: can.Message) -> None:
+        # Filter: only process messages with correct arbitration ID
+        if msg.arbitration_id != self._arbitration_id:
+            return
+
+        # Filter: only process angle response messages (start with 0x01)        
+        if len(msg.data) < 2 or msg.data[0] != self._CONTROL_CMD:
+            return
+
+        # Parse angle data (skip first byte which is the command)
+        raw_angles = list(msg.data[1:])
+
+        # Validate angle count (should be 6 angles)
+        if len(raw_angles) != self._ANGLE_COUNT:
+            return
+
+        angles = O6Angle.from_raw(raw_angles)
+        angle_data = AngleData(angles=angles, timestamp=time.time())
+        self._relay.push(angle_data)
+qwer@qwer-ThinkPad-L14-Gen-2:~$[1C

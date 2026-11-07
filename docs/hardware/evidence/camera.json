@@ -1,0 +1,365 @@
+{
+  "at": "2026-11-07T11:38:39.520132+08:00",
+  "kind": "camera",
+  "motion_commands_sent": false,
+  "sdk_version": "2.10.6",
+  "devices": [
+    {
+      "serial": "CP2L863000KL",
+      "name": "Orbbec Gemini 335L",
+      "firmware": "1.4.60",
+      "connection": "USB3.2",
+      "color": {
+        "width": 640,
+        "height": 480,
+        "fps": 15,
+        "format": "OBFormat.MJPG",
+        "fx": 368.1024169921875,
+        "fy": 368.163330078125,
+        "cx": 322.947021484375,
+        "cy": 237.29510498046875
+      },
+      "depth": {
+        "width": 640,
+        "height": 480,
+        "fps": 15,
+        "format": "OBFormat.Y16",
+        "fx": 377.61968994140625,
+        "fy": 377.61968994140625,
+        "cx": 319.70001220703125,
+        "cy": 244.5
+      },
+      "frames": [
+        {
+          "color_us": 50272531951,
+          "depth_us": 50272531970,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.9426692708333333
+        },
+        {
+          "color_us": 50272598687,
+          "depth_us": 50272598706,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.9432291666666667
+        },
+        {
+          "color_us": 50272665423,
+          "depth_us": 50272665442,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.9429166666666666
+        },
+        {
+          "color_us": 50272732159,
+          "depth_us": 50272732178,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.9433854166666666
+        },
+        {
+          "color_us": 50272798895,
+          "depth_us": 50272798914,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.9427473958333333
+        },
+        {
+          "color_us": 50272865631,
+          "depth_us": 50272865650,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.9428645833333333
+        },
+        {
+          "color_us": 50272932367,
+          "depth_us": 50272932386,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.9437890625
+        },
+        {
+          "color_us": 50272999103,
+          "depth_us": 50272999122,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.9432942708333333
+        },
+        {
+          "color_us": 50273065839,
+          "depth_us": 50273065858,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.9428385416666667
+        },
+        {
+          "color_us": 50273132575,
+          "depth_us": 50273132594,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.9432552083333333
+        },
+        {
+          "color_us": 50273199311,
+          "depth_us": 50273199330,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.9427994791666666
+        },
+        {
+          "color_us": 50273266047,
+          "depth_us": 50273266066,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.9425911458333334
+        },
+        {
+          "color_us": 50273332783,
+          "depth_us": 50273332802,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.9430078125
+        },
+        {
+          "color_us": 50273399519,
+          "depth_us": 50273399538,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.9412369791666667
+        },
+        {
+          "color_us": 50273466255,
+          "depth_us": 50273466274,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.942578125
+        }
+      ],
+      "stream_ok": true
+    },
+    {
+      "serial": "AY6M86300GH",
+      "name": "Orbbec Gemini 2",
+      "firmware": "1.4.92",
+      "connection": "USB3.0",
+      "color": {
+        "width": 640,
+        "height": 480,
+        "fps": 15,
+        "format": "OBFormat.RGB",
+        "fx": 517.2816162109375,
+        "fy": 517.3043823242188,
+        "cx": 324.88470458984375,
+        "cy": 241.26663208007812
+      },
+      "depth": {
+        "width": 640,
+        "height": 400,
+        "fps": 15,
+        "format": "OBFormat.Y16",
+        "fx": 304.3924560546875,
+        "fy": 304.3924560546875,
+        "cx": 319.467529296875,
+        "cy": 198.4596710205078
+      },
+      "frames": [
+        {
+          "color_us": 50338928705,
+          "depth_us": 50338952198,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.14784375
+        },
+        {
+          "color_us": 50339053926,
+          "depth_us": 50339077398,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.14759375
+        },
+        {
+          "color_us": 50339179100,
+          "depth_us": 50339202598,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.15128125
+        },
+        {
+          "color_us": 50339304321,
+          "depth_us": 50339327798,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.152828125
+        },
+        {
+          "color_us": 50339429494,
+          "depth_us": 50339452998,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.148515625
+        },
+        {
+          "color_us": 50339554716,
+          "depth_us": 50339578198,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.150390625
+        },
+        {
+          "color_us": 50339679937,
+          "depth_us": 50339703398,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.1495625
+        },
+        {
+          "color_us": 50339805111,
+          "depth_us": 50339828598,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.151109375
+        },
+        {
+          "color_us": 50339930332,
+          "depth_us": 50339953798,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.149828125
+        },
+        {
+          "color_us": 50340055506,
+          "depth_us": 50340078998,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.14853125
+        },
+        {
+          "color_us": 50340180727,
+          "depth_us": 50340204198,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.152015625
+        },
+        {
+          "color_us": 50340305901,
+          "depth_us": 50340329399,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.152125
+        },
+        {
+          "color_us": 50340431122,
+          "depth_us": 50340454599,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.159546875
+        },
+        {
+          "color_us": 50340556296,
+          "depth_us": 50340579799,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.1481875
+        },
+        {
+          "color_us": 50340681517,
+          "depth_us": 50340704999,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.146546875
+        }
+      ],
+      "stream_ok": true
+    },
+    {
+      "serial": "AY6M8630086",
+      "name": "Orbbec Gemini 2",
+      "firmware": "1.4.92",
+      "connection": "USB3.0",
+      "color": {
+        "width": 640,
+        "height": 480,
+        "fps": 15,
+        "format": "OBFormat.RGB",
+        "fx": 517.2506713867188,
+        "fy": 517.0243530273438,
+        "cx": 320.98687744140625,
+        "cy": 236.98263549804688
+      },
+      "depth": {
+        "width": 640,
+        "height": 400,
+        "fps": 15,
+        "format": "OBFormat.Y16",
+        "fx": 306.0580749511719,
+        "fy": 306.0580749511719,
+        "cx": 319.8875732421875,
+        "cy": 197.19290161132812
+      },
+      "frames": [
+        {
+          "color_us": 50343072374,
+          "depth_us": 50343093064,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.16984375
+        },
+        {
+          "color_us": 50343197595,
+          "depth_us": 50343218265,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.17340625
+        },
+        {
+          "color_us": 50343322769,
+          "depth_us": 50343343465,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.17615625
+        },
+        {
+          "color_us": 50343447990,
+          "depth_us": 50343468665,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.18690625
+        },
+        {
+          "color_us": 50343573164,
+          "depth_us": 50343593865,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.175359375
+        },
+        {
+          "color_us": 50343698385,
+          "depth_us": 50343719065,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.177625
+        },
+        {
+          "color_us": 50343823559,
+          "depth_us": 50343844265,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.180390625
+        },
+        {
+          "color_us": 50343948780,
+          "depth_us": 50343969465,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.178890625
+        },
+        {
+          "color_us": 50344074001,
+          "depth_us": 50344094665,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.178703125
+        },
+        {
+          "color_us": 50344199175,
+          "depth_us": 50344219865,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.179015625
+        },
+        {
+          "color_us": 50344324396,
+          "depth_us": 50344345065,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.17990625
+        },
+        {
+          "color_us": 50344449570,
+          "depth_us": 50344470265,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.186171875
+        },
+        {
+          "color_us": 50344574791,
+          "depth_us": 50344595465,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.182921875
+        },
+        {
+          "color_us": 50344699965,
+          "depth_us": 50344720665,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.17175
+        },
+        {
+          "color_us": 50344825186,
+          "depth_us": 50344845865,
+          "depth_scale_mm": 1.0,
+          "nonzero_depth_ratio": 0.174953125
+        }
+      ],
+      "stream_ok": true
+    }
+  ]
+}

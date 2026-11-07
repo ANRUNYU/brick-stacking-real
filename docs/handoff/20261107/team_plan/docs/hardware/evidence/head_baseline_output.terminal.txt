@@ -1,0 +1,3 @@
+BRIGHTNESS {"phase": "head_baseline", "serial": "CP2L863000KL", "frames": 15, "m
+[23;80Hmean_rgb": 115.07, "dark_fraction": 0.1262, "pixel_std": 56.04}
+qwer@qwer-ThinkPad-L14-Gen-2:~$ 

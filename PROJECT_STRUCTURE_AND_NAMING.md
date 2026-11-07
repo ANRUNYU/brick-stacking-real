@@ -1,5 +1,8 @@
 # 真机双臂垒砖项目：目录结构与命名规范
 
+> **2026-11-07更新**：当前单臂两阶段，按[实际目录归属](docs/GIT_WORKFLOW.md)增量开发。腕机实测Gemini2；下文Gemini335与双臂模板是旧候选，不要求重建/重命名现有模块。
+
+
 > 状态：**提议版本 v1.0（待团队评审）**  
 > 适用项目：LinkerArm（P7 候选）+ LinkerHand O6 ×2 + Orbbec Gemini 335L（头部）/ Gemini 335 ×2（腕部）的全自主垒砖真机系统。  
 > 设计依据：`BRICK_STACKING_REAL_ROBOT_DESIGN_v0.2.md`；本规范是其第 12 章的详细化，不替代该系统设计基线。  

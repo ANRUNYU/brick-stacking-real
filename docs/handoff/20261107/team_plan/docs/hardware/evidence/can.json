@@ -1,0 +1,924 @@
+{
+  "at": "2026-11-07T11:38:26.297527+08:00",
+  "kind": "can",
+  "motion_commands_sent": false,
+  "links": [
+    {
+      "ifindex": 87,
+      "ifname": "can0",
+      "flags": [
+        "NOARP",
+        "UP",
+        "LOWER_UP",
+        "ECHO"
+      ],
+      "mtu": 16,
+      "qdisc": "pfifo_fast",
+      "operstate": "UP",
+      "linkmode": "DEFAULT",
+      "group": "default",
+      "txqlen": 10,
+      "link_type": "can",
+      "promiscuity": 0,
+      "allmulti": 0,
+      "min_mtu": 16,
+      "max_mtu": 16,
+      "linkinfo": {
+        "info_kind": "can",
+        "info_data": {
+          "ctrlmode_supported": [
+            "LOOPBACK",
+            "LISTEN-ONLY",
+            "TRIPLE-SAMPLING",
+            "ONE-SHOT",
+            "CC-LEN8-DLC"
+          ],
+          "state": "ERROR-ACTIVE",
+          "berr_counter": {
+            "tx": 0,
+            "rx": 0
+          },
+          "restart_ms": 0,
+          "bittiming": {
+            "bitrate": 1000000,
+            "sample_point": "0.750",
+            "tq": 125,
+            "prop_seg": 2,
+            "phase_seg1": 3,
+            "phase_seg2": 2,
+            "sjw": 1,
+            "brp": 1
+          },
+          "bittiming_const": {
+            "name": "pcan_usb",
+            "tseg1": {
+              "min": 1,
+              "max": 16
+            },
+            "tseg2": {
+              "min": 1,
+              "max": 8
+            },
+            "sjw": {
+              "min": 1,
+              "max": 4
+            },
+            "brp": {
+              "min": 1,
+              "max": 64
+            },
+            "brp_inc": 1
+          },
+          "clock": 8000000
+        },
+        "info_xstats": {
+          "restarts": 0,
+          "bus_error": 0,
+          "arbitration_lost": 0,
+          "error_warning": 0,
+          "error_passive": 0,
+          "bus_off": 0
+        }
+      },
+      "num_tx_queues": 1,
+      "num_rx_queues": 1,
+      "gso_max_size": 65536,
+      "gso_max_segs": 65535,
+      "tso_max_size": 65536,
+      "tso_max_segs": 65535,
+      "gro_max_size": 65536,
+      "parentbus": "usb",
+      "parentdev": "3-6.3.1:1.0",
+      "stats64": {
+        "rx": {
+          "bytes": 195120,
+          "packets": 32218,
+          "errors": 0,
+          "dropped": 0,
+          "over_errors": 0,
+          "multicast": 0
+        },
+        "tx": {
+          "bytes": 7896,
+          "packets": 4671,
+          "errors": 0,
+          "dropped": 0,
+          "carrier_errors": 0,
+          "collisions": 0
+        }
+      }
+    },
+    {
+      "ifindex": 88,
+      "ifname": "can1",
+      "flags": [
+        "NOARP",
+        "UP",
+        "LOWER_UP",
+        "ECHO"
+      ],
+      "mtu": 16,
+      "qdisc": "pfifo_fast",
+      "operstate": "UP",
+      "linkmode": "DEFAULT",
+      "group": "default",
+      "txqlen": 10,
+      "link_type": "can",
+      "promiscuity": 0,
+      "allmulti": 0,
+      "min_mtu": 16,
+      "max_mtu": 16,
+      "linkinfo": {
+        "info_kind": "can",
+        "info_data": {
+          "ctrlmode_supported": [
+            "LOOPBACK",
+            "LISTEN-ONLY",
+            "TRIPLE-SAMPLING",
+            "ONE-SHOT",
+            "CC-LEN8-DLC"
+          ],
+          "state": "ERROR-ACTIVE",
+          "berr_counter": {
+            "tx": 0,
+            "rx": 0
+          },
+          "restart_ms": 0,
+          "bittiming": {
+            "bitrate": 1000000,
+            "sample_point": "0.750",
+            "tq": 125,
+            "prop_seg": 2,
+            "phase_seg1": 3,
+            "phase_seg2": 2,
+            "sjw": 1,
+            "brp": 1
+          },
+          "bittiming_const": {
+            "name": "pcan_usb",
+            "tseg1": {
+              "min": 1,
+              "max": 16
+            },
+            "tseg2": {
+              "min": 1,
+              "max": 8
+            },
+            "sjw": {
+              "min": 1,
+              "max": 4
+            },
+            "brp": {
+              "min": 1,
+              "max": 64
+            },
+            "brp_inc": 1
+          },
+          "clock": 8000000
+        },
+        "info_xstats": {
+          "restarts": 0,
+          "bus_error": 0,
+          "arbitration_lost": 0,
+          "error_warning": 0,
+          "error_passive": 0,
+          "bus_off": 0
+        }
+      },
+      "num_tx_queues": 1,
+      "num_rx_queues": 1,
+      "gso_max_size": 65536,
+      "gso_max_segs": 65535,
+      "tso_max_size": 65536,
+      "tso_max_segs": 65535,
+      "gro_max_size": 65536,
+      "parentbus": "usb",
+      "parentdev": "3-6.3.2:1.0",
+      "stats64": {
+        "rx": {
+          "bytes": 190071,
+          "packets": 31379,
+          "errors": 0,
+          "dropped": 0,
+          "over_errors": 0,
+          "multicast": 0
+        },
+        "tx": {
+          "bytes": 7695,
+          "packets": 4557,
+          "errors": 0,
+          "dropped": 0,
+          "carrier_errors": 0,
+          "collisions": 0
+        }
+      }
+    },
+    {
+      "ifindex": 89,
+      "ifname": "can2",
+      "flags": [
+        "NOARP",
+        "UP",
+        "LOWER_UP",
+        "ECHO"
+      ],
+      "mtu": 16,
+      "qdisc": "pfifo_fast",
+      "operstate": "UP",
+      "linkmode": "DEFAULT",
+      "group": "default",
+      "txqlen": 10,
+      "link_type": "can",
+      "promiscuity": 0,
+      "allmulti": 0,
+      "min_mtu": 16,
+      "max_mtu": 16,
+      "linkinfo": {
+        "info_kind": "can",
+        "info_data": {
+          "ctrlmode_supported": [
+            "LOOPBACK",
+            "LISTEN-ONLY",
+            "TRIPLE-SAMPLING",
+            "ONE-SHOT",
+            "CC-LEN8-DLC"
+          ],
+          "state": "ERROR-ACTIVE",
+          "berr_counter": {
+            "tx": 0,
+            "rx": 0
+          },
+          "restart_ms": 0,
+          "bittiming": {
+            "bitrate": 1000000,
+            "sample_point": "0.750",
+            "tq": 125,
+            "prop_seg": 2,
+            "phase_seg1": 3,
+            "phase_seg2": 2,
+            "sjw": 1,
+            "brp": 1
+          },
+          "bittiming_const": {
+            "name": "pcan_usb",
+            "tseg1": {
+              "min": 1,
+              "max": 16
+            },
+            "tseg2": {
+              "min": 1,
+              "max": 8
+            },
+            "sjw": {
+              "min": 1,
+              "max": 4
+            },
+            "brp": {
+              "min": 1,
+              "max": 64
+            },
+            "brp_inc": 1
+          },
+          "clock": 8000000
+        },
+        "info_xstats": {
+          "restarts": 0,
+          "bus_error": 0,
+          "arbitration_lost": 0,
+          "error_warning": 0,
+          "error_passive": 0,
+          "bus_off": 0
+        }
+      },
+      "num_tx_queues": 1,
+      "num_rx_queues": 1,
+      "gso_max_size": 65536,
+      "gso_max_segs": 65535,
+      "tso_max_size": 65536,
+      "tso_max_segs": 65535,
+      "gro_max_size": 65536,
+      "parentbus": "usb",
+      "parentdev": "3-6.3.3:1.0",
+      "stats64": {
+        "rx": {
+          "bytes": 49027,
+          "packets": 6140,
+          "errors": 0,
+          "dropped": 0,
+          "over_errors": 0,
+          "multicast": 0
+        },
+        "tx": {
+          "bytes": 48973,
+          "packets": 6158,
+          "errors": 0,
+          "dropped": 0,
+          "carrier_errors": 0,
+          "collisions": 0
+        }
+      }
+    },
+    {
+      "ifindex": 90,
+      "ifname": "can3",
+      "flags": [
+        "NOARP",
+        "UP",
+        "LOWER_UP",
+        "ECHO"
+      ],
+      "mtu": 16,
+      "qdisc": "pfifo_fast",
+      "operstate": "UP",
+      "linkmode": "DEFAULT",
+      "group": "default",
+      "txqlen": 10,
+      "link_type": "can",
+      "promiscuity": 0,
+      "allmulti": 0,
+      "min_mtu": 16,
+      "max_mtu": 16,
+      "linkinfo": {
+        "info_kind": "can",
+        "info_data": {
+          "ctrlmode_supported": [
+            "LOOPBACK",
+            "LISTEN-ONLY",
+            "TRIPLE-SAMPLING",
+            "ONE-SHOT",
+            "CC-LEN8-DLC"
+          ],
+          "state": "ERROR-ACTIVE",
+          "berr_counter": {
+            "tx": 0,
+            "rx": 0
+          },
+          "restart_ms": 0,
+          "bittiming": {
+            "bitrate": 1000000,
+            "sample_point": "0.750",
+            "tq": 125,
+            "prop_seg": 2,
+            "phase_seg1": 3,
+            "phase_seg2": 2,
+            "sjw": 1,
+            "brp": 1
+          },
+          "bittiming_const": {
+            "name": "pcan_usb",
+            "tseg1": {
+              "min": 1,
+              "max": 16
+            },
+            "tseg2": {
+              "min": 1,
+              "max": 8
+            },
+            "sjw": {
+              "min": 1,
+              "max": 4
+            },
+            "brp": {
+              "min": 1,
+              "max": 64
+            },
+            "brp_inc": 1
+          },
+          "clock": 8000000
+        },
+        "info_xstats": {
+          "restarts": 0,
+          "bus_error": 0,
+          "arbitration_lost": 0,
+          "error_warning": 0,
+          "error_passive": 0,
+          "bus_off": 0
+        }
+      },
+      "num_tx_queues": 1,
+      "num_rx_queues": 1,
+      "gso_max_size": 65536,
+      "gso_max_segs": 65535,
+      "tso_max_size": 65536,
+      "tso_max_segs": 65535,
+      "gro_max_size": 65536,
+      "parentbus": "usb",
+      "parentdev": "3-6.3.4:1.0",
+      "stats64": {
+        "rx": {
+          "bytes": 163,
+          "packets": 32,
+          "errors": 0,
+          "dropped": 0,
+          "over_errors": 0,
+          "multicast": 0
+        },
+        "tx": {
+          "bytes": 101,
+          "packets": 49,
+          "errors": 0,
+          "dropped": 0,
+          "carrier_errors": 0,
+          "collisions": 0
+        }
+      }
+    }
+  ],
+  "usb": "/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/1p, 480M\n/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 10000M\n    |__ Port 003: Dev 026, If 0, Class=Hub, Driver=hub/4p, 5000M\n        |__ Port 001: Dev 027, If 0, Class=Vendor Specific Class, Driver=r8152, 5000M\n        |__ Port 003: Dev 058, If 0, Class=Hub, Driver=hub/4p, 5000M\n        |__ Port 004: Dev 059, If 0, Class=Hub, Driver=hub/4p, 5000M\n            |__ Port 002: Dev 060, If 0, Class=Video, Driver=uvcvideo, 5000M\n            |__ Port 002: Dev 060, If 1, Class=Video, Driver=uvcvideo, 5000M\n            |__ Port 002: Dev 060, If 2, Class=Video, Driver=uvcvideo, 5000M\n            |__ Port 002: Dev 060, If 3, Class=Video, Driver=uvcvideo, 5000M\n            |__ Port 002: Dev 060, If 4, Class=Video, Driver=uvcvideo, 5000M\n            |__ Port 002: Dev 060, If 5, Class=Video, Driver=uvcvideo, 5000M\n            |__ Port 002: Dev 060, If 6, Class=Vendor Specific Class, Driver=[none], 5000M\n            |__ Port 002: Dev 060, If 7, Class=Human Interface Device, Driver=usbhid, 5000M\n            |__ Port 003: Dev 061, If 0, Class=Video, Driver=uvcvideo, 5000M\n            |__ Port 003: Dev 061, If 1, Class=Video, Driver=uvcvideo, 5000M\n            |__ Port 003: Dev 061, If 2, Class=Video, Driver=uvcvideo, 5000M\n            |__ Port 003: Dev 061, If 3, Class=Video, Driver=uvcvideo, 5000M\n            |__ Port 003: Dev 061, If 4, Class=Video, Driver=uvcvideo, 5000M\n            |__ Port 003: Dev 061, If 5, Class=Video, Driver=uvcvideo, 5000M\n            |__ Port 003: Dev 061, If 6, Class=Human Interface Device, Driver=usbhid, 5000M\n            |__ Port 004: Dev 062, If 0, Class=Video, Driver=uvcvideo, 5000M\n            |__ Port 004: Dev 062, If 1, Class=Video, Driver=uvcvideo, 5000M\n            |__ Port 004: Dev 062, If 2, Class=Video, Driver=uvcvideo, 5000M\n            |__ Port 004: Dev 062, If 3, Class=Video, Driver=uvcvideo, 5000M\n            |__ Port 004: Dev 062, If 4, Class=Video, Driver=uvcvideo, 5000M\n            |__ Port 004: Dev 062, If 5, Class=Video, Driver=uvcvideo, 5000M\n            |__ Port 004: Dev 062, If 6, Class=Vendor Specific Class, Driver=[none], 5000M\n            |__ Port 004: Dev 062, If 7, Class=Human Interface Device, Driver=usbhid, 5000M\n/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/12p, 480M\n    |__ Port 001: Dev 002, If 0, Class=Human Interface Device, Driver=usbhid, 1.5M\n    |__ Port 006: Dev 006, If 0, Class=Hub, Driver=hub/4p, 480M\n        |__ Port 001: Dev 007, If 0, Class=Hub, Driver=hub/4p, 480M\n        |__ Port 003: Dev 045, If 0, Class=Hub, Driver=hub/4p, 480M\n            |__ Port 001: Dev 046, If 0, Class=[unknown], Driver=peak_usb, 12M\n            |__ Port 002: Dev 047, If 0, Class=[unknown], Driver=peak_usb, 12M\n            |__ Port 003: Dev 048, If 0, Class=[unknown], Driver=peak_usb, 12M\n            |__ Port 004: Dev 049, If 0, Class=[unknown], Driver=peak_usb, 12M\n        |__ Port 004: Dev 050, If 0, Class=Hub, Driver=hub/4p, 480M\n    |__ Port 007: Dev 003, If 0, Class=Video, Driver=uvcvideo, 480M\n    |__ Port 007: Dev 003, If 1, Class=Video, Driver=uvcvideo, 480M\n    |__ Port 007: Dev 003, If 2, Class=Video, Driver=uvcvideo, 480M\n    |__ Port 007: Dev 003, If 3, Class=Video, Driver=uvcvideo, 480M\n    |__ Port 007: Dev 003, If 4, Class=Application Specific Interface, Driver=[none], 480M\n    |__ Port 010: Dev 004, If 0, Class=Wireless, Driver=btusb, 12M\n    |__ Port 010: Dev 004, If 1, Class=Wireless, Driver=btusb, 12M\n/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 10000M\n",
+  "can_sysfs": {
+    "can1": "/sys/devices/pci0000:00/0000:00:14.0/usb3/3-6/3-6.3/3-6.3.2/3-6.3.2:1.0",
+    "can2": "/sys/devices/pci0000:00/0000:00:14.0/usb3/3-6/3-6.3/3-6.3.3/3-6.3.3:1.0",
+    "can0": "/sys/devices/pci0000:00/0000:00:14.0/usb3/3-6/3-6.3/3-6.3.1/3-6.3.1:1.0",
+    "can3": "/sys/devices/pci0000:00/0000:00:14.0/usb3/3-6/3-6.3/3-6.3.4/3-6.3.4:1.0"
+  },
+  "motors": [
+    {
+      "interface": "can2",
+      "joint": 1,
+      "id": 61,
+      "queries": {
+        "0x6": [
+          {
+            "id": 61,
+            "hex": "0677bb84bc",
+            "stamp": 1794022706.3561532
+          }
+        ],
+        "0x2b": [
+          {
+            "id": 61,
+            "hex": "2b00",
+            "stamp": 1794022706.6289854
+          }
+        ],
+        "0x5f": [
+          {
+            "id": 61,
+            "hex": "5f539ac841",
+            "stamp": 1794022706.9018211
+          }
+        ]
+      },
+      "position_rad": -0.016202671453356743
+    },
+    {
+      "interface": "can2",
+      "joint": 2,
+      "id": 62,
+      "queries": {
+        "0x6": [
+          {
+            "id": 62,
+            "hex": "0663141dbb",
+            "stamp": 1794022707.1746783
+          }
+        ],
+        "0x2b": [
+          {
+            "id": 62,
+            "hex": "2b00",
+            "stamp": 1794022707.4476008
+          }
+        ],
+        "0x5f": [
+          {
+            "id": 62,
+            "hex": "5f53c5cc41",
+            "stamp": 1794022707.7207968
+          }
+        ]
+      },
+      "position_rad": -0.0023968450259417295
+    },
+    {
+      "interface": "can2",
+      "joint": 3,
+      "id": 63,
+      "queries": {
+        "0x6": [
+          {
+            "id": 63,
+            "hex": "0609eae83c",
+            "stamp": 1794022707.9939003
+          }
+        ],
+        "0x2b": [
+          {
+            "id": 63,
+            "hex": "2b00",
+            "stamp": 1794022708.2669163
+          }
+        ],
+        "0x5f": [
+          {
+            "id": 63,
+            "hex": "5f01dcdf41",
+            "stamp": 1794022708.5396898
+          }
+        ]
+      },
+      "position_rad": 0.028431909158825874
+    },
+    {
+      "interface": "can2",
+      "joint": 4,
+      "id": 64,
+      "queries": {
+        "0x6": [
+          {
+            "id": 64,
+            "hex": "067aea50bd",
+            "stamp": 1794022708.8125029
+          }
+        ],
+        "0x2b": [
+          {
+            "id": 64,
+            "hex": "2b00",
+            "stamp": 1794022709.0858893
+          }
+        ],
+        "0x5f": [
+          {
+            "id": 64,
+            "hex": "5f17cde241",
+            "stamp": 1794022709.3590136
+          }
+        ]
+      },
+      "position_rad": -0.051004864275455475
+    },
+    {
+      "interface": "can2",
+      "joint": 5,
+      "id": 65,
+      "queries": {
+        "0x6": [
+          {
+            "id": 65,
+            "hex": "0651350a3e",
+            "stamp": 1794022709.6323078
+          }
+        ],
+        "0x2b": [
+          {
+            "id": 65,
+            "hex": "2b00",
+            "stamp": 1794022709.9057012
+          }
+        ],
+        "0x5f": [
+          {
+            "id": 65,
+            "hex": "5f10e5ea41",
+            "stamp": 1794022710.1787004
+          }
+        ]
+      },
+      "position_rad": 0.13496901094913483
+    },
+    {
+      "interface": "can2",
+      "joint": 6,
+      "id": 66,
+      "mode_query": [
+        {
+          "id": 1602,
+          "hex": "420b0200000000ff",
+          "stamp": 1794022710.4520926
+        }
+      ]
+    },
+    {
+      "interface": "can2",
+      "joint": 7,
+      "id": 67,
+      "mode_query": [
+        {
+          "id": 1603,
+          "hex": "430b0200000000ff",
+          "stamp": 1794022710.7254121
+        }
+      ]
+    },
+    {
+      "interface": "can3",
+      "joint": 1,
+      "id": 51,
+      "queries": {
+        "0x6": [
+          {
+            "id": 51,
+            "hex": "066344b33c",
+            "stamp": 1794022710.9996376
+          }
+        ],
+        "0x2b": [
+          {
+            "id": 51,
+            "hex": "2b00",
+            "stamp": 1794022711.2727346
+          }
+        ],
+        "0x5f": [
+          {
+            "id": 51,
+            "hex": "5f8fbcc841",
+            "stamp": 1794022711.5460606
+          }
+        ]
+      },
+      "position_rad": 0.021883195266127586
+    },
+    {
+      "interface": "can3",
+      "joint": 2,
+      "id": 52,
+      "queries": {
+        "0x6": [
+          {
+            "id": 52,
+            "hex": "06695166bd",
+            "stamp": 1794022711.8187745
+          }
+        ],
+        "0x2b": [
+          {
+            "id": 52,
+            "hex": "2b00",
+            "stamp": 1794022712.0916078
+          }
+        ],
+        "0x5f": [
+          {
+            "id": 52,
+            "hex": "5fdc49cd41",
+            "stamp": 1794022712.3641856
+          }
+        ]
+      },
+      "position_rad": -0.056229982525110245
+    },
+    {
+      "interface": "can3",
+      "joint": 3,
+      "id": 53,
+      "queries": {
+        "0x6": [
+          {
+            "id": 53,
+            "hex": "06643c2bbf",
+            "stamp": 1794022712.636871
+          }
+        ],
+        "0x2b": [
+          {
+            "id": 53,
+            "hex": "2b00",
+            "stamp": 1794022712.9093754
+          }
+        ],
+        "0x5f": [
+          {
+            "id": 53,
+            "hex": "5f9134e041",
+            "stamp": 1794022713.1820745
+          }
+        ]
+      },
+      "position_rad": -0.6688902378082275
+    },
+    {
+      "interface": "can3",
+      "joint": 4,
+      "id": 54,
+      "queries": {
+        "0x6": [
+          {
+            "id": 54,
+            "hex": "0694323dbc",
+            "stamp": 1794022713.4551065
+          }
+        ],
+        "0x2b": [
+          {
+            "id": 54,
+            "hex": "2b00",
+            "stamp": 1794022713.7278523
+          }
+        ],
+        "0x5f": [
+          {
+            "id": 54,
+            "hex": "5f77afe141",
+            "stamp": 1794022714.0004861
+          }
+        ]
+      },
+      "position_rad": -0.011547703295946121
+    },
+    {
+      "interface": "can3",
+      "joint": 5,
+      "id": 55,
+      "queries": {
+        "0x6": [
+          {
+            "id": 55,
+            "hex": "062ba7073f",
+            "stamp": 1794022714.2733698
+          }
+        ],
+        "0x2b": [
+          {
+            "id": 55,
+            "hex": "2b00",
+            "stamp": 1794022714.5460973
+          }
+        ],
+        "0x5f": [
+          {
+            "id": 55,
+            "hex": "5f9ec3ed41",
+            "stamp": 1794022714.8193223
+          }
+        ]
+      },
+      "position_rad": 0.5298945307731628
+    },
+    {
+      "interface": "can3",
+      "joint": 6,
+      "id": 56,
+      "mode_query": [
+        {
+          "id": 1592,
+          "hex": "380b0200000000ff",
+          "stamp": 1794022715.0927145
+        }
+      ]
+    },
+    {
+      "interface": "can3",
+      "joint": 7,
+      "id": 57,
+      "mode_query": [
+        {
+          "id": 1593,
+          "hex": "390b0200000000ff",
+          "stamp": 1794022715.366053
+        }
+      ]
+    }
+  ],
+  "hands": [
+    {
+      "interface": "can0",
+      "id": 39,
+      "queries": {
+        "0xc0": [
+          {
+            "id": 39,
+            "hex": "c0004c484f362d30",
+            "stamp": 1794022715.6405337
+          },
+          {
+            "id": 39,
+            "hex": "c001342d3237362d",
+            "stamp": 1794022715.6405582
+          },
+          {
+            "id": 39,
+            "hex": "c002522d5a2d312d",
+            "stamp": 1794022715.6416028
+          },
+          {
+            "id": 39,
+            "hex": "c00344",
+            "stamp": 1794022715.6425967
+          }
+        ],
+        "0xc1": [
+          {
+            "id": 39,
+            "hex": "c1030000",
+            "stamp": 1794022715.915755
+          }
+        ],
+        "0xc2": [
+          {
+            "id": 39,
+            "hex": "c2030002",
+            "stamp": 1794022716.1890206
+          }
+        ],
+        "0xc4": [
+          {
+            "id": 39,
+            "hex": "c4040000",
+            "stamp": 1794022716.4624918
+          }
+        ],
+        "0x1": [
+          {
+            "id": 39,
+            "hex": "01807f80808080",
+            "stamp": 1794022716.73596
+          }
+        ],
+        "0x33": [
+          {
+            "id": 39,
+            "hex": "331d2126262524",
+            "stamp": 1794022717.009473
+          }
+        ],
+        "0x35": [
+          {
+            "id": 39,
+            "hex": "35000000000000",
+            "stamp": 1794022717.282885
+          }
+        ]
+      },
+      "serial": "LHO6-04-276-R-Z-1-D"
+    },
+    {
+      "interface": "can1",
+      "id": 40,
+      "queries": {
+        "0xc0": [
+          {
+            "id": 40,
+            "hex": "c0004c484f362d30",
+            "stamp": 1794022717.5571892
+          },
+          {
+            "id": 40,
+            "hex": "c001342d3332322d",
+            "stamp": 1794022717.5576303
+          },
+          {
+            "id": 40,
+            "hex": "c0024c2d5a2d312d",
+            "stamp": 1794022717.5585926
+          },
+          {
+            "id": 40,
+            "hex": "c00344",
+            "stamp": 1794022717.5595436
+          }
+        ],
+        "0xc1": [
+          {
+            "id": 40,
+            "hex": "c1030000",
+            "stamp": 1794022717.8325098
+          }
+        ],
+        "0xc2": [
+          {
+            "id": 40,
+            "hex": "c2030004",
+            "stamp": 1794022718.1059074
+          }
+        ],
+        "0xc4": [
+          {
+            "id": 40,
+            "hex": "c4040000",
+            "stamp": 1794022718.3791811
+          }
+        ],
+        "0x1": [
+          {
+            "id": 40,
+            "hex": "01fefffefefefe",
+            "stamp": 1794022718.6527753
+          }
+        ],
+        "0x33": [
+          {
+            "id": 40,
+            "hex": "331c201c1c1c1b",
+            "stamp": 1794022718.926105
+          }
+        ],
+        "0x35": [
+          {
+            "id": 40,
+            "hex": "35000000000000",
+            "stamp": 1794022719.199583
+          }
+        ]
+      },
+      "serial": "LHO6-04-322-L-Z-1-D"
+    }
+  ],
+  "source_sha256": {
+    "/home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e/src/linkerbot/arm/p7/motor_v2.py": "6f45000ba0f7f049e0a23b7ddceb318154b9672a5181472ea899099ea3127aba",
+    "/home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e/src/linkerbot/arm/p7/p7.py": "ea31068fcee5fd663b1e26563a6863b159fd9ce772b1bd77748023a15f90c5ec",
+    "/home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e/src/linkerbot/comm/can/can.py": "751c0eff4a402f980577670e83e52c43b533f823fb590666f5e7cfb009c5e3c3",
+    "/home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e/src/linkerbot/hand/o6/o6.py": "518351c4f1dfbd931291ee657795f1793021f9d4fbf2fd6d654691fd57762227"
+  }
+}

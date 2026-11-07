@@ -1,0 +1,43 @@
+CAM_RESULT {"index": 0, "name": "Orbbec Gemini 335L", "serial": "CP2L863000KL", 
+[23;80H "firmware": "1.4.60", "connection": "USB3.2", "color": {"width": 640, "height": 
+[23;80H 480, "fps": 15, "format": "OBFormat.MJPG", "fx": 368.1024169921875, "fy": 368.16
+[23;80H63330078125, "cx": 322.947021484375, "cy": 237.29510498046875, "profile_count": 3
+[23;80H346}, "depth": {"width": 640, "height": 480, "fps": 15, "format": "OBFormat.Y16",
+[23;80H, "fx": 377.61968994140625, "fy": 377.61968994140625, "cx": 319.70001220703125, "
+[23;80H"cy": 244.5, "profile_count": 46}, "frames": [{"color_us": 50137976462, "depth_us
+[23;80Hs": 50137976461, "depth_scale_mm": 1.0, "valid_ratio": 0.9413020833333333}, {"col
+[23;80Hlor_us": 50138043198, "depth_us": 50138043197, "depth_scale_mm": 1.0, "valid_rati
+[23;80Hio": 0.9415625}, {"color_us": 50138109934, "depth_us": 50138109933, "depth_scale_
+[23;80H_mm": 1.0, "valid_ratio": 0.9424869791666667}, {"color_us": 50138176670, "depth_u
+[23;80Hus": 50138176669, "depth_scale_mm": 1.0, "valid_ratio": 0.9417708333333333}, {"co
+[23;80Holor_us": 50138243406, "depth_us": 50138243405, "depth_scale_mm": 1.0, "valid_rat
+[23;80Htio": 0.9422005208333334}], "stream_ok": true}
+CAM_RESULT {"index": 1, "name": "Orbbec Gemini 2", "serial": "AY6M86300GH", "fir
+[23;80Hrmware": "1.4.92", "connection": "USB3.0", "color": {"width": 640, "height": 480,
+[23;80H, "fps": 15, "format": "OBFormat.RGB", "fx": 517.2816162109375, "fy": 517.3043823
+[23;80H3242188, "cx": 324.88470458984375, "cy": 241.26663208007812, "profile_count": 48}
+[23;80H}, "depth": {"width": 640, "height": 400, "fps": 15, "format": "OBFormat.Y16", "f
+[23;80Hfx": 304.3924560546875, "fy": 304.3924560546875, "cx": 319.467529296875, "cy": 19
+[23;80H98.4596710205078, "profile_count": 36}, "frames": [{"color_us": 50201874270, "dep
+[23;80Hpth_us": 50201879794, "depth_scale_mm": 1.0, "valid_ratio": 0.164484375}, {"color
+[23;80Hr_us": 50201942065, "depth_us": 50201946494, "depth_scale_mm": 1.0, "valid_ratio"
+[23;80H": 0.245296875}, {"color_us": 50201985718, "depth_us": 50201990094, "depth_scale_
+[23;80H_mm": 1.0, "valid_ratio": 0.173046875}, {"color_us": 50202051176, "depth_us": 502
+[23;80H202055594, "depth_scale_mm": 1.0, "valid_ratio": 0.18121875}, {"color_us": 502021
+[23;80H184648, "depth_us": 50202213294, "depth_scale_mm": 1.0, "valid_ratio": 0.15698437
+[23;80H75}], "stream_ok": true}
+CAM_RESULT {"index": 2, "name": "Orbbec Gemini 2", "serial": "AY6M8630086", "fir
+[23;80Hrmware": "1.4.92", "connection": "USB3.0", "color": {"width": 640, "height": 480,
+[23;80H, "fps": 15, "format": "OBFormat.RGB", "fx": 517.2506713867188, "fy": 517.0243530
+[23;80H0273438, "cx": 320.98687744140625, "cy": 236.98263549804688, "profile_count": 48}
+[23;80H}, "depth": {"width": 640, "height": 400, "fps": 15, "format": "OBFormat.Y16", "f
+[23;80Hfx": 306.0580749511719, "fy": 306.0580749511719, "cx": 319.8875732421875, "cy": 1
+[23;80H197.19290161132812, "profile_count": 36}, "frames": [{"color_us": 50202638822, "d
+[23;80Hdepth_us": 50202644359, "depth_scale_mm": 1.0, "valid_ratio": 0.187375}, {"color_
+[23;80H_us": 50202705575, "depth_us": 50202711059, "depth_scale_mm": 1.0, "valid_ratio":
+[23;80H: 0.198484375}, {"color_us": 50202749433, "depth_us": 50202754959, "depth_scale_m
+[23;80Hmm": 1.0, "valid_ratio": 0.1791875}, {"color_us": 50202814992, "depth_us": 502028
+[23;80H820559, "depth_scale_mm": 1.0, "valid_ratio": 0.17321875}, {"color_us": 502029495
+[23;80H531, "depth_us": 50202977859, "depth_scale_mm": 1.0, "valid_ratio": 0.1791875}], 
+[23;80H "stream_ok": true}
+qwer@qwer-ThinkPad-L14-Gen-2:~$ 

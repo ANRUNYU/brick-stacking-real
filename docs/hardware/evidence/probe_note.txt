@@ -1,0 +1,1 @@
+Delivered replay script omits the preview-encoding block used on the remote host. Exported camera.json contains metadata/statistics only; no preview pixels were exported. Remote original JSON stays under /tmp on robot host.

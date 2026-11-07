@@ -1,0 +1,162 @@
+Warning: truncated output (original token count: 4151)
+Total output lines: 241
+
+ros2_ws/src/linkerhand-ros2-sdk/gui_control/laun
+[23;80Hnch/gui_control.launch.py
+ros2_ws/src/linkerhand-ros2-sdk/pressure_diagram/launch/pressure_diagram.launch.
+[23;80H.py
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/launch/linker_hand.launch.p
+[23;80Hpy
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/launch/linker_hand_double.l
+[23;80Hlaunch.py
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/Linker
+[23;80HrHand/config/L7_positions.yaml
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/Linker
+[23;80HrHand/config/L25_positions.yaml
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/Linker
+[23;80HrHand/config/O6_positions.yaml
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/Linker
+[23;80HrHand/config/L6_positions.yaml
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/Linker
+[23;80HrHand/config/L21_positions.yaml
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/Linker
+[23;80HrHand/config/L20_positions.yaml
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/Linker
+[23;80HrHand/config/setting.yaml
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/Linker
+[23;80HrHand/config/L10_positions.yaml
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l20_10_11.py:32:    def __init__(self, name, hand_type, can, is_t
+[23;80Htouch):
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l20_10_11.py:34:        self.hand_type = hand_type
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l20_10_11.py:43:        self._check_linker_hand_type()
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l20_10_11.py:79:    def _check_linker_hand_type(self):
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l20_10_11.py:88:        self.api = LinkerHandApi(hand_type=self.h
+[23;80Hhand_type, hand_joint=self.hand_joint,modbus=self.modbus,can=self.can)
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l20_10_11.py:91:        self.hand_cmd_sub = self.create_subscript
+[23;80Htion(JointState, f'/cb_{self.hand_type}_hand_control_cmd', self.hand_control_cb,1
+[23;80H10)
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l20_10_11.py:92:        self.hand_state_pub = self.create_publish
+[23;80Hher(JointState, f'/cb_{self.hand_type}_hand_state',10)
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l20_10_11.py:94:        self.hand_current_pub = self.create_publi
+[23;80Hisher(String, f'/cb_{self.hand_type}_hand_current',10)
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l20_10_11.py:97:                ColorMsg(msg=f"{self.hand_type} {
+[23;80H{self.hand_joint} Equipped with matrix pressure sensing", color='green')
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l20_10_11.py:98:                self.matrix_touch_pub = self.crea
+[23;80Hate_publisher(String, f'/cb_{self.hand_type}_hand_matrix_touch', 10)
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l20_10_11.py:99:                self.matrix_touch_pub_pc = self.c
+[23;80Hcreate_publisher(PointCloud2, f'/cb_{self.hand_type}_hand_matrix_touch_pc', 10)  
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l20_10_11.py:100:                self.matrix_touch_mass_pub = sel
+[23;80Hlf.create_publisher(String, f'/cb_{self.hand_type}_hand_matrix_touch_mass', 10)  
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l20_10_11.py:102:                ColorMsg(msg=f"{self.hand_type} 
+[23;80H {self.hand_joint} Equipped with pressure sensor", color="green")
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l20_10_11.py:103:                self.touch_pub = self.create_pub
+[23;80Hblisher(Float32MultiArray, f'/cb_{self.hand_type}_hand_force', 10)
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l20_10_11.py:105:                ColorMsg(msg=f"{self.hand_type} 
+[23;80H {self.hand_joint} Not equipped with any pressure sensors", color="red")
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l20_10_11.py:256:    '/cb_{self.hand_type}_hand_control_cmd' 话题
+[23;79H题…1651 tokens truncated…f._check_linker_hand_type()
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l7.py:71:    def _check_linker_hand_type(self):
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l7.py:81:        self.api = LinkerHandApi(hand_type=self.hand_typ
+[23;80Hpe, hand_joint=self.hand_joint,modbus=self.modbus,can=self.can)
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l7.py:84:        self.hand_cmd_sub = self.create_subscription(Joi
+[23;80HintState, f'/cb_{self.hand_type}_hand_control_cmd', self.hand_control_cb,10)     
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l7.py:85:        self.hand_state_pub = self.create_publisher(Join
+[23;80HntState, f'/cb_{self.hand_type}_hand_state',10)
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l7.py:88:                ColorMsg(msg=f"{self.hand_type} {self.ha
+[23;80Hand_joint} Equipped with matrix pressure sensing", color='green')
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l7.py:89:                self.matrix_touch_pub = self.create_publ
+[23;80Hlisher(String, f'/cb_{self.hand_type}_hand_matrix_touch', 10)
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l7.py:90:                self.matrix_touch_pub_pc = self.create_p
+[23;80Hpublisher(PointCloud2, f'/cb_{self.hand_type}_hand_matrix_touch_pc', 10)
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l7.py:91:                self.matrix_touch_mass_pub = self.create
+[23;80He_publisher(String, f'/cb_{self.hand_type}_hand_matrix_touch_mass', 10)
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l7.py:93:                ColorMsg(msg=f"{self.hand_type} {self.ha
+[23;80Hand_joint} Equipped with pressure sensor", color="green")
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l7.py:94:                self.touch_pub = self.create_publisher(F
+[23;80HFloat32MultiArray, f'/cb_{self.hand_type}_hand_force', 10)
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l7.py:96:                ColorMsg(msg=f"{self.hand_type} {self.ha
+[23;80Hand_joint} Not equipped with any pressure sensors", color="red")
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l7.py:263:    '/cb_{self.hand_type}_hand_control_cmd' 话题类型为 
+[23;80H sensor_msgs/msg/JointState 控制话题，限制 30Hz
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l7.py:264:    /cb_{self.hand_type}_hand_state 话题类型为 sensor_m
+[23;80Hmsgs/msg/JointState 40Hz
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk/linker_hand_ros2_sdk/linker
+[23;80Hr_hand_advanced_l7.py:265:    '/cb_{self.hand_type}_hand_matrix_touch' 话题类型为
+[23;79H为 std_msgs/msg/String 40Hz
+[Unit]
+Description=Configure robot CAN interface %I
+After=systemd-udevd.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/robot-can-up %I
+/sys/class/net/can0
+ID_NET_DRIVER=peak_usb
+ID_SERIAL=_XCAN-USB
+ID_PATH_WITH_USB_REVISION=pci-0000:00:14.0-usbv2-0:6.3.1:1.0
+ID_PATH=pci-0000:00:14.0-usb-0:6.3.1:1.0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_6_3_1_1_0
+ID_NET_LINK_FILE=/usr/lib/systemd/network/73-usb-net-by-mac.link
+ID_NET_NAME=can0
+/sys/class/net/can1
+ID_NET_DRIVER=peak_usb
+ID_SERIAL=_XCAN-USB
+ID_PATH_WITH_USB_REVISION=pci-0000:00:14.0-usbv2-0:6.3.2:1.0
+ID_PATH=pci-0000:00:14.0-usb-0:6.3.2:1.0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_6_3_2_1_0
+ID_NET_LINK_FILE=/usr/lib/systemd/network/73-usb-net-by-mac.link
+ID_NET_NAME=can1
+/sys/class/net/can2
+ID_NET_DRIVER=peak_usb
+ID_SERIAL=_XCAN-USB
+ID_PATH_WITH_USB_REVISION=pci-0000:00:14.0-usbv2-0:6.3.3:1.0
+ID_PATH=pci-0000:00:14.0-usb-0:6.3.3:1.0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_6_3_3_1_0
+ID_NET_LINK_FILE=/usr/lib/systemd/network/73-usb-net-by-mac.link
+ID_NET_NAME=can2
+/sys/class/net/can3
+ID_NET_DRIVER=peak_usb
+ID_SERIAL=_XCAN-USB
+ID_PATH_WITH_USB_REVISION=pci-0000:00:14.0-usbv2-0:6.3.4:1.0
+ID_PATH=pci-0000:00:14.0-usb-0:6.3.4:1.0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_6_3_4_1_0
+ID_NET_LINK_FILE=/usr/lib/systemd/network/73-usb-net-by-mac.link
+ID_NET_NAME=can3
+Name: linkerbot
+Version: 0.5.4
+Location: /home/qwer/p7_sdk_venv/lib/python3.12/site-packages
+Editable project location: /home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-9
+[23;80H927290b8e27f9e2df3cc5b0a0776c36e2fb5175e
+Name: python-can
+Version: 4.6.1
+Location: /home/qwer/p7_sdk_venv/lib/python3.12/site-packages
+

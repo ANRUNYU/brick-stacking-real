@@ -1,0 +1,3 @@
+# Preserve handoff snapshot hashes and raw terminal evidence across platforms.
+docs/handoff/20261107/** -text whitespace=cr-at-eol,-blank-at-eof
+**/*.terminal.txt -text -diff

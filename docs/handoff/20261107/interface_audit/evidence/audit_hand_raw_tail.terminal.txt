@@ -1,0 +1,14 @@
+HAND_RAW can0 0x27 0x1 [('0x27', '01807f80808080')]
+HAND_RAW can0 0x28 0xc2 []
+HAND_RAW can0 0x28 0xc0 []
+HAND_RAW can0 0x28 0x1 []
+HAND_RAW can1 0x27 0xc2 []
+HAND_RAW can1 0x27 0xc0 []
+HAND_RAW can1 0x27 0x1 []
+HAND_RAW can1 0x28 0xc2 [('0x28', 'c2030004')]
+HAND_RAW can1 0x28 0xc0 [('0x28', 'c0004c484f362d30'), ('0x28', 'c001342d3332322
+[23;80H2d'), ('0x28', 'c0024c2d5a2d312d'), ('0x28', 'c00344')]
+HAND_RAW can1 0x28 0x1 [('0x28', '01fefffefefefe')]
+qwer@qwer-ThinkPad-L14-Gen-2:~$ sudo: 需要密码
+SUDO_RESULT=1
+qwer@qwer-ThinkPad-L14-Gen-2:~$[1C

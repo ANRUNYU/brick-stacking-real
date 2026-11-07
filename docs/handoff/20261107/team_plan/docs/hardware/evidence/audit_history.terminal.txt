@@ -1,0 +1,757 @@
+stty -echo; python3 - <<'PY'
+>[1Cimport json,pathlib
+> for f in ['captures/right-o6-feedback-20261106-01.json','captures/vision-inven
+[23;80Hntory-20261106-01/camera_report.json','captures/head_profiles_20261106_04.json']:[24;1H
+>  print('FILE',f); print(pathlib.Path(f).read_text())
+> PY
+FILE captures/right-o6-feedback-20261106-01.json
+{
+  "started_at": "2026-11-06T06:45:20.767094+00:00",
+  "interface": "can1",
+  "side": "right",
+  "source": "real_measured",
+  "query_requested": true,
+  "motion_commands_sent": false,
+  "interface_configuration_changed": false,
+  "motion_tested": false,
+  "control_ready": false,
+  "communication_passed": false,
+  "samples": [],
+  "errors": [
+    {
+      "stage": "setup",
+      "error": "ValueError: can1 must already be UP at 1 Mbps"
+    }
+  ],
+  "cleanup_errors": [],
+  "device_info": null,
+  "can_before": [
+    {
+      "ifindex": 27,
+      "ifname": "can1",
+      "flags": [
+        "NOARP",
+        "ECHO"
+      ],
+      "mtu": 16,
+      "qdisc": "noop",
+      "operstate": "DOWN",
+      "linkmode": "DEFAULT",
+      "group": "default",
+      "txqlen": 10,
+      "link_type": "can",
+      "promiscuity": 0,
+      "allmulti": 0,
+      "min_mtu": 16,
+      "max_mtu": 16,
+      "linkinfo": {
+        "info_kind": "can",
+        "info_data": {
+          "ctrlmode_supported": [
+            "LOOPBACK",
+            "LISTEN-ONLY",
+            "TRIPLE-SAMPLING",
+            "ONE-SHOT",
+            "CC-LEN8-DLC"
+          ],
+          "state": "STOPPED",
+          "berr_counter": {
+            "tx": 0,
+            "rx": 0
+          },
+          "restart_ms": 0,
+          "bittiming_const": {
+            "name": "pcan_usb",
+            "tseg1": {
+              "min": 1,
+              "max": 16
+            },
+            "tseg2": {
+              "min": 1,
+              "max": 8
+            },
+            "sjw": {
+              "min": 1,
+              "max": 4
+            },
+            "brp": {
+              "min": 1,
+              "max": 64
+            },
+            "brp_inc": 1
+          },
+          "clock": 8000000
+        }
+      },
+      "num_tx_queues": 1,
+      "num_rx_queues": 1,
+      "gso_max_size": 65536,
+      "gso_max_segs": 65535,
+      "tso_max_size": 65536,
+      "tso_max_segs": 65535,
+      "gro_max_size": 65536,
+      "parentbus": "usb",
+      "parentdev": "3-6.4.2:1.0"
+    }
+  ],
+  "result": "ERROR"
+}
+FILE captures/vision-inventory-20261106-01/camera_report.json
+{
+  "started_at": "2026-11-06T07:24:42.135477+00:00",
+  "scope": "camera_only",
+  "robot_motion_accessed": false,
+  "can_accessed": false,
+  "devices": [
+    {
+      "serial": "",
+      "name": "Orbbec Gemini 335L",
+      "uid": "2-3.3.2-13"
+    },
+    {
+      "serial": "",
+      "name": "Orbbec Gemini2",
+      "uid": "2-3.3.3-14"
+    },
+    {
+      "serial": "",
+      "name": "Orbbec Gemini2",
+      "uid": "2-3.3.4-15"
+    }
+  ],
+  "frames": [],
+  "rejected_skew": 0,
+  "errors": [],
+  "cleanup_errors": [],
+  "result": "INVENTORY",
+  "binding_version": "2.1.3",
+  "sdk_version": "2.10.6"
+}
+FILE captures/head_profiles_20261106_04.json
+{
+  "color": [
+    {
+      "width": 1280,
+      "height": 800,
+      "fps": 15,
+      "format": "OBFormat.MJPG"
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "fps": 15,
+      "format": "OBFormat.RGB"
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "fps": 15,
+      "format": "OBFormat.RGBA"
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "fps": 15,
+      "format": "OBFormat.BGR"
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "fps": 15,
+      "format": "OBFormat.BGRA"
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "fps": 15,
+      "format": "OBFormat.Y8"
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "fps": 15,
+      "format": "OBFormat.YUYV"
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "fps": 15,
+      "format": "OBFormat.MJPG"
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "fps": 15,
+      "format": "OBFormat.RGB"
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "fps": 15,
+      "format": "OBFormat.RGBA"
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "fps": 15,
+      "format": "OBFormat.BGR"
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "fps": 15,
+      "format": "OBFormat.BGRA"
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "fps": 15,
+      "format": "OBFormat.Y8"
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "fps": 15,
+      "format": "OBFormat.YUYV"
+    },
+    {
+      "width": 848,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.MJPG"
+    },
+    {
+      "width": 848,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.RGB"
+    },
+    {
+      "width": 848,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.RGBA"
+    },
+    {
+      "width": 848,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.BGR"
+    },
+    {
+      "width": 848,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.BGRA"
+    },
+    {
+      "width": 848,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    },
+    {
+      "width": 848,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.Y8"
+    },
+    {
+      "width": 848,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.YUYV"
+    },
+    {
+      "width": 640,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.MJPG"
+    },
+    {
+      "width": 640,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.RGB"
+    },
+    {
+      "width": 640,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.RGBA"
+    },
+    {
+      "width": 640,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.BGR"
+    },
+    {
+      "width": 640,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.BGRA"
+    },
+    {
+      "width": 640,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    },
+    {
+      "width": 640,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.Y8"
+    },
+    {
+      "width": 640,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.YUYV"
+    },
+    {
+      "width": 640,
+      "height": 400,
+      "fps": 15,
+      "format": "OBFormat.MJPG"
+    },
+    {
+      "width": 640,
+      "height": 400,
+      "fps": 15,
+      "format": "OBFormat.RGB"
+    },
+    {
+      "width": 640,
+      "height": 400,
+      "fps": 15,
+      "format": "OBFormat.RGBA"
+    },
+    {
+      "width": 640,
+      "height": 400,
+      "fps": 15,
+      "format": "OBFormat.BGR"
+    },
+    {
+      "width": 640,
+      "height": 400,
+      "fps": 15,
+      "format": "OBFormat.BGRA"
+    },
+    {
+      "width": 640,
+      "height": 400,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    },
+    {
+      "width": 640,
+      "height": 400,
+      "fps": 15,
+      "format": "OBFormat.Y8"
+    },
+    {
+      "width": 640,
+      "height": 400,
+      "fps": 15,
+      "format": "OBFormat.YUYV"
+    },
+    {
+      "width": 640,
+      "height": 360,
+      "fps": 15,
+      "format": "OBFormat.MJPG"
+    },
+    {
+      "width": 640,
+      "height": 360,
+      "fps": 15,
+      "format": "OBFormat.RGB"
+    },
+    {
+      "width": 640,
+      "height": 360,
+      "fps": 15,
+      "format": "OBFormat.RGBA"
+    },
+    {
+      "width": 640,
+      "height": 360,
+      "fps": 15,
+      "format": "OBFormat.BGR"
+    },
+    {
+      "width": 640,
+      "height": 360,
+      "fps": 15,
+      "format": "OBFormat.BGRA"
+    },
+    {
+      "width": 640,
+      "height": 360,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    },
+    {
+      "width": 640,
+      "height": 360,
+      "fps": 15,
+      "format": "OBFormat.Y8"
+    },
+    {
+      "width": 640,
+      "height": 360,
+      "fps": 15,
+      "format": "OBFormat.YUYV"
+    },
+    {
+      "width": 480,
+      "height": 270,
+      "fps": 15,
+      "format": "OBFormat.MJPG"
+    },
+    {
+      "width": 480,
+      "height": 270,
+      "fps": 15,
+      "format": "OBFormat.RGB"
+    },
+    {
+      "width": 480,
+      "height": 270,
+      "fps": 15,
+      "format": "OBFormat.RGBA"
+    },
+    {
+      "width": 480,
+      "height": 270,
+      "fps": 15,
+      "format": "OBFormat.BGR"
+    },
+    {
+      "width": 480,
+      "height": 270,
+      "fps": 15,
+      "format": "OBFormat.BGRA"
+    },
+    {
+      "width": 480,
+      "height": 270,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    },
+    {
+      "width": 480,
+      "height": 270,
+      "fps": 15,
+      "format": "OBFormat.Y8"
+    },
+    {
+      "width": 480,
+      "height": 270,
+      "fps": 15,
+      "format": "OBFormat.YUYV"
+    },
+    {
+      "width": 424,
+      "height": 240,
+      "fps": 15,
+      "format": "OBFormat.MJPG"
+    },
+    {
+      "width": 424,
+      "height": 240,
+      "fps": 15,
+      "format": "OBFormat.RGB"
+    },
+    {
+      "width": 424,
+      "height": 240,
+      "fps": 15,
+      "format": "OBFormat.RGBA"
+    },
+    {
+      "width": 424,
+      "height": 240,
+      "fps": 15,
+      "format": "OBFormat.BGR"
+    },
+    {
+      "width": 424,
+      "height": 240,
+      "fps": 15,
+      "format": "OBFormat.BGRA"
+    },
+    {
+      "width": 424,
+      "height": 240,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    },
+    {
+      "width": 424,
+      "height": 240,
+      "fps": 15,
+      "format": "OBFormat.Y8"
+    },
+    {
+      "width": 424,
+      "height": 240,
+      "fps": 15,
+      "format": "OBFormat.YUYV"
+    }
+  ],
+  "depth": [
+    {
+      "width": 1280,
+      "height": 800,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    },
+    {
+      "width": 848,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    },
+    {
+      "width": 640,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    },
+    {
+      "width": 640,
+      "height": 400,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    },
+    {
+      "width": 640,
+      "height": 360,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    },
+    {
+      "width": 480,
+      "height": 270,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    },
+    {
+      "width": 424,
+      "height": 266,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    },
+    {
+      "width": 424,
+      "height": 240,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    }
+  ]
+}
+qwer@qwer-ThinkPad-L14-Gen-2:~$[1C    if not 1 <= args.frames <= 50 or not 1 <= ar
+[23;80Hrgs.seconds <= 60 or not 0 < args.max_skew_ms <= 100:
+        p.error("invalid capture bounds")
+    if args.capture and not args.serial:
+        p.error("capture requires explicit serial number")
+    args.output.mkdir(parents=True)
+    report = {"started_at": datetime.now(timezone.utc).isoformat(), "scope": "ca
+[23;80Hamera_only",
+        "robot_motion_accessed": False, "can_accessed": False, "devices": [],   
+        "frames": [], "rejected_skew": 0, "errors": [], "cleanup_errors": [], "r
+[23;80Hresult": "ERROR"}
+    try:
+        import pyorbbecsdk as sdk
+        report["binding_version"] = importlib.metadata.version("pyorbbecsdk2")  
+        report["sdk_version"] = sdk.get_version()
+        context = sdk.Context()
+        devices = context.query_devices()
+        for i in range(devices.get_count()):
+            report["devices"].append({"serial": devices.get_device_serial_number
+[23;80Hr_by_index(i),
+                "name": devices.get_device_name_by_index(i), "uid": devices.get_
+[23;80H_device_uid_by_index(i)})
+        if args.capture:
+            if args.uid:
+                if args.uid not in {d["uid"] for d in report["devices"]}:       
+                    raise ValueError("requested UID not enumerated; no camera fa
+[23;80Hallback")
+                device = devices.get_device_by_uid(args.uid)
+            else:
+                if args.serial not in {d["serial"] for d in report["devices"]}: [24;1H
+                    raise ValueError("requested camera not enumerated; no fallba
+[23;80Hack to another camera")
+                device = devices.get_device_by_serial_number(args.serial)       
+            info = device.get_device_info()
+            report["selected"] = {"serial": info.get_serial_number(), "name": in
+[23;80Hnfo.get_name(),
+                                  "firmware": info.get_firmware_version(), "conn
+[23;80Hnection": info.get_connection_type()}
+            if report["selected"]["serial"] != args.serial:
+                raise ValueError("opened device serial does not match explicit r
+[23;80Hrequested serial")
+            capture(sdk,device,args.serial,args.output,report,count=args.frames,
+[23;80H,seconds=args.seconds,max_skew_ms=args.max_skew_ms)
+        else:
+            report["result"] = "INVENTORY" if report["devices"] else "NO_DEVICES
+[23;80HS"
+    except Exception as exc:
+        report["errors"].append(f"{type(exc).__name__}: {exc}")
+        report["result"] = "ERROR"
+    (args.output/"camera_report.json").write_text(json.dumps(report,ensure_ascii
+[23;80Hi=False,indent=2,default=str,allow_nan=False),encoding="utf-8")
+    print(json.dumps(report,ensure_ascii=False,default=str,allow_nan=False))    
+    return 0 if report["result"] in {"INVENTORY","CAPTURED"} and not report["cle
+[23;80Heanup_errors"] else 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+import logging
+import struct
+import threading
+import time
+from enum import Enum, IntEnum
+
+import can
+
+from linkerbot.arm.common import ControlMode
+from linkerbot.arm.common.model import (
+    AccelerationState,
+    AngleState,
+    TemperatureState,
+    TorqueState,
+    VelocityState,
+)
+from linkerbot.comm import CANMessageDispatcher
+from linkerbot.exceptions import TimeoutError
+from linkerbot.relay import DataRelay
+
+logger = logging.getLogger(__name__)
+
+
+class SensorType(IntEnum):
+    """Sensor types that support background polling."""
+
+    POSITION = 0x06
+    TORQUE = 0x03
+    VELOCITY = 0x05
+    TEMPERATURE = 0x5F
+
+
+class InternalSensorType(IntEnum):
+    ENABLED = 0x2B
+    ACCELERATION = 0x1D
+    POSITION_KP = 0x19
+    VELOCITY_KP = 0x17
+    VELOCITY_KI = 0x18
+    HANDSHAKE = 0x01
+
+
+class _ControlModeValue(int, Enum):
+    PP = 0x05
+
+
+_CONTROL_MODE_MAP = {
+    ControlMode.PP: _ControlModeValue.PP,
+}
+
+
+class A7Motor:
+    def __init__(self, id: int, dispatcher: CANMessageDispatcher) -> None:      
+        self._id = id
+        self._dispatcher = dispatcher
+
+        # Sensor state (populated by polling)
+        self._angle: AngleState
+        self._velocity: VelocityState
+        self._torque: TorqueState
+        self._temperature: TemperatureState
+
+        # Control state (read at init, updated on set)
+        self._enabled: bool
+        self._control_angle: AngleState
+        self._control_velocity: VelocityState
+        self._control_acceleration: AccelerationState
+        self._position_kp: float
+        self._velocity_kp: float
+        self._velocity_ki: float
+
+        # One DataRelay per read command byte
+        self._read_relays: dict[int, DataRelay[bytes]] = {}
+
+        # Polling
+        self._poll_threads: list[threading.Thread] = []
+        self._stop_event = threading.Event()
+
+        self._dispatcher.subscribe(self._on_message)
+
+    @property
+    def angle(self) -> AngleState:
+        return self._angle
+
+    @property
+    def velocity(self) -> VelocityState:
+        return self._velocity
+
+    @property
+    def torque(self) -> TorqueState:
+        return self._torque
+
+    @property
+    def temperature(self) -> TemperatureState:
+        return self._temperature
+
+    @property
+    def control_angle(self) -> AngleState:
+        return self._control_angle
+
+    @property
+    def control_velocity(self) -> VelocityState:
+        return self._control_velocity
+
+    @property
+    def control_acceleration(self) -> AccelerationState:
+        return self._control_acceleration
+
+    @property
+    def enabled(self) -> bool:
+        return self._enabled
+ros2_ws/src/linkerhand-ros2-sdk
+ros2_ws/src/linkerhand-ros2-sdk/.github
+ros2_ws/src/linkerhand-ros2-sdk/gui_control
+ros2_ws/src/linkerhand-ros2-sdk/pressure_diagram
+ros2_ws/src/linkerhand-ros2-sdk/.git
+ros2_ws/src/linkerhand-ros2-sdk/doc
+ros2_ws/src/linkerhand-ros2-sdk/resource
+ros2_ws/src/linkerhand-ros2-sdk/examples
+ros2_ws/src/linkerhand-ros2-sdk/graphic_display
+ros2_ws/src/linkerhand-ros2-sdk/linker_hand_ros2_sdk
+ros2_ws/src/my_first_pkg
+ros2_ws/src/my_first_pkg/test
+ros2_ws/src/my_first_pkg/resource
+ros2_ws/src/my_first_pkg/my_first_pkg
+qwer@qwer-ThinkPad-L14-Gen-2:~$[1C

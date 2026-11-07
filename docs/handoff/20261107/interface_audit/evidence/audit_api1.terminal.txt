@@ -1,0 +1,230 @@
+124:    def _send(self, data: bytes) -> None:
+132:    def _on_message(self, msg: can.Message) -> None:
+149:    def _read_register(self, cmd: int, timeout_s: float = 1.0) -> bytes:    
+154:    def _read_register_float(self, cmd: int, timeout_s: float = 1.0) -> floa
+[23;80Hat:
+            relay = DataRelay()
+            self._read_relays[cmd] = relay
+        return relay
+
+    def _read_register(self, cmd: int, timeout_s: float = 1.0) -> bytes:        
+        relay = self._get_relay(cmd)
+        self._send(bytes([cmd]))
+        return relay.wait(timeout_s)
+
+    def _read_register_float(self, cmd: int, timeout_s: float = 1.0) -> float:  
+        data = self._read_register(cmd, timeout_s)
+        return struct.unpack("<f", data[:4])[0]
+
+    def _save_params(self) -> None:
+        self._send(bytes([0x0D]))
+        time.sleep(0.001)
+
+    def set_control_mode(self, mode: ControlMode) -> None:
+        mode_byte = _CONTROL_MODE_MAP[mode]
+        self._send(bytes([0x07, mode_byte]))
+
+    def enable(self) -> None:
+        self._enabled = True
+        self._send(bytes([0x2A, 0x01]))
+
+    def disable(self) -> None:
+        self._enabled = False
+        self._send(bytes([0x2A, 0x00]))
+
+    def calibrate_zero(self) -> None:
+        self._send(bytes([0x87]))
+        self._save_params()
+
+    def reset_error(self) -> None:
+        self._send(bytes([0xFE]))
+
+    def set_angle(self, angle: float) -> None:
+        self._control_angle = AngleState(angle=angle, timestamp=time.time())    
+        self._send(bytes([0x0A]) + struct.pack("<f", angle))
+
+    def set_velocity(self, velocity: float) -> None:
+        self._control_velocity = VelocityState(velocity=velocity, timestamp=time
+[23;80He.time())
+        self._send(bytes([0x1F]) + struct.pack("<f", velocity))
+
+    def set_acceleration(self, acceleration: float) -> None:
+        self._control_acceleration = AccelerationState(
+            acceleration=acceleration, timestamp=time.time()
+        )
+        self._send(bytes([0x20]) + struct.pack("<f", acceleration))
+
+    def set_deceleration(self, deceleration: float) -> None:
+        self._send(bytes([0x21]) + struct.pack("<f", deceleration))
+
+    def set_velocity_kp(self, kp: float) -> None:
+        self._velocity_kp = kp
+        self._send(bytes([0x10]) + struct.pack("<f", kp))
+
+    def set_velocity_ki(self, ki: float) -> None:
+        self._velocity_ki = ki
+        self._send(bytes([0x11]) + struct.pack("<f", ki))
+
+    def set_position_kp(self, kp: float) -> None:
+        self._position_kp = kp
+        self._send(bytes([0x12]) + struct.pack("<f", kp))
+
+    def read_initial_state(self, timeout_s: float = 1.0) -> None:
+        now = time.time()
+        self._angle = AngleState(
+            angle=self._read_register_float(SensorType.POSITION, timeout_s),    
+            timestamp=now,
+        )
+        self._velocity = VelocityState(
+            velocity=self._read_register_float(SensorType.VELOCITY, timeout_s), [24;1H
+            timestamp=now,
+        )
+        self._torque = TorqueState(
+            torque=self._read_register_float(SensorType.TORQUE, timeout_s),     
+            timestamp=now,
+        )
+        self._temperature = TemperatureState(
+            temperature=self._read_register_float(SensorType.TEMPERATURE, timeou
+[23;80Hut_s),
+"""O6 robotic hand control package.
+
+This package provides the O6 interface for controlling the O6 robotic hand      
+via CAN bus communication.
+"""
+
+from linkerbot.hand.o6.angle import AngleData, O6Angle
+from linkerbot.hand.o6.events import (
+    AccelerationEvent,
+    AngleEvent,
+    FaultEvent,
+    ForceSensorEvent,
+    O6Snapshot,
+    SensorEvent,
+    SensorSource,
+    SpeedEvent,
+    TemperatureEvent,
+    TorqueEvent,
+)
+from linkerbot.hand.o6.fault import FaultCode, FaultData, FaultManager, O6Fault [24;1H
+from linkerbot.hand.o6.force_sensor import (
+    AllFingersData,
+    ForceSensorData,
+    ForceSensorManager,
+    SingleForceSensorManager,
+)
+from linkerbot.hand.o6.o6 import O6
+from linkerbot.hand.o6.speed import (
+    AccelerationData,
+    AccelerationManager,
+    O6Acceleration,
+    O6Speed,
+    SpeedData,
+    SpeedManager,
+)
+from linkerbot.hand.o6.temperature import (
+    O6Temperature,
+    TemperatureData,
+    TemperatureManager,
+)
+from linkerbot.hand.o6.torque import O6Torque, TorqueData, TorqueManager        
+from linkerbot.hand.o6.version import DeviceInfo, Version, VersionManager       
+
+__all__ = [
+    "O6",
+    # Managers
+    "ForceSensorManager",
+    "SingleForceSensorManager",
+    "TemperatureManager",
+    "FaultManager",
+    "VersionManager",
+    "AccelerationManager",
+    "SpeedManager",
+    "TorqueManager",
+    # Data containers
+    "AngleData",
+    "TorqueData",
+    "SpeedData",
+    "AccelerationData",
+    "ForceSensorData",
+    "AllFingersData",
+    "TemperatureData",
+    "FaultData",
+    "O6Snapshot",
+    # Event types
+    "AngleEvent",
+    "TorqueEvent",
+    "SpeedEvent",
+    "AccelerationEvent",
+    "TemperatureEvent",
+    "FaultEvent",
+    "ForceSensorEvent",
+    "SensorEvent",
+    "SensorSource",
+    # Type classes
+    "O6Angle",
+    "O6Torque",
+    "O6Speed",
+    "O6Acceleration",
+    "O6Temperature",
+    "O6Fault",
+    "FaultCode",
+    "Version",
+    "DeviceInfo",
+]
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/src/linkerbot/hand/o6/angle.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/src/linkerbot/hand/o6/o6.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/src/linkerbot/hand/o6/speed.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/src/linkerbot/hand/o6/temperature.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/src/linkerbot/hand/o6/torque.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/src/linkerbot/hand/o6/__init__.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/src/linkerbot/hand/o6/version.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/src/linkerbot/hand/o6/fault.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/src/linkerbot/hand/o6/force_sensor.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/src/linkerbot/hand/o6/events.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/tests/hand/o6/conftest.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/tests/hand/o6/test_polling.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/tests/hand/o6/test_streaming.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/tests/hand/o6/test_acceleration.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/tests/hand/o6/test_validation.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/tests/hand/o6/test_temperature.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/tests/hand/o6/test_speed.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/tests/hand/o6/test_stress.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/tests/hand/o6/__init__.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/tests/hand/o6/test_angle_mapping.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/tests/hand/o6/test_torque.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/tests/hand/o6/test_fault.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/tests/hand/o6/test_error_handling.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/tests/hand/o6/test_force_sensor.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/tests/hand/o6/test_lifecycle.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/tests/hand/o6/test_version.py
+linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175
+[23;80H5e/tests/hand/o6/test_angle.py
+brick_vision_venv/bin/python  brick_vision_venv/bin/python3  brick_vision_venv/b
+[23;80Hbin/python3.12
+
