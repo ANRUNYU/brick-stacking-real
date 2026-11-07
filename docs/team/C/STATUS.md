@@ -374,3 +374,13 @@ C2-04新增validation_report.py及c_validation_report.py：按stage/source/assis
 源码打包工具增量纳入calibration examples/templates/installation及精确FCL requirements/lock，排除calibration approved真实数据、虚拟环境、原图、SDK/mesh与无关txt；有回归验证。SOFTWARE_REVIEW.md集中可运行入口，NEXT_FIELD_SESSION.md列下一次实际标定需要的输入与现场物品，HANDOFF_ABD同步。用户已实测确认安装尺寸，不再重复要求量尺寸。
 
 全套154 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c20-freeze。Mock十块既有e2e、所有原模块及新增回归均覆盖；未推送/合并/创建Issue。剩余实机依赖：真实TCP/头部→base矩阵、A时刻对齐新鲜状态、D实际手预设映射及真实场景/安全限值/停车证据。未宣称九项C任务或M3/M5/M6全部完成。
+
+## 第二十一批：现场接触确认与左臂被动反馈检查（C1-02/C1-03/M2a）
+
+用户授权开始采集，随后明确确认笔杆已刚性固定、笔尖轻触固定凹点。用户纠正现有Python控制进程是右手，不能用于本轮左臂采样；保留其进程，不读取/注入TTY、不关闭或重启。左任务是左臂J1…J7的61…67反馈配左手工具；手指状态不能代替臂关节。
+
+SSH只读核对进程/监听端口/资料：未发现可直接使用的关节状态文件/服务。只读现场A7Motor/MotorV2解析源码；SDK构造模式写入风险仍存在，未实例化。参照Linux SocketCAN文档recvmsg MSG_DONTROUTE含义过滤本地主机生成帧：https://www.kernel.org/doc/html/latest/networking/can.html 。
+
+执行独立被动CAN RAW receive socket，在所有当前CAN接口上只接收标准ID61…67，3秒有界窗口，无send调用，收到0帧。report remote /home/qwer/c_calibration_runs/left_passive_probe_1b03710c37634b1f8b3df054705d0a14.json，本地摘要left_passive_capture_C21.json。发送帧0，无使能/停止/回零/清故障/Flash写入/运动命令；不改变CAN接口状态。现场仅监听，不以NO_FEEDBACK诊断故障或未上电。
+
+第一有效pivot样本数仍0，未写任何虚假T_base_flange/关节角，未生成标定矩阵。待A/现场提供已验收、无构造副作用的新鲜左臂状态出口；已询问是否有实时角度显示程序/路径。即便接触条件成立，没有七轴反馈也不能计为TCP样本。
