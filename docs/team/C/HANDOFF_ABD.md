@@ -132,3 +132,11 @@ D/C：新增具名rad主动关节→mimic展开→全部指节FK→FCL12mesh检�
 ## 现场采样补充（第二十一批）
 
 用户已确认指针固定且接触凹点，现有控制进程是右手，不使用/干预该进程。只被动监听左臂ID61…67约3秒，0接收、0发送，未改变接口/设备状态。证据left_passive_capture_C21.json，NO_FEEDBACK只描述窗口，不是故障判断。有效TCP样本0，不能凭接触条件生成标定。A需要提供新鲜左臂七轴状态出口；未启动P7对象，未发送任何控制帧。
+
+## 状态入口核验（第二十二批，M2a）
+
+用户提供两份历史运动脚本，SSH逐行审查及hash见LEFT_STATE_ACQUISITION.md。V1脚本实际漏左J1且包含右臂；V2脚本read_initial_state会发Rest，后续使能/5度运动/解除使能，未直接执行或import。不要让D调度器或B采集进程调用这些脚本作为无副作用状态API。
+
+C已独立实现c_left_arm_readonly_probe.py：只允许can2左61…65的06读请求，不实例化SDK；66/67原始帧仅监听，不默认量化。主机实际5请求、0合格响应（2.254秒），未发送控制/使能/Rest/Flash写入。报告c-left-readonly-probe-1与原始证据left_readonly_capture_C22.json；完整状态和calibration_sample_valid均false，有效TCP样本0。
+
+A→C仍需具名七轴rad值、逐轴时间/原始反馈、clock/epoch、设备/映射版本、新鲜度/跨轴时差、状态/故障；V2纯查询协议或已审核状态出口尚缺。公共ArmAdapter未变；诊断报告不是其可执行扩展。C→B/D目前没有新的有效TCP或外参，旧候选不可提升为approved。7项新增工具回归，全套161 passed；实机通信无应答独立记录，不作为测试通过。现场无需重测安装尺寸。

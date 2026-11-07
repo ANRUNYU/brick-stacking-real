@@ -384,3 +384,11 @@ SSH只读核对进程/监听端口/资料：未发现可直接使用的关节状
 执行独立被动CAN RAW receive socket，在所有当前CAN接口上只接收标准ID61…67，3秒有界窗口，无send调用，收到0帧。report remote /home/qwer/c_calibration_runs/left_passive_probe_1b03710c37634b1f8b3df054705d0a14.json，本地摘要left_passive_capture_C21.json。发送帧0，无使能/停止/回零/清故障/Flash写入/运动命令；不改变CAN接口状态。现场仅监听，不以NO_FEEDBACK诊断故障或未上电。
 
 第一有效pivot样本数仍0，未写任何虚假T_base_flange/关节角，未生成标定矩阵。待A/现场提供已验收、无构造副作用的新鲜左臂状态出口；已询问是否有实时角度显示程序/路径。即便接触条件成立，没有七轴反馈也不能计为TCP样本。
+
+## 第二十二批：历史脚本核验与实际只读查询（C1-02/C1-03/C1-05，M2a）
+
+用户说明左臂已上电但无状态程序，并给出p7_test_v1_joints.py/p7_j67_verified.py。SSH读取、锁SHA，发现旧V1脚本漏左J1且含右臂；V2脚本会Rest/使能/运动/解除使能，未执行两份脚本。只读SDK确认A7的06查询与V2初始读取的Rest副作用。
+
+新增tools/c_left_arm_readonly_probe.py及tests/unit/test_left_readonly_probe.py，仅固定can2左61…65各一次06，V2只接收raw，无SDK实例化/控制命令。真实主机运行2.254秒、5查询、0响应，七轴完整状态false、有效TCP样本仍0。没有更改CAN配置/第三方SDK/右手进程。真实设备操作仅寄存器读请求；运动/使能/解除使能/回零/Flash写入均0。不能再将本轮描述为完全不发送CAN帧。
+
+文档LEFT_STATE_ACQUISITION.md记录源文件hash/行号、运行方式、M2a输入要求与剩余V2状态依赖；evidence/left_readonly_capture_C22.json保存主机报告内容，原始路径/hash见文档。HANDOFF_ABD与TASK_STATUS同步。输入接口版本c-left-readonly-probe-1，未修改公共协议；7项新回归，全套161 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c22-final。没有产出有效标定矩阵或真机规划验收。

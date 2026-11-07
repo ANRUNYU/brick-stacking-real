@@ -1,0 +1,52 @@
+{
+  "schema_version": "c-left-readonly-probe-1",
+  "source": "real",
+  "arm_role": "left",
+  "interface": "can2",
+  "units": "rad",
+  "clock_domain": "host_monotonic",
+  "epoch": "9b6c0c59-88a1-40c3-abb2-48c45b10a479",
+  "stamp_semantics": "host receive/dequeue time, not device time",
+  "transmitted": [
+    {
+      "motor_id": 61,
+      "data_hex": "06",
+      "host_send_monotonic_s": 197926.051972908
+    },
+    {
+      "motor_id": 62,
+      "data_hex": "06",
+      "host_send_monotonic_s": 197926.402188293
+    },
+    {
+      "motor_id": 63,
+      "data_hex": "06",
+      "host_send_monotonic_s": 197926.752833161
+    },
+    {
+      "motor_id": 64,
+      "data_hex": "06",
+      "host_send_monotonic_s": 197927.103480216
+    },
+    {
+      "motor_id": 65,
+      "data_hex": "06",
+      "host_send_monotonic_s": 197927.454130599
+    }
+  ],
+  "received": [],
+  "missing_motor_ids": [
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67
+  ],
+  "calibration_sample_valid": false,
+  "motion_commands_sent": 0,
+  "complete_seven_axis_state": false,
+  "elapsed_s": 2.253536044008797,
+  "status": "DIAGNOSTIC_ONLY"
+}
