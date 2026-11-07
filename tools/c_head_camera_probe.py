@@ -45,37 +45,38 @@ def depth_to_metres(raw, scale_mm):
     return values
 
 
-def rectify_pair(rgb, depth_m, k, distortion, *, map_cache=None):
-    """Apply one common map to registered RGB/depth; do not fill depth holes."""
+def rectify_pair(rgb, depth_m, k, distortion, *, map_cache=None, depth_distortion=None):
+    """Rectify each aligned stream using its OWN distortion into common K.
+
+    None depth_distortion retains the old helper convention for offline callers;
+    real capture always supplies the aligned depth frame's explicit parameters.
+    """
     import cv2
     import numpy as np
-    model = distortion["model"].split(".")[-1]
-    if model not in {"NONE", "BROWN_CONRADY", "BROWN_CONRADY_K6"}:
-        raise ValueError(f"unverified distortion model: {model}")
     if rgb.shape[:2] != depth_m.shape:
         raise ValueError("D2C output must match color dimensions")
-    names = ["k1", "k2", "p1", "p2", "k3", "k4", "k5", "k6"]
-    d = np.array([distortion[n] for n in names], float)
-    if not np.isfinite(d).all():
-        raise ValueError("nonfinite camera distortion")
-    if model == "NONE":
-        if np.any(d != 0):
-            raise ValueError("NONE model with nonzero coefficients")
-        return rgb.copy(), depth_m.copy()
-    if model == "BROWN_CONRADY":
-        if np.any(d[5:] != 0):
-            raise ValueError("Brown model has unverified extra coefficients")
-        d = d[:5]
     h, w = depth_m.shape
-    key = (w, h, k.tobytes(), d.tobytes())
-    if map_cache is not None and key in map_cache:
-        x, y = map_cache[key]
-    else:
-        x, y = cv2.initUndistortRectifyMap(k, d, None, k, (w, h), cv2.CV_32FC1)
-        if map_cache is not None:
-            map_cache[key] = (x, y)
-    return (cv2.remap(rgb, x, y, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT),
-            cv2.remap(depth_m, x, y, cv2.INTER_NEAREST, borderMode=cv2.BORDER_CONSTANT, borderValue=float("nan")))
+    def mapping(dist):
+        model=dist["model"].split(".")[-1]
+        if model not in {"NONE","BROWN_CONRADY","BROWN_CONRADY_K6"}:
+            raise ValueError(f"unverified distortion model: {model}")
+        d=np.array([dist[n] for n in ("k1","k2","p1","p2","k3","k4","k5","k6")],float)
+        if not np.isfinite(d).all(): raise ValueError("nonfinite distortion")
+        if model=="NONE" and np.any(d!=0): raise ValueError("NONE with nonzero distortion")
+        if model=="BROWN_CONRADY":
+            if np.any(d[5:]!=0): raise ValueError("unverified extra coefficients")
+            d=d[:5]
+        if not np.any(d): return None
+        key=(w,h,k.tobytes(),d.tobytes())
+        if map_cache is not None and key in map_cache: return map_cache[key]
+        maps=cv2.initUndistortRectifyMap(k,d,None,k,(w,h),cv2.CV_32FC1)
+        if map_cache is not None: map_cache[key]=maps
+        return maps
+    cm=mapping(distortion)
+    dm=mapping(distortion if depth_distortion is None else depth_distortion)
+    color=rgb.copy() if cm is None else cv2.remap(rgb,*cm,cv2.INTER_LINEAR,borderMode=cv2.BORDER_CONSTANT)
+    depth=depth_m.copy() if dm is None else cv2.remap(depth_m,*dm,cv2.INTER_NEAREST,borderMode=cv2.BORDER_CONSTANT,borderValue=float("nan"))
+    return color,depth
 
 
 def describe_profile(profile):
@@ -148,6 +149,19 @@ def capture(sdk, device, serial, output, report, *, count, seconds, max_skew_ms)
             warmup += 1
             if warmup <= 5:
                 continue
+            aligned_geometry = {}
+            for label, frame in (("color", c), ("depth", d)):
+                frame_profile = frame.get_stream_profile().as_video_stream_profile()
+                fi = frame_profile.get_intrinsic()
+                fd = frame_profile.get_distortion()
+                fk = np.array([[fi.fx,0.,fi.cx],[0.,fi.fy,fi.cy],[0.,0.,1.]])
+                aligned_geometry[label] = {"K": fk.tolist(), "width": fi.width, "height": fi.height,
+                    "distortion": {name: float(getattr(fd,name)) for name in ("k1","k2","k3","k4","k5","k6","p1","p2")},
+                    "distortion_model": str(fd.model)}
+                if (fi.width,fi.height)!=(intr.width,intr.height) or not np.allclose(fk,k,atol=1e-5,rtol=0):
+                    report["aligned_geometry"] = aligned_geometry
+                    raise ValueError("aligned frame K/dimensions differ; refusing old-intrinsic backprojection")
+            report["aligned_geometry"] = aligned_geometry
             ct, dt = c.get_timestamp_us()/1e6, d.get_timestamp_us()/1e6
             if abs(ct-dt)*1000 > max_skew_ms:
                 report["rejected_skew"] += 1
@@ -169,7 +183,12 @@ def capture(sdk, device, serial, output, report, *, count, seconds, max_skew_ms)
             if not report["frames"]:
                 raw_preview = rgb.copy()
             decode_end = time.monotonic()
-            rgb, dm = rectify_pair(rgb, dm, k, distortion, map_cache=map_cache)
+            frame_depth_distortion = dict(aligned_geometry["depth"]["distortion"])
+            frame_depth_distortion["model"] = aligned_geometry["depth"]["distortion_model"]
+            frame_color_distortion = dict(aligned_geometry["color"]["distortion"])
+            frame_color_distortion["model"] = aligned_geometry["color"]["distortion_model"]
+            rgb, dm = rectify_pair(rgb, dm, k, frame_color_distortion, map_cache=map_cache,
+                                   depth_distortion=frame_depth_distortion)
             rectify_end = time.monotonic()
             index = len(report["frames"])
             name = f"frame_{index:03d}.npz"
@@ -222,7 +241,7 @@ def main(argv=None):
     if args.capture and not args.serial:
         p.error("capture requires explicit serial number")
     args.output.mkdir(parents=True)
-    report = {"started_at": datetime.now(timezone.utc).isoformat(), "scope": "camera_only", "tool_version": "c-head-1280x800-15-v2-buffered",
+    report = {"started_at": datetime.now(timezone.utc).isoformat(), "scope": "camera_only", "tool_version": "c-head-1280x800-15-v4-separate-distortion",
         "robot_motion_accessed": False, "can_accessed": False, "devices": [],
         "frames": [], "rejected_skew": 0, "errors": [], "cleanup_errors": [], "result": "ERROR"}
     try:

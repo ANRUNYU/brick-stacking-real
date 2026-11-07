@@ -165,3 +165,30 @@ camera_report、每帧SHA256、ROI与逐帧分析均保存在 docs/team/C/eviden
 运行同前：c_head_camera_probe、analyze_cube_capture（ROI使用single_cube_C06_roi.json）、analyze_calibration_capture。记录源 real，原始RGB-D远端 /home/qwer/c_calibration_runs/single_cube_1280_20261107_C07，本地artifacts同名；报告和每帧SHA256见evidence/single_cube_C07_*。所有图像仍不进Git。
 
 验证：84 passed（新增缓存结果等价、深度NaN保留、K变化不复用旧映射的回归）。真实20帧通过分离计时/几何工具；尚未对真实相机做长时/运动验收。下一步需要独立物理参考或标定板确认RGB-D空间误差；单一已知尺寸方块不建立相机到左臂base关系。实际标定采样仍需左臂模型/安装关系、基座可测参考点和现场协作。
+
+## 第九批：逐流畸变修复与现场URDF接入（C1-01/C1-02/C1-03）
+
+用户现场补充：左臂固定在整机上，交付时已安装，没有安装记录。不能据此推断L_arm_root相对头部/身体/桌面的变换。主机只读find找到p7__left.urdf，原SDK未修改，未构造Arm/O6对象。文件取回artifacts/c_real_calibration/robot_models，原模型不提交Git。
+
+### URDF适配
+
+新增localization/urdf_chain.py，复用hardware.inspect_urdf、RevoluteJoint/forward_kinematics和RigidTransform；只解析固定/转动关节明确的base→tip链，拒绝mimic/未知类型、重复父节点、断链及不完整q映射，不猜J1→L1_Joint/ID对应。示例：
+`urdf_forward_kinematics(path, {f'L{i}_Joint': 0.0 for i in range(1,8)}, base_frame='L_arm_root', tip_frame='L8_Link')`。
+
+现场文件是7个revolute+1个fixed，声明零角度末端平移[-0.000001582,0.058,-0.6082]m，与逐段原点独立累加相符。首次手算预期Z误写-0.7082，断言失败，核对原文逐项加总后修正预期为-0.6082，不修改模型来通过。审计含原文件SHA256，见evidence/left_p7_declared_model_audit.json。模型无collision元素、无手/相机/全机几何，不能执行完整碰撞检查；URDF限位/速度只是声明，不能直接成为已验收实机限制。q=0测试不是回零命令，也不是实机零位证据。
+
+### C08真实帧几何核验与修复
+
+2026-11-07 16:13，v3独立工具采3帧，strict SN CP2L863000KL、1280×800@15，CAPTURED无cleanup错误（原记录在主机 /home/qwer/c_calibration_runs/head_frame_geometry_20261107_C08）。逐帧读取对齐后color/depth各自profile：二者K/尺寸一致，但RGB畸变非零，aligned depth畸变全零。旧工具用RGB映射同时remap两流，因此与帧声明不一致；此前C03—C07和C08输出保留为诊断，禁止作为标定批准数据。并不声称此问题解释全部尺寸偏差。
+
+v4修复：每流按各自frame profile畸变映射到共同K，零畸变depth复制而不再次RGB remap；缓存按各自K/D；对齐帧K/尺寸与所用K不同则拒绝。保留旧helper缺省参数仅用于既有离线调用；真实capture显式传depth参数。工厂参数与软件处理仍不代替实测空间配准验收。参考厂商SDK逐帧profile获取接口文档：https://orbbec.github.io/pyorbbecsdk/source/5_Application_Guide/ApplicationGuide.html 。
+
+### C09真实修复验证
+
+2026-11-07 16:15，远端独立副本 /home/qwer/c_head_camera_probe_1280_v4.py，部署与本地SHA256一致60e3b1b0210d41a84529f404ec2ae4500beb42766f8b6aca55f8760d021d2ce9。临时sudo只运行相机，20帧、最长20s、1280×800@15、SN核验，CAPTURED无cleanup错误。有效保存14.9844fps，间隔66.735—66.737ms，skew最大0.021ms。停流后写盘，已退出，无CAN/手/臂动作。
+
+图像核对块仍在ROI范围，使用明确C06手选ROI，仅诊断对照：高度中位50.324mm、范围50.055—50.659mm、时间std0.168mm；四边46.528/46.716/45.920/47.229mm，仍偏低。高度与C07变化不能全部归因修复（非同步对照、存在传感器变化），边长问题仍待独立验证。无外参/TCP输出，无motion许可。
+
+原始数据本地artifacts/c_real_calibration/single_cube_1280_20261107_C09、远端同名目录；evidence/single_cube_C09_*保存报告/每帧SHA256/分析，包含真实逐流K/D。原图不纳入Git。工具运行命令沿用上一批，c_head_camera_probe为v4。测试86 passed：新增逐流畸变不混用的回归及URDF固定末端/RPY/断链/映射测试。真实3帧核验和20帧修复后重采均成功。
+
+剩余依赖明确：A需核验所选左臂URDF到真实关节名、正方向、零位、限位及base原点定义；C需以可重复识别的物理基准测量base→相机/桌面，或用已标定刚性指针及受控多姿态采样建立点对；D需实际工具/TCP几何。没有安装记录时先建立测量基准，不用躯干外壳/桌面近似尺寸或单块尺寸代替未知基座变换。实体标记/指针安装及任何机器人运动须先确定具体方案与现场授权。

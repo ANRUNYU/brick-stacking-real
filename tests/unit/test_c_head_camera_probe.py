@@ -39,3 +39,15 @@ def test_cached_rectification_preserves_values_and_depth_holes():
     changed=k.copy();changed[0,0]=120
     m.rectify_pair(rgb,d,changed,dist,map_cache=cache)
     assert len(cache)==2
+
+def test_zero_distortion_aligned_depth_is_not_remapped_with_color():
+    import numpy as np
+    k=np.array([[10.,0,10.],[0,10.,10.],[0,0,1.]])
+    rgb=np.full((20,20,3),128,np.uint8)
+    d=np.arange(400,dtype=np.float32).reshape(20,20);d[5,5]=np.nan
+    color=dict(model='BROWN_CONRADY',k1=.4,k2=0.,k3=0.,k4=0.,k5=0.,k6=0.,p1=0.,p2=0.)
+    depth=dict(color,k1=0.)
+    _,correct=m.rectify_pair(rgb,d,k,color,depth_distortion=depth)
+    _,old=m.rectify_pair(rgb,d,k,color)
+    np.testing.assert_allclose(correct,d,equal_nan=True)
+    assert not np.allclose(old,d,equal_nan=True)
