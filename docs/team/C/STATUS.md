@@ -47,3 +47,25 @@ CLI 使用 `PYTHONPATH=src`（PowerShell：`$env:PYTHONPATH='src'`）或 editabl
 尚未上传：包内含设备序列号、内网地址与原始 terminal evidence，需完成逐文件公开内容审查后才能判定“没有问题”。本分支不把整个包覆盖进代码根目录。原始资料路径与 SHA256SUMS 保留在用户提供的交付目录。远程上传仅针对后续审查通过的交付资料，不包含本批未审查开发代码；本次未推送或合并。
 
 最终验证：`python -m pytest -q --basetemp=.test-tmp-final`：63 passed（53 基线 + 10 新增）。CLI 合成点对样例实际运行成功；第一次样例生成因 PYTHONPATH 未设置失败，设置 src 后重跑通过。`git diff --check` 通过。输出候选不属于 approved 目录。全部验证来源 synthetic/mock，不是实机记录。
+
+## 第二批：C1-01 / C1-04 / C1-05 离线增量
+
+### 身份绑定修正（用户现场补充）
+
+can0/can1 可能随启动/插拔变化；旧审计映射只是 2026-11-07 的快照。禁止把总线编号当左右手身份。A/D 以设备唯一身份读取结果和物理路径解析当前绑定，记录 binding_version、SN、bus、核验时刻和来源，未知/重复/不一致时拒绝动作。C 不新增 CAN 探测/发送代码。本批检查 C 新增源文件，无 can0/can1 固定角色逻辑。设备映射变化不意味着相机/TCP 已重验。
+
+### 实现与接收方适配
+
+- C1-01 / M1：localization/forward_kinematics.py，RevoluteJoint(name, origin, axis_xyz) 复用 RigidTransform。origin 是零角度 T_parent_joint；轴在该关节系，位置输入必须按名字完整匹配，单位 rad。返回 T_base_last_joint，TCP 需另外显式 compose。通用数学实现通过，不代表实际 P7 FK 通过。需 A 给所选侧 URDF/关节原点/轴、零位和映射版本后核对；未读取远端 SDK 或控制设备。
+- C1-04 / M1：planning/joint_trajectory.py，JointLimits 要求逐关节上下限、速度/加速度、模型版本与来源；无默认值。build_offline_trajectory 要求起点、场景/标定、时钟/epoch 和状态时间/新鲜度。生成分段五次多项式，每路点速度和加速度归零，解析峰值决定时间。仅支持这些分段的插值；不能改为厂商默认插值后沿用本校验结果。
+- C1-05 / M2a：tools/c_motion_sample.py 给 A/D 七轴合成样例。运行：设置 PYTHONPATH=src 后 `python tools/c_motion_sample.py output.json`。输出文件不得已存在。所有限值、起点和版本均为 SYNTHETIC，不可用于真实机器人。样例不提供虚构执行成功反馈。
+- C→A：schema c-trajectory-1 输出 joint_names、expected_start_rad、segments(start_rad/end_rad/start_s/duration_s)、插值、模型/场景/标定版本和时钟域/epoch。sample_segment 求 q/dq/ddq。相对时间从 0 起；适配器应在执行前重新读取状态并核验全部上下文，不能用样例时间或单纯 tuple 反馈代替。现有 ArmAdapter 不变，不新增 execute 方法。
+- C→D：trajectory_limits PASS 仅表示所提供关节路点的五次插值符合所提供数值限制。ik NOT_CHECKED、full_collision UNKNOWN、motion_enabled=false。没有真实有效期、设备绑定和完整碰撞证据，不得申请执行许可。
+
+### 验证与剩余依赖
+
+`python -m pytest -q --basetemp=.test-tmp-fk`：81 passed（本批新增 18 项）；`python tools/c_motion_sample.py .test-seven-axis.json` 已实际生成七轴样例。轨迹测试覆盖端点 q、零速度/加速度、1001 点速率抽检、未来/过期状态、缺失限位、位置越界和起点不一致。FK 用可手算两连杆 90°/-90° 位置 [1,1,0] 验证，以及轴、帧链和关节映射拒绝测试。来源全部 synthetic/mock；无真实硬件动作。
+
+状态修订：C1-01 的通用 FK 已补充并通过；实际关节模型仍待测。C1-04 的关节路点时间参数化已补充；尚未实现笛卡尔 IK、规划器联接和全机碰撞。C1-05 仅有可调用轨迹样例，尚未与 A 执行反馈联调。C2-01/03 和实测标定不因上述数学通过而完成。
+
+需 A：所选臂模型版本、J1…J7 到实际 ID 的核验映射、零位、限位/速率来源、新鲜状态及 epoch；需 B：同步/配准采样与独立物理验证点；需 D：工具/相机/持物包络、碰撞场景版本和接触约定。真实安全停止、J6/J7、主臂选择仍未知。本批不依赖 SSH，不连接或开流。
