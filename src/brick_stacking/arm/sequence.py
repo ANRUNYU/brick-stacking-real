@@ -1,13 +1,14 @@
 """Sequential execution and timing for a multi-segment mock arm plan."""
 
 from collections.abc import Callable, Sequence
+from copy import deepcopy
 from dataclasses import dataclass
 import math
 from threading import Lock
 import time
 from typing import cast
 
-from brick_stacking.arm.adapter import JOINT_NAMES, MockArm, _number, _positions, trajectory_hash
+from brick_stacking.arm.adapter import ArmFault, FaultKind, JOINT_NAMES, MockArm, _number, _positions, trajectory_hash
 from brick_stacking.contracts import ArmState, ExecutionResult, ExecutionStatus, Permit, PlanResult
 
 
@@ -28,6 +29,7 @@ class SequenceProgress:
     elapsed_s: float
     segments: tuple[SegmentProgress, ...]
     reason: str | None
+    fault: ArmFault | None = None
 
 
 class MultiSegmentRun:
@@ -78,6 +80,7 @@ class MultiSegmentRun:
         self._start_sample_id: str | None = None
         self._status: ExecutionStatus = "PENDING"
         self._reason: str | None = None
+        self._fault: ArmFault | None = None
         self._started: float | None = None
         self._ended: float | None = None
         self._completed = 0
@@ -115,6 +118,15 @@ class MultiSegmentRun:
     def _finish(self, status: ExecutionStatus, now: float, reason: str | None = None) -> None:
         self._status, self._ended, self._reason = status, now, reason
 
+    def _fail_before_dispatch(self, phase: str, reason: str, kind: FaultKind) -> SequenceProgress:
+        now = self._now()
+        self._fault = ArmFault(kind, {
+            "request_sent": False, "feedback_confirmed": False, "hold_capable": None,
+            "reason": "no active segment to stop",
+        })
+        self._finish("FAILED", now, f"{phase}: {reason}")
+        return self._snapshot(now)
+
     def _snapshot(self, now: float) -> SequenceProgress:
         end = now if self._ended is None else self._ended
         elapsed = 0.0 if self._started is None else end - self._started
@@ -125,7 +137,7 @@ class MultiSegmentRun:
             segments.append(SegmentProgress(self._segments[index][0], result["command_id"],
                                             result["status"], duration, result["reason"]))
         return SequenceProgress(self._status, self._completed, len(self._segments), elapsed,
-                                tuple(segments), self._reason)
+                                tuple(segments), self._reason, deepcopy(self._fault))
 
     def progress(self) -> SequenceProgress:
         with self._lock:
@@ -140,14 +152,21 @@ class MultiSegmentRun:
                 self._started, self._status = now, "RUNNING"
             phase, trajectory, permit = self._segments[self._completed]
             if len(self._results) == self._completed:
+                if now >= min(self._deadline, permit["valid_until_host_monotonic_s"]):
+                    return self._fail_before_dispatch(phase, "plan or segment permit expired", "EXPIRED")
                 try:
-                    if now >= min(self._deadline, permit["valid_until_host_monotonic_s"]):
-                        raise ValueError("plan or segment permit expired")
                     state = self._arm.read_state()
-                    self._check_start(state, permit, self._now())
+                    now = self._now()
+                    if now >= min(self._deadline, permit["valid_until_host_monotonic_s"]):
+                        return self._fail_before_dispatch(phase, "plan or segment permit expired", "EXPIRED")
+                    self._check_start(state, permit, now)
                     command = self._arm.execute_trajectory(
                         trajectory, permit, valid_until_host_monotonic_s=self._deadline,
                     )
+                except TimeoutError:
+                    return self._fail_before_dispatch(phase, "mock start-state read timed out", "TIMEOUT")
+                except OSError:
+                    return self._fail_before_dispatch(phase, "mock start-state transport disconnected", "DISCONNECTED")
                 except (ValueError, RuntimeError) as exc:
                     now = self._now()
                     self._finish("FAILED", now, f"{phase}: {exc}")
@@ -163,8 +182,9 @@ class MultiSegmentRun:
                 try:
                     self._check_limits(feedback["q_rad"])
                 except ValueError as exc:
-                    if self._arm.cancel(command):
-                        self._results[-1] = self._arm.get_execution_result(command)
+                    self._arm.cancel(command)
+                    self._results[-1] = self._arm.get_execution_result(command)
+                    self._fault = self._arm.get_execution_fault(command)
                     now = self._now()
                     self._finish("FAILED", now, f"{phase}: feedback {exc}")
                     return self._snapshot(now)
@@ -173,6 +193,7 @@ class MultiSegmentRun:
                 if self._completed == len(self._segments):
                     self._finish("SUCCEEDED", now)
             elif result["status"] != "RUNNING":
+                self._fault = self._arm.get_execution_fault(command)
                 self._finish("FAILED", now, f"{phase}: {result['reason'] or result['status']}")
             return self._snapshot(now)
 
@@ -184,5 +205,9 @@ class MultiSegmentRun:
                 command = self._results[-1]["command_id"]
                 self._arm.cancel(command)
                 self._results[-1] = self._arm.get_execution_result(command)
+                self._fault = self._arm.get_execution_fault(command)
+                if self._fault is not None:
+                    self._finish("FAILED", self._now(), self._results[-1]["reason"])
+                    return False
             self._finish("CANCELLED", self._now(), "mock sequence cancelled")
             return True

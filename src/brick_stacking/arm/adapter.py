@@ -11,10 +11,17 @@ import time
 from typing import Literal, Protocol, cast
 from uuid import uuid4
 
-from brick_stacking.contracts import ArmState, ExecutionResult, ExecutionStatus, JointName, Permit, Trajectory
+from brick_stacking.contracts import ArmState, ExecutionResult, ExecutionStatus, JointName, Permit, StopResult, Trajectory
 from brick_stacking.hardware.mock_devices import MockArm as JointMock
 
 JOINT_NAMES: tuple[JointName, ...] = ("J1", "J2", "J3", "J4", "J5", "J6", "J7")
+FaultKind = Literal["TIMEOUT", "EXPIRED", "DISCONNECTED"]
+
+
+@dataclass(frozen=True)
+class ArmFault:
+    kind: FaultKind
+    stop: StopResult
 
 
 class ArmAdapter(Protocol):
@@ -79,6 +86,7 @@ class _Run:
     result: ExecutionResult
     next_point: int = 0
     final_dispatched_at: float | None = None
+    fault: ArmFault | None = None
 
 
 class MockArm:
@@ -96,6 +104,7 @@ class MockArm:
         feedback_reader: Callable[[], ArmState | None] | None = None,
         max_feedback_age_s: float = 0.1,
         goal_tolerance_rad: float = 1e-6,
+        feedback_timeout_s: float | None = None,
     ):
         self._joints = JointMock(_positions(initial_joints_rad))
         self._clock = clock
@@ -110,6 +119,11 @@ class MockArm:
         self._goal_tolerance_rad = _number(goal_tolerance_rad, "goal tolerance")
         if self._max_feedback_age_s <= 0 or self._goal_tolerance_rad < 0:
             raise ValueError("feedback age must be positive and goal tolerance nonnegative")
+        self._feedback_timeout_s = None
+        if feedback_timeout_s is not None:
+            self._feedback_timeout_s = _number(feedback_timeout_s, "feedback timeout")
+            if self._feedback_timeout_s <= 0:
+                raise ValueError("feedback timeout must be positive")
 
     def _now(self) -> float:
         now = _number(self._clock(), "host monotonic clock")
@@ -150,6 +164,8 @@ class MockArm:
         if valid_until_host_monotonic_s is not None:
             expires = min(expires, _number(valid_until_host_monotonic_s, "trajectory deadline"))
         with self._lock:
+            if self._run and self._run.fault is not None:
+                raise RuntimeError("mock arm fault latched; start a fresh recovery session")
             if self._run and self._run.result["status"] == "RUNNING":
                 raise RuntimeError("a mock trajectory is already running")
             now = self._now()
@@ -194,10 +210,38 @@ class MockArm:
             return "repeated or out-of-order mock feedback"
         return None
 
-    def _expire(self, run: _Run, now: float) -> ExecutionResult:
-        run.result.update(status="FAILED", ended_host_monotonic_s=now,
-                          reason="permit or trajectory expired during mock execution")
+    def _fail(
+        self, run: _Run, now: float, kind: FaultKind, reason: str, *, stop_already_failed: bool = False,
+    ) -> ExecutionResult:
+        run.result.update(status="FAILED", ended_host_monotonic_s=now, reason=reason)
+        request_sent = kind != "DISCONNECTED" and not stop_already_failed
+        stop_reason = "mock stop request could not be sent" if stop_already_failed else "mock transport disconnected"
+        if request_sent:
+            try:
+                self._joints.stop()
+                stop_reason = "mock stop request only"
+            except OSError:
+                request_sent = False
+                stop_reason = "mock stop request could not be sent"
+        run.fault = ArmFault(kind, {
+            "request_sent": request_sent, "feedback_confirmed": False, "hold_capable": None,
+            "reason": stop_reason,
+        })
         return deepcopy(run.result)
+
+    def _transport_fault(self, run: _Run, exc: OSError, operation: str) -> ExecutionResult:
+        now = self._now()
+        if isinstance(exc, TimeoutError):
+            return self._fail(run, now, "TIMEOUT", f"mock {operation} timed out")
+        return self._fail(run, now, "DISCONNECTED", f"mock {operation} disconnected")
+
+    def _deadline_fault(self, run: _Run, now: float) -> ExecutionResult | None:
+        if now >= run.expires:
+            return self._fail(run, now, "EXPIRED", "permit or trajectory expired during mock execution")
+        if (self._feedback_timeout_s is not None and run.final_dispatched_at is not None
+                and now >= run.final_dispatched_at + self._feedback_timeout_s):
+            return self._fail(run, now, "TIMEOUT", "mock completion feedback timed out")
+        return None
 
     def step(self, command_id: str) -> ExecutionResult:
         """Advance the mock by applying due points in order at the current clock."""
@@ -206,8 +250,8 @@ class MockArm:
             if run.result["status"] != "RUNNING":
                 return deepcopy(run.result)
             now = self._now()
-            if now >= run.expires:
-                return self._expire(run, now)
+            if failure := self._deadline_fault(run, now):
+                return failure
 
             points = run.trajectory["points"]
             previous_point = run.next_point
@@ -215,13 +259,16 @@ class MockArm:
                 point = points[run.next_point]
                 if now < run.started + point["time_from_start_s"]:
                     break
-                self._joints.simulate_joint_target(point["q_rad"])
+                try:
+                    self._joints.simulate_joint_target(point["q_rad"])
+                except OSError as exc:
+                    return self._transport_fault(run, exc, "target transport")
                 run.next_point += 1
                 now = self._now()
                 if run.next_point == len(points):
                     run.final_dispatched_at = now
-                if now >= run.expires:
-                    return self._expire(run, now)
+                if failure := self._deadline_fault(run, now):
+                    return failure
             if run.next_point == previous_point and run.final_dispatched_at is None:
                 return deepcopy(run.result)
 
@@ -230,11 +277,11 @@ class MockArm:
             else:
                 try:
                     sample = self._feedback_reader()
-                except OSError:
-                    sample = None
+                except OSError as exc:
+                    return self._transport_fault(run, exc, "feedback transport")
                 now = self._now()
-            if now >= run.expires:
-                return self._expire(run, now)
+            if failure := self._deadline_fault(run, now):
+                return failure
 
             problem = self._feedback_problem(run, sample, now)
             if problem is not None or sample is None:
@@ -256,7 +303,12 @@ class MockArm:
             if run.result["status"] != "RUNNING":
                 return False
             now = self._now()
-            self._joints.stop()
+            try:
+                self._joints.stop()
+            except OSError as exc:
+                kind = "TIMEOUT" if isinstance(exc, TimeoutError) else "DISCONNECTED"
+                self._fail(run, self._now(), kind, "mock cancellation stop failed", stop_already_failed=True)
+                return False
             run.result.update(status="CANCELLED", ended_host_monotonic_s=now,
                               reason="mock execution cancelled")
             return True
@@ -268,6 +320,10 @@ class MockArm:
     def get_execution_status(self, command_id: str) -> ExecutionStatus:
         with self._lock:
             return self._command(command_id).result["status"]
+
+    def get_execution_fault(self, command_id: str) -> ArmFault | None:
+        with self._lock:
+            return deepcopy(self._command(command_id).fault)
 
 
 def replay_execution(
