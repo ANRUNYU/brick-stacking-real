@@ -192,3 +192,33 @@ v4修复：每流按各自frame profile畸变映射到共同K，零畸变depth�
 原始数据本地artifacts/c_real_calibration/single_cube_1280_20261107_C09、远端同名目录；evidence/single_cube_C09_*保存报告/每帧SHA256/分析，包含真实逐流K/D。原图不纳入Git。工具运行命令沿用上一批，c_head_camera_probe为v4。测试86 passed：新增逐流畸变不混用的回归及URDF固定末端/RPY/断链/映射测试。真实3帧核验和20帧修复后重采均成功。
 
 剩余依赖明确：A需核验所选左臂URDF到真实关节名、正方向、零位、限位及base原点定义；C需以可重复识别的物理基准测量base→相机/桌面，或用已标定刚性指针及受控多姿态采样建立点对；D需实际工具/TCP几何。没有安装记录时先建立测量基准，不用躯干外壳/桌面近似尺寸或单块尺寸代替未知基座变换。实体标记/指针安装及任何机器人运动须先确定具体方案与现场授权。
+
+## 第十批：SSH现场坐标链与SDK行为确认（C1-01/C1-03/M0-M2a）
+
+用户要求现场信息优先SSH读取。本批直接在主机读取SDK源码/配置，并在主机p7_sdk_venv运行纯Pinocchio FK；没有用离线样例冒充设备状态。为验证项目解析器才对同哈希文件做本地数值对照。无机器人动作、无CAN访问、无相机开流、无sudo。
+
+### 已从现场源码确认（非实机运动验收）
+
+- src/linkerbot/arm/p7/p7.py：左侧motor_ids=61..67，前5个A7Motor，后2个MotorV2，源码注释对应URDF L1..L7。关节名映射属于源码事实；物理标签、角度正方向、零位偏置仍待A核验。
+- P7默认world_frame='urdf'；ArmKinetix加载p7__left.urdf，默认tcp_offset=[0,0,0]只表示模型末端无额外偏移，不代表实测TCP。
+- ArmKinetix的maestro约定：对模型第一关节placement左乘Rz(90°)和原点到J2的平移，并在FK输出rotation右乘Rz(90°).T。位置/姿态处理不可未经审查当项目单一T_world_base套用。C公共坐标继续使用明确URDF frame，接收方必须提供world_frame字段；不猜Maestro就是world。
+- P7.__init__会建立CAN dispatcher、构造motor对象、调用_ensure_v2_ptm_mode及read_initial_state/start_polling。源码明确_ensure_v2_ptm_mode会对MotorV2调用ensure_ptm_mode，注释描述Flash Control Mode 0x02写入。因此“只实例化P7再读get_pose”不是允许的只读路径；本批未执行或导入linkerbot。
+- get_angles返回缓存motor.angle.angle；get_pose/FK不可自行证明反馈新鲜，需A额外提供设备/主机时刻、epoch和有效性。
+
+### SSH数学交叉验证
+
+在主机 /home/qwer/p7_sdk_venv/bin/python 只import pinocchio/numpy，用pin.buildModelFromUrdf读取现场文件，输出L8_Link的三组FK（零角度和两组非零测试q）；从未构造真实P7、没有命令角度下发。主机保存 /home/qwer/c_calibration_runs/left_p7_fk_reference_20261107_C10.json。
+
+URDF SHA256=233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce；P7.py和kinetix.py哈希见evidence/remote_sdk_coordinate_audit_C10.json；三组输出见remote_left_p7_fk_C10.json。项目FK与三组Pinocchio矩阵最大元素差均0（判据1e-12）。这验证同一声明模型的实现一致性，不证明物理安装或关节零位正确。
+
+可重跑现场工具 tools/remote_p7_model_reference.py（只在主机p7_sdk_venv执行；包含本次确切SDK路径，换部署需先核对路径/哈希；输出文件采用x模式，已存在则拒绝覆盖）。重跑数值用例不占机器人动作预约；仍不得用P7对象替代该路径。
+
+### 搜索范围与缺失
+
+通过SSH查过 /home/qwer/ros2_ws/src、下载目录，以及vision_candidate_20261106_02/config、vision_candidate_20261106_04/config的URDF/xacro/标定/安装相关文件与extrinsic/T_world/T_base/camera_to/maestro/tcp_offset字段，未返回所需头部→左臂base安装变换。其他目录未穷举，不声称整台主机绝对无文件。SDK的两侧臂URDF只到单臂root，不能补出头部/躯干安装外参。已有相机报告内参不是外参。
+
+### 当前结论与交接
+
+C1-01：现场声明模型可加载，并与主机Pinocchio三组输入一致。C1-03：物理base原点/轴向、机身到头部/左肩关系、真实TCP未知，依旧WAITING_FOR_MEASUREMENT。A→C优先提供带时戳/epoch的七轴反馈及零位/方向核验，明确URDF或Maestro约定；C→A禁止默认TCP=0或仅凭get_pose返回就批准。需要厂家整机安装图/校准记录，或建立已知刚性标记/指针与独立测量约束。先从软件读到的值不能替代这项物理测量。
+
+本批新增主机可复跑数学脚本和两份可追溯证据；没有改SDK、没有推送。已有最近全套86 passed；本批新增验证为远端Pinocchio与项目FK三组1e-12数值对照全部通过。
