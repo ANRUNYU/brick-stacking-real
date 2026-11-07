@@ -56,3 +56,11 @@ D需提供手角色/SN/预设/版本/单位、实测手与相机/持物包络、
 STATUS.md保存每批任务ID、文件原因、输入版本、测试、现场动作边界和依赖。evidence/保存哈希/报告/ROI；原始RGB-D在主机/home/qwer/c_calibration_runs和本地artifacts/c_real_calibration，不纳入Git。数学参考不标real joint feedback。工具/夹持/相机安装改变后标定需失效重验；原报告不可静默覆盖。
 
 本批最新全套：`python -m pytest -q --basetemp=.test-tmp-c11-final`，91 passed。只证明对应软件/Mock用例；真实验收见逐批记录。所有C任务尚未全部完成，本页将随进展更新，最终交付时再冻结版本。
+
+## 最新补充：厂家资产与IK（第十二批）
+
+厂家P7组件可提供机身/肩部候选基准：base_link到左肩mount的声明平移(0,.164,0)m，L8_Link为tool0；源称A7V2_50_4.27。torso_root离地1.2m是仿真设置，不是实测。厂家腕部335L/顶部ZED装配与现场头335L/腕Gemini2不同，禁止套用其相机安装外参。来源链接、未锁定commit及读取网络失败均记录在STATUS第十二批。
+
+新增solve_pose_ik为C1-04/C2-03的数值后端：显式求解参数，返回c-ik-1，局部失败不宣称全局不可达，collision UNKNOWN、trajectory NOT_GENERATED。用户明确批准单文件上传后，已在主机Pinocchio完成两组数学验证，见remote_pinocchio_ik_C12.json；不调用P7、不访问CAN，数值残差不是实机精度。最近全套95 passed。
+
+用户具备毫米刻度直尺/卷尺，外廓复量仍50mm；顶面平整区域/倒角/重复测量未给，保持未知。installation_survey.json已准备，记录物理基准、操作者/时间和量具分辨率；未知外参/TCP为null。A/B/D后续统一从此页及STATUS读取最新证据，旧采样不能绕过逐流畸变修复限制。尚未向成员发送，最终交付前冻结。

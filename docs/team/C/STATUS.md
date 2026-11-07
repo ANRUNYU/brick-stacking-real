@@ -232,3 +232,25 @@ C1-01：现场声明模型可加载，并与主机Pinocchio三组输入一致。
 新增planning/slot_release.py：复用Slot、RigidTransform和tcp_target_for_block，提供world目标、TCP释放/接近/撤退；沿table法向而非worldZ，支撑DAG不改，未检查物理接触/IK/全机碰撞。十块红4黄3蓝2绿1的四层测试验证层高、支撑数和旋转桌面下TCP偏移方向。
 
 全套91 passed，命令python -m pytest -q --basetemp=.test-tmp-c11-final；来源synthetic/mock，未连接设备，无硬件动作。C2-01补齐槽位到释放目标数学链但实测table/TCP未知；C2-03补齐候选评估调度，真实IK/全机碰撞后端仍未实现。C1-03/C1-05/C2-02实际估计改进/C2-04真实复验仍待测，不标完成。
+
+## 第十二批：厂家资产线索、数值IK与测量准备（C1-01/C1-03/C1-04/C2-03）
+
+用户提供三个厂家仓库：linker-bot/linker-sim-assets、linkerbot-python-sdk、linkerhand-ros2-sdk，并确认毫米刻度直尺/卷尺。已通过浏览读取三库入口及sim-assets的P7 torso/arm meta、base.urdf和相机装配说明。网络限制：本地git ls-remote连接超时；在机器人主机尝试GitHub API目录读取，响应IncompleteRead，未保存完整目录/commit。以下为main页面候选，尚未锁定commit，不导入生产配置。
+
+厂家来源：
+- https://raw.githubusercontent.com/linker-bot/linker-sim-assets/main/src/linker_robot_assets/assets/components/bases/p7_torso/meta.yaml
+- https://raw.githubusercontent.com/linker-bot/linker-sim-assets/main/src/linker_robot_assets/assets/components/bases/p7_torso/variants/default/base.urdf
+- https://raw.githubusercontent.com/linker-bot/linker-sim-assets/main/src/linker_robot_assets/assets/components/arms/p7/meta.yaml
+- https://raw.githubusercontent.com/linker-bot/linker-sim-assets/main/docs/camera-assemblies.zh-CN.md
+
+模型声明：P7组件源A7V2_50_4.27；base_link→arm_left_mount xyz=[0,.164,0]m、rpy0；右侧[.0000332,-.164,0]m。arm_root通过固定装配连接mount。L8_Link是tool0，固定在L7之后45.5mm。它们是源模型声明，不是现场安装测量。torso_root→base_link的1.2m明确为仿真摆放高度，禁止当实际离地高度。腕机335L/顶部ZED资产描述与现场头335L/腕Gemini2不一致，不套相机安装值或其他臂法兰尺寸。实体基准仍需识别。
+
+新增planning/numerical_ik.py：只numpy的有界阻尼数值IK，注入FK，显式位置/旋转容差、姿态权重、阻尼、步长/迭代次数，逐步限位与回溯，返回独立IK状态和局部失败原因。不收敛不是全局不可达证明；不生成轨迹、不计算碰撞、不许可运动。没有默认实机参数。
+
+本地全套95 passed（新增已知姿态反算/FK独立回代、不可达局部失败、越界种子、坐标不符、180度旋转测试）。同哈希现场P7模型的两组反算本地通过。
+
+首次包含SCP的组合操作被auto-review拒绝（认为具体私有源码上传未明确授权），未执行、未绕过。之后先完成本地代码/测试/哈希，用户明确批准将该单文件上传/home/qwer/c_numerical_ik_v1.py并执行纯数学验证。SHA256 e26a011b985be18764a932de5fd7fb2df00ce9ae7b94ed9f83fb39ffd2f9179f在主机断言一致。主机p7_sdk_venv只import pinocchio/numpy并runpy该无硬件文件；未import linkerbot、未构造P7。两组模型目标均6次迭代收敛，位置数值残差2.78e-6/5.34e-6m，旋转约1.67e-6/3.77e-6rad。这些不是实机精度。remote_pinocchio_ik_C12.json为真实SSH运行的模型验证证据，源不是关节反馈，motion_enabled=false；主机报告/home/qwer/c_calibration_runs/remote_ik_C12.json。
+
+现场测量模板calibration/measurement_templates/installation_survey.json：记录操作者/时间/run_id、工具分辨率与不确定度分开、物理基准是否已识别，所有未测坐标链/TCP为null。用户复量外廓50×50×50mm；没有提供顶面平整区/倒角或三次重复值，保留未知，不推断倒角解释尺寸差异。量尺刻度1mm不是±1mm已验证准确度。
+
+本批没有相机开流、CAN访问或机器人动作。C1-04/C2-03新增可运行模型IK；完整碰撞后端、真实轨迹与C1-03仍待安装/零位/工具约束。下一现场动作只先核对铭牌、肩部轴/安装基准与厂家候选图，再制定可重复测量，不能用卷尺猜隐藏轴心或仿真高度补外参。
