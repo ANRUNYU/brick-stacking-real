@@ -102,3 +102,19 @@ can0/can1 可能随启动/插拔变化；旧审计映射只是 2026-11-07 的快
 首版原图手选角点估计边长40—42mm；放大8倍按可见面交界重新选角点后为47.28、48.85、42.75、47.17mm，与50mm仍有明显差异。不以50mm反调深度尺度、内参或角点。两版原始分析均保留在artifacts，最终ROI与结果纳入 evidence。尺寸校验未通过预定验收（尚无冻结阈值），状态 INCONCLUSIVE：低分辨率角点、配准、顶面平行假设及系统偏差需要进一步分辨。像素留出同源，不能替代外部真值验证。
 
 camera_report、每帧SHA256、ROI与逐帧分析均保存在 docs/team/C/evidence/single_cube_C04_*。原始图像仍不纳入Git。`python -m pytest -q --basetemp=.test-tmp-c04`：81 passed；新增工具已在20帧真实数据上运行。C1-03仍未完成，不输出相机→臂外参或TCP，无动作许可。下一步需要多个工作区位置的同块重复采样，评估视角/分辨率/深度偏差；完整外参仍需与左臂基座关联的物理参考点或标定板，不能仅靠立方体尺寸求解。
+
+## 第五批：第二位置真实采样与角点敏感性（C1-02/C1-03）
+
+2026-11-07 15:42（Asia/Shanghai），用户平移同一实测50mm块后确认放好。具体平移距离/方向未量测，不能当已知10cm位移约束。画面中块位置和朝向发生变化。采集C05：20帧，头部SN/配置不变，设备跨度1.267984s，skew最大0.019ms，CAPTURED、无cleanup错误。独立时钟epoch，不跨会话拼接设备时间。临时sudo仅相机开流/停止，无CAN/机器人动作。
+
+复用analyze_cube_capture；新ROI见 evidence/single_cube_C05_roi.json，手选可见顶面交界，无以50mm调角点。结果：高度中位49.985mm、范围49.679—50.436mm、时间标准差0.181mm；顶面像素深度时间标准差中位0.572mm、桌面0.600mm。与C04高度中位50.545mm相差-0.559mm。桌面空间留出绝对残差P95逐帧中位约3.56mm。两位置的近50mm高度只是局部几何一致性证据，不证明全工作区绝对精度。
+
+边长中位48.59/41.86/50.80/44.90mm，未收敛为尺量50mm。工具新增每边两端角点各坐标±1px的16种组合敏感性；第一帧四边范围41.59—55.60、35.41—48.44、44.01—57.62、38.53—51.32mm。这不是统计置信区间，且不包含配准/深度/平面假设偏差。像素分辨率和手选角点不足以据此验收边长；不能把所有差异归因于像素误差或反向调整尺度。
+
+运行真实工具：
+`python tools/analyze_cube_capture.py artifacts/c_real_calibration/single_cube_20261107_C05 docs/team/C/evidence/single_cube_C05_roi.json output.json`（PYTHONPATH=src）。
+`python tools/analyze_calibration_capture.py artifacts/c_real_calibration/single_cube_20261107_C05 output_capture.json`。
+结果、每帧SHA256与采集报告已保存 evidence/single_cube_C05_*；原始图像/深度留artifacts和远端，不提交Git。
+`python -m pytest -q --basetemp=.test-tmp-c05`：81 passed。新增敏感性计算已对本轮真实20帧运行，不宣称单独新增回归覆盖。
+
+下一实验优先核对设备支持的更高分辨率profile，并按对应K/D重新采集而非插值放大。若提高分辨率仍有不一致，需使用标定板/独立量测验证空间配准和形状。当前停止重复相同低分辨率位置采样作为验收；外参/TCP及运动许可仍未知。

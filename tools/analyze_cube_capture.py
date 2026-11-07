@@ -5,6 +5,7 @@ normal sign hint, and diagnostic RANSAC settings. Corner dimensions assume the
 cube top is parallel to the local table; they are not independent metrology.
 """
 import argparse
+import itertools
 import json
 from pathlib import Path
 import cv2
@@ -42,6 +43,15 @@ def analyze(directory, config):
         if np.any(np.abs(denom)<1e-6): raise ValueError('grazing ray')
         vertices=rays*((height-plane.offset_m)/denom)[:,None]
         edges=np.linalg.norm(vertices-np.roll(vertices,-1,axis=0),axis=1)
+        sensitivity=[]
+        for i in range(4):
+            lengths=[]
+            for offsets in itertools.product((-1,1),repeat=4):
+                pair=corners[[i,(i+1)%4]]+np.asarray(offsets).reshape(2,2)
+                rays_pair=backproject(pair,np.ones(2),k)
+                points=rays_pair*((height-plane.offset_m)/(rays_pair@n))[:,None]
+                lengths.append(float(np.linalg.norm(points[1]-points[0])))
+            sensitivity.append([min(lengths),max(lengths)])
         heldout=plane.heights(xyz(check))
         records.append({'file':path.name,'stamp_s':meta['stamp_s'],
                         'top_valid_ratio':float(valid[top].mean()),
@@ -50,6 +60,7 @@ def analyze(directory, config):
                         'top_height_m':height,'height_minus_measured_edge_m':height-config['measured_edge_m'],
                         'top_height_spatial_mad_m':float(np.median(np.abs(heights-height))),
                         'manual_corner_edge_m':edges.tolist(),
+                        'corner_plus_minus_1px_edge_range_m':sensitivity,
                         'table_normal_camera':list(plane.normal)})
         top_series.append(np.where(valid[top],d[top],np.nan))
         table_series.append(np.where(valid[table],d[table],np.nan))
@@ -71,6 +82,7 @@ def analyze(directory, config):
                            'corner intersection assumes parallel top/table planes',
                            'spatial holdout pixels share same sensor systematic errors',
                            'single stationary sample; no independent metrology tolerance',
+                           'corner +/-1px ranges are sensitivity only, not confidence bounds',
                            'no camera-to-arm extrinsic or TCP']}
 
 
