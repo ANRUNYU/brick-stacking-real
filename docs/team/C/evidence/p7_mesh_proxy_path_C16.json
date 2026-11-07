@@ -1,0 +1,128 @@
+{
+  "status": "FAIL",
+  "sampled_status": "FAIL",
+  "scope": "named capsules at sampled quintic joint poses against static planes/spheres and self pairs",
+  "missing": [
+    "hand",
+    "camera",
+    "torso",
+    "payload",
+    "environment",
+    "continuous collision",
+    "continuous motion between samples",
+    "unmodeled geometry and deformation"
+  ],
+  "model_version": "manufacturer_mesh_capsules_padding0",
+  "kinematic_model_version": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+  "scene_version": "synthetic-empty-environment",
+  "samples_checked": 1,
+  "sample_dt_s": 0.02,
+  "min_sampled_clearance_m": -0.14164412410624383,
+  "coverage_names": [
+    "L1_Link",
+    "L2_Link",
+    "L3_Link",
+    "L4_Link",
+    "L5_Link",
+    "L6_Link",
+    "L7_Link",
+    "L8_Link"
+  ],
+  "self_exclusions": [],
+  "contacts": [
+    {
+      "segment": 0,
+      "time_from_segment_start_s": 0.0,
+      "first": "L1_Link",
+      "second": "L2_Link",
+      "clearance_m": -0.14164412410624383
+    },
+    {
+      "segment": 0,
+      "time_from_segment_start_s": 0.0,
+      "first": "L1_Link",
+      "second": "L3_Link",
+      "clearance_m": -0.048970634862083216
+    },
+    {
+      "segment": 0,
+      "time_from_segment_start_s": 0.0,
+      "first": "L2_Link",
+      "second": "L3_Link",
+      "clearance_m": -0.12552770210012495
+    },
+    {
+      "segment": 0,
+      "time_from_segment_start_s": 0.0,
+      "first": "L2_Link",
+      "second": "L4_Link",
+      "clearance_m": -0.022189205961989464
+    },
+    {
+      "segment": 0,
+      "time_from_segment_start_s": 0.0,
+      "first": "L3_Link",
+      "second": "L4_Link",
+      "clearance_m": -0.11021051037313179
+    },
+    {
+      "segment": 0,
+      "time_from_segment_start_s": 0.0,
+      "first": "L3_Link",
+      "second": "L5_Link",
+      "clearance_m": -0.05848488277885555
+    },
+    {
+      "segment": 0,
+      "time_from_segment_start_s": 0.0,
+      "first": "L4_Link",
+      "second": "L5_Link",
+      "clearance_m": -0.11880582506598682
+    },
+    {
+      "segment": 0,
+      "time_from_segment_start_s": 0.0,
+      "first": "L4_Link",
+      "second": "L6_Link",
+      "clearance_m": -0.05822331567794777
+    },
+    {
+      "segment": 0,
+      "time_from_segment_start_s": 0.0,
+      "first": "L5_Link",
+      "second": "L6_Link",
+      "clearance_m": -0.08709921390848976
+    },
+    {
+      "segment": 0,
+      "time_from_segment_start_s": 0.0,
+      "first": "L5_Link",
+      "second": "L7_Link",
+      "clearance_m": -0.05978940488968288
+    },
+    {
+      "segment": 0,
+      "time_from_segment_start_s": 0.0,
+      "first": "L6_Link",
+      "second": "L7_Link",
+      "clearance_m": -0.09642779711825006
+    },
+    {
+      "segment": 0,
+      "time_from_segment_start_s": 0.0,
+      "first": "L6_Link",
+      "second": "L8_Link",
+      "clearance_m": -0.04757980353003076
+    },
+    {
+      "segment": 0,
+      "time_from_segment_start_s": 0.0,
+      "first": "L7_Link",
+      "second": "L8_Link",
+      "clearance_m": -0.04242102405332103
+    }
+  ],
+  "full_collision": "UNKNOWN",
+  "motion_enabled": false,
+  "source": "real_manufacturer_assets_at_synthetic_joint_path_not_hardware"
+}

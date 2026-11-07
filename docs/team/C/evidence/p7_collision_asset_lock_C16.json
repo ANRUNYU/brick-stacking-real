@@ -1,0 +1,56 @@
+{
+  "schema_version": "c-vendor-mesh-lock-1",
+  "source_ref": "main_at_download; content hashes authoritative",
+  "urdf_sha256": "b898b9597d7d075cc5e7114d76a90d0ec514c387a5fd59411555455a6d722daa",
+  "meshes": [
+    {
+      "path": "meshes/L1_Link.STL",
+      "sha256": "fd658d500c9881a15a31b6f6512fa5564fc993917eee41543ece7b37d124b4b7",
+      "bytes": 3321284,
+      "source": "https://media.githubusercontent.com/media/linker-bot/linker-sim-assets/main/src/linker_robot_assets/assets/components/arms/p7/variants/left/meshes/L1_Link.STL"
+    },
+    {
+      "path": "meshes/L2_Link.STL",
+      "sha256": "dacf4d3315eae44f8ad4848a8df8e4ace16aa137505b17003150ef3858841773",
+      "bytes": 1445634,
+      "source": "https://media.githubusercontent.com/media/linker-bot/linker-sim-assets/main/src/linker_robot_assets/assets/components/arms/p7/variants/left/meshes/L2_Link.STL"
+    },
+    {
+      "path": "meshes/L3_Link.STL",
+      "sha256": "596b128e09ad488833255140b288b4388d94ba20c5df0745d405158d4c505974",
+      "bytes": 2924284,
+      "source": "https://media.githubusercontent.com/media/linker-bot/linker-sim-assets/main/src/linker_robot_assets/assets/components/arms/p7/variants/left/meshes/L3_Link.STL"
+    },
+    {
+      "path": "meshes/L4_Link.STL",
+      "sha256": "61381dbfea7e1c5148e50a165506ac1fd1345934a15d2eb40be923d5132c97d2",
+      "bytes": 1523134,
+      "source": "https://media.githubusercontent.com/media/linker-bot/linker-sim-assets/main/src/linker_robot_assets/assets/components/arms/p7/variants/left/meshes/L4_Link.STL"
+    },
+    {
+      "path": "meshes/L5_Link.STL",
+      "sha256": "d8963bb47e872fd33f6c909eadea6cba91218fa95c650bc56cfa690635ecd9e1",
+      "bytes": 761184,
+      "source": "https://media.githubusercontent.com/media/linker-bot/linker-sim-assets/main/src/linker_robot_assets/assets/components/arms/p7/variants/left/meshes/L5_Link.STL"
+    },
+    {
+      "path": "meshes/L6_Link.STL",
+      "sha256": "c0e6a663b89c21e6db2d003d614f2ab0c47e6a20863b4b29d76f67dcf5f0c814",
+      "bytes": 3143884,
+      "source": "https://media.githubusercontent.com/media/linker-bot/linker-sim-assets/main/src/linker_robot_assets/assets/components/arms/p7/variants/left/meshes/L6_Link.STL"
+    },
+    {
+      "path": "meshes/L7_Link.STL",
+      "sha256": "eeb7d68dc2fd1f0146ef693b5b9306e1fc295a01bd50ff00325429db1023aa65",
+      "bytes": 451884,
+      "source": "https://media.githubusercontent.com/media/linker-bot/linker-sim-assets/main/src/linker_robot_assets/assets/components/arms/p7/variants/left/meshes/L7_Link.STL"
+    },
+    {
+      "path": "meshes/L8_Link.STL",
+      "sha256": "c978199bd9db18818e9b5700b2e9e849c5c4689904407f041412ff295543ca3e",
+      "bytes": 15684,
+      "source": "https://media.githubusercontent.com/media/linker-bot/linker-sim-assets/main/src/linker_robot_assets/assets/components/arms/p7/variants/left/meshes/L8_Link.STL"
+    }
+  ],
+  "approved_for_motion": false
+}

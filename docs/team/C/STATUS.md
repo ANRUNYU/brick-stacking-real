@@ -298,3 +298,19 @@ SHA256=b898b9597d7d075cc5e7114d76a90d0ec514c387a5fd59411555455a6d722daa。含8�
 全套126 passed，命令python -m pytest -q --basetemp=.test-tmp-c15-final。新增端点无碰撞但中段接触、无接触仍UNKNOWN、self接缝排除必须理由、退化/平行/交叉距离、空几何/未知半径/旧模型拒绝，以及轴反号与J2非对称限位/版本拒绝测试。来源synthetic+源模型比较；不宣称全机/连续/物理碰撞验收。
 
 下一缺项：固定厂商资产修订并解析实际mesh，再明确臂/机身/手/相机/持物/桌面碰撞体和必要安装接缝；场景与TCP尚无具体有效矩阵，仍不得执行真实路径。本批为真实碰撞后端的有限几何基础，C1-04/C2-03保持部分完成。
+
+## 第十六批：实际厂家网格锁定、保守包络与FK接入（C1-04/C2-03）
+
+用户要求不需介入工作自行推进。本批未连接设备或发运动指令。GitHub commits API证书验证失败，未关闭TLS校验；使用raw/media公开下载及Git LFS oid固定内容。不是git commit pin：URDF固定SHA256，所有8份STL按LFS SHA256和字节数核验，源码main改变时URDF不匹配会拒绝。锁清单见evidence/p7_collision_asset_lock_C16.json。第三方文件仅存artifacts/c_real_calibration/robot_models/vendor_collision，不修改SDK，不提交大网格。
+
+tools/fetch_p7_collision_assets.py复现下载，4线程读取公共LFS媒体，每文件50MB预算；拒绝URDF版本改变/mesh哈希或长度不符，不覆盖已有不一致文件。完整锁清单采用x模式，不覆盖旧证据。
+
+新增planning/mesh_envelopes.py：无新依赖，严格解析binary STL长度/有限顶点；检查URDF/所有网格hash、覆盖完整性、受支持identity collision origin/unit scale；不支持项拒绝。按PCA轴和全部顶点最大径向距离生成胶囊包络，显式padding。数学覆盖输入三角形，不等于CAD/实物覆盖。当前8link包络报告p7_mesh_envelopes_C16.json，padding=0仅用于资产诊断，不是安全余量。
+
+新增planning/urdf_capsules.py：将网格局部包络通过既有URDF FK及显式q映射置于L_arm_root，检查源/目标hash和运行时模型变化。无默认TCP、相机外参或真实桌面。实际8mesh和synthetic [0]*7→[.01]*7轨迹已接通采样胶囊检查；在第一帧发现多组包络重叠并FAIL，见p7_mesh_proxy_path_C16.json。包络对相邻乃至间隔一link均可能保守填充，不能推断真实自碰撞；没有为了通过增加排除。采样在首次接触停止，未检查后续全路径。
+
+验证：python -m pytest -q --basetemp=.test-tmp-c16-final 最初129 passed；补哈希/路径拒绝回归后见最终运行。新增binary STL格式/截断/LFS指针拒绝、全部角点包络覆盖/padding、模型符号旋转对应及模型变化拒绝。实际网格全部解析成功，报告保存包含link端点/半径/顶点数；来源是厂商真实资产、测试姿态synthetic，不是硬件运动测试。
+
+下一步自主工作：细化保守代理或引入经验证的网格接触检查，并明确安装接缝策略；继续补工具/相机/持物/环境模型。完整碰撞保持UNKNOWN，不把图形资产加载成功当物理避碰通过。C1-04/C2-03仍部分完成。
+
+第十六批最终回归：`python -m pytest -q --basetemp=.test-tmp-c16-final2`：131 passed；无新依赖安装，无硬件动作。

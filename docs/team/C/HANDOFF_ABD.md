@@ -88,3 +88,13 @@ A/C必读：厂家P7碰撞URDF与现场SDK的七轴axis全反，J2限位反号�
 C→D：sampled_capsule_check实现明确半径胶囊对平面/球/自碰撞的轨迹中间姿态检查；每个self排除需名称和原因，缺几何/半径/版本拒绝。碰撞FAIL，采样点无接触则完整status UNKNOWN，不能申请permit；输出覆盖、缺失、采样间隔与首个接触。它可作为evaluate_candidates的碰撞回调，UNKNOWN将拒绝选择。没有加载厂家网格、没有全机或连续认证。
 
 厂家8个mesh引用及轴向差异证据见vendor_p7_collision_audit_C15.json和vendor_sdk_axis_mapping_C15.json。最新全套126 passed，现场只有源码/哈希读取，无设备动作。后续仍需解析mesh、工具/相机/持物/环境及接触约定。
+
+## 最新补充：8份厂家STL的锁定和FK放置（第十六批）
+
+已下载/解析P7左臂8份真实STL，URDF哈希固定，STL的Git LFS SHA256及长度全部校验；锁清单p7_collision_asset_lock_C16.json。git commit API证书失败未绕过验证，当前以内容hash锁版本。原文件在artifacts，不放入源码/SDK。
+
+mesh_envelopes对每link全部三角顶点生成保守胶囊，urdf_capsules使用明确SDK→vendor角度映射把它们置于L_arm_root。实际网格接入synthetic短轨迹后首帧包络重叠FAIL；这不是实物碰撞结论，不能通过扩大安装排除来掩盖。padding0仅资产诊断，没有真实安全余量。模型范围仍缺手/相机/机身/持物/环境与连续检查。
+
+复现：`python tools/fetch_p7_collision_assets.py <新资产目录>`，需网络；读取函数load_p7_capsule_envelopes(dir,padding_m=...)和MappedUrdfCapsules(...).at_source_q(q)。API用例tests/unit/planning/test_mesh_envelopes.py、test_urdf_capsules.py。C15显式映射配置必须匹配两侧hash。采样无接触status仍UNKNOWN，不允许申请真实permit。
+
+第十六批最新全套131 passed；本批不需现场协助。后续自主继续几何后端改进，当前不申请真实执行。
