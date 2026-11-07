@@ -64,3 +64,11 @@ STATUS.md保存每批任务ID、文件原因、输入版本、测试、现场动
 新增solve_pose_ik为C1-04/C2-03的数值后端：显式求解参数，返回c-ik-1，局部失败不宣称全局不可达，collision UNKNOWN、trajectory NOT_GENERATED。用户明确批准单文件上传后，已在主机Pinocchio完成两组数学验证，见remote_pinocchio_ik_C12.json；不调用P7、不访问CAN，数值残差不是实机精度。最近全套95 passed。
 
 用户具备毫米刻度直尺/卷尺，外廓复量仍50mm；顶面平整区域/倒角/重复测量未给，保持未知。installation_survey.json已准备，记录物理基准、操作者/时间和量具分辨率；未知外参/TCP为null。A/B/D后续统一从此页及STATUS读取最新证据，旧采样不能绕过逐流畸变修复限制。尚未向成员发送，最终交付前冻结。
+
+## 最新补充：持物偏移与版本失效（第十三批，116 passed）
+
+C2-02/M4-M5：`estimate_held_offset(training, validation, candidate_id=..., grasp_version=..., max_translation_residual_m=..., max_rotation_residual_rad=...)`，每行(sample_id,T_world_tcp,T_world_block)，各至少3样本，ID不重用，位姿在同一capture时刻/同一epoch时钟域。返回未批准RigidTransform和fit/validation一致性报告；不丢异常点，不自动修正。B方向未知时拒绝构造假姿态；A需提供图像时刻插值后的FK（插值误差另报告）。样例/验证：tests/unit/localization/test_held_offset.py。真实采样仍缺，尚无持物误差改善结论。
+
+C2-04/M3-M6：`validate_plan_context(planned,current,created_stamp_s=...,expires_stamp_s=...,now_s=...)`。CONTEXT_KEYS列出13项设备/标定/工具/场景/时钟依赖；任何缺失或变化使计划失效，时间需同域。A/D需要在执行前调用并拒绝FAIL；它不代替实物身份、新鲜反馈、停止和全机碰撞校验，不生成permit。样例tests/unit/planning/test_context_validation.py。真实重装/夹持变更后仍须独立测点复验。
+
+九项C任务最新完成度见TASK_STATUS.md；本批未连接设备，未有真实运动。最终交付仍需实际标定、M3/M5/M6证据，不能冻结为全部完成。

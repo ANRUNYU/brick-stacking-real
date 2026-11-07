@@ -254,3 +254,13 @@ C1-01：现场声明模型可加载，并与主机Pinocchio三组输入一致。
 现场测量模板calibration/measurement_templates/installation_survey.json：记录操作者/时间/run_id、工具分辨率与不确定度分开、物理基准是否已识别，所有未测坐标链/TCP为null。用户复量外廓50×50×50mm；没有提供顶面平整区/倒角或三次重复值，保留未知，不推断倒角解释尺寸差异。量尺刻度1mm不是±1mm已验证准确度。
 
 本批没有相机开流、CAN访问或机器人动作。C1-04/C2-03新增可运行模型IK；完整碰撞后端、真实轨迹与C1-03仍待安装/零位/工具约束。下一现场动作只先核对铭牌、肩部轴/安装基准与厂家候选图，再制定可重复测量，不能用卷尺猜隐藏轴心或仿真高度补外参。
+
+## 第十三批：持物偏移候选与标定依赖失效（C2-02/C2-04/M4-M6）
+
+新增localization/held_offset.py：输入至少3训练+3独立验证的(sample_id,T_world_tcp,T_world_block)，必须有capture stamp，调用现有RigidTransform合成检查同一时刻、坐标和clock_domain（调用者将epoch纳入域）。相对T_tcp_block对平移平均、旋转SVD投影；所有样本保留，无自动丢异常点，拟合与验证各报告最大平移/角度残差。阈值、grasp_version、candidate_id显式给出；不合格返回FAIL但保留未批准候选供诊断。不提供物理外参准确度保证、不自动应用修正、approved/motion_enabled始终false。真实B若方向不可观测，不能用identity补成完整位姿。
+
+新增planning/context_validation.py：检查arm_role、binding、模型、关节映射、相机SN/profile/安装、标定、TCP、grasp、scene、clock_domain、epoch；未知/变化以及过期/未来时间均拒绝。只做上下文一致性，不验证实物身份/急停/碰撞、不生成许可。A/D必须在执行前和重规划时接入，不能把它当D SafetyGate替代。所有time输入应先属于已声明同一主机时钟域。
+
+测试python -m pytest -q --basetemp=.test-tmp-c13：116 passed（新增21项）；偏移方向在变化世界姿态下恢复、独立验证异常不隐瞒、样本ID泄漏/时钟不符拒绝、13项版本逐项变更/未知拒绝、未来/过期/NaN时间拒绝。来源synthetic，未连接硬件，无动作。真实持物位姿仍依赖A/B同步和已标定工具，不把本批视为C2-02真机精度改进。
+
+新增TASK_STATUS.md提供九项C任务的最新状态，避免仅靠早期表格推断当前完成度；HANDOFF_ABD同步本批API。现场正在询问可见厂家铭牌和左肩轴心，不拆卸/不移动机器人。C1-03仍待物理基准、标定点与TCP实测。
