@@ -1,0 +1,428 @@
+{
+  "started_at": "2026-11-07T08:05:12.950224+00:00",
+  "scope": "camera_only",
+  "tool_version": "c-head-1280x800-15-v2-buffered",
+  "robot_motion_accessed": false,
+  "can_accessed": false,
+  "devices": [
+    {
+      "serial": "CP2L863000KL",
+      "name": "Orbbec Gemini 335L",
+      "uid": "2-3.4.3-61"
+    },
+    {
+      "serial": "AY6M86300GH",
+      "name": "Orbbec Gemini2",
+      "uid": "2-3.4.4-62"
+    },
+    {
+      "serial": "AY6M8630086",
+      "name": "Orbbec Gemini2",
+      "uid": "2-3.4.2-60"
+    }
+  ],
+  "frames": [
+    {
+      "file": "frame_000.npz",
+      "rgb_stamp_s": 66265.431773,
+      "depth_stamp_s": 66265.431792,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.05127651398652233,
+        "align": 0.01485708000836894,
+        "decode_depth": 0.007166617986513302,
+        "rectify": 0.005601202021352947
+      },
+      "host_receive_stamp_s": 189796.621890735,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.893744140625,
+      "median_depth_m": 2.052000045776367
+    },
+    {
+      "file": "frame_001.npz",
+      "rgb_stamp_s": 66265.498509,
+      "depth_stamp_s": 66265.498528,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.03401786999893375,
+        "align": 0.016209582012379542,
+        "decode_depth": 0.003489825001452118,
+        "rectify": 0.0026350220141466707
+      },
+      "host_receive_stamp_s": 189796.689741213,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.8909755859375,
+      "median_depth_m": 2.0439999103546143
+    },
+    {
+      "file": "frame_002.npz",
+      "rgb_stamp_s": 66265.565245,
+      "depth_stamp_s": 66265.565264,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.04017938202014193,
+        "align": 0.017609395988984033,
+        "decode_depth": 0.003723238012753427,
+        "rectify": 0.002675556985195726
+      },
+      "host_receive_stamp_s": 189796.756459249,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.8916796875,
+      "median_depth_m": 2.049999952316284
+    },
+    {
+      "file": "frame_003.npz",
+      "rgb_stamp_s": 66265.631981,
+      "depth_stamp_s": 66265.632,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.037400734989205375,
+        "align": 0.014993796008639038,
+        "decode_depth": 0.002419993019429967,
+        "rectify": 0.0026043729740194976
+      },
+      "host_receive_stamp_s": 189796.823266333,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.8904208984375,
+      "median_depth_m": 2.0439999103546143
+    },
+    {
+      "file": "frame_004.npz",
+      "rgb_stamp_s": 66265.698717,
+      "depth_stamp_s": 66265.698736,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.04186529398430139,
+        "align": 0.014991799980634823,
+        "decode_depth": 0.0025758210103958845,
+        "rectify": 0.002866565977456048
+      },
+      "host_receive_stamp_s": 189796.889992347,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.890185546875,
+      "median_depth_m": 2.0439999103546143
+    },
+    {
+      "file": "frame_005.npz",
+      "rgb_stamp_s": 66265.765453,
+      "depth_stamp_s": 66265.765472,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.042108880006708205,
+        "align": 0.016741700004786253,
+        "decode_depth": 0.002602497988846153,
+        "rectify": 0.002631422015838325
+      },
+      "host_receive_stamp_s": 189796.956666309,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.8921904296875,
+      "median_depth_m": 2.049999952316284
+    },
+    {
+      "file": "frame_006.npz",
+      "rgb_stamp_s": 66265.832188,
+      "depth_stamp_s": 66265.832208,
+      "skew_ms": 0.020000006770715117,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.04107530499459244,
+        "align": 0.016090319026261568,
+        "decode_depth": 0.0032653829839546233,
+        "rectify": 0.002683624014025554
+      },
+      "host_receive_stamp_s": 189797.023549824,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.8925087890625,
+      "median_depth_m": 2.049999952316284
+    },
+    {
+      "file": "frame_007.npz",
+      "rgb_stamp_s": 66265.898925,
+      "depth_stamp_s": 66265.898944,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.040369198017288,
+        "align": 0.015520040993578732,
+        "decode_depth": 0.002524559007724747,
+        "rectify": 0.0025645260175224394
+      },
+      "host_receive_stamp_s": 189797.090150636,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.892044921875,
+      "median_depth_m": 2.046999931335449
+    },
+    {
+      "file": "frame_008.npz",
+      "rgb_stamp_s": 66265.96566,
+      "depth_stamp_s": 66265.965679,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.042115460004424676,
+        "align": 0.014316184009658173,
+        "decode_depth": 0.0033302599913440645,
+        "rectify": 0.002757045003818348
+      },
+      "host_receive_stamp_s": 189797.156900831,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.8928369140625,
+      "median_depth_m": 2.0460000038146973
+    },
+    {
+      "file": "frame_009.npz",
+      "rgb_stamp_s": 66266.032397,
+      "depth_stamp_s": 66266.032416,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.041780094004934654,
+        "align": 0.013454026979161426,
+        "decode_depth": 0.0023608350020367652,
+        "rectify": 0.0024498970014974475
+      },
+      "host_receive_stamp_s": 189797.223434888,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.8911611328125,
+      "median_depth_m": 2.0490000247955322
+    },
+    {
+      "file": "frame_010.npz",
+      "rgb_stamp_s": 66266.099132,
+      "depth_stamp_s": 66266.099151,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.044630797987338156,
+        "align": 0.0142503019887954,
+        "decode_depth": 0.003196909005055204,
+        "rectify": 0.002635148004628718
+      },
+      "host_receive_stamp_s": 189797.290442148,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.89343359375,
+      "median_depth_m": 2.053999900817871
+    },
+    {
+      "file": "frame_011.npz",
+      "rgb_stamp_s": 66266.165869,
+      "depth_stamp_s": 66266.165888,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.04249356299987994,
+        "align": 0.013959153002360836,
+        "decode_depth": 0.0025203000113833696,
+        "rectify": 0.0026995640073437244
+      },
+      "host_receive_stamp_s": 189797.357123268,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.892583984375,
+      "median_depth_m": 2.0510001182556152
+    },
+    {
+      "file": "frame_012.npz",
+      "rgb_stamp_s": 66266.232605,
+      "depth_stamp_s": 66266.232624,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.04408945300383493,
+        "align": 0.014248722000047565,
+        "decode_depth": 0.003266557992901653,
+        "rectify": 0.002654728014022112
+      },
+      "host_receive_stamp_s": 189797.424031643,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.8944443359375,
+      "median_depth_m": 2.053999900817871
+    },
+    {
+      "file": "frame_013.npz",
+      "rgb_stamp_s": 66266.299341,
+      "depth_stamp_s": 66266.29936,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.04206441101268865,
+        "align": 0.013809058989863843,
+        "decode_depth": 0.0024052259977906942,
+        "rectify": 0.002539945999160409
+      },
+      "host_receive_stamp_s": 189797.490605325,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.8918564453125,
+      "median_depth_m": 2.0429999828338623
+    },
+    {
+      "file": "frame_014.npz",
+      "rgb_stamp_s": 66266.366077,
+      "depth_stamp_s": 66266.366096,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.043903268000576645,
+        "align": 0.01392448801198043,
+        "decode_depth": 0.0032404020021203905,
+        "rectify": 0.002630558010423556
+      },
+      "host_receive_stamp_s": 189797.557215996,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.891560546875,
+      "median_depth_m": 2.0510001182556152
+    },
+    {
+      "file": "frame_015.npz",
+      "rgb_stamp_s": 66266.432813,
+      "depth_stamp_s": 66266.432832,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.04305362800369039,
+        "align": 0.015373278001789004,
+        "decode_depth": 0.0024168370000552386,
+        "rectify": 0.002611138013890013
+      },
+      "host_receive_stamp_s": 189797.624146612,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.8904765625,
+      "median_depth_m": 2.0480000972747803
+    },
+    {
+      "file": "frame_016.npz",
+      "rgb_stamp_s": 66266.499549,
+      "depth_stamp_s": 66266.499568,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.041980262991273776,
+        "align": 0.015451907005626708,
+        "decode_depth": 0.0033984860056079924,
+        "rectify": 0.002643131010700017
+      },
+      "host_receive_stamp_s": 189797.690830046,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.890505859375,
+      "median_depth_m": 2.0429999828338623
+    },
+    {
+      "file": "frame_017.npz",
+      "rgb_stamp_s": 66266.566284,
+      "depth_stamp_s": 66266.566304,
+      "skew_ms": 0.020000006770715117,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.04112854099366814,
+        "align": 0.015309442998841405,
+        "decode_depth": 0.0025292020000051707,
+        "rectify": 0.0025702999846544117
+      },
+      "host_receive_stamp_s": 189797.75763327,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.8920859375,
+      "median_depth_m": 2.046999931335449
+    },
+    {
+      "file": "frame_018.npz",
+      "rgb_stamp_s": 66266.633021,
+      "depth_stamp_s": 66266.63304,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.042498711991356686,
+        "align": 0.01583835101337172,
+        "decode_depth": 0.0034962149802595377,
+        "rectify": 0.002619699022034183
+      },
+      "host_receive_stamp_s": 189797.824455347,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.890279296875,
+      "median_depth_m": 2.0420000553131104
+    },
+    {
+      "file": "frame_019.npz",
+      "rgb_stamp_s": 66266.699756,
+      "depth_stamp_s": 66266.699775,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.04039746301714331,
+        "align": 0.01505610698950477,
+        "decode_depth": 0.002513852989068255,
+        "rectify": 0.0025465780054219067
+      },
+      "host_receive_stamp_s": 189797.89107901,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.89112109375,
+      "median_depth_m": 2.0390000343322754
+    }
+  ],
+  "rejected_skew": 0,
+  "errors": [],
+  "cleanup_errors": [],
+  "result": "CAPTURED",
+  "binding_version": "2.1.3",
+  "sdk_version": "2.10.6",
+  "selected": {
+    "serial": "CP2L863000KL",
+    "name": "Orbbec Gemini 335L",
+    "firmware": "1.4.60",
+    "connection": "USB3.2"
+  },
+  "profiles": {
+    "color": {
+      "width": 1280,
+      "height": 800,
+      "fps": 15,
+      "format": "OBFormat.RGB"
+    },
+    "depth": {
+      "width": 1280,
+      "height": 800,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    }
+  },
+  "calibration": {
+    "K": [
+      [
+        609.669189453125,
+        0.0,
+        644.880615234375
+      ],
+      [
+        0.0,
+        609.7700805664062,
+        395.0197448730469
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "distortion": {
+      "k1": -0.031556159257888794,
+      "k2": 0.036501653492450714,
+      "k3": -0.012785496190190315,
+      "k4": 0.0,
+      "k5": 0.0,
+      "k6": 0.0,
+      "p1": -0.0005816970369778574,
+      "p2": 0.0004935592296533287,
+      "model": "OBCameraDistortionModel.BROWN_CONRADY_K6"
+    },
+    "width": 1280,
+    "height": 800,
+    "extrinsics_available": false
+  },
+  "notice": "Capture is not depth accuracy, alignment accuracy or block-detection acceptance. Clock is per-camera; no arm/world transform.",
+  "persistence_after_stop_s": 3.119877077988349,
+  "timing_note": "Compression/write/previews deferred until pipe.stop; bounded RAM capture, not long-run recorder. Host receive clock is not device clock."
+}

@@ -151,3 +151,17 @@ camera_report、每帧SHA256、ROI与逐帧分析均保存在 docs/team/C/eviden
 测试：新增精确profile/缺模式拒绝回归，全部83 passed。analyze_cube_capture和analyze_calibration_capture在实际20帧运行成功；后者补有效保存速率和设备帧间隔，不把配置帧率当实际吞吐。
 
 后续先保留此配置为静态诊断候选；生产配置尚未冻结。需定位采集链吞吐、独立验证RGB-D配准/角点/顶面假设，并取得与左臂base关联的物理参考约束。仅提高分辨率不代替外参/TCP标定。
+
+## 第八批：分离写盘后的真实吞吐验证与独立顶面拟合（C1-02/C1-03）
+
+2026-11-07 16:05（Asia/Shanghai）。主机独立工具 /home/qwer/c_head_camera_probe_1280_v2.py，部署前后SHA256一致：1c2321899ee7f590ccb4739dc828eaa881d58bc0dc6b5e97f7b654eecb688706。配置1280×800 RGB/Y16 @15fps，头部CP2L863000KL，20帧最长20s，仅临时sudo相机访问，无CAN、手、臂动作。CAPTURED，无cleanup错误，pipe.stop完成后才压缩/写盘。此哈希对应现场部署版本；以后本地改动应重新计算再部署。
+
+实现：tools/c_head_camera_probe.py缓存去畸变映射（按尺寸/K/D键），有限帧数复制后的RGB/深度在RAM缓冲，停止pipeline后写NPZ及预览。最大50帧上限延用，不是长时录包器。每帧记录wait/align/decode_depth/rectify耗时。保存失败应返回ERROR而不冒充完整录包；本轮真实保存成功。源程序和SDK未覆盖。
+
+实测C07保存速率14.9844fps（上一版本C06约6.7787fps），20帧设备时间跨度1.267983s，帧间隔66.735—66.737ms。本样本没有时间戳缺口，不推断长期零丢帧。host span-device span差约1.205ms，仅同会话相对间隔，不是绝对延迟/时钟标定。配准耗时中位15.025ms、decode/depth2.900ms、rectify2.633ms，wait42.022ms。停流后压缩写盘3.120s。因同时后移写盘/预览并缓存映射，仅能判定组合改动改善本轮短采集，不能给各因素独立因果贡献。
+
+几何：预览核对块仍在同一画面位置，复用C06明确ROI，不承诺现场绝对未动。高度中位50.791mm，范围50.507—51.046mm，时间标准差0.139mm。顶面/桌面像素时间标准差中位0.477/0.589mm。新增独立顶面SVD平面（不强制平行桌面），法向夹角逐帧中位0.988°，顶面平面残差RMS中位0.972mm；独立顶面求交的边长中位46.331/46.469/45.748/47.021mm，仍偏低。没有按50mm改尺度、角点或K；法向差异不能排除局部深度偏差、配准和边界定义问题。完整外参/TCP仍未知。
+
+运行同前：c_head_camera_probe、analyze_cube_capture（ROI使用single_cube_C06_roi.json）、analyze_calibration_capture。记录源 real，原始RGB-D远端 /home/qwer/c_calibration_runs/single_cube_1280_20261107_C07，本地artifacts同名；报告和每帧SHA256见evidence/single_cube_C07_*。所有图像仍不进Git。
+
+验证：84 passed（新增缓存结果等价、深度NaN保留、K变化不复用旧映射的回归）。真实20帧通过分离计时/几何工具；尚未对真实相机做长时/运动验收。下一步需要独立物理参考或标定板确认RGB-D空间误差；单一已知尺寸方块不建立相机到左臂base关系。实际标定采样仍需左臂模型/安装关系、基座可测参考点和现场协作。

@@ -1,0 +1,47 @@
+{
+  "source": "real_recorded",
+  "camera_id": "CP2L863000KL",
+  "clock_domain": "orbbec_CP2L863000KL_5ac1b7d58bcc4f29bc399ca4139d933c",
+  "n_frames": 20,
+  "shape": [
+    800,
+    1280
+  ],
+  "device_capture_span_s": 1.267982999997912,
+  "effective_saved_fps_device_time": 14.98442802469062,
+  "device_frame_interval_min_s": 0.06673500000033528,
+  "device_frame_interval_max_s": 0.06673700000101235,
+  "all_frames_valid_pixel_ratio": 0.833154296875,
+  "temporal_std_p50_m": 0.005812731571495533,
+  "temporal_std_p95_m": 0.07686416618525968,
+  "max_rgb_depth_skew_ms": 0.020000006770715117,
+  "sha256": {
+    "frame_000.npz": "4189a87aae7918d05965c7f181cac52434a0d1834dcee8355494d32e96070298",
+    "frame_001.npz": "073d815c2cee6bd5e6d728de6893b2de0b5e1e74766cfae470609c8bfad832fa",
+    "frame_002.npz": "a5ff4a3ef019f960d9d41392557d5124ab38839547c73552ff3d1f04a12f2a39",
+    "frame_003.npz": "402dd6b50ae031e2df6c80f8184d18156b6b68dcfd61cf2704ba1a7f0a2df293",
+    "frame_004.npz": "620d06266f4baf5601a9a9ae30f391e3c22fc28055ed93bce5fe415d114135f3",
+    "frame_005.npz": "b6158f2f43487a53847787794fbb82d2363b55441e318e92f764f5d122808dcd",
+    "frame_006.npz": "b3e933851a3c426d58275679c8d532c338b6dfad39a282a4cc68b645f547ea64",
+    "frame_007.npz": "1fde9d2ed922e1e1eff1867b9108ba47dcd9dfaad7be14ad4a6993b424d3f025",
+    "frame_008.npz": "8484fa36bb1bd1f9be075b50ab1d20b13080b0e054de09da78159d40a696c2f7",
+    "frame_009.npz": "1fb3838b7120fb7c0163ff1559a02e91de49efc8d9421b91c161d8bf9163676a",
+    "frame_010.npz": "7f4b20976a422e1d8477479bfb17e15d9f5b23218cdb4062da5d037e7708cf46",
+    "frame_011.npz": "aae2465960fda707371da6c478f993e8d2b4c6f43851f68977f4da96d65b7c2f",
+    "frame_012.npz": "29caf6978622377330bf4af87b9b853c6313e25c33adfa786c6053e3d9b35a33",
+    "frame_013.npz": "34ec97ddda43715e44f4da085c132055331bf1789d571002bb8d74d0981b4486",
+    "frame_014.npz": "66d2206f0c117c008dc076f32fda74c42ef640f349fd23fb2d164972257d7b54",
+    "frame_015.npz": "de3bd9ca492354787ffbf468fef23621d1da958910cb6a3874e8582337b58aee",
+    "frame_016.npz": "4176cfc9671accdb36f69d653d0bb6b6adc0f4937a216d88c918a2f6948567d1",
+    "frame_017.npz": "f64a4c2815b3254a53534380a58a27100c89ac5d702fe25d8cda086f2673418e",
+    "frame_018.npz": "70e94dddb20d8e79245d90668033f62ed9885a96f3dc11ef978f2bfb4d1e0f33",
+    "frame_019.npz": "0b02f95c1b844704a4a7a72059e14e048acb1f980a72a70029e5ba15b00dc350"
+  },
+  "approved": false,
+  "motion_enabled": false,
+  "limitations": [
+    "whole-image temporal variation includes scene motion",
+    "not absolute depth accuracy or spatial registration acceptance",
+    "no host/device clock mapping, arm/world extrinsic or TCP"
+  ]
+}

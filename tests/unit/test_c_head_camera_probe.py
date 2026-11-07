@@ -23,3 +23,19 @@ def test_exact_mode_and_format_preference():
 def test_missing_exact_profile_refuses_fallback():
     with pytest.raises(ValueError,match='no fallback'):
         m.choose_profile(Profiles([Profile(640,480,15,'RGB')]),['RGB'])
+
+def test_cached_rectification_preserves_values_and_depth_holes():
+    import numpy as np
+    k=np.array([[100.,0,4.],[0,100.,4.],[0,0,1.]])
+    rgb=np.full((8,8,3),128,np.uint8)
+    d=np.ones((8,8),np.float32);d[4,4]=np.nan
+    dist=dict(model='BROWN_CONRADY',k1=.01,k2=0.,k3=0.,k4=0.,k5=0.,k6=0.,p1=0.,p2=0.)
+    cache={}
+    a=m.rectify_pair(rgb,d,k,dist,map_cache=cache)
+    b=m.rectify_pair(rgb,d,k,dist,map_cache=cache)
+    c=m.rectify_pair(rgb,d,k,dist)
+    assert len(cache)==1 and np.isnan(b[1][4,4])
+    np.testing.assert_array_equal(a[0],c[0]);np.testing.assert_allclose(b[1],c[1],equal_nan=True)
+    changed=k.copy();changed[0,0]=120
+    m.rectify_pair(rgb,d,changed,dist,map_cache=cache)
+    assert len(cache)==2

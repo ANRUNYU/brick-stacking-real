@@ -45,7 +45,7 @@ def depth_to_metres(raw, scale_mm):
     return values
 
 
-def rectify_pair(rgb, depth_m, k, distortion):
+def rectify_pair(rgb, depth_m, k, distortion, *, map_cache=None):
     """Apply one common map to registered RGB/depth; do not fill depth holes."""
     import cv2
     import numpy as np
@@ -67,7 +67,13 @@ def rectify_pair(rgb, depth_m, k, distortion):
             raise ValueError("Brown model has unverified extra coefficients")
         d = d[:5]
     h, w = depth_m.shape
-    x, y = cv2.initUndistortRectifyMap(k, d, None, k, (w, h), cv2.CV_32FC1)
+    key = (w, h, k.tobytes(), d.tobytes())
+    if map_cache is not None and key in map_cache:
+        x, y = map_cache[key]
+    else:
+        x, y = cv2.initUndistortRectifyMap(k, d, None, k, (w, h), cv2.CV_32FC1)
+        if map_cache is not None:
+            map_cache[key] = (x, y)
     return (cv2.remap(rgb, x, y, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT),
             cv2.remap(depth_m, x, y, cv2.INTER_NEAREST, borderMode=cv2.BORDER_CONSTANT, borderValue=float("nan")))
 
@@ -95,6 +101,9 @@ def capture(sdk, device, serial, output, report, *, count, seconds, max_skew_ms)
     import numpy as np
     pipe = sdk.Pipeline(device)
     started = False
+    pending = []
+    map_cache = {}
+    raw_preview = None
     try:
         color = choose_profile(pipe.get_stream_profile_list(sdk.OBSensorType.COLOR_SENSOR), ["RGB", "MJPG", "YUYV", "BGR"])
         depth = choose_profile(pipe.get_stream_profile_list(sdk.OBSensorType.DEPTH_SENSOR), ["Y16"])
@@ -122,11 +131,14 @@ def capture(sdk, device, serial, output, report, *, count, seconds, max_skew_ms)
         previous_stamp = -1.
         warmup = 0
         while len(report["frames"]) < count and time.monotonic() < end:
+            wait_start = time.monotonic()
             frames = pipe.wait_for_frames(1000)
             host_receive_monotonic_s = time.monotonic()
             if not frames:
                 continue
+            align_start = time.monotonic()
             aligned = align.process(frames)
+            align_end = time.monotonic()
             if not aligned:
                 continue
             frames = aligned.as_frame_set()
@@ -146,6 +158,7 @@ def capture(sdk, device, serial, output, report, *, count, seconds, max_skew_ms)
             w, h = c.get_width(), c.get_height()
             if (w, h) != (intr.width, intr.height):
                 raise ValueError("stream/intrinsic resolution mismatch")
+            decode_start = time.monotonic()
             rgb = decode_rgb(c.get_data(), str(c.get_format()), w, h)
             if d.get_format() != sdk.OBFormat.Y16:
                 raise ValueError("aligned depth is not Y16")
@@ -154,27 +167,23 @@ def capture(sdk, device, serial, output, report, *, count, seconds, max_skew_ms)
                 raise ValueError("unexpected depth row stride/size")
             dm = depth_to_metres(raw.reshape(d.get_height(),d.get_width()), d.get_depth_scale())
             if not report["frames"]:
-                cv2.imwrite(str(output/"color_raw.png"), cv2.cvtColor(rgb,cv2.COLOR_RGB2BGR))
-            rgb, dm = rectify_pair(rgb, dm, k, distortion)
+                raw_preview = rgb.copy()
+            decode_end = time.monotonic()
+            rgb, dm = rectify_pair(rgb, dm, k, distortion, map_cache=map_cache)
+            rectify_end = time.monotonic()
             index = len(report["frames"])
             name = f"frame_{index:03d}.npz"
             meta = {"camera_id": serial, "frame_id": f"camera_{serial}_color_optical_frame", "stamp_s": ct,
                     "clock_domain": epoch, "source": "real_measured",
                     "host_receive_stamp_s": host_receive_monotonic_s, "host_clock_domain": "host_monotonic", "registered": True,
                     "rectified": True, "depth_unit": "m"}
-            np.savez_compressed(output/name, rgb=rgb, depth_m=dm, k=k, metadata=json.dumps(meta))
+            pending.append((name, rgb, dm, meta))
             valid = np.isfinite(dm) & (dm > 0)
             report["frames"].append({"file": name, "rgb_stamp_s": ct, "depth_stamp_s": dt,
                 "skew_ms": abs(ct-dt)*1000, "depth_scale_mm": d.get_depth_scale(),
+                "timing_s": {"wait": host_receive_monotonic_s-wait_start, "align": align_end-align_start, "decode_depth": decode_end-decode_start, "rectify": rectify_end-decode_end},
                 "host_receive_stamp_s": host_receive_monotonic_s, "host_clock_domain": "host_monotonic",
                 "valid_depth_ratio": float(valid.mean()), "median_depth_m": float(np.median(dm[valid])) if valid.any() else None})
-            if index == 0:
-                cv2.imwrite(str(output/"color_rectified.png"), cv2.cvtColor(rgb,cv2.COLOR_RGB2BGR))
-                viz = np.zeros_like(dm, np.uint8)
-                if valid.any():
-                    lo, hi = np.percentile(dm[valid], [5,95])
-                    viz[valid] = np.clip((dm[valid]-lo)/max(hi-lo,1e-6)*255,0,255).astype(np.uint8)
-                cv2.imwrite(str(output/"depth_preview.png"), cv2.applyColorMap(viz,cv2.COLORMAP_TURBO))
         report["result"] = "CAPTURED" if len(report["frames"]) == count else "INCOMPLETE"
         report["notice"] = "Capture is not depth accuracy, alignment accuracy or block-detection acceptance. Clock is per-camera; no arm/world transform."
     finally:
@@ -183,6 +192,17 @@ def capture(sdk, device, serial, output, report, *, count, seconds, max_skew_ms)
                 pipe.stop()
             except Exception as exc:
                 report["cleanup_errors"].append(str(exc))
+    # Pipeline is stopped before compression, disk writes and previews.
+    persistence_start = time.monotonic()
+    for name, rgb, dm, meta in pending:
+        np.savez_compressed(output/name, rgb=rgb, depth_m=dm, k=k, metadata=json.dumps(meta))
+    report["persistence_after_stop_s"] = time.monotonic()-persistence_start
+    if pending:
+        _, rgb, dm, _ = pending[0]
+        cv2.imwrite(str(output/"color_raw.png"), cv2.cvtColor(raw_preview,cv2.COLOR_RGB2BGR))
+        cv2.imwrite(str(output/"color_rectified.png"), cv2.cvtColor(rgb,cv2.COLOR_RGB2BGR))
+    report["timing_note"] = "Compression/write/previews deferred until pipe.stop; bounded RAM capture, not long-run recorder. Host receive clock is not device clock."
+
 
 
 def main(argv=None):
@@ -202,7 +222,7 @@ def main(argv=None):
     if args.capture and not args.serial:
         p.error("capture requires explicit serial number")
     args.output.mkdir(parents=True)
-    report = {"started_at": datetime.now(timezone.utc).isoformat(), "scope": "camera_only", "tool_version": "c-head-1280x800-15-v1",
+    report = {"started_at": datetime.now(timezone.utc).isoformat(), "scope": "camera_only", "tool_version": "c-head-1280x800-15-v2-buffered",
         "robot_motion_accessed": False, "can_accessed": False, "devices": [],
         "frames": [], "rejected_skew": 0, "errors": [], "cleanup_errors": [], "result": "ERROR"}
     try:

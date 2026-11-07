@@ -36,6 +36,14 @@ def analyze(directory, config):
         heights=plane.heights(xyz(top&valid))
         if len(heights)<10: raise ValueError('too few valid top interior pixels')
         height=float(np.median(heights))
+        top_points=xyz(top&valid)
+        top_center=top_points.mean(0)
+        _, singular, vh=np.linalg.svd(top_points-top_center,full_matrices=False)
+        if singular[1]<1e-10: raise ValueError('degenerate top plane')
+        top_normal=vh[-1]
+        if top_normal@np.asarray(plane.normal)<0: top_normal=-top_normal
+        angle=float(np.degrees(np.arccos(np.clip(top_normal@np.asarray(plane.normal),-1,1))))
+        top_plane_rms=float(np.sqrt(np.mean(((top_points-top_center)@top_normal)**2)))
         # Intersect manual RGB corner rays with plane at observed median height.
         rays=backproject(corners,np.ones(4),k)
         n=np.asarray(plane.normal)
@@ -43,6 +51,10 @@ def analyze(directory, config):
         if np.any(np.abs(denom)<1e-6): raise ValueError('grazing ray')
         vertices=rays*((height-plane.offset_m)/denom)[:,None]
         edges=np.linalg.norm(vertices-np.roll(vertices,-1,axis=0),axis=1)
+        top_denominator=rays@top_normal
+        if np.any(np.abs(top_denominator)<1e-6): raise ValueError('grazing top ray')
+        independent_vertices=rays*((top_center@top_normal)/top_denominator)[:,None]
+        independent_edges=np.linalg.norm(independent_vertices-np.roll(independent_vertices,-1,axis=0),axis=1)
         sensitivity=[]
         for i in range(4):
             lengths=[]
@@ -60,6 +72,8 @@ def analyze(directory, config):
                         'top_height_m':height,'height_minus_measured_edge_m':height-config['measured_edge_m'],
                         'top_height_spatial_mad_m':float(np.median(np.abs(heights-height))),
                         'manual_corner_edge_m':edges.tolist(),
+                        'independent_top_plane_edges_m':independent_edges.tolist(),
+                        'top_table_normal_angle_deg':angle, 'top_plane_rms_m':top_plane_rms,
                         'corner_plus_minus_1px_edge_range_m':sensitivity,
                         'table_normal_camera':list(plane.normal)})
         top_series.append(np.where(valid[top],d[top],np.nan))
