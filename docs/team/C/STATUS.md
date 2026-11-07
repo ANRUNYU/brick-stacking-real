@@ -85,3 +85,20 @@ can0/can1 可能随启动/插拔变化；旧审计映射只是 2026-11-07 的快
 输出全帧持续有效像素89.92%；全图时间标准差中位4.73mm、P95 82.22mm。它包括背景/边缘/场景运动，不能作为绝对精度、桌面ROI精度或外参误差。无地面真值，accuracy UNKNOWN，外参/TCP仍未知。真实采集完成，不等于 C1-03 完成。
 
 现场下一步：用户准备平整棋盘格并实测格长、尺/卡尺，或提供已知尺寸平面参考物；固定标定板，采集工作区不同位置/高度的样本，保留独立验证点。相机到table可先独立标定；table到左臂base仍需可测几何约束和A的已验收模型/零位/安装数据。缺少这些不能用桌面平面自行确定XY原点，更不能生成有效世界到机械臂外参。任何自动运动另列具体路径和现场检查，当前没有运动授权实现。
+
+## 第四批：50mm实测立方体真实采样（C1-02/C1-03）
+
+用户确认块为尺量50×50×50mm，测量工具精度未知；桌面约100×40cm，不作为标定真值。用户将一块红块独立放在桌面中央后采集。主臂不运动。
+
+2026-11-07 15:30（Asia/Shanghai）真实头部采20帧，640×480 15fps，实际设备时长1.267984s，RGB/depth skew约0.019ms，CAPTURED且cleanup_errors为空。普通用户权限未修，临时sudo运行已审查相机探针，无CAN/臂/手调用。源为 /home/qwer/c_calibration_runs/single_cube_20261107_C04，本地 artifacts/c_real_calibration/single_cube_20261107_C04。
+
+新增 tools/analyze_cube_capture.py 复用 backproject 和 fit_table_plane；手选顶面内部腐蚀3px、邻近桌面ROI去除积木，桌面像素棋盘拆分训练/验证。RANSAC 8mm 为分析参数，不是验收容差；法向朝向相机，仅决定高度符号，不确定世界坐标。
+
+运行（PYTHONPATH=src）：
+`python tools/analyze_cube_capture.py artifacts/c_real_calibration/single_cube_20261107_C04 docs/team/C/evidence/single_cube_C04_roi.json output.json`
+
+最终结果：高度中位50.54mm、范围50.10—50.71mm、高度时间标准差0.151mm；顶面像素深度时间标准差中位0.497mm，桌面0.592mm。相对尺量50mm高度差约+0.54mm。以上是同一静态位置约1.27秒的重复性，不能当绝对精度保证。
+
+首版原图手选角点估计边长40—42mm；放大8倍按可见面交界重新选角点后为47.28、48.85、42.75、47.17mm，与50mm仍有明显差异。不以50mm反调深度尺度、内参或角点。两版原始分析均保留在artifacts，最终ROI与结果纳入 evidence。尺寸校验未通过预定验收（尚无冻结阈值），状态 INCONCLUSIVE：低分辨率角点、配准、顶面平行假设及系统偏差需要进一步分辨。像素留出同源，不能替代外部真值验证。
+
+camera_report、每帧SHA256、ROI与逐帧分析均保存在 docs/team/C/evidence/single_cube_C04_*。原始图像仍不纳入Git。`python -m pytest -q --basetemp=.test-tmp-c04`：81 passed；新增工具已在20帧真实数据上运行。C1-03仍未完成，不输出相机→臂外参或TCP，无动作许可。下一步需要多个工作区位置的同块重复采样，评估视角/分辨率/深度偏差；完整外参仍需与左臂基座关联的物理参考点或标定板，不能仅靠立方体尺寸求解。

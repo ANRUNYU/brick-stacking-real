@@ -1,0 +1,265 @@
+{
+  "started_at": "2026-11-07T07:30:21.647067+00:00",
+  "scope": "camera_only",
+  "robot_motion_accessed": false,
+  "can_accessed": false,
+  "devices": [
+    {
+      "serial": "CP2L863000KL",
+      "name": "Orbbec Gemini 335L",
+      "uid": "2-3.4.3-61"
+    },
+    {
+      "serial": "AY6M86300GH",
+      "name": "Orbbec Gemini2",
+      "uid": "2-3.4.4-62"
+    },
+    {
+      "serial": "AY6M8630086",
+      "name": "Orbbec Gemini2",
+      "uid": "2-3.4.2-60"
+    }
+  ],
+  "frames": [
+    {
+      "file": "frame_000.npz",
+      "rgb_stamp_s": 64174.093223,
+      "depth_stamp_s": 64174.093242,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9155143229166667,
+      "median_depth_m": 2.01200008392334
+    },
+    {
+      "file": "frame_001.npz",
+      "rgb_stamp_s": 64174.159959,
+      "depth_stamp_s": 64174.159978,
+      "skew_ms": 0.01900000643217936,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9166536458333333,
+      "median_depth_m": 2.0160000324249268
+    },
+    {
+      "file": "frame_002.npz",
+      "rgb_stamp_s": 64174.226695,
+      "depth_stamp_s": 64174.226714,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.91564453125,
+      "median_depth_m": 2.01200008392334
+    },
+    {
+      "file": "frame_003.npz",
+      "rgb_stamp_s": 64174.293431,
+      "depth_stamp_s": 64174.29345,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9152376302083334,
+      "median_depth_m": 2.01200008392334
+    },
+    {
+      "file": "frame_004.npz",
+      "rgb_stamp_s": 64174.360167,
+      "depth_stamp_s": 64174.360186,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9163346354166667,
+      "median_depth_m": 2.013000011444092
+    },
+    {
+      "file": "frame_005.npz",
+      "rgb_stamp_s": 64174.426903,
+      "depth_stamp_s": 64174.426922,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9155794270833333,
+      "median_depth_m": 2.010999917984009
+    },
+    {
+      "file": "frame_006.npz",
+      "rgb_stamp_s": 64174.493639,
+      "depth_stamp_s": 64174.493658,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9150651041666666,
+      "median_depth_m": 2.01200008392334
+    },
+    {
+      "file": "frame_007.npz",
+      "rgb_stamp_s": 64174.560375,
+      "depth_stamp_s": 64174.560394,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9167513020833333,
+      "median_depth_m": 2.0169999599456787
+    },
+    {
+      "file": "frame_008.npz",
+      "rgb_stamp_s": 64174.627111,
+      "depth_stamp_s": 64174.62713,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9160384114583333,
+      "median_depth_m": 2.01200008392334
+    },
+    {
+      "file": "frame_009.npz",
+      "rgb_stamp_s": 64174.693847,
+      "depth_stamp_s": 64174.693866,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9152506510416667,
+      "median_depth_m": 2.015000104904175
+    },
+    {
+      "file": "frame_010.npz",
+      "rgb_stamp_s": 64174.760583,
+      "depth_stamp_s": 64174.760602,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9162272135416667,
+      "median_depth_m": 2.0169999599456787
+    },
+    {
+      "file": "frame_011.npz",
+      "rgb_stamp_s": 64174.827319,
+      "depth_stamp_s": 64174.827338,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9158951822916667,
+      "median_depth_m": 2.0139999389648438
+    },
+    {
+      "file": "frame_012.npz",
+      "rgb_stamp_s": 64174.894055,
+      "depth_stamp_s": 64174.894074,
+      "skew_ms": 0.01900000643217936,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.915576171875,
+      "median_depth_m": 2.01200008392334
+    },
+    {
+      "file": "frame_013.npz",
+      "rgb_stamp_s": 64174.960791,
+      "depth_stamp_s": 64174.96081,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9158561197916667,
+      "median_depth_m": 2.010999917984009
+    },
+    {
+      "file": "frame_014.npz",
+      "rgb_stamp_s": 64175.027527,
+      "depth_stamp_s": 64175.027546,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9150325520833333,
+      "median_depth_m": 2.01200008392334
+    },
+    {
+      "file": "frame_015.npz",
+      "rgb_stamp_s": 64175.094263,
+      "depth_stamp_s": 64175.094282,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.917041015625,
+      "median_depth_m": 2.0169999599456787
+    },
+    {
+      "file": "frame_016.npz",
+      "rgb_stamp_s": 64175.160999,
+      "depth_stamp_s": 64175.161018,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9151725260416667,
+      "median_depth_m": 2.013000011444092
+    },
+    {
+      "file": "frame_017.npz",
+      "rgb_stamp_s": 64175.227735,
+      "depth_stamp_s": 64175.227754,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.91662109375,
+      "median_depth_m": 2.0139999389648438
+    },
+    {
+      "file": "frame_018.npz",
+      "rgb_stamp_s": 64175.294471,
+      "depth_stamp_s": 64175.29449,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9149576822916666,
+      "median_depth_m": 2.01200008392334
+    },
+    {
+      "file": "frame_019.npz",
+      "rgb_stamp_s": 64175.361207,
+      "depth_stamp_s": 64175.361226,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9160416666666666,
+      "median_depth_m": 2.01200008392334
+    }
+  ],
+  "rejected_skew": 0,
+  "errors": [],
+  "cleanup_errors": [],
+  "result": "CAPTURED",
+  "binding_version": "2.1.3",
+  "sdk_version": "2.10.6",
+  "selected": {
+    "serial": "CP2L863000KL",
+    "name": "Orbbec Gemini 335L",
+    "firmware": "1.4.60",
+    "connection": "USB3.2"
+  },
+  "profiles": {
+    "color": {
+      "width": 640,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.RGB"
+    },
+    "depth": {
+      "width": 640,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    }
+  },
+  "calibration": {
+    "K": [
+      [
+        368.1024169921875,
+        0.0,
+        322.947021484375
+      ],
+      [
+        0.0,
+        368.163330078125,
+        237.29510498046875
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "distortion": {
+      "k1": -0.031556159257888794,
+      "k2": 0.036501653492450714,
+      "k3": -0.012785496190190315,
+      "k4": 0.0,
+      "k5": 0.0,
+      "k6": 0.0,
+      "p1": -0.0005816970369778574,
+      "p2": 0.0004935592296533287,
+      "model": "OBCameraDistortionModel.BROWN_CONRADY_K6"
+    },
+    "width": 640,
+    "height": 480,
+    "extrinsics_available": false
+  },
+  "notice": "Capture is not depth accuracy, alignment accuracy or block-detection acceptance. Clock is per-camera; no arm/world transform."
+}

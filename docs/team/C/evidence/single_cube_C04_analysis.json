@@ -1,0 +1,492 @@
+{
+  "source": "real_recorded",
+  "config": {
+    "schema_version": "c-manual-roi-1",
+    "source": "manual inspection of 8x nearest-neighbour crop, pixel range x245:300 y305:355; revised visible face junctions, not fitted to 50mm",
+    "measured_edge_m": 0.05,
+    "measurement_source": "user ruler measurement; uncertainty unknown",
+    "top_corners_uv": [
+      [
+        257,
+        329
+      ],
+      [
+        272,
+        315
+      ],
+      [
+        286,
+        328
+      ],
+      [
+        272,
+        341
+      ]
+    ],
+    "top_erosion_px": 3,
+    "table_rect_xyxy": [
+      180,
+      290,
+      370,
+      390
+    ],
+    "exclude_rect_xyxy": [
+      242,
+      302,
+      304,
+      367
+    ],
+    "normal_hint_camera": [
+      0,
+      0,
+      -1
+    ],
+    "ransac_threshold_m": 0.008
+  },
+  "n_frames": 20,
+  "median_height_m": 0.050544619406104774,
+  "height_range_m": [
+    0.05009747801857589,
+    0.05070743458982219
+  ],
+  "height_temporal_std_m": 0.00015111124639628426,
+  "top_pixel_temporal_std_median_m": 0.0004974873135190535,
+  "table_pixel_temporal_std_median_m": 0.0005916003615919486,
+  "manual_corner_edges_median_m": [
+    0.04727702408248648,
+    0.04884557112608543,
+    0.0427526132670154,
+    0.04717103943366031
+  ],
+  "frames": [
+    {
+      "file": "frame_000.npz",
+      "stamp_s": 64174.093223,
+      "top_valid_ratio": 1.0,
+      "table_fit_rms_m": 0.0018007669668465632,
+      "table_spatial_holdout_p95_abs_m": 0.0035281814843267853,
+      "top_height_m": 0.050614427012907526,
+      "height_minus_measured_edge_m": 0.000614427012907523,
+      "top_height_spatial_mad_m": 0.0007676149076436545,
+      "manual_corner_edge_m": [
+        0.04727585541501348,
+        0.048852450186198604,
+        0.042750340356757316,
+        0.047176448918808934
+      ],
+      "table_normal_camera": [
+        -0.007435751294739226,
+        -0.7126261179711902,
+        -0.7015046155143915
+      ]
+    },
+    {
+      "file": "frame_001.npz",
+      "stamp_s": 64174.159959,
+      "top_valid_ratio": 1.0,
+      "table_fit_rms_m": 0.0017988186570813021,
+      "table_spatial_holdout_p95_abs_m": 0.0035164529177025275,
+      "top_height_m": 0.05050842134212319,
+      "height_minus_measured_edge_m": 0.0005084213421231859,
+      "top_height_spatial_mad_m": 0.0007549740816172879,
+      "manual_corner_edge_m": [
+        0.04727632505006646,
+        0.04884412837786495,
+        0.04275283403197088,
+        0.047170848806626385
+      ],
+      "table_normal_camera": [
+        -0.007227339350757192,
+        -0.7122246280885576,
+        -0.7019144140919351
+      ]
+    },
+    {
+      "file": "frame_002.npz",
+      "stamp_s": 64174.226695,
+      "top_valid_ratio": 1.0,
+      "table_fit_rms_m": 0.0017967519429307832,
+      "table_spatial_holdout_p95_abs_m": 0.003546067219777415,
+      "top_height_m": 0.05065861852587128,
+      "height_minus_measured_edge_m": 0.0006586185258712768,
+      "top_height_spatial_mad_m": 0.000599353006467962,
+      "manual_corner_edge_m": [
+        0.047277200731726525,
+        0.048845748873488554,
+        0.042752392502059915,
+        0.04716993323395376
+      ],
+      "table_normal_camera": [
+        -0.007171746507034103,
+        -0.7125505424756203,
+        -0.7015841292886678
+      ]
+    },
+    {
+      "file": "frame_003.npz",
+      "stamp_s": 64174.293431,
+      "top_valid_ratio": 1.0,
+      "table_fit_rms_m": 0.0018522710094941864,
+      "table_spatial_holdout_p95_abs_m": 0.0036630347779037504,
+      "top_height_m": 0.05054130968794346,
+      "height_minus_measured_edge_m": 0.0005413096879434559,
+      "top_height_spatial_mad_m": 0.0006481014745433056,
+      "manual_corner_edge_m": [
+        0.047278563399577894,
+        0.04884828573742841,
+        0.042754023913195764,
+        0.047173494257421254
+      ],
+      "table_normal_camera": [
+        -0.007243695275558646,
+        -0.7124191781082683,
+        -0.701716782998878
+      ]
+    },
+    {
+      "file": "frame_004.npz",
+      "stamp_s": 64174.360167,
+      "top_valid_ratio": 1.0,
+      "table_fit_rms_m": 0.0018108342234444898,
+      "table_spatial_holdout_p95_abs_m": 0.0035776588055432346,
+      "top_height_m": 0.05030582769842917,
+      "height_minus_measured_edge_m": 0.00030582769842917024,
+      "top_height_spatial_mad_m": 0.0007270237573373528,
+      "manual_corner_edge_m": [
+        0.04729838349476837,
+        0.048849816377324835,
+        0.04277342734145901,
+        0.047173845201659424
+      ],
+      "table_normal_camera": [
+        -0.0065925412077214186,
+        -0.7123734844580992,
+        -0.7017695897097929
+      ]
+    },
+    {
+      "file": "frame_005.npz",
+      "stamp_s": 64174.426903,
+      "top_valid_ratio": 1.0,
+      "table_fit_rms_m": 0.0017813531959445636,
+      "table_spatial_holdout_p95_abs_m": 0.003531583160918145,
+      "top_height_m": 0.050506229552769066,
+      "height_minus_measured_edge_m": 0.0005062295527690636,
+      "top_height_spatial_mad_m": 0.0007858255158472716,
+      "manual_corner_edge_m": [
+        0.047277047376883964,
+        0.04884539337868231,
+        0.042753040220623824,
+        0.04717123006069423
+      ],
+      "table_normal_camera": [
+        -0.007217450330925894,
+        -0.71233787151593,
+        -0.7017995904920968
+      ]
+    },
+    {
+      "file": "frame_006.npz",
+      "stamp_s": 64174.493639,
+      "top_valid_ratio": 1.0,
+      "table_fit_rms_m": 0.0017745569772578535,
+      "table_spatial_holdout_p95_abs_m": 0.003505794836773642,
+      "top_height_m": 0.05051581974567909,
+      "height_minus_measured_edge_m": 0.0005158197456790886,
+      "top_height_spatial_mad_m": 0.0007375752802233349,
+      "manual_corner_edge_m": [
+        0.04728315631649168,
+        0.04884871519602906,
+        0.042758328953154755,
+        0.04717325503022192
+      ],
+      "table_normal_camera": [
+        -0.0070827792740779634,
+        -0.712459793015751,
+        -0.7016771890076714
+      ]
+    },
+    {
+      "file": "frame_007.npz",
+      "stamp_s": 64174.560375,
+      "top_valid_ratio": 1.0,
+      "table_fit_rms_m": 0.0017788143056330094,
+      "table_spatial_holdout_p95_abs_m": 0.003527633125398232,
+      "top_height_m": 0.05058687829208508,
+      "height_minus_measured_edge_m": 0.0005868782920850774,
+      "top_height_spatial_mad_m": 0.0006341945102555924,
+      "manual_corner_edge_m": [
+        0.04728523520313389,
+        0.04885314002630083,
+        0.04275865864355629,
+        0.04717472523070426
+      ],
+      "table_normal_camera": [
+        -0.007067933174409365,
+        -0.7128424100000584,
+        -0.7012886301844277
+      ]
+    },
+    {
+      "file": "frame_008.npz",
+      "stamp_s": 64174.627111,
+      "top_valid_ratio": 1.0,
+      "table_fit_rms_m": 0.0017837664476074108,
+      "table_spatial_holdout_p95_abs_m": 0.00348575738190926,
+      "top_height_m": 0.05030239026205008,
+      "height_minus_measured_edge_m": 0.0003023902620500757,
+      "top_height_spatial_mad_m": 0.0006990895097843675,
+      "manual_corner_edge_m": [
+        0.04728512546806912,
+        0.048855366740390996,
+        0.042761057671810807,
+        0.047182758410205666
+      ],
+      "table_normal_camera": [
+        -0.0073307179138643284,
+        -0.7121104544605966,
+        -0.7020291740538921
+      ]
+    },
+    {
+      "file": "frame_009.npz",
+      "stamp_s": 64174.693847,
+      "top_valid_ratio": 1.0,
+      "table_fit_rms_m": 0.0017963570776612164,
+      "table_spatial_holdout_p95_abs_m": 0.003506934196750944,
+      "top_height_m": 0.050706356176726364,
+      "height_minus_measured_edge_m": 0.000706356176726361,
+      "top_height_spatial_mad_m": 0.0005286161035332748,
+      "manual_corner_edge_m": [
+        0.04726588912477503,
+        0.04882839750913169,
+        0.04274399275392047,
+        0.04715581092315833
+      ],
+      "table_normal_camera": [
+        -0.007071363197333338,
+        -0.712154947071123,
+        -0.7019867001479853
+      ]
+    },
+    {
+      "file": "frame_010.npz",
+      "stamp_s": 64174.760583,
+      "top_valid_ratio": 1.0,
+      "table_fit_rms_m": 0.0017930456922515894,
+      "table_spatial_holdout_p95_abs_m": 0.00358938569086844,
+      "top_height_m": 0.05067386265373286,
+      "height_minus_measured_edge_m": 0.0006738626537328568,
+      "top_height_spatial_mad_m": 0.0005570906926408714,
+      "manual_corner_edge_m": [
+        0.047274013632393884,
+        0.048837453702908165,
+        0.04274980399621333,
+        0.04716141743201887
+      ],
+      "table_normal_camera": [
+        -0.006993289114015437,
+        -0.712565168600328,
+        -0.7015710758041227
+      ]
+    },
+    {
+      "file": "frame_011.npz",
+      "stamp_s": 64174.827319,
+      "top_valid_ratio": 1.0,
+      "table_fit_rms_m": 0.001792924050908139,
+      "table_spatial_holdout_p95_abs_m": 0.003560760210123835,
+      "top_height_m": 0.05054728518197704,
+      "height_minus_measured_edge_m": 0.0005472851819770391,
+      "top_height_spatial_mad_m": 0.0007650867881252577,
+      "manual_corner_edge_m": [
+        0.04726033885774468,
+        0.04881927071887014,
+        0.04274158505030936,
+        0.047151826154726156
+      ],
+      "table_normal_camera": [
+        -0.0071149787004508,
+        -0.71149845284879,
+        -0.7026516410511474
+      ]
+    },
+    {
+      "file": "frame_012.npz",
+      "stamp_s": 64174.894055,
+      "top_valid_ratio": 1.0,
+      "table_fit_rms_m": 0.0017891136165209419,
+      "table_spatial_holdout_p95_abs_m": 0.003500728767202839,
+      "top_height_m": 0.050667007847085666,
+      "height_minus_measured_edge_m": 0.0006670078470856627,
+      "top_height_spatial_mad_m": 0.0006410717579002911,
+      "manual_corner_edge_m": [
+        0.0472680204329057,
+        0.04883263754618606,
+        0.04274539522948663,
+        0.04715924350621247
+      ],
+      "table_normal_camera": [
+        -0.007116569138722378,
+        -0.7122606545534325,
+        -0.7018789884437413
+      ]
+    },
+    {
+      "file": "frame_013.npz",
+      "stamp_s": 64174.960791,
+      "top_valid_ratio": 1.0,
+      "table_fit_rms_m": 0.0018066131258197787,
+      "table_spatial_holdout_p95_abs_m": 0.00350206215571862,
+      "top_height_m": 0.05070743458982219,
+      "height_minus_measured_edge_m": 0.000707434589822184,
+      "top_height_spatial_mad_m": 0.0007007641512422058,
+      "manual_corner_edge_m": [
+        0.04727700078808899,
+        0.0488439331019747,
+        0.04275177274530311,
+        0.04716687524225495
+      ],
+      "table_normal_camera": [
+        -0.007078160135067701,
+        -0.7127018611722449,
+        -0.701431362808023
+      ]
+    },
+    {
+      "file": "frame_014.npz",
+      "stamp_s": 64175.027527,
+      "top_valid_ratio": 1.0,
+      "table_fit_rms_m": 0.001808603719007344,
+      "table_spatial_holdout_p95_abs_m": 0.0035554836291426415,
+      "top_height_m": 0.05009747801857589,
+      "height_minus_measured_edge_m": 9.747801857588889e-05,
+      "top_height_spatial_mad_m": 0.0007080050318379882,
+      "manual_corner_edge_m": [
+        0.04728783395737166,
+        0.04885928460555036,
+        0.042764789518982306,
+        0.04718954917461705
+      ],
+      "table_normal_camera": [
+        -0.007463224173184775,
+        -0.7117348876351018,
+        -0.7024085349766118
+      ]
+    },
+    {
+      "file": "frame_015.npz",
+      "stamp_s": 64175.094263,
+      "top_valid_ratio": 1.0,
+      "table_fit_rms_m": 0.0017843432756627627,
+      "table_spatial_holdout_p95_abs_m": 0.003502606906948479,
+      "top_height_m": 0.05041209758134768,
+      "height_minus_measured_edge_m": 0.0004120975813476785,
+      "top_height_spatial_mad_m": 0.0006613068875840344,
+      "manual_corner_edge_m": [
+        0.047296463482739345,
+        0.048859222568182675,
+        0.04276966121547039,
+        0.0471811663157013
+      ],
+      "table_normal_camera": [
+        -0.0069068407977175205,
+        -0.7127142650502687,
+        -0.7014204672976476
+      ]
+    },
+    {
+      "file": "frame_016.npz",
+      "stamp_s": 64175.160999,
+      "top_valid_ratio": 1.0,
+      "table_fit_rms_m": 0.00181437689296127,
+      "table_spatial_holdout_p95_abs_m": 0.0035787655008431693,
+      "top_height_m": 0.050541953630232506,
+      "height_minus_measured_edge_m": 0.0005419536302325029,
+      "top_height_spatial_mad_m": 0.0007034661684420795,
+      "manual_corner_edge_m": [
+        0.04727072848340843,
+        0.04882904967998718,
+        0.04274914062253482,
+        0.04715710683957601
+      ],
+      "table_normal_camera": [
+        -0.006951157779745775,
+        -0.7120253924961325,
+        -0.7021193074159473
+      ]
+    },
+    {
+      "file": "frame_017.npz",
+      "stamp_s": 64175.227735,
+      "top_valid_ratio": 1.0,
+      "table_fit_rms_m": 0.0017774342415018388,
+      "table_spatial_holdout_p95_abs_m": 0.0035099128717345873,
+      "top_height_m": 0.05063837233302271,
+      "height_minus_measured_edge_m": 0.0006383723330227048,
+      "top_height_spatial_mad_m": 0.0004243059338688848,
+      "manual_corner_edge_m": [
+        0.04727159131408319,
+        0.04883420853073287,
+        0.04274865824754373,
+        0.047160352426317415
+      ],
+      "table_normal_camera": [
+        -0.007034758139121187,
+        -0.7122918199799133,
+        -0.7018481854130754
+      ]
+    },
+    {
+      "file": "frame_018.npz",
+      "stamp_s": 64175.294471,
+      "top_valid_ratio": 1.0,
+      "table_fit_rms_m": 0.0017932092029922643,
+      "table_spatial_holdout_p95_abs_m": 0.003559449675386749,
+      "top_height_m": 0.05044082530633698,
+      "height_minus_measured_edge_m": 0.0004408253063369755,
+      "top_height_spatial_mad_m": 0.0007267137099156162,
+      "manual_corner_edge_m": [
+        0.04729246826814951,
+        0.048857235721894716,
+        0.04276639960470207,
+        0.04718048421673906
+      ],
+      "table_normal_camera": [
+        -0.007015417282843653,
+        -0.712577036799274,
+        -0.7015588004912445
+      ]
+    },
+    {
+      "file": "frame_019.npz",
+      "stamp_s": 64175.361207,
+      "top_valid_ratio": 1.0,
+      "table_fit_rms_m": 0.0017778241391009676,
+      "table_spatial_holdout_p95_abs_m": 0.0035461700137288726,
+      "top_height_m": 0.05058728056959305,
+      "height_minus_measured_edge_m": 0.0005872805695930489,
+      "top_height_spatial_mad_m": 0.0008163232239462026,
+      "manual_corner_edge_m": [
+        0.04726942342392246,
+        0.0488301840233031,
+        0.042747515570820266,
+        0.04715781285175823
+      ],
+      "table_normal_camera": [
+        -0.007019524448120416,
+        -0.7121005598590138,
+        -0.7020423911168052
+      ]
+    }
+  ],
+  "approved": false,
+  "motion_enabled": false,
+  "limitations": [
+    "manual RGB corners uncertain at low pixel resolution",
+    "corner intersection assumes parallel top/table planes",
+    "spatial holdout pixels share same sensor systematic errors",
+    "single stationary sample; no independent metrology tolerance",
+    "no camera-to-arm extrinsic or TCP"
+  ]
+}
