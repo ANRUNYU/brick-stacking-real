@@ -133,3 +133,21 @@ camera_report、每帧SHA256、ROI与逐帧分析均保存在 docs/team/C/eviden
 首次远程命令因Windows引号转义SyntaxError未查询设备；改为准确传递同一只读Python代码后成功exit0。未修改SDK或持久参数。
 
 下一采样候选为RGB+Y16 1280×800@15fps，需显式选择profile并分别读出对应K/D，验证D2C输出/时间戳和深度单位；不得复用640×480内参、ROI或直接缩放旧图冒充高分辨率。1280×800的纵横比/视场也可能变化，不能承诺物体像素数恰好翻倍。本批只确认配置支持，尚未高分辨率采集。
+
+## 第七批：1280×800@15高分辨率真实采集（C1-02/C1-03）
+
+2026-11-07 15:58（Asia/Shanghai）。用户授权更好的配置，头部SN CP2L863000KL，20帧、最长20秒。新建 tools/c_head_camera_probe.py，来源为已审阅的主机 /home/qwer/orbbec_camera_probe.py，保留采集/清理流程，改为严格1280×800@15，格式优先RGB/Y16，缺模式报错不降级；增加接收时刻host_monotonic字段，不将其写成设备时钟。无SDK修改。副本部署 /home/qwer/c_head_camera_probe_1280_v1.py，未覆盖原工具。
+
+部署前后SHA256均b719e5f495cf10e18fdf2c8ac05112711ea0449aab0ab0479d658345d6a66e83。首次SCP连接被远端关闭，重试成功并核对哈希。临时sudo仅运行相机工具，真实CAPTURED、cleanup_errors为空，无CAN/臂/手动作，相机已停止。
+
+实际报告RGB+Y16均1280×800@15fps；K焦距fx609.669/fy609.770px（不能使用旧368px内参），按当前profile读D并执行D2C/去畸变。20帧设备跨度2.802912s，有效保存速率约6.78fps（不是设备实际输出帧率测定），不能声称15fps稳定接收。主机接收跨度3.454330s；相对间隔累计差约0.651418s，仅提示接收/处理积压或调度变化，未建立设备到主机时间映射，不据此计算绝对延迟。首尾host接收定义为wait_for_frames返回后，尚无transport时戳。
+
+新ROI由原生高分图独立选取，不放大旧图冒充新采集。分析结果：局部高度中位50.831mm、范围50.368—51.171mm、时间标准差0.206mm；顶面像素时间标准差中位0.539mm、桌面0.622mm。手选角点边长中位46.423/46.658/45.825/47.185mm，四边较一致但相对尺量50mm仍偏低2.8—4.2mm。第一帧角点各坐标±1px边长范围约42.16—50.67、42.61—50.70、41.66—49.97、43.27—51.09mm。这些是敏感性范围而非置信区间；不能据此断言角点误差解释全部尺寸差异。
+
+与C05相比，视场/ROI/profile改变，且两会话间没有外部固定位置证明，比较只作诊断，不作为受控精度改进验收。高分辨率降低单像素尺寸敏感性，但完整标定仍未知。外参/TCP不生成，motion_enabled=false。
+
+运行：`python tools/c_head_camera_probe.py --capture --serial CP2L863000KL --uid <当次核验UID> --frames 20 --seconds 20 --output <新目录>`（现场先确认相机无人占用；本机工具需Linux相机环境）。source real原始数据在远端 /home/qwer/c_calibration_runs/single_cube_1280_20261107_C06、本地 artifacts/c_real_calibration/single_cube_1280_20261107_C06。报告、ROI、每帧SHA256与分析见 evidence/single_cube_C06_*。原始图像不提交Git。
+
+测试：新增精确profile/缺模式拒绝回归，全部83 passed。analyze_cube_capture和analyze_calibration_capture在实际20帧运行成功；后者补有效保存速率和设备帧间隔，不把配置帧率当实际吞吐。
+
+后续先保留此配置为静态诊断候选；生产配置尚未冻结。需定位采集链吞吐、独立验证RGB-D配准/角点/顶面假设，并取得与左臂base关联的物理参考约束。仅提高分辨率不代替外参/TCP标定。
