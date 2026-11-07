@@ -3,12 +3,12 @@ import math
 from brick_stacking.models.scene_state import BlockLocation
 
 
-def verify_placement(snapshot, block_id, slot, *, xy_tolerance_m, z_tolerance_m):
+def verify_placement(snapshot, block_id, slot, *, xy_tolerance_m, z_tolerance_m, require_hand_clear=True):
     for tolerance in (xy_tolerance_m, z_tolerance_m):
         if not math.isfinite(tolerance) or tolerance <= 0:
             raise ValueError("positive finite tolerances required")
     block = next((b for b in snapshot.blocks if b.object_id == block_id), None)
-    if block is None or not block.visible or block.ambiguous or not snapshot.hand_clear:
+    if block is None or not block.visible or block.ambiguous or (require_hand_clear and not snapshot.hand_clear):
         return "UNOBSERVABLE"
     if block.frame_id != slot.frame_id or block.color != slot.required_color or block.location != BlockLocation.PLACED:
         return "FAIL"

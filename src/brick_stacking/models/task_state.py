@@ -27,3 +27,4 @@ class TaskResult:
     recovery_attempts: int
     manual_intervention_count: int = 0
     hardware_tested: bool = False
+    reobservations: int = 0

@@ -11,6 +11,7 @@ scene:
   yaw_rad: 0.0
 task:
   max_grasp_retries: 2
+  max_reobservations: 2
   max_observation_age_s: 0.5
   xy_tolerance_m: 0.006
   z_tolerance_m: 0.006

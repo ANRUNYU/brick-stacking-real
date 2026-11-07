@@ -15,7 +15,7 @@ class SceneManager:
         graph = {slot.slot_id: slot.supports for slot in slots}
         if any(support not in graph for supports in graph.values() for support in supports):
             raise ValueError("support graph references an unknown slot")
-        tuple(TopologicalSorter(graph).static_order())
+        self._support_order = tuple(TopologicalSorter(graph).static_order())
         self._ordered_slots = tuple(sorted(slots, key=lambda slot: slot.layer))
         self.states = {key: SlotState.EMPTY for key in self.slots}
         self.occupants = {}
@@ -75,3 +75,31 @@ class SceneManager:
                 raise ValueError("cannot erase uncertain post-pick occupancy")
             self.reservations.pop(slot_id)
             self.states[slot_id] = SlotState.EMPTY
+
+    def restore_verified(self, allocations):
+        """Seed a new task from freshly verified placements, atomically."""
+        with self._lock:
+            if self.occupants or self.reservations:
+                raise ValueError("rescan requires a fresh scene manager")
+            if (len(set(allocations.values())) != len(allocations)
+                    or any(key not in self.slots or not block_id for key, block_id in allocations.items())
+                    or any(support not in allocations for key in allocations for support in self.slots[key].supports)):
+                raise ValueError("rescan contains conflicting allocations or unverified support")
+            self.occupants.update(allocations)
+            self.states.update({key: SlotState.PLACED_VERIFIED for key in allocations})
+
+    def invalidate_supports(self, roots):
+        """Invalidate committed roots and dependent transactions, retaining ownership."""
+        with self._lock:
+            affected = set(roots)
+            invalidated = []
+            for key in self._support_order:
+                if key not in affected and not any(s in affected for s in self.slots[key].supports):
+                    continue
+                affected.add(key)
+                if key in self.occupants:
+                    self.reservations[key] = self.occupants.pop(key)
+                if key in self.reservations:
+                    self.states[key] = SlotState.UNVERIFIED
+                    invalidated.append(key)
+            return tuple(invalidated)
