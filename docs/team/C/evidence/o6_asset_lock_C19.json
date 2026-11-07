@@ -1,0 +1,79 @@
+{
+  "source_ref": "manufacturer main, content hashes authoritative",
+  "urdf_sha256": "e1e42ccd1ff55a28153acb025046f42d810ac97367f7bbfdaebe042d01cd75ba",
+  "meshes": [
+    {
+      "link": "lh_hand_base_link",
+      "path": "meshes/collision/lh_hand_base_link_col.obj",
+      "sha256": "88f95d9bc1aa9690f6bfe4a1d00dd0ab307545aea37f569fae91413fd47deb95",
+      "bytes": 14164
+    },
+    {
+      "link": "lh_thumb_metacarpals_base2",
+      "path": "meshes/collision/lh_thumb_metacarpals_base2_col.obj",
+      "sha256": "3ad2077d62c4216b8447eb46e895811cabf6c4ce6bb156f450e43422269b5322",
+      "bytes": 12742
+    },
+    {
+      "link": "lh_thumb_metacarpals",
+      "path": "meshes/collision/lh_thumb_metacarpals_col.obj",
+      "sha256": "e3310195ac506d3f8d43a25b1535004f0301b2b37fbf005f8a385e47fa283163",
+      "bytes": 99680
+    },
+    {
+      "link": "lh_thumb_distal",
+      "path": "meshes/collision/lh_thumb_distal_col.obj",
+      "sha256": "d7cdebf41a1074465a80a0700fc17f224dbb2e5ccc42af3f309f2d0d5303173a",
+      "bytes": 14134
+    },
+    {
+      "link": "lh_index_proximal",
+      "path": "meshes/collision/lh_index_proximal_col.obj",
+      "sha256": "a36d25be2513ba81e9ce13ca155f5fdaa6b5d1d99941b1ab66fd70befee37503",
+      "bytes": 16310
+    },
+    {
+      "link": "lh_index_distal",
+      "path": "meshes/collision/lh_index_distal_col.obj",
+      "sha256": "350dd8a432b04296743a751fb3b8955d30c63536c16ad08538189fa49963acba",
+      "bytes": 15067
+    },
+    {
+      "link": "lh_middle_proximal",
+      "path": "meshes/collision/lh_middle_proximal_col.obj",
+      "sha256": "ed07c40c7fb1af17aa9e3183e8a1e663373e228aa9322c13d72793a6072a2254",
+      "bytes": 16311
+    },
+    {
+      "link": "lh_middle_distal",
+      "path": "meshes/collision/lh_middle_distal_col.obj",
+      "sha256": "514d9fa4124ffe7121c1a9849c38f54c1831ab9d3c6317ee7823479ea16c80ed",
+      "bytes": 15068
+    },
+    {
+      "link": "lh_ring_proximal",
+      "path": "meshes/collision/lh_ring_proximal_col.obj",
+      "sha256": "fa096fc099cd68350ffb370447078f194f3f70c7d0a0dc30ad4725beff25d5ef",
+      "bytes": 16309
+    },
+    {
+      "link": "lh_ring_distal",
+      "path": "meshes/collision/lh_ring_distal_col.obj",
+      "sha256": "e93ec73f4d9a9b29ef854b5e9829f4fe7892def703769b6d7178f64b492a7424",
+      "bytes": 15066
+    },
+    {
+      "link": "lh_pinky_proximal",
+      "path": "meshes/collision/lh_pinky_proximal_col.obj",
+      "sha256": "9ea4869809981c6c445154cd25dfc515a0e708718f6d9ac703e0994b73878613",
+      "bytes": 16310
+    },
+    {
+      "link": "lh_pinky_distal",
+      "path": "meshes/collision/lh_pinky_distal_col.obj",
+      "sha256": "74e68c052cbd35b248217ceee6bab9800c5758133d7f5b27e99ceabfba99f663",
+      "bytes": 15067
+    }
+  ],
+  "approved_for_motion": false
+}

@@ -1,0 +1,204 @@
+{
+  "source": "https://raw.githubusercontent.com/linker-bot/linker-sim-assets/main/src/linker_robot_assets/assets/components/hands/linkerhand_o6/linkerhand_o6_left.urdf",
+  "sha256": "e1e42ccd1ff55a28153acb025046f42d810ac97367f7bbfdaebe042d01cd75ba",
+  "joints": [
+    {
+      "name": "lh_thumb_cmc_yaw",
+      "type": "revolute",
+      "parent": "lh_hand_base_link",
+      "child": "lh_thumb_metacarpals_base2",
+      "axis": {
+        "xyz": "-0.0 -0.0 1.0"
+      },
+      "limits": {
+        "effort": "100",
+        "lower": "0.0",
+        "upper": "1.36",
+        "velocity": "1"
+      },
+      "mimic": null
+    },
+    {
+      "name": "lh_thumb_cmc_pitch",
+      "type": "revolute",
+      "parent": "lh_thumb_metacarpals_base2",
+      "child": "lh_thumb_metacarpals",
+      "axis": {
+        "xyz": "-1.0 -0.0 -0.0"
+      },
+      "limits": {
+        "effort": "100",
+        "lower": "0.0",
+        "upper": "0.58",
+        "velocity": "1"
+      },
+      "mimic": null
+    },
+    {
+      "name": "lh_thumb_ip",
+      "type": "revolute",
+      "parent": "lh_thumb_metacarpals",
+      "child": "lh_thumb_distal",
+      "axis": {
+        "xyz": "-1.0 -0.0 -0.0"
+      },
+      "limits": {
+        "effort": "100",
+        "lower": "0.0",
+        "upper": "1.08",
+        "velocity": "1"
+      },
+      "mimic": {
+        "joint": "lh_thumb_cmc_pitch",
+        "multiplier": "1.86",
+        "offset": "0.0"
+      }
+    },
+    {
+      "name": "lh_index_mcp_pitch",
+      "type": "revolute",
+      "parent": "lh_hand_base_link",
+      "child": "lh_index_proximal",
+      "axis": {
+        "xyz": "0.0 1.0 0.0"
+      },
+      "limits": {
+        "effort": "100",
+        "lower": "0.0",
+        "upper": "1.6",
+        "velocity": "1"
+      },
+      "mimic": null
+    },
+    {
+      "name": "lh_index_dip",
+      "type": "revolute",
+      "parent": "lh_index_proximal",
+      "child": "lh_index_distal",
+      "axis": {
+        "xyz": "0.0 1.0 0.0"
+      },
+      "limits": {
+        "effort": "100",
+        "lower": "0.0",
+        "upper": "1.43",
+        "velocity": "1"
+      },
+      "mimic": {
+        "joint": "lh_index_mcp_pitch",
+        "multiplier": "0.89",
+        "offset": "0.0"
+      }
+    },
+    {
+      "name": "lh_middle_mcp_pitch",
+      "type": "revolute",
+      "parent": "lh_hand_base_link",
+      "child": "lh_middle_proximal",
+      "axis": {
+        "xyz": "0.0 1.0 0.0"
+      },
+      "limits": {
+        "effort": "100",
+        "lower": "0.0",
+        "upper": "1.6",
+        "velocity": "1"
+      },
+      "mimic": null
+    },
+    {
+      "name": "lh_middle_dip",
+      "type": "revolute",
+      "parent": "lh_middle_proximal",
+      "child": "lh_middle_distal",
+      "axis": {
+        "xyz": "0.0 1.0 0.0"
+      },
+      "limits": {
+        "effort": "100",
+        "lower": "0.0",
+        "upper": "1.43",
+        "velocity": "1"
+      },
+      "mimic": {
+        "joint": "lh_middle_mcp_pitch",
+        "multiplier": "0.89",
+        "offset": "0.0"
+      }
+    },
+    {
+      "name": "lh_ring_mcp_pitch",
+      "type": "revolute",
+      "parent": "lh_hand_base_link",
+      "child": "lh_ring_proximal",
+      "axis": {
+        "xyz": "0.0 1.0 0.0"
+      },
+      "limits": {
+        "effort": "100",
+        "lower": "0.0",
+        "upper": "1.6",
+        "velocity": "1"
+      },
+      "mimic": null
+    },
+    {
+      "name": "lh_ring_dip",
+      "type": "revolute",
+      "parent": "lh_ring_proximal",
+      "child": "lh_ring_distal",
+      "axis": {
+        "xyz": "0.0 1.0 0.0"
+      },
+      "limits": {
+        "effort": "100",
+        "lower": "0.0",
+        "upper": "1.43",
+        "velocity": "1"
+      },
+      "mimic": {
+        "joint": "lh_ring_mcp_pitch",
+        "multiplier": "0.89",
+        "offset": "0.0"
+      }
+    },
+    {
+      "name": "lh_pinky_mcp_pitch",
+      "type": "revolute",
+      "parent": "lh_hand_base_link",
+      "child": "lh_pinky_proximal",
+      "axis": {
+        "xyz": "0.0 1.0 0.0"
+      },
+      "limits": {
+        "effort": "100",
+        "lower": "0.0",
+        "upper": "1.6",
+        "velocity": "1"
+      },
+      "mimic": null
+    },
+    {
+      "name": "lh_pinky_dip",
+      "type": "revolute",
+      "parent": "lh_pinky_proximal",
+      "child": "lh_pinky_distal",
+      "axis": {
+        "xyz": "0.0 1.0 0.0"
+      },
+      "limits": {
+        "effort": "100",
+        "lower": "0.0",
+        "upper": "1.43",
+        "velocity": "1"
+      },
+      "mimic": {
+        "joint": "lh_pinky_mcp_pitch",
+        "multiplier": "0.89",
+        "offset": "0.0"
+      }
+    }
+  ],
+  "collision_count": 12,
+  "approved_for_motion": false
+}

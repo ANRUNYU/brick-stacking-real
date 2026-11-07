@@ -14,7 +14,7 @@ def _triple(text):
     return a
 
 
-def urdf_forward_kinematics(path, positions_rad, *, base_frame, tip_frame):
+def urdf_forward_kinematics(path, positions_rad, *, base_frame, tip_frame, resolved_mimic=False):
     """Inputs use URDF joint names, without guessing J1/SDK/CAN correspondence.
 
     Supports explicit base-to-tip fixed/revolute paths only. Fixed joints need
@@ -43,7 +43,15 @@ def urdf_forward_kinematics(path, positions_rad, *, base_frame, tip_frame):
     result=None
     for j in chain:
         kind=j.get('type')
-        if kind not in ('fixed','revolute') or j.find('mimic') is not None: raise ValueError('unsupported joint type/mimic')
+        if kind not in ('fixed','revolute'): raise ValueError('unsupported joint type')
+        mimic=j.find('mimic')
+        if mimic is not None:
+            if not resolved_mimic: raise ValueError('unresolved mimic joint')
+            master=mimic.get('joint')
+            if master not in positions_rad: raise ValueError('mimic master not in chain')
+            expected=float(mimic.get('multiplier','1'))*positions_rad[master]+float(mimic.get('offset','0'))
+            if not np.isfinite(expected) or not np.isclose(positions_rad[j.get('name')],expected,atol=1e-10,rtol=0):
+                raise ValueError('resolved mimic value inconsistent')
         origin=j.find('origin')
         xyz=_triple(origin.get('xyz','0 0 0') if origin is not None else '0 0 0')
         r,p,y=_triple(origin.get('rpy','0 0 0') if origin is not None else '0 0 0')

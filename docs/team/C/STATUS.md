@@ -338,3 +338,19 @@ surface_clearance.py新增固定基座刚性转动链的表面速度界和Lipsch
 新增4项回归：接缝来源hash/未审pair拒绝、FCL中段相交、已知旋转点速度界、采样gap证据与margin/缺失速度拒绝。独立FCL环境全套138 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c18-final2。源码/网格均本机计算，无SSH动作/设备访问；第三方SDK未改。
 
 第十八批最终结果：同一合成路径20ms细化后142sample，最大gap19.967ms，解析max pair表面速度界0.665520m/s，保守连续表面距离下界+6.401977mm（margin0仅诊断）。continuous_surface_status PASS，full_collision UNKNOWN、motion_enabled=false。所有外部/未建模物体、体积包含与标定误差不覆盖。下载工具同步增加MJCF锁定和复现，未知版本拒绝。
+
+## 第十九批：左O6模型、mimic与独立手部网格检查（C1-04/C2-02/C2-03）
+
+通过SSH只读搜索主机ros2_ws/src、现有视觉config和SDK目录内O6 URDF/xacro及grasp/TCP JSON/YAML，未返回匹配文件；不声称整个主机绝对无文件，未启动驱动或设备。不因缺D预设而停止独立手部模型工作。
+
+厂家components/hands/linkerhand_o6/meta.yaml指向left URDF/XML；P7+O6 unit/recipe猜测路径返回404，未把别的机械臂安装参数套给P7。候选URDF SHA256 e1e42ccd1ff55a28153acb025046f42d810ac97367f7bbfdaebe042d01cd75ba，6actuated+5mimic、12collision link。XML SHA256 3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643，mimic系数与URDF匹配（thumb1.86、其余0.89），12个明确接触排除（11相邻+掌体/拇指metacarpals安装对）。数据源/关节/范围见vendor_o6_audit_C19.json。
+
+新增localization/hand_kinematics.py：要求完整具名主动关节rad，显式展开mimic、验证所有主动/从动URDF限位、拒绝循环/未知引用。urdf_chain增加resolved_mimic显式入口，缺省仍拒绝mimic；启用时逐项检查所给从动值符合声明，不任意跳过约束。hand_link_poses输出掌根到各指节的未批准RigidTransform，不含臂到手安装。
+
+新增planning/obj_geometry.py严格triangle OBJ解析，支持正/负索引与纹理字段；拒绝非法索引/非三角面、无有限几何，不隐式扇分未知多边形。tools/fetch_o6_collision_assets.py固定URDF/XML内容并下载12个collision OBJ，锁SHA256/长度（共266228bytes）；原件只存artifacts/c_real_calibration/robot_models/vendor_o6_collision，不提交SDK/大网格。锁清单o6_asset_lock_C19.json。
+
+tools/audit_o6_fcl.py：检查全部hash、identity mesh origin/scale、XML/URDF mimic一致性、具名厂家接缝；12mesh BVH分别在全0和[.4,.2,.6,.6,.6,.6]rad两组明确synthetic关节值进行手内66pair检查（声明安装排除不查），两组均无非排除表面相交，结果status UNKNOWN、motion_enabled=false。这些不是raw_u8、不是实际open/close/grasp预设，也不表示实际手版本/手臂安装已标定；没有下发控制指令。证据o6_fcl_C19.json。
+
+复现：PYTHONPATH=src，先tools/fetch_o6_collision_assets.py <新目录>，再tools/audit_o6_fcl.py <目录> <新报告.json>。FCL使用独立planning_venv。最近全套144 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c19-final。新增mimic方向/限位/循环、缺省拒绝mimic、OBJ索引与非三角面拒绝回归。没有硬件动作。
+
+下一自主工作：读取可核验P7→O6固定安装来源后组合臂/手检查；D的实际预设/6通道到rad映射不可由模型限位猜。现阶段手模型覆盖是独立手内，不是已包含在C18臂轨迹连续表面判据中。相机/持物/真实环境仍缺，不申请真实动作许可。

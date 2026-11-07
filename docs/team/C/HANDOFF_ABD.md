@@ -112,3 +112,11 @@ C→A/D：新增FclMeshChecker，真实厂家8mesh BVH的两个模型姿态均�
 check_trajectory已接quintic关节路径→具名link变换→FCL，能检出中间姿态接触。50ms/58sample合成路径最小距离13.046mm，但连续速度界推算下界为负，仍UNKNOWN。细化20ms结果和条件式连续表面证据见p7_fcl_certificate_fine_C18.json。速度/间隙界方法见FCL_SETUP.md，不把FCL首尾刚体CCD当真实关节轨迹。full_collision UNKNOWN、motion_enabled=false不变；未覆盖手/相机/机身/持物/环境、体积包含和标定误差。
 
 第十八批细化证据：142sample、最大gap19.967ms，固定基座/刚性臂mesh/明确接缝/所声明quintic下，连续表面距离下界约6.402mm，条件式continuous_surface PASS。它不覆盖完整实体/环境，不能等同full_collision PASS。复现沿用tools/audit_p7_fcl.py，追加`--vendor-exclusions <arm.mjcf> --exclusions-sha256 <配置锁定hash> --path --sample-dt-s .02`，报告必须新路径。fetch_p7_collision_assets已同时锁定该MJCF。
+
+## 最新补充：O6独立模型覆盖（第十九批，144 passed）
+
+D/C：新增具名rad主动关节→mimic展开→全部指节FK→FCL12mesh检查。5组URDF mimic与厂家XML equality系数匹配；默认URDF FK仍拒绝未解析mimic。12个具名安装接触排除有固定XML哈希来源，非任意去掉碰撞。两组SYNTHETIC弧度手势无非排除表面相交，status/full_collision仍UNKNOWN。
+
+来源/关节模型范围见vendor_o6_audit_C19.json，资产锁o6_asset_lock_C19.json，FCL结果o6_fcl_C19.json。源为厂家候选，不是已读实际手关节，不把全0叫open。D仍需给实际preset版本、单位和显式6通道到模型rad映射，以及安装/适用对象信息。不能从URDF上下限猜raw归一化。
+
+工具fetch_o6_collision_assets下载并hash锁定12OBJ及URDF/XML，audit_o6_fcl复现手内模型验证。尚未组合到P7臂路径，尚无手/相机/积木相互碰撞结论。本批SSH仅查资料文件，无设备访问。最新144 passed。
