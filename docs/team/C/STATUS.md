@@ -69,3 +69,19 @@ can0/can1 可能随启动/插拔变化；旧审计映射只是 2026-11-07 的快
 状态修订：C1-01 的通用 FK 已补充并通过；实际关节模型仍待测。C1-04 的关节路点时间参数化已补充；尚未实现笛卡尔 IK、规划器联接和全机碰撞。C1-05 仅有可调用轨迹样例，尚未与 A 执行反馈联调。C2-01/03 和实测标定不因上述数学通过而完成。
 
 需 A：所选臂模型版本、J1…J7 到实际 ID 的核验映射、零位、限位/速率来源、新鲜状态及 epoch；需 B：同步/配准采样与独立物理验证点；需 D：工具/相机/持物包络、碰撞场景版本和接触约定。真实安全停止、J6/J7、主臂选择仍未知。本批不依赖 SSH，不连接或开流。
+
+## 第三批：真实头部相机预检（C1-02/C1-03，未批准标定）
+
+2026-11-07 15:26（Asia/Shanghai），用户确认主臂左臂、本人现场在位、J6/J7 与停止已验收、头部无人占用；该信息来源为用户陈述，尚未关联 A 的验收日志。无标定板或已知尺寸参考点。
+
+通过 SSH 实际执行已审阅的 /home/qwer/orbbec_camera_probe.py：普通 qwer 两次尝试因枚举序列号为空/USB 打开失败而拒绝。第三次仅临时 sudo 相机采集，指定 SN CP2L863000KL 和当次 UID 2-3.4.3-61，10 帧、最长20秒、skew阈值20ms（仅采集阈值，不是验收门槛）。未修改权限、SDK 或设备持久参数，未访问CAN或运动。已退出，cleanup_errors为空。
+
+结果 CAPTURED：RGB/Y16 640×480 15fps、深度尺度1mm、帧间 RGB/depth skew 最大约0.019ms；设备时间覆盖0.600624s，不是主机同步结果。每帧有效深度91.3%—91.7%。SDK执行D2C和去畸变不等于配准精度验收；输出 metadata registered=true 只表示处理流程。
+
+原始数据本地 artifacts/c_real_calibration/head_precheck_20261107_C03，远端 /home/qwer/c_calibration_runs/head_precheck_20261107_C03。原始图像不纳入Git。可版本化报告见 evidence/head_precheck_20261107_C03.json 和 head_precheck_analysis.json，后者记录每帧SHA256。预览可见桌面和积木。
+
+新增 tools/analyze_calibration_capture.py，实际运行命令：
+`python tools/analyze_calibration_capture.py artifacts/c_real_calibration/head_precheck_20261107_C03 artifacts/c_real_calibration/head_precheck_analysis.json`。
+输出全帧持续有效像素89.92%；全图时间标准差中位4.73mm、P95 82.22mm。它包括背景/边缘/场景运动，不能作为绝对精度、桌面ROI精度或外参误差。无地面真值，accuracy UNKNOWN，外参/TCP仍未知。真实采集完成，不等于 C1-03 完成。
+
+现场下一步：用户准备平整棋盘格并实测格长、尺/卡尺，或提供已知尺寸平面参考物；固定标定板，采集工作区不同位置/高度的样本，保留独立验证点。相机到table可先独立标定；table到左臂base仍需可测几何约束和A的已验收模型/零位/安装数据。缺少这些不能用桌面平面自行确定XY原点，更不能生成有效世界到机械臂外参。任何自动运动另列具体路径和现场检查，当前没有运动授权实现。
