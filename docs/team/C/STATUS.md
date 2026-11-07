@@ -270,3 +270,15 @@ C1-01：现场声明模型可加载，并与主机Pinocchio三组输入一致。
 用户再次确认机械臂为P7，左肩第一关节旋转中心可见、无外壳遮挡。后续不重复要求型号确认；采用现场P7 URDF作为声明模型继续核对。该确认不自动证明关节零位/正方向、厂家候选机身或相机安装吻合。
 
 下一项无运动测量：如左右第一关节中心均可接近观察，用尺/卷尺量两可见旋转中心的直线距离，记录3次原始mm读数；量中心而非外缘，不转动/推压手臂，右侧无法清楚识别则记未知。厂家候选模型的肩部名义间距约328mm，仅作模型安装尺寸核对，不以结果自动求相机外参。随后再定义左肩基准相对桌面的点/轴测量，避免把单一距离当完整六自由度变换。
+
+## 第十四批：接受实测安装确认、Rabokit审阅与完整位姿路径接口（C1-04/C1-05/C2-03）
+
+用户确认全部安装数值已实测与厂商一致，不再重复索取这些尺寸；新增installation/user_confirmed_vendor_geometry_20261107.json，source为用户实测确认，记录vendor_base_link→L_arm_root厂商声明+用户核验关系，与world/相机/TCP未知分离，不默认运动许可。后续不以仍待独立日志为由重复要求用户量同样尺寸。
+
+Rabokit/manual直接web读取失败，urllib得到前端HTML；读取公开脚本识别其公开手册API，成功读取目录与五份相关章节。第一次终端输出emoji被GBK编码拒绝，设置PYTHONIOENCODING=utf-8后重读成功。没登录、无控制操作。结论及适配差异见RABOKIT_REVIEW.md；不把文档描述当当前主机ROS节点，也不把理想仿真相机替代实机参数。
+
+新增planning/pose_path.py：顺序TCP目标→沿前一解继续IK→带当前起点的关节路点→既有五次时间参数化。任一目标无解，不返回可执行部分路径；IK成功和起点时效/限位失败分开报告；full_collision UNKNOWN，motion_enabled=false。现有models/ArmAdapter和D调度器不变。A接收明确关节轨迹，避免控制器在位姿接口内另选冗余解导致先前碰撞结果失效。
+
+测试python -m pytest -q --basetemp=.test-tmp-c14：119 passed；新增完整顺序目标FK回代、当前点到首目标段、第二目标无解不交部分轨迹、IK通过但状态过期独立拒绝。来源synthetic，本批无SSH设备访问、无相机开流、无运动。接口用法见tests/unit/planning/test_pose_path.py，调用plan_pose_path(fk,targets,seed_rad,limits,ik_settings=...,trajectory_context=...)。
+
+剩余重点：真实碰撞模型装配/覆盖验证、场景导出的实际相机外参/工具关系、与A新鲜状态/执行结果接通；仅手册base_link名称不能猜世界矩阵或TCP数值。完整M3/M5/M6尚未通过。

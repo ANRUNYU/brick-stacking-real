@@ -74,3 +74,9 @@ C2-04/M3-M6：`validate_plan_context(planned,current,created_stamp_s=...,expires
 九项C任务最新完成度见TASK_STATUS.md；本批未连接设备，未有真实运动。最终交付仍需实际标定、M3/M5/M6证据，不能冻结为全部完成。
 
 现场最新确认：机械臂已确认P7，不再重复索取型号；左肩第一轴旋转中心可见、无外壳遮挡，可开始物理安装尺寸核对。零位/轴正方向及相机安装仍独立未知。首先采肩部中心间距三次原始读数，名义约328mm只作厂家模型一致性检查，不作为已批准外参。
+
+## 最新补充：用户实测安装确认、平台差异与路径串接（第十四批）
+
+用户明确所有机械安装数值已实测与厂商一致，不再重复请求这些尺寸。记录calibration/installation/user_confirmed_vendor_geometry_20261107.json，清楚区分用户实测确认、厂商模型及未提供矩阵的相机/TCP关系。Rabokit五章已审阅，见RABOKIT_REVIEW.md：base_link位姿、冗余IK选解差异、理想仿真传感器时钟、整机/独立O6反馈通道不可混用。未启动平台或设备驱动。
+
+C→A/D新增plan_pose_path：顺序TCP目标通过局部IK后生成从当前起点开始的明确关节轨迹，任一失败不提供部分可执行路径。A应保留插值/关节解，不能转位姿move_to后让控制器重新选肘部姿态却沿用碰撞报告。full_collision UNKNOWN、motion_enabled=false。最新全套119 passed；尚无真实完整碰撞/执行闭环验收。
