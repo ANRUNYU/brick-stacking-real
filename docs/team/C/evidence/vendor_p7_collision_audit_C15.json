@@ -1,0 +1,406 @@
+{
+  "source_url": "https://raw.githubusercontent.com/linker-bot/linker-sim-assets/main/src/linker_robot_assets/assets/components/arms/p7/variants/left/arm.urdf",
+  "revision": "main_not_pinned",
+  "sha256": "b898b9597d7d075cc5e7114d76a90d0ec514c387a5fd59411555455a6d722daa",
+  "kinematic_differences": {
+    "L5_Joint": {
+      "vendor": {
+        "type": "revolute",
+        "parent": "L4_Link",
+        "child": "L5_Link",
+        "xyz": [
+          0.0,
+          0.0,
+          -0.124
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "axis": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "deployed": {
+        "type": "revolute",
+        "parent": "L4_Link",
+        "child": "L5_Link",
+        "xyz": [
+          0.0,
+          0.0,
+          -0.124
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "axis": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    "L4_Joint": {
+      "vendor": {
+        "type": "revolute",
+        "parent": "L3_Link",
+        "child": "L4_Link",
+        "xyz": [
+          2.4267e-05,
+          0.0,
+          -0.1621
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "axis": [
+          0.0,
+          -1.0,
+          0.0
+        ]
+      },
+      "deployed": {
+        "type": "revolute",
+        "parent": "L3_Link",
+        "child": "L4_Link",
+        "xyz": [
+          2.4267e-05,
+          0.0,
+          -0.1621
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "axis": [
+          0.0,
+          1.0,
+          0.0
+        ]
+      }
+    },
+    "L1_Joint": {
+      "vendor": {
+        "type": "revolute",
+        "parent": "L_arm_root",
+        "child": "L1_Link",
+        "xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "axis": [
+          0.0,
+          -1.0,
+          0.0
+        ]
+      },
+      "deployed": {
+        "type": "revolute",
+        "parent": "L_arm_root",
+        "child": "L1_Link",
+        "xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "axis": [
+          0.0,
+          1.0,
+          0.0
+        ]
+      }
+    },
+    "L7_Joint": {
+      "vendor": {
+        "type": "revolute",
+        "parent": "L6_Link",
+        "child": "L7_Link",
+        "xyz": [
+          -2.6563e-05,
+          0.0,
+          -0.0655
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "axis": [
+          -1.0,
+          0.0,
+          0.0
+        ]
+      },
+      "deployed": {
+        "type": "revolute",
+        "parent": "L6_Link",
+        "child": "L7_Link",
+        "xyz": [
+          -2.6563e-05,
+          0.0,
+          -0.0655
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "axis": [
+          1.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "L2_Joint": {
+      "vendor": {
+        "type": "revolute",
+        "parent": "L1_Link",
+        "child": "L2_Link",
+        "xyz": [
+          0.0,
+          0.058,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "axis": [
+          -1.0,
+          0.0,
+          0.0
+        ]
+      },
+      "deployed": {
+        "type": "revolute",
+        "parent": "L1_Link",
+        "child": "L2_Link",
+        "xyz": [
+          0.0,
+          0.058,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "axis": [
+          1.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "L6_Joint": {
+      "vendor": {
+        "type": "revolute",
+        "parent": "L5_Link",
+        "child": "L6_Link",
+        "xyz": [
+          0.0,
+          0.0,
+          -0.0881
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "axis": [
+          0.0,
+          -1.0,
+          0.0
+        ]
+      },
+      "deployed": {
+        "type": "revolute",
+        "parent": "L5_Link",
+        "child": "L6_Link",
+        "xyz": [
+          0.0,
+          0.0,
+          -0.0881
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "axis": [
+          0.0,
+          1.0,
+          0.0
+        ]
+      }
+    },
+    "L3_Joint": {
+      "vendor": {
+        "type": "revolute",
+        "parent": "L2_Link",
+        "child": "L3_Link",
+        "xyz": [
+          -2.5018e-05,
+          0.0,
+          -0.123
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "axis": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "deployed": {
+        "type": "revolute",
+        "parent": "L2_Link",
+        "child": "L3_Link",
+        "xyz": [
+          -2.5018e-05,
+          0.0,
+          -0.123
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "axis": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    }
+  },
+  "collision_elements": [
+    {
+      "link": "L1_Link",
+      "name": null,
+      "geometries": [
+        {
+          "type": "mesh",
+          "attributes": {
+            "filename": "meshes/L1_Link.STL"
+          }
+        }
+      ]
+    },
+    {
+      "link": "L2_Link",
+      "name": null,
+      "geometries": [
+        {
+          "type": "mesh",
+          "attributes": {
+            "filename": "meshes/L2_Link.STL"
+          }
+        }
+      ]
+    },
+    {
+      "link": "L3_Link",
+      "name": null,
+      "geometries": [
+        {
+          "type": "mesh",
+          "attributes": {
+            "filename": "meshes/L3_Link.STL"
+          }
+        }
+      ]
+    },
+    {
+      "link": "L4_Link",
+      "name": null,
+      "geometries": [
+        {
+          "type": "mesh",
+          "attributes": {
+            "filename": "meshes/L4_Link.STL"
+          }
+        }
+      ]
+    },
+    {
+      "link": "L5_Link",
+      "name": null,
+      "geometries": [
+        {
+          "type": "mesh",
+          "attributes": {
+            "filename": "meshes/L5_Link.STL"
+          }
+        }
+      ]
+    },
+    {
+      "link": "L6_Link",
+      "name": null,
+      "geometries": [
+        {
+          "type": "mesh",
+          "attributes": {
+            "filename": "meshes/L6_Link.STL"
+          }
+        }
+      ]
+    },
+    {
+      "link": "L7_Link",
+      "name": null,
+      "geometries": [
+        {
+          "type": "mesh",
+          "attributes": {
+            "filename": "meshes/L7_Link.STL"
+          }
+        }
+      ]
+    },
+    {
+      "link": "L8_Link",
+      "name": null,
+      "geometries": [
+        {
+          "type": "mesh",
+          "attributes": {
+            "filename": "meshes/L8_Link.STL"
+          }
+        }
+      ]
+    }
+  ],
+  "collision_count": 8,
+  "approved_for_motion": false,
+  "missing": [
+    "mesh files not yet resolved",
+    "physical collision coverage not validated",
+    "camera/tool/environment geometry"
+  ]
+}

@@ -80,3 +80,11 @@ C2-04/M3-M6：`validate_plan_context(planned,current,created_stamp_s=...,expires
 用户明确所有机械安装数值已实测与厂商一致，不再重复请求这些尺寸。记录calibration/installation/user_confirmed_vendor_geometry_20261107.json，清楚区分用户实测确认、厂商模型及未提供矩阵的相机/TCP关系。Rabokit五章已审阅，见RABOKIT_REVIEW.md：base_link位姿、冗余IK选解差异、理想仿真传感器时钟、整机/独立O6反馈通道不可混用。未启动平台或设备驱动。
 
 C→A/D新增plan_pose_path：顺序TCP目标通过局部IK后生成从当前起点开始的明确关节轨迹，任一失败不提供部分可执行路径。A应保留插值/关节解，不能转位姿move_to后让控制器重新选肘部姿态却沿用碰撞报告。full_collision UNKNOWN、motion_enabled=false。最新全套119 passed；尚无真实完整碰撞/执行闭环验收。
+
+## 最新补充：碰撞采样与轴向模型转换（第十五批）
+
+A/C必读：厂家P7碰撞URDF与现场SDK的七轴axis全反，J2限位反号换序。不是尺寸不符；用户实测安装一致的记录不变。`q_vendor=-q_sdk`三组FK及全部限位变换吻合，但这仅是模型约定转换，不是重新电机校准。使用config/planning/p7_sdk_to_vendor_collision_candidate.json和JointConventionMap时严格核对两侧哈希，不可静默混用角度。当前现场SDK哈希已再次SSH核对。
+
+C→D：sampled_capsule_check实现明确半径胶囊对平面/球/自碰撞的轨迹中间姿态检查；每个self排除需名称和原因，缺几何/半径/版本拒绝。碰撞FAIL，采样点无接触则完整status UNKNOWN，不能申请permit；输出覆盖、缺失、采样间隔与首个接触。它可作为evaluate_candidates的碰撞回调，UNKNOWN将拒绝选择。没有加载厂家网格、没有全机或连续认证。
+
+厂家8个mesh引用及轴向差异证据见vendor_p7_collision_audit_C15.json和vendor_sdk_axis_mapping_C15.json。最新全套126 passed，现场只有源码/哈希读取，无设备动作。后续仍需解析mesh、工具/相机/持物/环境及接触约定。

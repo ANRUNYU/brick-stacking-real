@@ -282,3 +282,19 @@ Rabokit/manual直接web读取失败，urllib得到前端HTML；读取公开脚�
 测试python -m pytest -q --basetemp=.test-tmp-c14：119 passed；新增完整顺序目标FK回代、当前点到首目标段、第二目标无解不交部分轨迹、IK通过但状态过期独立拒绝。来源synthetic，本批无SSH设备访问、无相机开流、无运动。接口用法见tests/unit/planning/test_pose_path.py，调用plan_pose_path(fk,targets,seed_rad,limits,ik_settings=...,trajectory_context=...)。
 
 剩余重点：真实碰撞模型装配/覆盖验证、场景导出的实际相机外参/工具关系、与A新鲜状态/执行结果接通；仅手册base_link名称不能猜世界矩阵或TCP数值。完整M3/M5/M6尚未通过。
+
+## 第十五批：采样胶囊碰撞后端与模型轴向约定（C1-04/C2-03）
+
+新增planning/capsule_collision.py：明确名称/坐标/端点/半径的Capsule，轨迹按既有quintic插值采样，检查胶囊对静态半空间平面、球障碍及胶囊自碰撞。自碰撞排除必须给有序具名pair和原因；拒绝未知半径、空几何、坐标/模型/场景不匹配、拓扑变化、超样本预算。碰撞检测在首个接触采样时提前结束，输出段/时间/接触对/间隙；不是整条路径全部接触统计。触碰计FAIL，无接触仅sampled_status PASS，而status/full_collision UNKNOWN，所以不能被候选评估当完整通过。覆盖缺失/间隔/模型版本显式返回。没有推断臂/手/相机半径或真实桌面位置。
+
+核对公开厂家P7左臂碰撞URDF（main未锁commit，文件本身SHA256已固定）：
+https://raw.githubusercontent.com/linker-bot/linker-sim-assets/main/src/linker_robot_assets/assets/components/arms/p7/variants/left/arm.urdf
+SHA256=b898b9597d7d075cc5e7114d76a90d0ec514c387a5fd59411555455a6d722daa。含8个mesh collision引用，尚未解析网格/验证实体覆盖。与现场SDK URDF连杆原点一致，但L1…L7轴全部取反，J2限位也反号换序。不是机械尺寸不符，不要求重复量尺寸。
+
+通过SSH现场重新sha256sum及读取axis，SDK仍为233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce，确认此前版本未变；没有import机器人库/访问CAN/开相机/运动。三组模型验证q_vendor=-q_sdk后FK最大矩阵差0，未转换的非零样例差显著。所有轴限位经[-upper,-lower]变换与厂商一致。
+
+新增localization/joint_conventions.py显式具名符号/偏移/两侧版本映射；版本错或不完整关节拒绝。config/planning/p7_sdk_to_vendor_collision_candidate.json仅用于两份数学模型之间转换，非电机零位/方向标定，不自动启用。证据vendor_p7_collision_audit_C15.json与vendor_sdk_axis_mapping_C15.json；原厂家URDF留artifacts，不修改第三方文件。
+
+全套126 passed，命令python -m pytest -q --basetemp=.test-tmp-c15-final。新增端点无碰撞但中段接触、无接触仍UNKNOWN、self接缝排除必须理由、退化/平行/交叉距离、空几何/未知半径/旧模型拒绝，以及轴反号与J2非对称限位/版本拒绝测试。来源synthetic+源模型比较；不宣称全机/连续/物理碰撞验收。
+
+下一缺项：固定厂商资产修订并解析实际mesh，再明确臂/机身/手/相机/持物/桌面碰撞体和必要安装接缝；场景与TCP尚无具体有效矩阵，仍不得执行真实路径。本批为真实碰撞后端的有限几何基础，C1-04/C2-03保持部分完成。
