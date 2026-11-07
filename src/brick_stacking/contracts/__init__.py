@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Literal, TypedDict
+from typing import Literal, NotRequired, TypedDict
 
 from brick_stacking.models.scene_state import SlotState
 
@@ -17,6 +17,7 @@ ExecutionStatus = Literal[
 HandRole = Literal["left", "right"]
 JointName = Literal["J1", "J2", "J3", "J4", "J5", "J6", "J7"]
 HandChannels = tuple[int, int, int, int, int, int]
+HandPercentChannels = tuple[float, float, float, float, float, float]
 
 
 class Sample(TypedDict):
@@ -57,7 +58,8 @@ class ArmState(Sample):
 class HandState(Sample):
     role: HandRole
     hand_sn: str
-    raw_u8: HandChannels
+    raw_u8: HandChannels | None
+    percent: NotRequired[HandPercentChannels]
     mapping_version: str
     fault_valid: bool
     temperature_valid: bool
@@ -122,7 +124,7 @@ class RawHandValues(TypedDict):
 
 class PercentHandValues(TypedDict):
     unit: Literal["percent"]
-    values: tuple[float, float, float, float, float, float]
+    values: HandPercentChannels
 
 
 class GraspPreset(TypedDict):

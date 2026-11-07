@@ -1,0 +1,4 @@
+{
+  "right": {"channel": "can0", "can_id": 39, "serial_number": "LHO6-04-276-R-Z-1-D"},
+  "left": {"channel": "can1", "can_id": 40, "serial_number": "LHO6-04-322-L-Z-1-D"}
+}
