@@ -222,3 +222,13 @@ URDF SHA256=233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce；P
 C1-01：现场声明模型可加载，并与主机Pinocchio三组输入一致。C1-03：物理base原点/轴向、机身到头部/左肩关系、真实TCP未知，依旧WAITING_FOR_MEASUREMENT。A→C优先提供带时戳/epoch的七轴反馈及零位/方向核验，明确URDF或Maestro约定；C→A禁止默认TCP=0或仅凭get_pose返回就批准。需要厂家整机安装图/校准记录，或建立已知刚性标记/指针与独立测量约束。先从软件读到的值不能替代这项物理测量。
 
 本批新增主机可复跑数学脚本和两份可追溯证据；没有改SDK、没有推送。已有最近全套86 passed；本批新增验证为远端Pinocchio与项目FK三组1e-12数值对照全部通过。
+
+## 第十一批：候选评估与多层释放几何（C1-04/C2-01/C2-03/M1/M4）
+
+用户要求持续维护三方交接，建立HANDOFF_ABD.md统一入口，汇总全部现场有用发现、最新处理修复、SDK构造副作用、身份/坐标/时钟约束、API样例和M0–M6依赖。每批更新本页及交接入口，最终冻结后交付；当前未发送消息给成员、未推送。
+
+新增planning/candidate_evaluation.py：连接已有五次轨迹校验，支持注入IK与完整路径碰撞证据提供者，按版本验证并独立报告失败，符合提供模型者按总时长排序。没有真实IK/碰撞后端时使用明确mock，不虚构可达性。碰撞scope/missing必须显式给出，full_collision固定UNKNOWN，全部motion_enabled=false。公共Protocol不变。测试覆盖无解、越限、硬碰撞失败/未知、旧模型/状态/缺标定、排序与独立状态。
+
+新增planning/slot_release.py：复用Slot、RigidTransform和tcp_target_for_block，提供world目标、TCP释放/接近/撤退；沿table法向而非worldZ，支撑DAG不改，未检查物理接触/IK/全机碰撞。十块红4黄3蓝2绿1的四层测试验证层高、支撑数和旋转桌面下TCP偏移方向。
+
+全套91 passed，命令python -m pytest -q --basetemp=.test-tmp-c11-final；来源synthetic/mock，未连接设备，无硬件动作。C2-01补齐槽位到释放目标数学链但实测table/TCP未知；C2-03补齐候选评估调度，真实IK/全机碰撞后端仍未实现。C1-03/C1-05/C2-02实际估计改进/C2-04真实复验仍待测，不标完成。
