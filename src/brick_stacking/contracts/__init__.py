@@ -48,7 +48,7 @@ class JointBinding(TypedDict):
 class ArmState(Sample):
     joint_names: tuple[JointName, ...]
     joint_bindings: dict[JointName, JointBinding]
-    q_rad: tuple[float, ...]
+    q_rad: tuple[float | None, ...]  # None marks an unavailable joint position.
     dq_rad_s: tuple[float, ...] | None
     enabled: bool | None
     fault: str | None
