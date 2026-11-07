@@ -1,4 +1,4 @@
-"""A1-02 contract and deterministic, offline-only trajectory execution."""
+"""Offline-only trajectory execution with feedback-confirmed completion."""
 
 from collections.abc import Callable, Sequence
 from copy import deepcopy
@@ -8,10 +8,10 @@ import json
 import math
 from threading import Lock
 import time
-from typing import Literal, Protocol
+from typing import Literal, Protocol, cast
 from uuid import uuid4
 
-from brick_stacking.contracts import ArmState, ExecutionResult, JointName, Permit, Trajectory
+from brick_stacking.contracts import ArmState, ExecutionResult, ExecutionStatus, JointName, Permit, Trajectory
 from brick_stacking.hardware.mock_devices import MockArm as JointMock
 
 JOINT_NAMES: tuple[JointName, ...] = ("J1", "J2", "J3", "J4", "J5", "J6", "J7")
@@ -25,6 +25,7 @@ class ArmAdapter(Protocol):
         valid_until_host_monotonic_s: float | None = None,
     ) -> str: ...
     def cancel(self, command_id: str) -> bool: ...
+    def get_execution_status(self, command_id: str) -> ExecutionStatus: ...
     def get_execution_result(self, command_id: str) -> ExecutionResult: ...
 
 
@@ -77,6 +78,7 @@ class _Run:
     expires: float
     result: ExecutionResult
     next_point: int = 0
+    final_dispatched_at: float | None = None
 
 
 class MockArm:
@@ -91,6 +93,9 @@ class MockArm:
         clock: Callable[[], float] = time.monotonic,
         device_id: str = "mock-arm", config_hash: str = "mock-config",
         calibration_hash: str = "mock-calibration", scene_version: str = "mock-scene",
+        feedback_reader: Callable[[], ArmState | None] | None = None,
+        max_feedback_age_s: float = 0.1,
+        goal_tolerance_rad: float = 1e-6,
     ):
         self._joints = JointMock(_positions(initial_joints_rad))
         self._clock = clock
@@ -100,6 +105,11 @@ class MockArm:
         self._epoch = uuid4().hex
         self._lock = Lock()
         self._run: _Run | None = None
+        self._feedback_reader = feedback_reader
+        self._max_feedback_age_s = _number(max_feedback_age_s, "maximum feedback age")
+        self._goal_tolerance_rad = _number(goal_tolerance_rad, "goal tolerance")
+        if self._max_feedback_age_s <= 0 or self._goal_tolerance_rad < 0:
+            raise ValueError("feedback age must be positive and goal tolerance nonnegative")
 
     def _now(self) -> float:
         now = _number(self._clock(), "host monotonic clock")
@@ -159,6 +169,36 @@ class MockArm:
             raise KeyError(command_id)
         return self._run
 
+    def _feedback_problem(self, run: _Run, sample: ArmState | None, now: float) -> str | None:
+        if sample is None:
+            return "awaiting mock feedback"
+        if (sample["source"] != "mock" or sample["device_id"] != self._device_id
+                or sample["epoch"] != self._epoch or sample["clock_domain"] != "host_monotonic"
+                or sample["frame_id"] != "active_arm_base" or tuple(sample["joint_names"]) != JOINT_NAMES
+                or sample["validity"] != "VALID" or sample["fault"] is not None or not sample["sample_id"]):
+            return "invalid mock feedback identity, joint order or validity"
+        try:
+            stamp = _number(sample["host_receive_stamp"], "feedback timestamp")
+            _positions(sample["q_rad"])
+        except (TypeError, ValueError):
+            return "invalid mock feedback timestamp or position"
+        lower_bound = run.started if run.final_dispatched_at is None else run.final_dispatched_at
+        if stamp < lower_bound or not 0 <= now - stamp <= self._max_feedback_age_s:
+            return "stale or future mock feedback"
+        if self._feedback_reader is not None and stamp == run.final_dispatched_at:
+            return "mock feedback must postdate final dispatch"
+        previous = cast(ArmState | None, run.result["feedback"])
+        if previous is not None and (
+            stamp <= previous["host_receive_stamp"] or sample["sample_id"] == previous["sample_id"]
+        ):
+            return "repeated or out-of-order mock feedback"
+        return None
+
+    def _expire(self, run: _Run, now: float) -> ExecutionResult:
+        run.result.update(status="FAILED", ended_host_monotonic_s=now,
+                          reason="permit or trajectory expired during mock execution")
+        return deepcopy(run.result)
+
     def step(self, command_id: str) -> ExecutionResult:
         """Advance the mock by applying due points in order at the current clock."""
         with self._lock:
@@ -167,9 +207,7 @@ class MockArm:
                 return deepcopy(run.result)
             now = self._now()
             if now >= run.expires:
-                run.result.update(status="FAILED", ended_host_monotonic_s=now,
-                                  reason="permit or trajectory expired during mock execution")
-                return deepcopy(run.result)
+                return self._expire(run, now)
 
             points = run.trajectory["points"]
             previous_point = run.next_point
@@ -179,10 +217,37 @@ class MockArm:
                     break
                 self._joints.simulate_joint_target(point["q_rad"])
                 run.next_point += 1
-            if run.next_point != previous_point:
-                run.result["feedback"] = self._state(now)
-            if run.next_point == len(points):
-                run.result.update(status="SUCCEEDED", ended_host_monotonic_s=now)
+                now = self._now()
+                if run.next_point == len(points):
+                    run.final_dispatched_at = now
+                if now >= run.expires:
+                    return self._expire(run, now)
+            if run.next_point == previous_point and run.final_dispatched_at is None:
+                return deepcopy(run.result)
+
+            if self._feedback_reader is None:
+                sample = self._state(now)
+            else:
+                try:
+                    sample = self._feedback_reader()
+                except OSError:
+                    sample = None
+                now = self._now()
+            if now >= run.expires:
+                return self._expire(run, now)
+
+            problem = self._feedback_problem(run, sample, now)
+            if problem is not None or sample is None:
+                run.result["reason"] = problem
+                return deepcopy(run.result)
+            run.result.update(feedback=deepcopy(sample), reason=None)
+            if run.final_dispatched_at is not None:
+                target = points[-1]["q_rad"]
+                if all(abs(actual - goal) <= self._goal_tolerance_rad
+                       for actual, goal in zip(sample["q_rad"], target, strict=True)):
+                    run.result.update(status="SUCCEEDED", ended_host_monotonic_s=now)
+                else:
+                    run.result["reason"] = "mock feedback outside goal tolerance"
             return deepcopy(run.result)
 
     def cancel(self, command_id: str) -> bool:
@@ -199,6 +264,10 @@ class MockArm:
     def get_execution_result(self, command_id: str) -> ExecutionResult:
         with self._lock:
             return deepcopy(self._command(command_id).result)
+
+    def get_execution_status(self, command_id: str) -> ExecutionStatus:
+        with self._lock:
+            return self._command(command_id).result["status"]
 
 
 def replay_execution(
