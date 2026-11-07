@@ -98,3 +98,9 @@ mesh_envelopes对每link全部三角顶点生成保守胶囊，urdf_capsules使�
 复现：`python tools/fetch_p7_collision_assets.py <新资产目录>`，需网络；读取函数load_p7_capsule_envelopes(dir,padding_m=...)和MappedUrdfCapsules(...).at_source_q(q)。API用例tests/unit/planning/test_mesh_envelopes.py、test_urdf_capsules.py。C15显式映射配置必须匹配两侧hash。采样无接触status仍UNKNOWN，不允许申请真实permit。
 
 第十六批最新全套131 passed；本批不需现场协助。后续自主继续几何后端改进，当前不申请真实执行。
+
+## 最新补充：FCL已配置（第十七批）
+
+主机/home/qwer/c_planning_venv已安装python-fcl0.7.0.11/numpy2.2.6/Cython3.3.1，主机基本sphere/triangle-mesh相交与距离assert、pip check通过；原控制/相机环境没改。Windows独立项目测试环境全套134 passed。重建见FCL_SETUP.md和requirements-linux-fcl.txt，依赖可选extra planning。
+
+C→A/D：新增FclMeshChecker，真实厂家8mesh BVH的两个模型姿态均发现6pair表面相交（未排除安装接缝），报告p7_fcl_mesh_audit_C17.json。不是实物碰撞结论，也不是避碰通过；无接触仍UNKNOWN，需补体积包含、连续关节路径、手/相机/机身/持物/环境。默认模型符号映射与所有hash约束仍必须保留，不允许因FCL已安装放开动作。

@@ -314,3 +314,15 @@ tools/fetch_p7_collision_assets.py复现下载，4线程读取公共LFS媒体，
 下一步自主工作：细化保守代理或引入经验证的网格接触检查，并明确安装接缝策略；继续补工具/相机/持物/环境模型。完整碰撞保持UNKNOWN，不把图形资产加载成功当物理避碰通过。C1-04/C2-03仍部分完成。
 
 第十六批最终回归：`python -m pytest -q --basetemp=.test-tmp-c16-final2`：131 passed；无新依赖安装，无硬件动作。
+
+## 第十七批：FCL环境配置与三角网格查询（C1-04/C2-03）
+
+用户明确授权配置所需环境。主机创建独立c_planning_venv，Python3.12.3；未改已有控制/视觉venv、不用sudo、不修改SDK。首次安装因pytest/Cython大型索引响应截断失败；--no-deps尝试仍下载慢，中断pip后在本地下载Linux wheels，通过SCP传入公共软件分发包，逐个SHA256一致后使用--no-index安装完整numpy/FCL/Cython。非源码绕过授权；没有上传控制代码。固定版本见requirements-linux-fcl.txt与wheel锁清单。
+
+本机另建artifacts/planning_venv以测试项目FCL后端。安装FCL0.7.0.11、numpy2.2.6、Cython3.3.1和项目依赖/测试库；默认Python环境未改。最初测试因独立env缺PyYAML导入失败，补项目依赖后全套134 passed，pip check无冲突。主机最小env用assert验证sphere/mesh相交及1m分离，pip check无冲突，报告remote_fcl_environment_C17.json。没有把本地134项说成主机全套结果。
+
+新增planning/fcl_mesh.py：可选延迟import FCL，具名三角mesh BVH、明确同系姿态、逐pair surface collision/distance、显式clearance、严格排除pair和理由。缺pose、非法indices、非有限数据拒绝。无接触status仍UNKNOWN，表面相交/距离不足FAIL，不混淆体积包含/连续路径/物理安全。新增3项FCL回归。
+
+新增tools/audit_p7_fcl.py：读C16哈希锁资产、显式SDK→vendor符号映射，两个synthetic姿态8mesh各28pair；无任何排除，各有6组表面相交，证据p7_fcl_mesh_audit_C17.json。可能存在安装接缝/模型声明重叠，不视作实物碰撞；不自动排除使其通过。所有形状在声明L_arm_root系，无假相机/table外参。
+
+部署/重建/故障处理/范围详见FCL_SETUP.md。可选依赖planning extra不影响默认离线安装。测试命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-fcl-full：134 passed，pip check通过；主机基础几何assert通过。无CAN访问/相机开流/机器人动作；SSH已退出。下一自主工作为厂家安装接触过滤核对、完整场景模型与连续轨迹覆盖，不等用户配置库。

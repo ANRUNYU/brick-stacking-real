@@ -1,0 +1,17 @@
+[
+  {
+    "file": "cython-3.3.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+    "bytes": 3418124,
+    "sha256": "215669fd0ce792080cd4d0748db7e1e31f424b6706a6220d08339895e6a3a03a"
+  },
+  {
+    "file": "numpy-2.2.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+    "bytes": 16527618,
+    "sha256": "fd83c01228a688733f1ded5201c678f0c53ecc1006ffbc404db9f7a899ac6249"
+  },
+  {
+    "file": "python_fcl-0.7.0.11-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+    "bytes": 4659289,
+    "sha256": "3ac7b02f47d7fb881e5786be8328da3c586af9b8c2f0eb07c4a3ed9342f810e2"
+  }
+]
