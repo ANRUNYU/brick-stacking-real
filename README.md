@@ -1,5 +1,7 @@
 # brick-stacking-real
 
+[D1-01 公共契约、离线预览与 M0 样例索引](docs/team/D1-01.md)
+
 独立真机项目的 **Python 离线开发 v0.2.0**。依据根目录两份设计/命名文档，从头实现；未导入 Rabokit 控制代码，未安装或实例化任何硬件 SDK。Windows 开发，Ubuntu 24.04 + ROS 2 Jazzy 部署目标已由团队确认。
 
 ## 当前可用
