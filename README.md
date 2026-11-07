@@ -56,3 +56,5 @@ M0：工程隔离、接口来源审计已建立，设备个体待核验，Ubuntu
 先补充实机 RGB-D 记录与分辨率、对齐方式，再做固定标注测试集、桌面分离与多视角实例分割。未知安装变换、TCP、限位、安全速度始终保留未知值。
 
 入口文档：[设备清单](docs/HARDWARE_INVENTORY.md)、[API 审计](docs/API_AUDIT.md)、[开放问题](docs/OPEN_QUESTIONS.md)、[测试计划](docs/TEST_PLAN.md)。团队已指定远端 ANRUNYU/brick-stacking-real，但本轮连接器返回 404、Git 网络查询失败，未发布代码。该目录尚未初始化独立 Git 仓库；运行记录中 `source_commit=null` 明示当前状态，并记录源码摘要。
+
+C 标定/规划离线工具与边界见 [C 任务状态与交接](docs/team/C/STATUS.md)。

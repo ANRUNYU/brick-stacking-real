@@ -1,0 +1,178 @@
+{
+  "dataset_id": "synthetic-1",
+  "source_frame": "camera",
+  "target_frame": "world",
+  "device_serial": "SYNTHETIC",
+  "profile": {
+    "width": 640,
+    "height": 480
+  },
+  "clock_domain": "host_monotonic",
+  "epoch": "mock-1",
+  "source": "synthetic",
+  "units": "m",
+  "train": [
+    {
+      "sample_id": "train-0",
+      "source_m": [
+        0,
+        0,
+        0
+      ],
+      "target_m": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "profile": {
+        "width": 640,
+        "height": 480
+      },
+      "clock_domain": "host_monotonic",
+      "epoch": "mock-1",
+      "host_stamp_s": 0.0
+    },
+    {
+      "sample_id": "train-1",
+      "source_m": [
+        0.1,
+        0,
+        0
+      ],
+      "target_m": [
+        0.2,
+        0.1,
+        0.1
+      ],
+      "profile": {
+        "width": 640,
+        "height": 480
+      },
+      "clock_domain": "host_monotonic",
+      "epoch": "mock-1",
+      "host_stamp_s": 1.0
+    },
+    {
+      "sample_id": "train-2",
+      "source_m": [
+        0,
+        0.1,
+        0
+      ],
+      "target_m": [
+        0.1,
+        0.2,
+        0.1
+      ],
+      "profile": {
+        "width": 640,
+        "height": 480
+      },
+      "clock_domain": "host_monotonic",
+      "epoch": "mock-1",
+      "host_stamp_s": 2.0
+    },
+    {
+      "sample_id": "train-3",
+      "source_m": [
+        0,
+        0,
+        0.1
+      ],
+      "target_m": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "profile": {
+        "width": 640,
+        "height": 480
+      },
+      "clock_domain": "host_monotonic",
+      "epoch": "mock-1",
+      "host_stamp_s": 3.0
+    }
+  ],
+  "validation": [
+    {
+      "sample_id": "validation-0",
+      "source_m": [
+        0.02,
+        0.02,
+        0.02
+      ],
+      "target_m": [
+        0.12000000000000001,
+        0.12000000000000001,
+        0.12000000000000001
+      ],
+      "profile": {
+        "width": 640,
+        "height": 480
+      },
+      "clock_domain": "host_monotonic",
+      "epoch": "mock-1",
+      "host_stamp_s": 0.0
+    },
+    {
+      "sample_id": "validation-1",
+      "source_m": [
+        0.12000000000000001,
+        0.02,
+        0.02
+      ],
+      "target_m": [
+        0.22000000000000003,
+        0.12000000000000001,
+        0.12000000000000001
+      ],
+      "profile": {
+        "width": 640,
+        "height": 480
+      },
+      "clock_domain": "host_monotonic",
+      "epoch": "mock-1",
+      "host_stamp_s": 1.0
+    },
+    {
+      "sample_id": "validation-2",
+      "source_m": [
+        0.02,
+        0.12000000000000001,
+        0.02
+      ],
+      "target_m": [
+        0.12000000000000001,
+        0.22000000000000003,
+        0.12000000000000001
+      ],
+      "profile": {
+        "width": 640,
+        "height": 480
+      },
+      "clock_domain": "host_monotonic",
+      "epoch": "mock-1",
+      "host_stamp_s": 2.0
+    },
+    {
+      "sample_id": "validation-3",
+      "source_m": [
+        0.02,
+        0.02,
+        0.12000000000000001
+      ],
+      "target_m": [
+        0.12000000000000001,
+        0.12000000000000001,
+        0.22000000000000003
+      ],
+      "profile": {
+        "width": 640,
+        "height": 480
+      },
+      "clock_domain": "host_monotonic",
+      "epoch": "mock-1",
+      "host_stamp_s": 3.0
+    }
+  ]
+}
