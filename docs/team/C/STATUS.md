@@ -354,3 +354,23 @@ tools/audit_o6_fcl.py：检查全部hash、identity mesh origin/scale、XML/URDF
 复现：PYTHONPATH=src，先tools/fetch_o6_collision_assets.py <新目录>，再tools/audit_o6_fcl.py <目录> <新报告.json>。FCL使用独立planning_venv。最近全套144 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c19-final。新增mimic方向/限位/循环、缺省拒绝mimic、OBJ索引与非三角面拒绝回归。没有硬件动作。
 
 下一自主工作：读取可核验P7→O6固定安装来源后组合臂/手检查；D的实际预设/6通道到rad映射不可由模型限位猜。现阶段手模型覆盖是独立手内，不是已包含在C18臂轨迹连续表面判据中。相机/持物/真实环境仍缺，不申请真实动作许可。
+
+## 第二十批：左臂手组合、报告/采样CLI、候选和交付（C1-02/C1-04/C2-01/C2-03/C2-04）
+
+通过Windows系统证书支持的GitHub公开API读取目录后，找到正确workstation p7_i1_o6_bimanual，并锁commit d0224b8da58802fe7cb2e35dcc9771693c4543b6（此前Python对API证书失败，未绕过TLS）。固定提交下P7/O6组件URDF的SHA256与已下载锁文件完全一致。recipe/manifest/workstation URDF也已读取并互核hash，只提取左侧固定安装关系，不开发双臂。
+
+配置p7_o6_left_mount_candidate.json保存L8_Link→lh_hand_base_link固定变换、厂商commit和recipe/装配/component hash。recipe左安装平移约Z2mm，RPY保留原文精度[3.1416,0,-1.5708]，不擅自圆整；它是机械掌根安装，不是任务TCP。tool_assembly.py复用RigidTransform按非交换链组合，拒绝名字/坐标不匹配。
+
+工具audit_arm_hand_fcl.py串接8臂+12手=20实际厂家mesh，使用七轴符号映射、mimic展开和厂家臂内/手内/臂手安装排除。两组synthetic手势、零臂姿态及对应synthetic quintic臂路径采样均无非排除表面相交，报告arm_hand_fcl_C20.json。手姿态固定、无真实预设映射；不含机身/相机/持物/环境。组合full_collision UNKNOWN。C18连续证据只适用于8臂mesh，未扩展给20组合。无任何硬件动作；source明确为厂商资产+synthetic姿态。
+
+新增planning/approach_candidates.py，显式世界系unit方向与clearance生成6阶段TCP目标，无默认world-up或可行性；复用TCP偏移反解，输入capture stamp保留供上下文校验。候选可交给pose_path/候选评估链，方向未知/非单位/重复拒绝。生成目标不约束实际Cartesian直线，仍须完整关节路径碰撞。
+
+C2-01兼容增量：build_stacking_slots增加gap_m=0.0，原调用结果保持一致；正gap保持居中层和双支撑DAG，gap>=edge/负值/非有限拒绝。几何正重叠不代表实际稳定性。c_ten_slot_sample.py已实际生成十槽位/释放目标SYNTHETIC样例。
+
+C1-02新增solve_tcp_pivot.py：完整metadata、最少4训练+4独立验证样本、ID分离、clock/epoch和矩阵校验，求平移及留出残差；输出旋转null/approved false，拒绝缺项。已生成tcp_pivot_synthetic.json并实际运行CLI；它不是实测数据。
+
+C2-04新增validation_report.py及c_validation_report.py：按stage/source/assisted/config/calibration/scene/clock/epoch分组，保留失败/UNKNOWN/缺误差样本数，ACK不是SUCCEEDED，mock/回放/人工不计无人工真机成功。输出仅描述统计、acceptance INCONCLUSIVE。mock_trials.json与CLI实际运行通过，无虚构真实成功。
+
+源码打包工具增量纳入calibration examples/templates/installation及精确FCL requirements/lock，排除calibration approved真实数据、虚拟环境、原图、SDK/mesh与无关txt；有回归验证。SOFTWARE_REVIEW.md集中可运行入口，NEXT_FIELD_SESSION.md列下一次实际标定需要的输入与现场物品，HANDOFF_ABD同步。用户已实测确认安装尺寸，不再重复要求量尺寸。
+
+全套154 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c20-freeze。Mock十块既有e2e、所有原模块及新增回归均覆盖；未推送/合并/创建Issue。剩余实机依赖：真实TCP/头部→base矩阵、A时刻对齐新鲜状态、D实际手预设映射及真实场景/安全限值/停车证据。未宣称九项C任务或M3/M5/M6全部完成。

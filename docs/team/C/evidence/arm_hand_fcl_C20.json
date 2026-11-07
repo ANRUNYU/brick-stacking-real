@@ -1,0 +1,3677 @@
+{
+  "source": "manufacturer_left_arm_hand_at_synthetic_joint_poses_not_hardware",
+  "mount_commit": "d0224b8da58802fe7cb2e35dcc9771693c4543b6",
+  "assembly_sha256": "4aca70b641295ceb0e0c6d489a54003d06afe46ed588e3f534e7dc174a0494ca",
+  "mesh_count": 20,
+  "results": [
+    {
+      "status": "UNKNOWN",
+      "sampled_status": "PASS",
+      "scope": "FCL triangle surfaces at supplied poses only",
+      "model_version": "4aca70b641295ceb0e0c6d489a54003d06afe46ed588e3f534e7dc174a0494ca",
+      "missing": [
+        "solid containment without intersecting surfaces",
+        "continuous joint-space motion",
+        "physical/unmodeled geometry"
+      ],
+      "pairs": [
+        {
+          "first": "L1_Link",
+          "second": "L3_Link",
+          "surface_intersection": false,
+          "distance_m": 0.07475928013840588,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L4_Link",
+          "surface_intersection": false,
+          "distance_m": 0.20909278762526867,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.32112159677709456,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.4208203039005955,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.4864055347547769,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.5622035820162908,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_hand_base_link",
+          "surface_intersection": false,
+          "distance_m": 0.5632000264549919,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_index_distal",
+          "surface_intersection": false,
+          "distance_m": 0.6943684737977436,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_index_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.6540763893643785,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_middle_distal",
+          "surface_intersection": false,
+          "distance_m": 0.6983936326275689,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_middle_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.6580418947664654,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.6880777436892747,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.6480498711930974,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.6942104992878513,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.6540594285246171,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.6014120883021892,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.5781246317628927,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.5800046224709686,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L4_Link",
+          "surface_intersection": false,
+          "distance_m": 0.12949077824438435,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.24220873433947565,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.34158170392794684,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.40750024874210355,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.4832251645422262,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_hand_base_link",
+          "surface_intersection": false,
+          "distance_m": 0.4842201775480994,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_index_distal",
+          "surface_intersection": false,
+          "distance_m": 0.6154328532280952,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_index_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.5751119958702282,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_middle_distal",
+          "surface_intersection": false,
+          "distance_m": 0.6195729115780004,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_middle_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.5792410413237135,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.6090421947132416,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.5690755556460795,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.6152208458305871,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.5751684970042907,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.5219651831627793,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.49883112325029755,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.5008055655931994,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.04918037371807455,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.14875469229343413,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.21615650907327935,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.2902635759649455,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_hand_base_link",
+          "surface_intersection": false,
+          "distance_m": 0.29126358019785414,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_index_distal",
+          "surface_intersection": false,
+          "distance_m": 0.4232665254047033,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_index_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.3829254018722119,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_middle_distal",
+          "surface_intersection": false,
+          "distance_m": 0.4264467624589282,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_middle_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.3861579008295031,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.41744078388258077,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.37716640604371254,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.42257457223236616,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.3823066162446004,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.3330372991790562,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.308315230337977,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.3088845253018724,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.0566222287782641,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.1228607432563383,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.19810021515315718,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_hand_base_link",
+          "surface_intersection": false,
+          "distance_m": 0.1991001140897323,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_index_distal",
+          "surface_intersection": false,
+          "distance_m": 0.3304439247188852,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_index_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.2900695931325497,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_middle_distal",
+          "surface_intersection": false,
+          "distance_m": 0.3342818659759751,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_middle_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.29393864374599815,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.3243557697761624,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.2841557898701229,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.3300914433738494,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.28995649359187625,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.2421112215000407,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.2157481073038267,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.2160968685071008,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.02170620618158655,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.07996911240247606,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_hand_base_link",
+          "surface_intersection": false,
+          "distance_m": 0.08086781209109338,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_index_distal",
+          "surface_intersection": false,
+          "distance_m": 0.2137927293661807,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_index_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.17413567603302438,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_middle_distal",
+          "surface_intersection": false,
+          "distance_m": 0.21642188421893832,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_middle_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.1771656084645166,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.20841415019325568,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.16861179239506596,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.21269106284386174,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.17330851357930185,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.12878918538459355,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.10049704626165226,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.10030367938285518,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.013046116929290093,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_hand_base_link",
+          "surface_intersection": false,
+          "distance_m": 0.014046103131907683,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_index_distal",
+          "surface_intersection": false,
+          "distance_m": 0.14542282675776702,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_index_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.10502929789114566,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_middle_distal",
+          "surface_intersection": false,
+          "distance_m": 0.14934242055424216,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_middle_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.10892087021794734,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.1395599219340406,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.09921846652025597,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.14513035804894994,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.10491189862633128,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.07196782923574946,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.03703986504770591,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.03277753124020524,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_hand_base_link",
+          "surface_intersection": false,
+          "distance_m": 4.1249180272873165e-08,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_index_distal",
+          "surface_intersection": false,
+          "distance_m": 0.12898255685939403,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_index_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.08882757418198702,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_middle_distal",
+          "surface_intersection": false,
+          "distance_m": 0.13454682924390657,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_middle_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.09524698901319172,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.12256626052273376,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.08261605920339508,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.129466319514742,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.09043621412645038,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.04774141604070854,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.013546170376939603,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.01441449083319556,
+          "clearance_violation": false
+        },
+        {
+          "first": "L8_Link",
+          "second": "lh_index_distal",
+          "surface_intersection": false,
+          "distance_m": 0.13151955903560955,
+          "clearance_violation": false
+        },
+        {
+          "first": "L8_Link",
+          "second": "lh_index_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.09119911144880907,
+          "clearance_violation": false
+        },
+        {
+          "first": "L8_Link",
+          "second": "lh_middle_distal",
+          "surface_intersection": false,
+          "distance_m": 0.1354214497257955,
+          "clearance_violation": false
+        },
+        {
+          "first": "L8_Link",
+          "second": "lh_middle_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.09524590847152471,
+          "clearance_violation": false
+        },
+        {
+          "first": "L8_Link",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.12594930642060878,
+          "clearance_violation": false
+        },
+        {
+          "first": "L8_Link",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.08556996652338886,
+          "clearance_violation": false
+        },
+        {
+          "first": "L8_Link",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.13099205328171404,
+          "clearance_violation": false
+        },
+        {
+          "first": "L8_Link",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.09094487745452833,
+          "clearance_violation": false
+        },
+        {
+          "first": "L8_Link",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.06795849540340038,
+          "clearance_violation": false
+        },
+        {
+          "first": "L8_Link",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.02743492836217746,
+          "clearance_violation": false
+        },
+        {
+          "first": "L8_Link",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.020235629931125845,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_hand_base_link",
+          "second": "lh_index_distal",
+          "surface_intersection": false,
+          "distance_m": 0.022868685554769303,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_hand_base_link",
+          "second": "lh_middle_distal",
+          "surface_intersection": false,
+          "distance_m": 0.02444860664600709,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_hand_base_link",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.021825476200162047,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_hand_base_link",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.022732466172245294,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_hand_base_link",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.038737410443768557,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_distal",
+          "second": "lh_middle_distal",
+          "surface_intersection": false,
+          "distance_m": 0.008363301578355388,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_distal",
+          "second": "lh_middle_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.008064099446106724,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_distal",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.04692163100152026,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_distal",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.04711156028579623,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_distal",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.027951924947734623,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_distal",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.027823850642273364,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_distal",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.09745328035490786,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_distal",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.088188145841859,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_distal",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.09511203091378528,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_proximal",
+          "second": "lh_middle_distal",
+          "surface_intersection": false,
+          "distance_m": 0.009366223841834737,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_proximal",
+          "second": "lh_middle_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.005887484205077116,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_proximal",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.04614433828968233,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_proximal",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.042118643121739775,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_proximal",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.028028870530268035,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_proximal",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.02409349693990187,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_proximal",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.0658069566839369,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_proximal",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.05030496448081668,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_proximal",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.054501689143840626,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_distal",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.02722880068785853,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_distal",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.02849507087225132,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_distal",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.007921261517250654,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_distal",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.008932164706659333,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_distal",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.110711313000317,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_distal",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.09794793777273424,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_distal",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.10002199374635805,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_proximal",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.026281184164697637,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_proximal",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.02389776315758994,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_proximal",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.007791832822221331,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_proximal",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.005553811376055753,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_proximal",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.08014564624503709,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_proximal",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.060613937948833206,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_proximal",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.059954841366222346,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_pinky_distal",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.007197165895173,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_pinky_distal",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.00701972540518407,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_pinky_distal",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.12621264034480859,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_pinky_distal",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.1051702166916413,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_pinky_distal",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.10127350313205447,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_pinky_proximal",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.008638061868291526,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_pinky_proximal",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.005292714612051435,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_pinky_proximal",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.10081089587592222,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_pinky_proximal",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.0734442878888891,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_pinky_proximal",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.06626417402611065,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_ring_distal",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.11856995911794659,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_ring_distal",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.10138609351308116,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_ring_distal",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.10013389163045974,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_ring_proximal",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.09009578683450607,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_ring_proximal",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.06639397590628425,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_ring_proximal",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.06181929975783597,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_thumb_distal",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.03609662169489143,
+          "clearance_violation": false
+        }
+      ],
+      "full_collision": "UNKNOWN",
+      "motion_enabled": false,
+      "exclusions": [
+        {
+          "pair": [
+            "L1_Link",
+            "L2_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L2_Link",
+            "L3_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L3_Link",
+            "L4_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L4_Link",
+            "L5_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L5_Link",
+            "L6_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L6_Link",
+            "L7_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L7_Link",
+            "L8_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "lh_hand_base_link",
+            "lh_thumb_metacarpals_base2"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "lh_thumb_metacarpals",
+            "lh_thumb_metacarpals_base2"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "lh_thumb_distal",
+            "lh_thumb_metacarpals"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "lh_hand_base_link",
+            "lh_index_proximal"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "lh_index_distal",
+            "lh_index_proximal"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "lh_hand_base_link",
+            "lh_middle_proximal"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "lh_middle_distal",
+            "lh_middle_proximal"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "lh_hand_base_link",
+            "lh_ring_proximal"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "lh_ring_distal",
+            "lh_ring_proximal"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "lh_hand_base_link",
+            "lh_pinky_proximal"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "lh_pinky_distal",
+            "lh_pinky_proximal"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "lh_hand_base_link",
+            "lh_thumb_metacarpals"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "L8_Link",
+            "lh_hand_base_link"
+          ],
+          "reason": "pinned vendor recipe installation seam; recipe sha256=d58f3fc7c9bcb56430b1291a2b8dde283a2df529db7f1a27ce5a3c9ed565ab6d"
+        }
+      ],
+      "synthetic_hand_rad": {
+        "lh_thumb_cmc_yaw": 0.0,
+        "lh_thumb_cmc_pitch": 0.0,
+        "lh_index_mcp_pitch": 0.0,
+        "lh_middle_mcp_pitch": 0.0,
+        "lh_ring_mcp_pitch": 0.0,
+        "lh_pinky_mcp_pitch": 0.0
+      },
+      "path": {
+        "status": "UNKNOWN",
+        "sampled_status": "PASS",
+        "scope": "FCL triangle surfaces sampled along declared quintic joint path",
+        "model_version": "4aca70b641295ceb0e0c6d489a54003d06afe46ed588e3f534e7dc174a0494ca",
+        "source_model_version": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+        "scene_version": "synthetic-left-arm-hand-only",
+        "samples_checked": 58,
+        "sample_dt_s": 0.05,
+        "min_sampled_distance_m": 4.124918015491197e-08,
+        "coverage_names": [
+          "L1_Link",
+          "L2_Link",
+          "L3_Link",
+          "L4_Link",
+          "L5_Link",
+          "L6_Link",
+          "L7_Link",
+          "L8_Link",
+          "lh_hand_base_link",
+          "lh_index_distal",
+          "lh_index_proximal",
+          "lh_middle_distal",
+          "lh_middle_proximal",
+          "lh_pinky_distal",
+          "lh_pinky_proximal",
+          "lh_ring_distal",
+          "lh_ring_proximal",
+          "lh_thumb_distal",
+          "lh_thumb_metacarpals",
+          "lh_thumb_metacarpals_base2"
+        ],
+        "checks": [
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.0,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.04939144736842105,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.0987828947368421,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.14817434210526315,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.1975657894736842,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.24695723684210524,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.2963486842105263,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.34574013157894734,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.3951315789473684,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.44452302631578944,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.4939144736842105,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.5433059210526315,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.5926973684210526,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.6420888157894736,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.6914802631578947,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.7408717105263157,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.7902631578947368,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.8396546052631578,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.8890460526315789,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.9384374999999999,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.987828947368421,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.037220394736842,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.086611842105263,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.1360032894736842,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.1853947368421052,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.234786184210526,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.2841776315789473,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.3335690789473684,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.3829605263157894,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.4323519736842103,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.4817434210526315,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.5311348684210526,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.5805263157894736,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.6299177631578945,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.6793092105263157,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.7287006578947368,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.7780921052631578,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.8274835526315787,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.8768749999999998,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.926266447368421,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.975657894736842,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.025049342105263,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.074440789473684,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.123832236842105,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.173223684210526,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.222615131578947,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.2720065789473685,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.3213980263157894,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.3707894736842103,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.4201809210526313,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.469572368421052,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.5189638157894736,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.5683552631578945,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.6177467105263155,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.667138157894737,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.716529605263158,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.7659210526315787,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.8153124999999997,
+            "sampled_status": "PASS"
+          }
+        ],
+        "contacts": [],
+        "missing": [
+          "torso",
+          "camera",
+          "payload",
+          "environment",
+          "physical preset mapping",
+          "continuous articulated motion",
+          "solid containment"
+        ],
+        "full_collision": "UNKNOWN",
+        "motion_enabled": false,
+        "exclusions": [
+          {
+            "pair": [
+              "L1_Link",
+              "L2_Link"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+          },
+          {
+            "pair": [
+              "L2_Link",
+              "L3_Link"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+          },
+          {
+            "pair": [
+              "L3_Link",
+              "L4_Link"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+          },
+          {
+            "pair": [
+              "L4_Link",
+              "L5_Link"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+          },
+          {
+            "pair": [
+              "L5_Link",
+              "L6_Link"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+          },
+          {
+            "pair": [
+              "L6_Link",
+              "L7_Link"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+          },
+          {
+            "pair": [
+              "L7_Link",
+              "L8_Link"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+          },
+          {
+            "pair": [
+              "lh_hand_base_link",
+              "lh_thumb_metacarpals_base2"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "lh_thumb_metacarpals",
+              "lh_thumb_metacarpals_base2"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "lh_thumb_distal",
+              "lh_thumb_metacarpals"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "lh_hand_base_link",
+              "lh_index_proximal"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "lh_index_distal",
+              "lh_index_proximal"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "lh_hand_base_link",
+              "lh_middle_proximal"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "lh_middle_distal",
+              "lh_middle_proximal"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "lh_hand_base_link",
+              "lh_ring_proximal"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "lh_ring_distal",
+              "lh_ring_proximal"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "lh_hand_base_link",
+              "lh_pinky_proximal"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "lh_pinky_distal",
+              "lh_pinky_proximal"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "lh_hand_base_link",
+              "lh_thumb_metacarpals"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "L8_Link",
+              "lh_hand_base_link"
+            ],
+            "reason": "pinned vendor recipe installation seam; recipe sha256=d58f3fc7c9bcb56430b1291a2b8dde283a2df529db7f1a27ce5a3c9ed565ab6d"
+          }
+        ]
+      }
+    },
+    {
+      "status": "UNKNOWN",
+      "sampled_status": "PASS",
+      "scope": "FCL triangle surfaces at supplied poses only",
+      "model_version": "4aca70b641295ceb0e0c6d489a54003d06afe46ed588e3f534e7dc174a0494ca",
+      "missing": [
+        "solid containment without intersecting surfaces",
+        "continuous joint-space motion",
+        "physical/unmodeled geometry"
+      ],
+      "pairs": [
+        {
+          "first": "L1_Link",
+          "second": "L3_Link",
+          "surface_intersection": false,
+          "distance_m": 0.07475928013840588,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L4_Link",
+          "surface_intersection": false,
+          "distance_m": 0.20909278762526867,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.32112159677709456,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.4208203039005955,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.4864055347547769,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.5622035820162908,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_hand_base_link",
+          "surface_intersection": false,
+          "distance_m": 0.5632000264549919,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_index_distal",
+          "surface_intersection": false,
+          "distance_m": 0.6883825355561844,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_index_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.6540568780383238,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_middle_distal",
+          "surface_intersection": false,
+          "distance_m": 0.6923824804739792,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_middle_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.6580457400317279,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.6822017188925861,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.6480695193435142,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.6883017977235972,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.6540782780876021,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.6096100234170646,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.5805852489048421,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.5800146588666351,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L4_Link",
+          "surface_intersection": false,
+          "distance_m": 0.12949077824438435,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.24220873433947565,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.34158170392794684,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.40750024874210355,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.4832251645422262,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_hand_base_link",
+          "surface_intersection": false,
+          "distance_m": 0.4842201775480994,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_index_distal",
+          "surface_intersection": false,
+          "distance_m": 0.6088539659015968,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_index_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.5750873884412525,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_middle_distal",
+          "surface_intersection": false,
+          "distance_m": 0.6128515514048675,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_middle_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.5792328950872241,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.6026865611842297,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.5690924293429681,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.6088389237479085,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.5751847303311772,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.5294650855215725,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.5010619875960712,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.5007997217936133,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.04918037371807455,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.14875469229343413,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.21615650907327935,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.2902635759649455,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_hand_base_link",
+          "surface_intersection": false,
+          "distance_m": 0.29126358019785414,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_index_distal",
+          "surface_intersection": false,
+          "distance_m": 0.41668134448109956,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_index_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.3829291832898937,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_middle_distal",
+          "surface_intersection": false,
+          "distance_m": 0.4199415778223929,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_middle_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.38617546208880066,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.41088346599023196,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.37718401764865594,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.4160760018382225,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.3823243645093642,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.33891307615131777,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.3096487451036375,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.30872920273617815,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.0566222287782641,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.1228607432563383,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.19810021515315718,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_hand_base_link",
+          "surface_intersection": false,
+          "distance_m": 0.1991001140897323,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_index_distal",
+          "surface_intersection": false,
+          "distance_m": 0.32453764402707186,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_index_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.2900647378618525,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_middle_distal",
+          "surface_intersection": false,
+          "distance_m": 0.32793374252500573,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_middle_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.29394239381571746,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.31865913724087475,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.28417486225766053,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.32399576579326483,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.2899747213126654,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.24905068280036177,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.21778140172885357,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.2160181125330839,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.02170620618158655,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.07996911240247606,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_hand_base_link",
+          "surface_intersection": false,
+          "distance_m": 0.08086781209109338,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_index_distal",
+          "surface_intersection": false,
+          "distance_m": 0.205524229803145,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_index_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.17412658844746565,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_middle_distal",
+          "surface_intersection": false,
+          "distance_m": 0.20838047845786942,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_middle_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.1771540848454865,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.19995271592542677,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.16860036075794016,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.2045524002246082,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.17329684536476192,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.1319332830375,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.10048106233989451,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.09968091231481184,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.013046116929290093,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_hand_base_link",
+          "surface_intersection": false,
+          "distance_m": 0.014046103131907683,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_index_distal",
+          "surface_intersection": false,
+          "distance_m": 0.14085785925030334,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_index_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.10503659682150226,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_middle_distal",
+          "surface_intersection": false,
+          "distance_m": 0.14451067675408472,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_middle_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.10893502689106203,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.13512006242321675,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.09923495031604902,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.1404592651028991,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.10493253346583685,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.0773420498310077,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.03769511919881635,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.032941485232686384,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_hand_base_link",
+          "surface_intersection": false,
+          "distance_m": 4.1249180272873165e-08,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_index_distal",
+          "surface_intersection": false,
+          "distance_m": 0.12261540684661937,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_index_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.08876525039528824,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_middle_distal",
+          "surface_intersection": false,
+          "distance_m": 0.12723314768722954,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_middle_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.09519683220324568,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.11643482772442162,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.08263527862471617,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.12266903027988996,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.09048515250212978,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.05327469144710949,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.015638299341654296,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.01447653524604574,
+          "clearance_violation": false
+        },
+        {
+          "first": "L8_Link",
+          "second": "lh_index_distal",
+          "surface_intersection": false,
+          "distance_m": 0.12627301712341388,
+          "clearance_violation": false
+        },
+        {
+          "first": "L8_Link",
+          "second": "lh_index_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.09121694259220099,
+          "clearance_violation": false
+        },
+        {
+          "first": "L8_Link",
+          "second": "lh_middle_distal",
+          "surface_intersection": false,
+          "distance_m": 0.1291303935209204,
+          "clearance_violation": false
+        },
+        {
+          "first": "L8_Link",
+          "second": "lh_middle_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.09519465586229589,
+          "clearance_violation": false
+        },
+        {
+          "first": "L8_Link",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.12090006538182312,
+          "clearance_violation": false
+        },
+        {
+          "first": "L8_Link",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.08556863413379492,
+          "clearance_violation": false
+        },
+        {
+          "first": "L8_Link",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.12538464711034839,
+          "clearance_violation": false
+        },
+        {
+          "first": "L8_Link",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.09096317349123842,
+          "clearance_violation": false
+        },
+        {
+          "first": "L8_Link",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.06918235313002405,
+          "clearance_violation": false
+        },
+        {
+          "first": "L8_Link",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.025947810099806803,
+          "clearance_violation": false
+        },
+        {
+          "first": "L8_Link",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.0199776345359528,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_hand_base_link",
+          "second": "lh_index_distal",
+          "surface_intersection": false,
+          "distance_m": 0.02443464397219419,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_hand_base_link",
+          "second": "lh_middle_distal",
+          "surface_intersection": false,
+          "distance_m": 0.0249861439940677,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_hand_base_link",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.02382698877459136,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_hand_base_link",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.024007410515300916,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_hand_base_link",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.036814853126958556,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_distal",
+          "second": "lh_middle_distal",
+          "surface_intersection": false,
+          "distance_m": 0.007716210518110819,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_distal",
+          "second": "lh_middle_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.008449016633266776,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_distal",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.045344641176717757,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_distal",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.04554604506966364,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_distal",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.026679268671184895,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_distal",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.027238241131726453,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_distal",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.053162003740058535,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_distal",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.06865803688258927,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_distal",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.0890552481263963,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_proximal",
+          "second": "lh_middle_distal",
+          "surface_intersection": false,
+          "distance_m": 0.008386001380220925,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_proximal",
+          "second": "lh_middle_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.005689836513688316,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_proximal",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.04497944974164903,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_proximal",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.04155667321528885,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_proximal",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.0270198928395822,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_proximal",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.023683754998971147,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_proximal",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.05834153518361708,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_proximal",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.04804106350095169,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_index_proximal",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.05448043537723605,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_distal",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.026325277110231086,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_distal",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.026677653669636644,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_distal",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.0073185397915735495,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_distal",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.008081712597606212,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_distal",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.06932523568089817,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_distal",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.07945683245731953,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_distal",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.09360334979493365,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_proximal",
+          "second": "lh_pinky_distal",
+          "surface_intersection": false,
+          "distance_m": 0.026333335996055238,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_proximal",
+          "second": "lh_pinky_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.023576373160632658,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_proximal",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.007950111053387589,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_proximal",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.005327784053705173,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_proximal",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.07078304206351663,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_proximal",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.05800893196433379,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_middle_proximal",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.0598507784026236,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_pinky_distal",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.006804623843063252,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_pinky_distal",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.007577783180415702,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_pinky_distal",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.09343991205779839,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_pinky_distal",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.09019901110777065,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_pinky_distal",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.09568947994577598,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_pinky_proximal",
+          "second": "lh_ring_distal",
+          "surface_intersection": false,
+          "distance_m": 0.007543080038761798,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_pinky_proximal",
+          "second": "lh_ring_proximal",
+          "surface_intersection": false,
+          "distance_m": 0.005158472832617838,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_pinky_proximal",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.08865903969770994,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_pinky_proximal",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.06828782868225707,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_pinky_proximal",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.06629710613963113,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_ring_distal",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.08130536317201087,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_ring_distal",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.08496339828275068,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_ring_distal",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.093803849946717,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_ring_proximal",
+          "second": "lh_thumb_distal",
+          "surface_intersection": false,
+          "distance_m": 0.07930720700973615,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_ring_proximal",
+          "second": "lh_thumb_metacarpals",
+          "surface_intersection": false,
+          "distance_m": 0.06258280856824601,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_ring_proximal",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.06167614869402901,
+          "clearance_violation": false
+        },
+        {
+          "first": "lh_thumb_distal",
+          "second": "lh_thumb_metacarpals_base2",
+          "surface_intersection": false,
+          "distance_m": 0.03735190939100408,
+          "clearance_violation": false
+        }
+      ],
+      "full_collision": "UNKNOWN",
+      "motion_enabled": false,
+      "exclusions": [
+        {
+          "pair": [
+            "L1_Link",
+            "L2_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L2_Link",
+            "L3_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L3_Link",
+            "L4_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L4_Link",
+            "L5_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L5_Link",
+            "L6_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L6_Link",
+            "L7_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L7_Link",
+            "L8_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "lh_hand_base_link",
+            "lh_thumb_metacarpals_base2"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "lh_thumb_metacarpals",
+            "lh_thumb_metacarpals_base2"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "lh_thumb_distal",
+            "lh_thumb_metacarpals"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "lh_hand_base_link",
+            "lh_index_proximal"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "lh_index_distal",
+            "lh_index_proximal"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "lh_hand_base_link",
+            "lh_middle_proximal"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "lh_middle_distal",
+            "lh_middle_proximal"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "lh_hand_base_link",
+            "lh_ring_proximal"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "lh_ring_distal",
+            "lh_ring_proximal"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "lh_hand_base_link",
+            "lh_pinky_proximal"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "lh_pinky_distal",
+            "lh_pinky_proximal"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "lh_hand_base_link",
+            "lh_thumb_metacarpals"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+        },
+        {
+          "pair": [
+            "L8_Link",
+            "lh_hand_base_link"
+          ],
+          "reason": "pinned vendor recipe installation seam; recipe sha256=d58f3fc7c9bcb56430b1291a2b8dde283a2df529db7f1a27ce5a3c9ed565ab6d"
+        }
+      ],
+      "synthetic_hand_rad": {
+        "lh_thumb_cmc_yaw": 0.4,
+        "lh_thumb_cmc_pitch": 0.2,
+        "lh_index_mcp_pitch": 0.6,
+        "lh_middle_mcp_pitch": 0.6,
+        "lh_ring_mcp_pitch": 0.6,
+        "lh_pinky_mcp_pitch": 0.6
+      },
+      "path": {
+        "status": "UNKNOWN",
+        "sampled_status": "PASS",
+        "scope": "FCL triangle surfaces sampled along declared quintic joint path",
+        "model_version": "4aca70b641295ceb0e0c6d489a54003d06afe46ed588e3f534e7dc174a0494ca",
+        "source_model_version": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+        "scene_version": "synthetic-left-arm-hand-only",
+        "samples_checked": 58,
+        "sample_dt_s": 0.05,
+        "min_sampled_distance_m": 4.124918015491197e-08,
+        "coverage_names": [
+          "L1_Link",
+          "L2_Link",
+          "L3_Link",
+          "L4_Link",
+          "L5_Link",
+          "L6_Link",
+          "L7_Link",
+          "L8_Link",
+          "lh_hand_base_link",
+          "lh_index_distal",
+          "lh_index_proximal",
+          "lh_middle_distal",
+          "lh_middle_proximal",
+          "lh_pinky_distal",
+          "lh_pinky_proximal",
+          "lh_ring_distal",
+          "lh_ring_proximal",
+          "lh_thumb_distal",
+          "lh_thumb_metacarpals",
+          "lh_thumb_metacarpals_base2"
+        ],
+        "checks": [
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.0,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.04939144736842105,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.0987828947368421,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.14817434210526315,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.1975657894736842,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.24695723684210524,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.2963486842105263,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.34574013157894734,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.3951315789473684,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.44452302631578944,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.4939144736842105,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.5433059210526315,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.5926973684210526,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.6420888157894736,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.6914802631578947,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.7408717105263157,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.7902631578947368,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.8396546052631578,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.8890460526315789,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.9384374999999999,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 0.987828947368421,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.037220394736842,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.086611842105263,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.1360032894736842,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.1853947368421052,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.234786184210526,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.2841776315789473,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.3335690789473684,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.3829605263157894,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.4323519736842103,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.4817434210526315,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.5311348684210526,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.5805263157894736,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.6299177631578945,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.6793092105263157,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.7287006578947368,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.7780921052631578,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.8274835526315787,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.8768749999999998,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.926266447368421,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 1.975657894736842,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.025049342105263,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.074440789473684,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.123832236842105,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.173223684210526,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.222615131578947,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.2720065789473685,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.3213980263157894,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.3707894736842103,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.4201809210526313,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.469572368421052,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.5189638157894736,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.5683552631578945,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.6177467105263155,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.667138157894737,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.716529605263158,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.7659210526315787,
+            "sampled_status": "PASS"
+          },
+          {
+            "segment": 0,
+            "time_from_segment_start_s": 2.8153124999999997,
+            "sampled_status": "PASS"
+          }
+        ],
+        "contacts": [],
+        "missing": [
+          "torso",
+          "camera",
+          "payload",
+          "environment",
+          "physical preset mapping",
+          "continuous articulated motion",
+          "solid containment"
+        ],
+        "full_collision": "UNKNOWN",
+        "motion_enabled": false,
+        "exclusions": [
+          {
+            "pair": [
+              "L1_Link",
+              "L2_Link"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+          },
+          {
+            "pair": [
+              "L2_Link",
+              "L3_Link"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+          },
+          {
+            "pair": [
+              "L3_Link",
+              "L4_Link"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+          },
+          {
+            "pair": [
+              "L4_Link",
+              "L5_Link"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+          },
+          {
+            "pair": [
+              "L5_Link",
+              "L6_Link"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+          },
+          {
+            "pair": [
+              "L6_Link",
+              "L7_Link"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+          },
+          {
+            "pair": [
+              "L7_Link",
+              "L8_Link"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+          },
+          {
+            "pair": [
+              "lh_hand_base_link",
+              "lh_thumb_metacarpals_base2"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "lh_thumb_metacarpals",
+              "lh_thumb_metacarpals_base2"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "lh_thumb_distal",
+              "lh_thumb_metacarpals"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "lh_hand_base_link",
+              "lh_index_proximal"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "lh_index_distal",
+              "lh_index_proximal"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "lh_hand_base_link",
+              "lh_middle_proximal"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "lh_middle_distal",
+              "lh_middle_proximal"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "lh_hand_base_link",
+              "lh_ring_proximal"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "lh_ring_distal",
+              "lh_ring_proximal"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "lh_hand_base_link",
+              "lh_pinky_proximal"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "lh_pinky_distal",
+              "lh_pinky_proximal"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "lh_hand_base_link",
+              "lh_thumb_metacarpals"
+            ],
+            "reason": "vendor MJCF installation exclusion; sha256=3d0ca932028277620c234b984d2dd570fc9d8d82311db988e53ab4618485b643"
+          },
+          {
+            "pair": [
+              "L8_Link",
+              "lh_hand_base_link"
+            ],
+            "reason": "pinned vendor recipe installation seam; recipe sha256=d58f3fc7c9bcb56430b1291a2b8dde283a2df529db7f1a27ce5a3c9ed565ab6d"
+          }
+        ]
+      }
+    }
+  ],
+  "motion_enabled": false
+}

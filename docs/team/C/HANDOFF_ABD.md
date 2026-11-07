@@ -120,3 +120,11 @@ D/C：新增具名rad主动关节→mimic展开→全部指节FK→FCL12mesh检�
 来源/关节模型范围见vendor_o6_audit_C19.json，资产锁o6_asset_lock_C19.json，FCL结果o6_fcl_C19.json。源为厂家候选，不是已读实际手关节，不把全0叫open。D仍需给实际preset版本、单位和显式6通道到模型rad映射，以及安装/适用对象信息。不能从URDF上下限猜raw归一化。
 
 工具fetch_o6_collision_assets下载并hash锁定12OBJ及URDF/XML，audit_o6_fcl复现手内模型验证。尚未组合到P7臂路径，尚无手/相机/积木相互碰撞结论。本批SSH仅查资料文件，无设备访问。最新144 passed。
+
+## 最新补充：组合模型和可审阅软件交付（第二十批，154 passed）
+
+厂家正确配方p7_i1_o6_bimanual已找到，并锁commit d0224b8da58802fe7cb2e35dcc9771693c4543b6。现有臂/手URDF哈希与该提交一致。p7_o6_left_mount_candidate.json只记录左L8→掌根机械关系及来源，不是TCP。20mesh组合的两个固定synthetic手势与quintic臂路径已做FCL采样，无非排除相交；full_collision仍UNKNOWN，缺机身/相机/持物/环境。C18连续表面判据没有自动扩展到组合模型。
+
+新增接近候选生成、兼容gap_m的十块槽位、TCP枢轴独立验证CLI和按来源/版本/人工分组的试验报告器。样例和运行入口见SOFTWARE_REVIEW.md；所有SYNTHETIC输入禁止转作真实配置。计数/误差工具不把Mock/ACK/人工计作自主真机成功。
+
+下一现场采样要求见NEXT_FIELD_SESSION.md；不重复量安装尺寸。需要A提供无P7构造副作用的新鲜状态/时刻FK，B提供同步相机点，D提供实际预设映射；用户现场配合刚性指针/固定参考点（未安装未运动）。C所有候选仍不自动批准，任务未全验收。文档将随实际数据持续更新。
