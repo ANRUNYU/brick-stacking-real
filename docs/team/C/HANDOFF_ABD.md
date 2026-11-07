@@ -72,3 +72,5 @@ C2-02/M4-M5：`estimate_held_offset(training, validation, candidate_id=..., gras
 C2-04/M3-M6：`validate_plan_context(planned,current,created_stamp_s=...,expires_stamp_s=...,now_s=...)`。CONTEXT_KEYS列出13项设备/标定/工具/场景/时钟依赖；任何缺失或变化使计划失效，时间需同域。A/D需要在执行前调用并拒绝FAIL；它不代替实物身份、新鲜反馈、停止和全机碰撞校验，不生成permit。样例tests/unit/planning/test_context_validation.py。真实重装/夹持变更后仍须独立测点复验。
 
 九项C任务最新完成度见TASK_STATUS.md；本批未连接设备，未有真实运动。最终交付仍需实际标定、M3/M5/M6证据，不能冻结为全部完成。
+
+现场最新确认：机械臂已确认P7，不再重复索取型号；左肩第一轴旋转中心可见、无外壳遮挡，可开始物理安装尺寸核对。零位/轴正方向及相机安装仍独立未知。首先采肩部中心间距三次原始读数，名义约328mm只作厂家模型一致性检查，不作为已批准外参。
