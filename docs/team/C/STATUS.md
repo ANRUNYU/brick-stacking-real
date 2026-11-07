@@ -326,3 +326,15 @@ tools/fetch_p7_collision_assets.py复现下载，4线程读取公共LFS媒体，
 新增tools/audit_p7_fcl.py：读C16哈希锁资产、显式SDK→vendor符号映射，两个synthetic姿态8mesh各28pair；无任何排除，各有6组表面相交，证据p7_fcl_mesh_audit_C17.json。可能存在安装接缝/模型声明重叠，不视作实物碰撞；不自动排除使其通过。所有形状在声明L_arm_root系，无假相机/table外参。
 
 部署/重建/故障处理/范围详见FCL_SETUP.md。可选依赖planning extra不影响默认离线安装。测试命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-fcl-full：134 passed，pip check通过；主机基础几何assert通过。无CAN访问/相机开流/机器人动作；SSH已退出。下一自主工作为厂家安装接触过滤核对、完整场景模型与连续轨迹覆盖，不等用户配置库。
+
+## 第十八批：厂家接缝与关节路径/连续表面证据（C1-04/C2-03）
+
+下载厂家同路径arm.mjcf，内容SHA256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3。contact/exclude列出7个相邻link对；C17两姿态的6个surface相交都属于这些已声明对。新增vendor_exclusions.py严格校验来源hash、reviewed pair和重复/无效排除。config/planning/p7_vendor_installation_seams.json保存具体对及来源；不是从失败结果自动扩大排除。
+
+FCL新增check_trajectory，现有模型变换/符号映射和quintic采样串接；输出各样本、首失败对、最小采样表面距离和缺失覆盖。相邻排除后，两个静态姿态无非排除三角表面相交；第一轮合成轨迹58samples、间隔上限约49.39ms、最小采样距离约13.046mm，证据p7_fcl_path_C18.json。它是八个厂家臂mesh、空环境、合成关节输入，无真实动作。
+
+surface_clearance.py新增固定基座刚性转动链的表面速度界和Lipschitz距离下界，方法/证明/限制见FCL_SETUP.md。模型hash必须匹配。50ms采样的连续下界约-3.389mm，因此维持continuous_surface UNKNOWN；没有以采样PASS掩盖间隔风险。随后同一轨迹细化20ms，结果见p7_fcl_certificate_fine_C18.json及本批最终记录。即使连续表面判据通过，full_collision仍UNKNOWN，motion_enabled=false，未覆盖体积包含和物理/环境/标定误差。
+
+新增4项回归：接缝来源hash/未审pair拒绝、FCL中段相交、已知旋转点速度界、采样gap证据与margin/缺失速度拒绝。独立FCL环境全套138 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c18-final2。源码/网格均本机计算，无SSH动作/设备访问；第三方SDK未改。
+
+第十八批最终结果：同一合成路径20ms细化后142sample，最大gap19.967ms，解析max pair表面速度界0.665520m/s，保守连续表面距离下界+6.401977mm（margin0仅诊断）。continuous_surface_status PASS，full_collision UNKNOWN、motion_enabled=false。所有外部/未建模物体、体积包含与标定误差不覆盖。下载工具同步增加MJCF锁定和复现，未知版本拒绝。

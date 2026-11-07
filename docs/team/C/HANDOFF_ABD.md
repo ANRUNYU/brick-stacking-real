@@ -104,3 +104,11 @@ mesh_envelopes对每link全部三角顶点生成保守胶囊，urdf_capsules使�
 主机/home/qwer/c_planning_venv已安装python-fcl0.7.0.11/numpy2.2.6/Cython3.3.1，主机基本sphere/triangle-mesh相交与距离assert、pip check通过；原控制/相机环境没改。Windows独立项目测试环境全套134 passed。重建见FCL_SETUP.md和requirements-linux-fcl.txt，依赖可选extra planning。
 
 C→A/D：新增FclMeshChecker，真实厂家8mesh BVH的两个模型姿态均发现6pair表面相交（未排除安装接缝），报告p7_fcl_mesh_audit_C17.json。不是实物碰撞结论，也不是避碰通过；无接触仍UNKNOWN，需补体积包含、连续关节路径、手/相机/机身/持物/环境。默认模型符号映射与所有hash约束仍必须保留，不允许因FCL已安装放开动作。
+
+## 最新补充：厂家接缝与连续表面判据（第十八批，138 passed）
+
+7个相邻link接缝排除有厂家arm.mjcf原文依据及SHA256锁定，不是从碰撞结果猜测。配置p7_vendor_installation_seams.json，load_vendor_exclusions会拒绝来源变化/未审pair/重复。两个静态姿态在此模型规则下无非排除三角相交。
+
+check_trajectory已接quintic关节路径→具名link变换→FCL，能检出中间姿态接触。50ms/58sample合成路径最小距离13.046mm，但连续速度界推算下界为负，仍UNKNOWN。细化20ms结果和条件式连续表面证据见p7_fcl_certificate_fine_C18.json。速度/间隙界方法见FCL_SETUP.md，不把FCL首尾刚体CCD当真实关节轨迹。full_collision UNKNOWN、motion_enabled=false不变；未覆盖手/相机/机身/持物/环境、体积包含和标定误差。
+
+第十八批细化证据：142sample、最大gap19.967ms，固定基座/刚性臂mesh/明确接缝/所声明quintic下，连续表面距离下界约6.402mm，条件式continuous_surface PASS。它不覆盖完整实体/环境，不能等同full_collision PASS。复现沿用tools/audit_p7_fcl.py，追加`--vendor-exclusions <arm.mjcf> --exclusions-sha256 <配置锁定hash> --path --sample-dt-s .02`，报告必须新路径。fetch_p7_collision_assets已同时锁定该MJCF。

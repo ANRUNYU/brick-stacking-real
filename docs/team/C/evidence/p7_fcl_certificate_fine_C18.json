@@ -1,0 +1,1289 @@
+{
+  "source": "FCL_on_manufacturer_meshes_at_synthetic_model_poses",
+  "python_fcl": "0.7.0.11",
+  "model_sha256": "b898b9597d7d075cc5e7114d76a90d0ec514c387a5fd59411555455a6d722daa",
+  "results": [
+    {
+      "status": "UNKNOWN",
+      "sampled_status": "PASS",
+      "scope": "FCL triangle surfaces at supplied poses only",
+      "model_version": "b898b9597d7d075cc5e7114d76a90d0ec514c387a5fd59411555455a6d722daa",
+      "missing": [
+        "solid containment without intersecting surfaces",
+        "continuous joint-space motion",
+        "physical/unmodeled geometry"
+      ],
+      "pairs": [
+        {
+          "first": "L1_Link",
+          "second": "L3_Link",
+          "surface_intersection": false,
+          "distance_m": 0.07475928013840588,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L4_Link",
+          "surface_intersection": false,
+          "distance_m": 0.20909278762526867,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.32112159677709456,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.4208203039005955,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.4864055347547769,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.5622035820162908,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L4_Link",
+          "surface_intersection": false,
+          "distance_m": 0.12949077824438435,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.24220873433947565,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.34158170392794684,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.40750024874210355,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.4832251645422262,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.04918037371807455,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.14875469229343413,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.21615650907327935,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.2902635759649455,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.0566222287782641,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.1228607432563383,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.19810021515315718,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.02170620618158655,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.07996911240247606,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.013046116929290093,
+          "clearance_violation": false
+        }
+      ],
+      "full_collision": "UNKNOWN",
+      "motion_enabled": false,
+      "exclusions": [
+        {
+          "pair": [
+            "L1_Link",
+            "L2_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L2_Link",
+            "L3_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L3_Link",
+            "L4_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L4_Link",
+            "L5_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L5_Link",
+            "L6_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L6_Link",
+            "L7_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L7_Link",
+            "L8_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        }
+      ],
+      "q_sdk_rad": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "status": "UNKNOWN",
+      "sampled_status": "PASS",
+      "scope": "FCL triangle surfaces at supplied poses only",
+      "model_version": "b898b9597d7d075cc5e7114d76a90d0ec514c387a5fd59411555455a6d722daa",
+      "missing": [
+        "solid containment without intersecting surfaces",
+        "continuous joint-space motion",
+        "physical/unmodeled geometry"
+      ],
+      "pairs": [
+        {
+          "first": "L1_Link",
+          "second": "L3_Link",
+          "surface_intersection": false,
+          "distance_m": 0.07468316301019677,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L4_Link",
+          "surface_intersection": false,
+          "distance_m": 0.211293055145765,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.3126126337657106,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.41667353876522323,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.4821918197583829,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.5557856072413441,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L4_Link",
+          "surface_intersection": false,
+          "distance_m": 0.12950048349921434,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.2334476014341423,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.33713402144244475,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.40328531755019104,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.476509495060396,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.04925221115659251,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.14866970028442997,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.21042459672906746,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.2853273937550639,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.05652903940493951,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.11714984515039559,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.19238889785492835,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.02191493347101923,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.07615411487098127,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.01327240052921648,
+          "clearance_violation": false
+        }
+      ],
+      "full_collision": "UNKNOWN",
+      "motion_enabled": false,
+      "exclusions": [
+        {
+          "pair": [
+            "L1_Link",
+            "L2_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L2_Link",
+            "L3_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L3_Link",
+            "L4_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L4_Link",
+            "L5_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L5_Link",
+            "L6_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L6_Link",
+            "L7_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L7_Link",
+            "L8_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        }
+      ],
+      "q_sdk_rad": [
+        0.2,
+        0.3,
+        -0.1,
+        0.2,
+        0.1,
+        -0.2,
+        0.15
+      ]
+    }
+  ],
+  "motion_enabled": false,
+  "missing": [
+    "hand",
+    "camera",
+    "torso",
+    "payload",
+    "environment",
+    "continuous articulated path",
+    "solid containment"
+  ],
+  "path_check": {
+    "status": "UNKNOWN",
+    "sampled_status": "PASS",
+    "scope": "FCL triangle surfaces sampled along declared quintic joint path",
+    "model_version": "b898b9597d7d075cc5e7114d76a90d0ec514c387a5fd59411555455a6d722daa",
+    "source_model_version": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+    "scene_version": "synthetic-arm-only",
+    "samples_checked": 142,
+    "sample_dt_s": 0.02,
+    "min_sampled_distance_m": 0.013046116929290093,
+    "coverage_names": [
+      "L1_Link",
+      "L2_Link",
+      "L3_Link",
+      "L4_Link",
+      "L5_Link",
+      "L6_Link",
+      "L7_Link",
+      "L8_Link"
+    ],
+    "checks": [
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.0,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.019966755319148932,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.039933510638297864,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.0599002659574468,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.07986702127659573,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.09983377659574466,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.1198005319148936,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.13976728723404253,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.15973404255319146,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.1797007978723404,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.19966755319148932,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.21963430851063825,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.2396010638297872,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.2595678191489361,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.27953457446808505,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.299501329787234,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.3194680851063829,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.33943484042553185,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.3594015957446808,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.3793683510638297,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.39933510638297864,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.4193018617021276,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.4392686170212765,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.45923537234042544,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.4792021276595744,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.4991688829787233,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.5191356382978722,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.5391023936170212,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.5590691489361701,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.579035904255319,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.599002659574468,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.6189694148936169,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.6389361702127658,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.6589029255319148,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.6788696808510637,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.6988364361702126,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.7188031914893616,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.7387699468085105,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.7587367021276594,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.7787034574468084,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.7986702127659573,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.8186369680851062,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.8386037234042552,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.8585704787234041,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.878537234042553,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.898503989361702,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.9184707446808509,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.9384374999999998,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.9584042553191487,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.9783710106382977,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.9983377659574466,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.0183045212765955,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.0382712765957445,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.0582380319148934,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.0782047872340423,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.0981715425531913,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.1181382978723402,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.1381050531914891,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.158071808510638,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.178038563829787,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.198005319148936,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.2179720744680849,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.2379388297872338,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.2579055851063827,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.2778723404255317,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.2978390957446806,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.3178058510638295,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.3377726063829785,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.3577393617021274,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.3777061170212763,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.3976728723404253,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.4176396276595742,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.4376063829787231,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.457573138297872,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.477539893617021,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.49750664893617,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.5174734042553188,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.5374401595744678,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.5574069148936167,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.5773736702127656,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.5973404255319146,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.6173071808510635,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.6372739361702124,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.6572406914893614,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.6772074468085103,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.6971742021276592,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.7171409574468082,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.737107712765957,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.757074468085106,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.777041223404255,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.797007978723404,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.8169747340425528,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.8369414893617018,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.8569082446808507,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.8768749999999996,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.8968417553191486,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.9168085106382975,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.9367752659574464,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.9567420212765954,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.9767087765957443,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.9966755319148932,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.016642287234042,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.036609042553191,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.0565757978723402,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.076542553191489,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.0965093085106377,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.116476063829787,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.136442819148936,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.1564095744680847,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.1763763297872334,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.1963430851063825,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.2163098404255317,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.2362765957446804,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.256243351063829,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.2762101063829783,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.2961768617021274,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.316143617021276,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.336110372340425,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.356077127659574,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.376043882978723,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.396010638297872,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.4159773936170206,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.4359441489361697,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.455910904255319,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.4758776595744676,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.4958444148936163,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.5158111702127655,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.5357779255319146,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.5557446808510633,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.575711436170212,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.595678191489361,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.6156449468085103,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.635611702127659,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.6555784574468078,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.675545212765957,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.695511968085106,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.715478723404255,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.7354454787234035,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.7554122340425526,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.775378989361702,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.7953457446808505,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.8153124999999997,
+        "sampled_status": "PASS"
+      }
+    ],
+    "contacts": [],
+    "missing": [
+      "hand",
+      "camera",
+      "torso",
+      "payload",
+      "environment",
+      "continuous articulated path",
+      "solid containment",
+      "continuous articulated motion",
+      "solid containment"
+    ],
+    "full_collision": "UNKNOWN",
+    "motion_enabled": false,
+    "exclusions": [
+      {
+        "pair": [
+          "L1_Link",
+          "L2_Link"
+        ],
+        "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+      },
+      {
+        "pair": [
+          "L2_Link",
+          "L3_Link"
+        ],
+        "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+      },
+      {
+        "pair": [
+          "L3_Link",
+          "L4_Link"
+        ],
+        "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+      },
+      {
+        "pair": [
+          "L4_Link",
+          "L5_Link"
+        ],
+        "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+      },
+      {
+        "pair": [
+          "L5_Link",
+          "L6_Link"
+        ],
+        "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+      },
+      {
+        "pair": [
+          "L6_Link",
+          "L7_Link"
+        ],
+        "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+      },
+      {
+        "pair": [
+          "L7_Link",
+          "L8_Link"
+        ],
+        "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+      }
+    ]
+  },
+  "surface_speed_bounds": {
+    "method": "revolute_chain_triangle_inequality_quintic_analytic_max_velocity",
+    "urdf_sha256": "b898b9597d7d075cc5e7114d76a90d0ec514c387a5fd59411555455a6d722daa",
+    "surface_speed_m_s": {
+      "L1_Link": 0.014426927883618042,
+      "L2_Link": 0.05100200581800296,
+      "L3_Link": 0.1275956208045058,
+      "L4_Link": 0.18021162544782648,
+      "L5_Link": 0.2543345632352913,
+      "L6_Link": 0.30501547821329483,
+      "L7_Link": 0.33314474682229933,
+      "L8_Link": 0.3323754603411295
+    },
+    "assumptions": [
+      "fixed base",
+      "rigid meshes in link frames",
+      "unit revolute axes",
+      "declared quintic interpolation"
+    ]
+  },
+  "continuous_surface_certificate": {
+    "continuous_surface_status": "PASS",
+    "conservative_surface_distance_lower_bound_m": 0.0064019773610992725,
+    "max_pair_surface_speed_m_s": 0.6655202071634289,
+    "max_sample_gap_s": 0.019966755319149154,
+    "clearance_margin_m": 0.0,
+    "reason": "conditional on supplied model speed bounds; not solid/physical collision approval",
+    "full_collision": "UNKNOWN",
+    "motion_enabled": false
+  }
+}

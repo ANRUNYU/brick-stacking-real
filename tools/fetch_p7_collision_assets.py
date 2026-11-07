@@ -12,6 +12,7 @@ import urllib.request
 ROOT='src/linker_robot_assets/assets/components/arms/p7/variants/left/'
 RAW='https://raw.githubusercontent.com/linker-bot/linker-sim-assets/main/'
 MEDIA='https://media.githubusercontent.com/media/linker-bot/linker-sim-assets/main/'
+MJCF_HASH='7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3'
 URDF_HASH='b898b9597d7d075cc5e7114d76a90d0ec514c387a5fd59411555455a6d722daa'
 
 
@@ -27,6 +28,8 @@ def main():
     out=args.directory;out.mkdir(parents=True,exist_ok=True)
     urdf=fetch(RAW+ROOT+'arm.urdf')
     if hashlib.sha256(urdf).hexdigest()!=URDF_HASH: raise ValueError('upstream URDF changed; re-audit before use')
+    mjcf=fetch(RAW+ROOT+'arm.mjcf')
+    if hashlib.sha256(mjcf).hexdigest()!=MJCF_HASH: raise ValueError('vendor exclusion model changed; re-audit required')
     def mesh(i):
         name=f'meshes/L{i}_Link.STL';pointer=fetch(RAW+ROOT+name).decode('ascii')
         lines=pointer.splitlines()
@@ -44,7 +47,10 @@ def main():
     path=out/'arm.urdf'
     if path.exists() and path.read_bytes()!=urdf: raise ValueError('existing URDF differs')
     if not path.exists(): path.write_bytes(urdf)
-    manifest=dict(schema_version='c-vendor-mesh-lock-1',source_ref='main_at_download; content hashes authoritative',urdf_sha256=URDF_HASH,meshes=meshes,approved_for_motion=False)
+    mjcf_path=out/'arm.mjcf'
+    if mjcf_path.exists() and mjcf_path.read_bytes()!=mjcf: raise ValueError('existing MJCF differs')
+    if not mjcf_path.exists(): mjcf_path.write_bytes(mjcf)
+    manifest=dict(vendor_exclusion_mjcf_sha256=MJCF_HASH,schema_version='c-vendor-mesh-lock-1',source_ref='main_at_download; content hashes authoritative',urdf_sha256=URDF_HASH,meshes=meshes,approved_for_motion=False)
     with (out/'asset_lock.json').open('x',encoding='utf-8') as f:json.dump(manifest,f,indent=2)
     print(json.dumps(manifest,indent=2))
 

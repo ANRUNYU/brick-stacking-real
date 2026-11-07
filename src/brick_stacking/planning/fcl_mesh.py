@@ -51,3 +51,46 @@ class FclMeshChecker:
                     missing=['solid containment without intersecting surfaces','continuous joint-space motion','physical/unmodeled geometry'],
                     pairs=pairs,full_collision='UNKNOWN',motion_enabled=False,
                     exclusions=[dict(pair=list(p),reason=r) for p,r in exclusions.items()])
+
+    def check_trajectory(self,trajectory,poses_at_q,*,source_model_version,scene_version,
+                         exclusions,min_clearance_m,sample_dt_s,missing_coverage):
+        """Finite checks of actual quintic joint interpolation, not Cartesian CCD.
+
+        A generic FCL rigid-transform sweep is not substituted for articulated
+        joint interpolation. Clear samples remain UNKNOWN for complete motion.
+        """
+        import math
+        from brick_stacking.planning.joint_trajectory import sample_segment
+        if trajectory.get('model_version')!=source_model_version or trajectory.get('scene_version')!=scene_version:
+            raise ValueError('stale trajectory model/scene')
+        if trajectory.get('interpolation')!='quintic_stop_at_each_waypoint': raise ValueError('unsupported interpolation')
+        if not np.isfinite(sample_dt_s) or sample_dt_s<=0 or not isinstance(missing_coverage,list):
+            raise ValueError('explicit sampling interval and coverage required')
+        segments=trajectory.get('segments',[])
+        if not segments: raise ValueError('nonempty trajectory required')
+        total=0
+        for segment in segments:
+            d=segment['duration_s']
+            if not np.isfinite(d) or d<=0: raise ValueError('positive finite segment durations required')
+            total+=math.ceil(d/sample_dt_s)+1
+        if total>10000: raise ValueError('FCL sample budget exceeded')
+        checks=[];contacts=[];minimum=float('inf')
+        for i,segment in enumerate(segments):
+            duration=segment['duration_s']
+            for t in np.linspace(0,duration,math.ceil(duration/sample_dt_s)+1):
+                q,_,_=sample_segment(segment,float(t))
+                row=self.check_poses(poses_at_q(q),exclusions=exclusions,min_clearance_m=min_clearance_m)
+                distances=[p['distance_m'] for p in row['pairs'] if p['distance_m'] is not None]
+                if distances: minimum=min(minimum,min(distances))
+                checks.append(dict(segment=i,time_from_segment_start_s=float(t),sampled_status=row['sampled_status']))
+                if row['sampled_status']=='FAIL':
+                    contacts=[dict(p,segment=i,time_from_segment_start_s=float(t)) for p in row['pairs'] if p['clearance_violation']]
+                    break
+            if contacts: break
+        return dict(status='FAIL' if contacts else 'UNKNOWN',sampled_status='FAIL' if contacts else 'PASS',
+                    scope='FCL triangle surfaces sampled along declared quintic joint path',model_version=self.version,
+                    source_model_version=source_model_version,scene_version=scene_version,samples_checked=len(checks),
+                    sample_dt_s=sample_dt_s,min_sampled_distance_m=minimum if np.isfinite(minimum) else None,
+                    coverage_names=sorted(self.geometry),checks=checks,contacts=contacts,missing=list(missing_coverage)+['continuous articulated motion','solid containment'],
+                    full_collision='UNKNOWN',motion_enabled=False,
+                    exclusions=[dict(pair=list(p),reason=r) for p,r in exclusions.items()])

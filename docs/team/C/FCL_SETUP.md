@@ -29,3 +29,13 @@ python3 -m venv /home/qwer/c_planning_venv
 FCL后端为所给三角表面在所给姿态的相交与距离。未实现关节非线性轨迹的连续认证；闭合物体互相包含而表面不相交的体积包含问题也需另查。未包含手、相机、机身、持物和真实环境。结果无接触时status仍UNKNOWN，完整碰撞/动作许可不通过。原粗包络继续用于保守诊断，不再把它当唯一mesh碰撞依据。
 
 参考实现接口：https://github.com/BerkeleyAutomation/python-fcl 。不启动任何Robot/Arm/Hand对象。
+
+## 连续表面间隙判据（第十八批）
+
+FclMeshChecker新增check_trajectory：按真实quintic关节插值生成各link姿态，逐样本三角表面查询，不用首尾刚体直线扫掠替代关节运动。新增surface_clearance.py给出有条件的连续表面间隙证据，不是完整物理避碰。
+
+速度界：固定基座、刚性link/unit revolute axis下，任意mesh点对某祖先关节轴的距离不超过“后续各joint origin平移模长之和+link局部mesh最大点范数”；乘该轴整个quintic轨迹的解析角速度上界，再对祖先关节求和，得到该mesh的表面点速度界。各轴速率使用所有段的最大值；不会把首尾姿态速度当整段上界。
+
+距离界：两表面的距离变化率不超过两者最大点速度之和。每个区间选最近端点样本，时间差至多gap/2，所以全局最小采样距离减去最大pair速度界×最大gap/2，得到保守表面距离下界。两侧模型哈希和具名覆盖必须一致；下界严格大于显式margin才标continuous_surface_status PASS，否则UNKNOWN。原status/full_collision仍UNKNOWN，motion_enabled=false。
+
+这依赖声明模型、数值查询和厂家安装排除，不包含网格未反映的实体/变形、闭合体完全包含、真实环境或标定误差。margin=0仅用于本次数学诊断，不是生产安全余量。正的表面距离证据不能替代上述缺项。

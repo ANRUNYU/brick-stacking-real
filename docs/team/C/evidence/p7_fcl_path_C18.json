@@ -1,0 +1,829 @@
+{
+  "source": "FCL_on_manufacturer_meshes_at_synthetic_model_poses",
+  "python_fcl": "0.7.0.11",
+  "model_sha256": "b898b9597d7d075cc5e7114d76a90d0ec514c387a5fd59411555455a6d722daa",
+  "results": [
+    {
+      "status": "UNKNOWN",
+      "sampled_status": "PASS",
+      "scope": "FCL triangle surfaces at supplied poses only",
+      "model_version": "b898b9597d7d075cc5e7114d76a90d0ec514c387a5fd59411555455a6d722daa",
+      "missing": [
+        "solid containment without intersecting surfaces",
+        "continuous joint-space motion",
+        "physical/unmodeled geometry"
+      ],
+      "pairs": [
+        {
+          "first": "L1_Link",
+          "second": "L3_Link",
+          "surface_intersection": false,
+          "distance_m": 0.07475928013840588,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L4_Link",
+          "surface_intersection": false,
+          "distance_m": 0.20909278762526867,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.32112159677709456,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.4208203039005955,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.4864055347547769,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.5622035820162908,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L4_Link",
+          "surface_intersection": false,
+          "distance_m": 0.12949077824438435,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.24220873433947565,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.34158170392794684,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.40750024874210355,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.4832251645422262,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.04918037371807455,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.14875469229343413,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.21615650907327935,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.2902635759649455,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.0566222287782641,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.1228607432563383,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.19810021515315718,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.02170620618158655,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.07996911240247606,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.013046116929290093,
+          "clearance_violation": false
+        }
+      ],
+      "full_collision": "UNKNOWN",
+      "motion_enabled": false,
+      "exclusions": [
+        {
+          "pair": [
+            "L1_Link",
+            "L2_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L2_Link",
+            "L3_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L3_Link",
+            "L4_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L4_Link",
+            "L5_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L5_Link",
+            "L6_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L6_Link",
+            "L7_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L7_Link",
+            "L8_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        }
+      ],
+      "q_sdk_rad": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "status": "UNKNOWN",
+      "sampled_status": "PASS",
+      "scope": "FCL triangle surfaces at supplied poses only",
+      "model_version": "b898b9597d7d075cc5e7114d76a90d0ec514c387a5fd59411555455a6d722daa",
+      "missing": [
+        "solid containment without intersecting surfaces",
+        "continuous joint-space motion",
+        "physical/unmodeled geometry"
+      ],
+      "pairs": [
+        {
+          "first": "L1_Link",
+          "second": "L3_Link",
+          "surface_intersection": false,
+          "distance_m": 0.07468316301019677,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L4_Link",
+          "surface_intersection": false,
+          "distance_m": 0.211293055145765,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.3126126337657106,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.41667353876522323,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.4821918197583829,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.5557856072413441,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L4_Link",
+          "surface_intersection": false,
+          "distance_m": 0.12950048349921434,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.2334476014341423,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.33713402144244475,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.40328531755019104,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.476509495060396,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.04925221115659251,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.14866970028442997,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.21042459672906746,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.2853273937550639,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.05652903940493951,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.11714984515039559,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.19238889785492835,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.02191493347101923,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.07615411487098127,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.01327240052921648,
+          "clearance_violation": false
+        }
+      ],
+      "full_collision": "UNKNOWN",
+      "motion_enabled": false,
+      "exclusions": [
+        {
+          "pair": [
+            "L1_Link",
+            "L2_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L2_Link",
+            "L3_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L3_Link",
+            "L4_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L4_Link",
+            "L5_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L5_Link",
+            "L6_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L6_Link",
+            "L7_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        },
+        {
+          "pair": [
+            "L7_Link",
+            "L8_Link"
+          ],
+          "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+        }
+      ],
+      "q_sdk_rad": [
+        0.2,
+        0.3,
+        -0.1,
+        0.2,
+        0.1,
+        -0.2,
+        0.15
+      ]
+    }
+  ],
+  "motion_enabled": false,
+  "missing": [
+    "hand",
+    "camera",
+    "torso",
+    "payload",
+    "environment",
+    "continuous articulated path",
+    "solid containment"
+  ],
+  "path_check": {
+    "status": "UNKNOWN",
+    "sampled_status": "PASS",
+    "scope": "FCL triangle surfaces sampled along declared quintic joint path",
+    "model_version": "b898b9597d7d075cc5e7114d76a90d0ec514c387a5fd59411555455a6d722daa",
+    "source_model_version": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+    "scene_version": "synthetic-arm-only",
+    "samples_checked": 58,
+    "sample_dt_s": 0.05,
+    "min_sampled_distance_m": 0.013046116929290093,
+    "checks": [
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.0,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.04939144736842105,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.0987828947368421,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.14817434210526315,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.1975657894736842,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.24695723684210524,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.2963486842105263,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.34574013157894734,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.3951315789473684,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.44452302631578944,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.4939144736842105,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.5433059210526315,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.5926973684210526,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.6420888157894736,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.6914802631578947,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.7408717105263157,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.7902631578947368,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.8396546052631578,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.8890460526315789,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.9384374999999999,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 0.987828947368421,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.037220394736842,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.086611842105263,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.1360032894736842,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.1853947368421052,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.234786184210526,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.2841776315789473,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.3335690789473684,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.3829605263157894,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.4323519736842103,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.4817434210526315,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.5311348684210526,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.5805263157894736,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.6299177631578945,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.6793092105263157,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.7287006578947368,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.7780921052631578,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.8274835526315787,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.8768749999999998,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.926266447368421,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 1.975657894736842,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.025049342105263,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.074440789473684,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.123832236842105,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.173223684210526,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.222615131578947,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.2720065789473685,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.3213980263157894,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.3707894736842103,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.4201809210526313,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.469572368421052,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.5189638157894736,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.5683552631578945,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.6177467105263155,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.667138157894737,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.716529605263158,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.7659210526315787,
+        "sampled_status": "PASS"
+      },
+      {
+        "segment": 0,
+        "time_from_segment_start_s": 2.8153124999999997,
+        "sampled_status": "PASS"
+      }
+    ],
+    "contacts": [],
+    "missing": [
+      "hand",
+      "camera",
+      "torso",
+      "payload",
+      "environment",
+      "continuous articulated path",
+      "solid containment",
+      "continuous articulated motion",
+      "solid containment"
+    ],
+    "full_collision": "UNKNOWN",
+    "motion_enabled": false,
+    "exclusions": [
+      {
+        "pair": [
+          "L1_Link",
+          "L2_Link"
+        ],
+        "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+      },
+      {
+        "pair": [
+          "L2_Link",
+          "L3_Link"
+        ],
+        "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+      },
+      {
+        "pair": [
+          "L3_Link",
+          "L4_Link"
+        ],
+        "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+      },
+      {
+        "pair": [
+          "L4_Link",
+          "L5_Link"
+        ],
+        "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+      },
+      {
+        "pair": [
+          "L5_Link",
+          "L6_Link"
+        ],
+        "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+      },
+      {
+        "pair": [
+          "L6_Link",
+          "L7_Link"
+        ],
+        "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+      },
+      {
+        "pair": [
+          "L7_Link",
+          "L8_Link"
+        ],
+        "reason": "vendor MJCF installation exclusion; sha256=7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3"
+      }
+    ]
+  }
+}
