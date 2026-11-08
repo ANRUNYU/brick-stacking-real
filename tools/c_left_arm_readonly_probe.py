@@ -69,14 +69,15 @@ def decode_received(frame, flags):
     return row
 
 
-def capture(timeout_s=0.35, passive_s=0.5):
+def capture(timeout_s=0.35, passive_s=0.5, read_wrist_mode=True):
     if not math.isfinite(timeout_s) or not 0 < timeout_s <= 1:
         raise ValueError('query timeout must be in (0, 1] seconds')
     if not math.isfinite(passive_s) or not 0 <= passive_s <= 3:
         raise ValueError('passive window must be in [0, 3] seconds')
+    if type(read_wrist_mode) is not bool:raise ValueError('explicit wrist-mode selection required')
     report = dict(schema_version='c-left-readonly-probe-1', source='real',
                   arm_role='left', interface='can2', units='rad',
-                  clock_domain='host_monotonic', epoch=str(uuid.uuid4()),
+                  clock_domain='host_monotonic', epoch='linux_boot:'+str(uuid.UUID(Path('/proc/sys/kernel/random/boot_id').read_text().strip())),capture_id=str(uuid.uuid4()),
                   stamp_semantics='host receive/dequeue time, not device time',
                   transmitted=[], received=[], missing_motor_ids=list(LEFT_IDS),
                   calibration_sample_valid=False, motion_commands_sent=0,
@@ -110,7 +111,7 @@ def capture(timeout_s=0.35, passive_s=0.5):
                 break
         else:
             raise RuntimeError('receive queue did not drain; no requests sent')
-        for mid in LEFT_IDS:
+        for mid in (LEFT_IDS if read_wrist_mode else LEFT_IDS[:5]):
             sent_at = time.monotonic()
             packet = position_request(mid) if mid <= 65 else v2_mode_request(mid)
             count = bus.send(packet)
@@ -134,10 +135,11 @@ def capture(timeout_s=0.35, passive_s=0.5):
 def main():
     parser = argparse.ArgumentParser(__doc__)
     parser.add_argument('output', type=Path)
+    parser.add_argument('--five-axis-only',action='store_true',help='only J1..5 position READs; no wrist requests')
     args = parser.parse_args()
     # Reserve output before touching the bus; never overwrite an earlier capture.
     with args.output.open('x', encoding='utf-8') as stream:
-        json.dump(capture(), stream, indent=2, allow_nan=False)
+        json.dump(capture(read_wrist_mode=not args.five_axis_only), stream, indent=2, allow_nan=False)
 
 
 if __name__ == '__main__':

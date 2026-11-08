@@ -178,3 +178,6 @@ O6_INDEX_FIELD_TRIAL.md给出精确命令、现场责任、原始预览hash和�
 用户已确认手指可动，SSH读取O6测试/fixture/已有报告：单指交互7/7记通过（报告未绑定SN），速度报告备注混有shell文本，不能直接验收速度或当机械故障。取消上轮单指8raw方案作为下一动作；未执行。config/planning/o6_sdk_pose_references_candidate.json保存可追溯开/半闭/全闭百分比参考，非rad、非开口mm、非50mm已验收抓握。不要把test_all_closed直接用于抓块。
 
 o6_hand fixture先100%速度/加速度全开，即便选读取测试也有动作，C没有运行该pytest命令。O6_SIDE只选ID，仍须按SN发现总线。新c_o6_tactile_probe.py绕过fixture完成两轮五指只读矩阵采集：10组完整10×4、全0，raw未标定，无接触响应验收。证据/源码hash/历史报告和主动读取报告见O6_SDK_TEST_REVIEW.md、evidence/o6_sdk_test_audit_20261108.json及left_o6_tactile_summary_20261108.json。全套209 passed，真实控制写入0。下一现场可只轻触食指触觉区域读变化，无需再动手指或让用户设计路线。
+# C31 当前交接补充（2026-11-08）
+
+最新采集/求解入口 [FIXED_CAMERA_CALIBRATION.md](FIXED_CAMERA_CALIBRATION.md)。无标记50mm方块固定在L5候选段，用61–65读取和厂家FK，联合估计固定相机外参及未知中心偏移；不要求已知笔尖TCP，不使用未核验腕量化。模型/安装/图像/epoch明确，几何单位m。工具及267回归通过，真实多姿态仍未完成；不要使用尚不存在的外参执行。B的设备—主机延迟映射仍UNKNOWN；静止接收时间覆盖不是时钟标定。A/B/D最小接口和M1/M2a/M3交接见该文档；本批只有头部开流/五轴位置READ，无运动目标。

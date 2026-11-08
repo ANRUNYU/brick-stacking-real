@@ -1,4 +1,20 @@
-# C 离线交付状态（2026-11-07）
+# C 开发与实测交付记录（持续更新至2026-11-08）
+
+## 当前增量 C31：无标记固定块联合标定与真实采集
+
+对应 C1-01/C1-02/C1-03，M1/M2a。操作说明与输入输出见 [FIXED_CAMERA_CALIBRATION.md](FIXED_CAMERA_CALIBRATION.md)，当前状态以 TASK_STATUS.md 为准；下文早期批次按历史记录保留。
+
+新增 localization/{cube_center,point_target_calibration,fixed_camera_calibration,target_pose}.py，复用 CameraFrame/RigidTransform/FK；新增 measure_cube_center、prepare_calibration_reference、solve_fixed_camera、estimate_calibration_target、c_static_calibration_capture 工具和三个明确 synthetic 的样例。修改只读 probe 增加 --five-axis-only 与 boot epoch。无公共 Protocol 破坏性变更，无第三方SDK修改。
+
+输入：用户尺量50mm规则立方体；头部Gemini335L CP2L863000KL真实RGB-D，1280×800@15，校正/配准及设备时间保留；left can2/61–65原始06位置读取；固定SHA的SDK左臂URDF。L5安装位置是照片/CAD对照及现场固定确认，不是TCP。读取助手SHA e5e67311b1d4738301683b75de02f8361a9f92b7aeb6d684a36ae020af79b787；独立进程采集器SHA 741e957049b3b0b13fb9c6c52d34f204af9b4a6e22130c80d8be0a9bff49e925。只读源码已部署至主机 c_calibration_tools/c31_static_v2_20261108，原始记录另存，不覆盖SDK。
+
+验证：`artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c31-record-final`：267 passed。包括退化/时钟/版本/样本泄漏拒绝、独立检查点、三面→中心→联合标定合成集成，以及独立只读采样进程测试。合成数学通过不等于物理精度。
+
+真实采集：桌面方块三重复帧的中心检查为2通过1失败，详见新文档；不作为装臂标定姿态。旧线程采集47组但间隔1.694s失败；隔离进程重采98完整五轴读数、间隔0.051552s通过静止质量，但照片里没有左臂/固定块，故不作为标定样本。后续现场重新摆放后继续采集。设备/主机时钟不混用，延迟映射仍UNKNOWN。
+
+交接A：具名L5参考位姿与原始反馈/模型/epoch；B：帧SHA、三面检查及相机/主机两种时间；D：固定安装版本与未知抓握偏移。模板和调用见新文档，全部候选未批准。仍缺入镜且姿态充分的训练/独立验证、物理误差验收、实际抓握偏移及M3/M5/M6真实闭环。
+
+硬件操作：本批实际开头部相机并发左61–65位置READ；没有发送Rest、使能、目标、回零、清故障、Flash，未访问右臂/控制手指。本次不推送或合并远程。
 
 远程 main 基线 1acbee0d51faf4d321a36d2cb105cfd9d6ee0fc5；独立克隆 .worktrees/c-calibration-planning，分支 codex/c-calibration-planning。未发现 AGENTS.md。保留原仓库与其他成员代码。已读取统一交付包指定九份资料。契约 v0.1 尚待 M0 冻结；以下为增量离线 API，不覆盖公共 Protocol。
 
