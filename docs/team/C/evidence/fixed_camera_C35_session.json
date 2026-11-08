@@ -1,0 +1,1020 @@
+{
+  "schema_version": "c35-fixed-camera-session-evidence-1",
+  "source": "real",
+  "phase": "COLLECTING",
+  "training_candidates": [
+    {
+      "schema_version": "c-fixed-camera-point-prepared-1",
+      "group": "training",
+      "context": {
+        "source": "real",
+        "units": "m",
+        "arm_role": "left",
+        "base_frame": "L_arm_root",
+        "reference_frame": "L5_Link",
+        "attachment_reference_frame": "L5_Link",
+        "camera_serial": "CP2L863000KL",
+        "camera_frame": "camera_CP2L863000KL_color_optical_frame",
+        "camera_profile_version": "0cff4d6eb086ce64dbcdfa9db5095d1e6a751e2229a4d5ac2a1b4a390d99f997",
+        "arm_device_id": "operator_selected_left_P7_can2_61_to_67",
+        "model_version": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+        "joint_mapping_version": "left_can2_61_to_65_read06_float32_sdk_v1",
+        "target_id": "C35_calibration_cube_50mm",
+        "target_geometry_version": "38b26b49853f053f5667a1388c1a777ce390b7cdf130f8294aab9ce1b73bc940",
+        "attachment_version": "left_L5_cube_mount_operator_confirmed_C35_v1",
+        "clock_domain": "host_monotonic",
+        "epoch": "linux_boot:f9016d4a-56d7-4a83-a8c2-3fa6d11f8153",
+        "observation_kind": "point_center"
+      },
+      "sample": {
+        "sample_id": "C35_training_pose01",
+        "image_id": "b37b7f07db4edfde01b4024f2f82c0450ab0cff36df75f42c713d79f2f46d245",
+        "joint_sample_id": "C35_training_pose01_frame_000.npz_exposure_interpolation",
+        "target_rigidly_fixed": true,
+        "operator_evidence": "User confirmed ready in response to unchanged rigid L5 mount instruction; visual frame review C35 pose01",
+        "center_quality": "PASS",
+        "center_camera_m": [
+          -0.21224178578831215,
+          -0.011486109372672602,
+          0.40425836430604967
+        ],
+        "T_base_reference": [
+          [
+            -0.1734108374706195,
+            -0.12345819034660713,
+            -0.9770807319173167,
+            0.3947709606486616
+          ],
+          [
+            -0.06542443276350357,
+            0.9913641976539413,
+            -0.11365153411868673,
+            0.044512029428030675
+          ],
+          [
+            0.9826740685727453,
+            0.04421654493849721,
+            -0.17999047782699407,
+            -0.052895990479559535
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "reference_stamp_s": 281209.6265809056,
+        "center_stamp_s": 281209.6265809056,
+        "time_alignment_evidence": {
+          "method": "SDK global exposure mapping + bracketed linear joint interpolation",
+          "timing_acceptance": "NOT_VALIDATED",
+          "device_to_host_mapping_error_bound_s": null,
+          "original_camera_stamp_s": 157679.514145,
+          "original_camera_clock_domain": "orbbec_CP2L863000KL_61f8297ef6604649a7ad9de9457a2a38",
+          "clock_observation": {
+            "schema_version": "c-orbbec-clock-observation-1",
+            "sdk_host_clock_type": "REALTIME",
+            "sdk_host_clock_domain": "host_realtime",
+            "host_bridge": {
+              "monotonic_before_s": 281209.657745815,
+              "monotonic_after_s": 281209.65774958,
+              "realtime_s": 1794130128.4918928,
+              "monotonic_raw_s": 281209.783959942
+            },
+            "bridge_bracket_s": 3.764987923204899e-06,
+            "frames": {
+              "color": {
+                "device_timestamp_us": 157679514145,
+                "system_timestamp_us": 1794130128491047,
+                "global_timestamp_us": 1794130128460707,
+                "global_available": true,
+                "global_host_monotonic_candidate_s": 281209.6265618321,
+                "sdk_receive_minus_global_s": 0.03034
+              },
+              "depth": {
+                "device_timestamp_us": 157679514164,
+                "system_timestamp_us": 1794130128478894,
+                "global_timestamp_us": 1794130128460726,
+                "global_available": true,
+                "global_host_monotonic_candidate_s": 281209.6265809056,
+                "sdk_receive_minus_global_s": 0.018168
+              }
+            },
+            "device_to_host_mapping_source": "SDK global timestamp fitter; raw readings retained",
+            "device_to_host_mapping_error_bound_s": null,
+            "timing_acceptance": "NOT_VALIDATED",
+            "approved": false,
+            "motion_enabled": false
+          },
+          "joint_brackets": {
+            "L1_Joint": {
+              "receive_interval_s": [
+                281209.584519808,
+                281209.635072139
+              ],
+              "positions_sdk_rad": [
+                -1.2978675365447998,
+                -1.3036679029464722
+              ],
+              "linear_speed_rad_s": -0.11473984068483743
+            },
+            "L2_Joint": {
+              "receive_interval_s": [
+                281209.585143656,
+                281209.635823234
+              ],
+              "positions_sdk_rad": [
+                -0.0968565121293068,
+                -0.0968565121293068
+              ],
+              "linear_speed_rad_s": 0.0
+            },
+            "L3_Joint": {
+              "receive_interval_s": [
+                281209.585824147,
+                281209.636588275
+              ],
+              "positions_sdk_rad": [
+                2.7090952396392822,
+                2.7090742588043213
+              ],
+              "linear_speed_rad_s": -0.0004133004105499897
+            },
+            "L4_Joint": {
+              "receive_interval_s": [
+                281209.586529112,
+                281209.63735428
+              ],
+              "positions_sdk_rad": [
+                0.4963812828063965,
+                0.4963812828063965
+              ],
+              "linear_speed_rad_s": 0.0
+            },
+            "L5_Joint": {
+              "receive_interval_s": [
+                281209.587143909,
+                281209.638035093
+              ],
+              "positions_sdk_rad": [
+                -2.6471288204193115,
+                -2.647096872329712
+              ],
+              "linear_speed_rad_s": 0.0006277725743238263
+            }
+          }
+        },
+        "camera_profile_version": "0cff4d6eb086ce64dbcdfa9db5095d1e6a751e2229a4d5ac2a1b4a390d99f997",
+        "target_geometry_version": "38b26b49853f053f5667a1388c1a777ce390b7cdf130f8294aab9ce1b73bc940",
+        "attachment_version": "left_L5_cube_mount_operator_confirmed_C35_v1",
+        "clock_domain": "host_monotonic",
+        "epoch": "linux_boot:f9016d4a-56d7-4a83-a8c2-3fa6d11f8153"
+      },
+      "frame_decisions": [
+        {
+          "image_file": "frame_000.npz",
+          "frame_sha256": "b37b7f07db4edfde01b4024f2f82c0450ab0cff36df75f42c713d79f2f46d245",
+          "vision_quality": "PASS",
+          "reason": null
+        },
+        {
+          "image_file": "frame_001.npz",
+          "frame_sha256": "95e1039aa07965776e68966e1a2bce0f8a66312b925458b446c532a4f1975738",
+          "vision_quality": "FAIL",
+          "reason": null
+        },
+        {
+          "image_file": "frame_002.npz",
+          "frame_sha256": "8293da40e1377d640bea7d9e269852df2b2109f245573af991898edced359ca0",
+          "vision_quality": "PASS",
+          "reason": null
+        }
+      ],
+      "selection": "first image with PASS vision quality in capture order; before any extrinsic fit",
+      "record_manifest_sha256": "0fb4867d0b66183e84f474d0125dabedb713c29e074626a49ea871005b25e8f1",
+      "joint_cycles_sha256": "82b1cdd57b8c22db9b343f9dd76a40e1c18971dbf41a729fcab8a9d8bef9b70c",
+      "qualification": "PROVISIONAL_TIMING",
+      "calibration_sample_valid": false,
+      "approved": false,
+      "motion_enabled": false
+    },
+    {
+      "schema_version": "c-fixed-camera-point-prepared-1",
+      "group": "training",
+      "context": {
+        "source": "real",
+        "units": "m",
+        "arm_role": "left",
+        "base_frame": "L_arm_root",
+        "reference_frame": "L5_Link",
+        "attachment_reference_frame": "L5_Link",
+        "camera_serial": "CP2L863000KL",
+        "camera_frame": "camera_CP2L863000KL_color_optical_frame",
+        "camera_profile_version": "0cff4d6eb086ce64dbcdfa9db5095d1e6a751e2229a4d5ac2a1b4a390d99f997",
+        "arm_device_id": "operator_selected_left_P7_can2_61_to_67",
+        "model_version": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+        "joint_mapping_version": "left_can2_61_to_65_read06_float32_sdk_v1",
+        "target_id": "C35_calibration_cube_50mm",
+        "target_geometry_version": "38b26b49853f053f5667a1388c1a777ce390b7cdf130f8294aab9ce1b73bc940",
+        "attachment_version": "left_L5_cube_mount_operator_confirmed_C35_v1",
+        "clock_domain": "host_monotonic",
+        "epoch": "linux_boot:f9016d4a-56d7-4a83-a8c2-3fa6d11f8153",
+        "observation_kind": "point_center"
+      },
+      "sample": {
+        "sample_id": "C35_training_pose02",
+        "image_id": "0c62a56fb33e8c4eb403ad4931836da01f46497d145ac7bbf033a0b1611af7ce",
+        "joint_sample_id": "C35_training_pose02_frame_000.npz_exposure_interpolation",
+        "target_rigidly_fixed": true,
+        "operator_evidence": "User confirmed pose02 ready under unchanged rigid mount and fixed camera instruction",
+        "center_quality": "PASS",
+        "center_camera_m": [
+          -0.13456489690096674,
+          0.14607647042865515,
+          0.4911508772852404
+        ],
+        "T_base_reference": [
+          [
+            0.045565261381715336,
+            0.40014843522719523,
+            -0.9153169050883104,
+            0.3205181292569127
+          ],
+          [
+            -0.17431856821753935,
+            0.9053953959323398,
+            0.38713332819470453,
+            -0.01714278204350883
+          ],
+          [
+            0.983634507187402,
+            0.14191690107153854,
+            0.11100788017275227,
+            -0.20790082740632665
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "reference_stamp_s": 281461.4075546055,
+        "center_stamp_s": 281461.4075546055,
+        "time_alignment_evidence": {
+          "method": "SDK global exposure mapping + bracketed linear joint interpolation",
+          "timing_acceptance": "NOT_VALIDATED",
+          "device_to_host_mapping_error_bound_s": null,
+          "original_camera_stamp_s": 157931.294937,
+          "original_camera_clock_domain": "orbbec_CP2L863000KL_67a6c0ff43ba45c8bdba04d11134a7e1",
+          "clock_observation": {
+            "schema_version": "c-orbbec-clock-observation-1",
+            "sdk_host_clock_type": "REALTIME",
+            "sdk_host_clock_domain": "host_realtime",
+            "host_bridge": {
+              "monotonic_before_s": 281461.440069527,
+              "monotonic_after_s": 281461.440075504,
+              "realtime_s": 1794130380.274217,
+              "monotonic_raw_s": 281461.563121063
+            },
+            "bridge_bracket_s": 5.976995453238487e-06,
+            "frames": {
+              "color": {
+                "device_timestamp_us": 157931294937,
+                "system_timestamp_us": 1794130380272473,
+                "global_timestamp_us": 1794130380241681,
+                "global_available": true,
+                "global_host_monotonic_candidate_s": 281461.4075367241,
+                "sdk_receive_minus_global_s": 0.030792
+              },
+              "depth": {
+                "device_timestamp_us": 157931294956,
+                "system_timestamp_us": 1794130380259999,
+                "global_timestamp_us": 1794130380241699,
+                "global_available": true,
+                "global_host_monotonic_candidate_s": 281461.4075546055,
+                "sdk_receive_minus_global_s": 0.0183
+              }
+            },
+            "device_to_host_mapping_source": "SDK global timestamp fitter; raw readings retained",
+            "device_to_host_mapping_error_bound_s": null,
+            "timing_acceptance": "NOT_VALIDATED",
+            "approved": false,
+            "motion_enabled": false
+          },
+          "joint_brackets": {
+            "L1_Joint": {
+              "receive_interval_s": [
+                281461.373089395,
+                281461.423237484
+              ],
+              "positions_sdk_rad": [
+                -0.817779541015625,
+                -0.8173960447311401
+              ],
+              "linear_speed_rad_s": 0.007647276138817986
+            },
+            "L2_Joint": {
+              "receive_interval_s": [
+                281461.373894069,
+                281461.423998838
+              ],
+              "positions_sdk_rad": [
+                -0.09532252699136734,
+                -0.09527458250522614
+              ],
+              "linear_speed_rad_s": 0.0009568846856961819
+            },
+            "L3_Joint": {
+              "receive_interval_s": [
+                281461.374596308,
+                281461.42470385
+              ],
+              "positions_sdk_rad": [
+                0.523470938205719,
+                0.5234389901161194
+              ],
+              "linear_speed_rad_s": -0.0006375904367484386
+            },
+            "L4_Joint": {
+              "receive_interval_s": [
+                281461.375394096,
+                281461.425364826
+              ],
+              "positions_sdk_rad": [
+                -0.680831789970398,
+                -0.6807786226272583
+              ],
+              "linear_speed_rad_s": 0.0010639697111932515
+            },
+            "L5_Joint": {
+              "receive_interval_s": [
+                281461.376096939,
+                281461.425934195
+              ],
+              "positions_sdk_rad": [
+                -0.1721254289150238,
+                -0.172072172164917
+              ],
+              "linear_speed_rad_s": 0.0010686132106116847
+            }
+          }
+        },
+        "camera_profile_version": "0cff4d6eb086ce64dbcdfa9db5095d1e6a751e2229a4d5ac2a1b4a390d99f997",
+        "target_geometry_version": "38b26b49853f053f5667a1388c1a777ce390b7cdf130f8294aab9ce1b73bc940",
+        "attachment_version": "left_L5_cube_mount_operator_confirmed_C35_v1",
+        "clock_domain": "host_monotonic",
+        "epoch": "linux_boot:f9016d4a-56d7-4a83-a8c2-3fa6d11f8153"
+      },
+      "frame_decisions": [
+        {
+          "image_file": "frame_000.npz",
+          "frame_sha256": "0c62a56fb33e8c4eb403ad4931836da01f46497d145ac7bbf033a0b1611af7ce",
+          "vision_quality": "PASS",
+          "reason": null
+        },
+        {
+          "image_file": "frame_001.npz",
+          "frame_sha256": "0784ad1362764071c5680931fe285711a9bd7cb15c3bd901d4bf10063173dbe2",
+          "vision_quality": "PASS",
+          "reason": null
+        },
+        {
+          "image_file": "frame_002.npz",
+          "frame_sha256": "908554e5d4b4c36723b1bef1759362ce00038c72f1b41d8c7e0ee5305a30c53a",
+          "vision_quality": "PASS",
+          "reason": null
+        }
+      ],
+      "selection": "first image with PASS vision quality in capture order; before any extrinsic fit",
+      "record_manifest_sha256": "49b0c417d88d9fdee472079980ce9cb713e1fd9d4ce92fe7ce1d4e71f3e56c1b",
+      "joint_cycles_sha256": "5c1febc05176ac09738748a4f2aa4c4983fde7de22f5a2cd855609959eceba0b",
+      "qualification": "PROVISIONAL_TIMING",
+      "calibration_sample_valid": false,
+      "approved": false,
+      "motion_enabled": false
+    },
+    {
+      "schema_version": "c-fixed-camera-point-prepared-1",
+      "group": "training",
+      "context": {
+        "source": "real",
+        "units": "m",
+        "arm_role": "left",
+        "base_frame": "L_arm_root",
+        "reference_frame": "L5_Link",
+        "attachment_reference_frame": "L5_Link",
+        "camera_serial": "CP2L863000KL",
+        "camera_frame": "camera_CP2L863000KL_color_optical_frame",
+        "camera_profile_version": "0cff4d6eb086ce64dbcdfa9db5095d1e6a751e2229a4d5ac2a1b4a390d99f997",
+        "arm_device_id": "operator_selected_left_P7_can2_61_to_67",
+        "model_version": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+        "joint_mapping_version": "left_can2_61_to_65_read06_float32_sdk_v1",
+        "target_id": "C35_calibration_cube_50mm",
+        "target_geometry_version": "38b26b49853f053f5667a1388c1a777ce390b7cdf130f8294aab9ce1b73bc940",
+        "attachment_version": "left_L5_cube_mount_operator_confirmed_C35_v1",
+        "clock_domain": "host_monotonic",
+        "epoch": "linux_boot:f9016d4a-56d7-4a83-a8c2-3fa6d11f8153",
+        "observation_kind": "point_center"
+      },
+      "sample": {
+        "sample_id": "C35_training_pose03_retry",
+        "image_id": "2d9f7666ee2a4889e0bf49e8dd643e532266d414ec2991b15c1a7a1393d18684",
+        "joint_sample_id": "C35_training_pose03_retry_frame_001.npz_exposure_interpolation",
+        "target_rigidly_fixed": true,
+        "operator_evidence": "User confirmed pose03 retry ready with same rigid mount",
+        "center_quality": "PASS",
+        "center_camera_m": [
+          -0.14638414145939832,
+          0.0955211843107153,
+          0.48894771035749446
+        ],
+        "T_base_reference": [
+          [
+            0.08670704979725884,
+            0.28846430364434206,
+            -0.953556622880068,
+            0.355872339160109
+          ],
+          [
+            -0.10620284742452644,
+            0.9543835265498433,
+            0.2790574124606031,
+            -0.00474168168386788
+          ],
+          [
+            0.990556834671478,
+            0.07707418357186296,
+            0.1133875103896032,
+            -0.1690490449266681
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "reference_stamp_s": 282053.9978028432,
+        "center_stamp_s": 282053.9978028432,
+        "time_alignment_evidence": {
+          "method": "SDK global exposure mapping + bracketed linear joint interpolation",
+          "timing_acceptance": "NOT_VALIDATED",
+          "device_to_host_mapping_error_bound_s": null,
+          "original_camera_stamp_s": 158523.885871,
+          "original_camera_clock_domain": "orbbec_CP2L863000KL_6a4d316472ad46ba9fa2019e73d1a9b8",
+          "clock_observation": {
+            "schema_version": "c-orbbec-clock-observation-1",
+            "sdk_host_clock_type": "REALTIME",
+            "sdk_host_clock_domain": "host_realtime",
+            "host_bridge": {
+              "monotonic_before_s": 282054.030194896,
+              "monotonic_after_s": 282054.030201993,
+              "realtime_s": 1794130972.8643427,
+              "monotonic_raw_s": 282054.147272865
+            },
+            "bridge_bracket_s": 7.097027264535427e-06,
+            "frames": {
+              "color": {
+                "device_timestamp_us": 158523885871,
+                "system_timestamp_us": 1794130972862626,
+                "global_timestamp_us": 1794130972831929,
+                "global_available": true,
+                "global_host_monotonic_candidate_s": 282053.9977847234,
+                "sdk_receive_minus_global_s": 0.030697
+              },
+              "depth": {
+                "device_timestamp_us": 158523885890,
+                "system_timestamp_us": 1794130972850362,
+                "global_timestamp_us": 1794130972831947,
+                "global_available": true,
+                "global_host_monotonic_candidate_s": 282053.9978028432,
+                "sdk_receive_minus_global_s": 0.018415
+              }
+            },
+            "device_to_host_mapping_source": "SDK global timestamp fitter; raw readings retained",
+            "device_to_host_mapping_error_bound_s": null,
+            "timing_acceptance": "NOT_VALIDATED",
+            "approved": false,
+            "motion_enabled": false
+          },
+          "joint_brackets": {
+            "L1_Joint": {
+              "receive_interval_s": [
+                282053.995883223,
+                282054.04614968
+              ],
+              "positions_sdk_rad": [
+                -0.9928690791130066,
+                -0.9928690791130066
+              ],
+              "linear_speed_rad_s": 0.0
+            },
+            "L2_Joint": {
+              "receive_interval_s": [
+                282053.996659473,
+                282054.046882118
+              ],
+              "positions_sdk_rad": [
+                -0.09882192313671112,
+                -0.09886985272169113
+              ],
+              "linear_speed_rad_s": -0.0009543421098132703
+            },
+            "L3_Joint": {
+              "receive_interval_s": [
+                282053.997388546,
+                282054.04761057
+              ],
+              "positions_sdk_rad": [
+                0.4250085651874542,
+                0.4258820712566376
+              ],
+              "linear_speed_rad_s": 0.017392888619243152
+            },
+            "L4_Joint": {
+              "receive_interval_s": [
+                282053.948317242,
+                282053.9981829
+              ],
+              "positions_sdk_rad": [
+                -0.48651689291000366,
+                -0.48650631308555603
+              ],
+              "linear_speed_rad_s": 0.00021216654632183905
+            },
+            "L5_Joint": {
+              "receive_interval_s": [
+                282053.948923582,
+                282053.998967122
+              ],
+              "positions_sdk_rad": [
+                -0.22516494989395142,
+                -0.2251436412334442
+              ],
+              "linear_speed_rad_s": 0.00042580242124902684
+            }
+          }
+        },
+        "camera_profile_version": "0cff4d6eb086ce64dbcdfa9db5095d1e6a751e2229a4d5ac2a1b4a390d99f997",
+        "target_geometry_version": "38b26b49853f053f5667a1388c1a777ce390b7cdf130f8294aab9ce1b73bc940",
+        "attachment_version": "left_L5_cube_mount_operator_confirmed_C35_v1",
+        "clock_domain": "host_monotonic",
+        "epoch": "linux_boot:f9016d4a-56d7-4a83-a8c2-3fa6d11f8153"
+      },
+      "frame_decisions": [
+        {
+          "image_file": "frame_000.npz",
+          "frame_sha256": "f1f78c1fc188723f7b3bd5c85d356c3c822d3840eabfaa8b0e91bf1ddae3baa8",
+          "vision_quality": "FAIL",
+          "reason": null
+        },
+        {
+          "image_file": "frame_001.npz",
+          "frame_sha256": "2d9f7666ee2a4889e0bf49e8dd643e532266d414ec2991b15c1a7a1393d18684",
+          "vision_quality": "PASS",
+          "reason": null
+        },
+        {
+          "image_file": "frame_002.npz",
+          "frame_sha256": "a8b4ae3d63454bd1c43413cf6243f2ff1490b46bf9e8d9c87975d00e2a4920b3",
+          "vision_quality": "FAIL",
+          "reason": null
+        }
+      ],
+      "selection": "first image with PASS vision quality in capture order; before any extrinsic fit",
+      "record_manifest_sha256": "a1b00753e95584b5648b418190fef41b349437c689b0c1162a489ad2779bef73",
+      "joint_cycles_sha256": "68f43e815e9870773f16d18fb08e748f5312c45222ad6d6c6cdccfe2e9832132",
+      "qualification": "PROVISIONAL_TIMING",
+      "calibration_sample_valid": false,
+      "approved": false,
+      "motion_enabled": false
+    }
+  ],
+  "validation_candidates": [],
+  "rejected_capture": {
+    "capture_id": "c35_training_pose03",
+    "centers": [
+      {
+        "schema_version": "c-cube-center-observation-1",
+        "source": "real_measured",
+        "camera_serial": "CP2L863000KL",
+        "frame_sha256": "61f0252402ef9b99fe487f0e5aa10eac7d36e341bdc4caca101a653539e298c5",
+        "camera_stamp_s": 158244.331579,
+        "camera_clock_domain": "orbbec_CP2L863000KL_d9fa430c23ee46bb87d1019354ece4c0",
+        "host_receive_stamp_s": 281774.475748481,
+        "host_clock_domain": "host_monotonic",
+        "center_camera_m": [
+          -0.15436319997498854,
+          0.0983760220486829,
+          0.48658230560231797
+        ],
+        "config": {
+          "camera_serial": "CP2L863000KL",
+          "edge_m": 0.05,
+          "edge_source": "operator ruler measured regular cube 50x50x50 mm",
+          "roi_source": "C35 pose03 rectified RGB manual visible face interiors before depth fit",
+          "face_polygons_xy": [
+            [
+              [
+                431,
+                471
+              ],
+              [
+                475,
+                477
+              ],
+              [
+                459,
+                505
+              ],
+              [
+                411,
+                501
+              ]
+            ],
+            [
+              [
+                482,
+                483
+              ],
+              [
+                489,
+                505
+              ],
+              [
+                475,
+                542
+              ],
+              [
+                470,
+                515
+              ]
+            ],
+            [
+              [
+                412,
+                517
+              ],
+              [
+                456,
+                521
+              ],
+              [
+                463,
+                544
+              ],
+              [
+                424,
+                540
+              ]
+            ]
+          ],
+          "erosion_px": 0,
+          "plane_threshold_m": 0.002,
+          "min_inlier_ratio": 0.9,
+          "max_holdout_m": 0.003,
+          "max_normal_dot": 0.1,
+          "max_condition_number": 10,
+          "regular_cube_constraint": true
+        },
+        "face_pixel_counts": [
+          {
+            "selected": 1499,
+            "valid": 1451,
+            "training": 726,
+            "validation": 725
+          },
+          {
+            "selected": 587,
+            "valid": 454,
+            "training": 226,
+            "validation": 228
+          },
+          {
+            "selected": 982,
+            "valid": 982,
+            "training": 492,
+            "validation": 490
+          }
+        ],
+        "approved": false,
+        "motion_enabled": false,
+        "time_alignment": "NOT_ESTABLISHED",
+        "notice": "device and host receive clocks kept separate; no reference pose/camera extrinsic here",
+        "quality": {
+          "schema_version": "c-three-face-center-1",
+          "face_reports": [
+            {
+              "normal_camera": [
+                -0.027468307526708462,
+                -0.7975459147035014,
+                -0.6026325630277323
+              ],
+              "offset_m": 0.34260764241765135,
+              "inlier_ratio": 0.9696969696969697,
+              "fit_rms_m": 0.0007274875119648027,
+              "validation_n": 725,
+              "validation_p95_m": 0.0016222176599029244,
+              "validation_max_m": 0.004706989518833138,
+              "fitted_cube_normal_camera": [
+                -0.027065112850912735,
+                -0.8104408045328589,
+                -0.585194994864532
+              ],
+              "constrained_validation_p95_m": 0.0016881155676570134,
+              "constrained_validation_max_m": 0.005051691028048252
+            },
+            {
+              "normal_camera": [
+                0.9922556360412376,
+                0.039942787804744764,
+                -0.11761516248674642
+              ],
+              "offset_m": 0.18129831603584004,
+              "inlier_ratio": 0.9292035398230089,
+              "fit_rms_m": 0.0008308367348278863,
+              "validation_n": 228,
+              "validation_p95_m": 0.002167069511206108,
+              "validation_max_m": 0.004482551412977265,
+              "fitted_cube_normal_camera": [
+                0.9878918422611456,
+                0.06777796003527656,
+                -0.1395559247303282
+              ],
+              "constrained_validation_p95_m": 0.0022537281062543404,
+              "constrained_validation_max_m": 0.003970383797211138
+            },
+            {
+              "normal_camera": [
+                -0.16574059154048648,
+                0.542410540589848,
+                -0.8236023687270686
+              ],
+              "offset_m": 0.29624160605515604,
+              "inlier_ratio": 0.9817073170731707,
+              "fit_rms_m": 0.000678814123916092,
+              "validation_n": 490,
+              "validation_p95_m": 0.0014396169678264079,
+              "validation_max_m": 0.002824907881384342,
+              "fitted_cube_normal_camera": [
+                -0.15276513889054616,
+                0.5818864584105641,
+                -0.7987934412964113
+              ],
+              "constrained_validation_p95_m": 0.0017955464620674102,
+              "constrained_validation_max_m": 0.0031225122952353475
+            }
+          ],
+          "max_abs_normal_dot": 0.06828490918024643,
+          "normal_condition_number": 1.0867988550230965,
+          "regular_cube_constraint": true,
+          "converged": true,
+          "consistency": "FAIL",
+          "orientation_xyzw": null,
+          "approved": false,
+          "motion_enabled": false,
+          "scope": "three-face depth/size consistency only; no labelled orientation, absolute sensor accuracy or calibration approval"
+        }
+      },
+      {
+        "schema_version": "c-cube-center-observation-1",
+        "source": "real_measured",
+        "camera_serial": "CP2L863000KL",
+        "frame_sha256": "d82274e29cc75145d3049d52ff1f59baa8294f2bc5e8461d221b43b1e0014d61",
+        "camera_stamp_s": 158244.398315,
+        "camera_clock_domain": "orbbec_CP2L863000KL_d9fa430c23ee46bb87d1019354ece4c0",
+        "host_receive_stamp_s": 281774.542902637,
+        "host_clock_domain": "host_monotonic",
+        "center_camera_m": null,
+        "config": {
+          "camera_serial": "CP2L863000KL",
+          "edge_m": 0.05,
+          "edge_source": "operator ruler measured regular cube 50x50x50 mm",
+          "roi_source": "C35 pose03 rectified RGB manual visible face interiors before depth fit",
+          "face_polygons_xy": [
+            [
+              [
+                431,
+                471
+              ],
+              [
+                475,
+                477
+              ],
+              [
+                459,
+                505
+              ],
+              [
+                411,
+                501
+              ]
+            ],
+            [
+              [
+                482,
+                483
+              ],
+              [
+                489,
+                505
+              ],
+              [
+                475,
+                542
+              ],
+              [
+                470,
+                515
+              ]
+            ],
+            [
+              [
+                412,
+                517
+              ],
+              [
+                456,
+                521
+              ],
+              [
+                463,
+                544
+              ],
+              [
+                424,
+                540
+              ]
+            ]
+          ],
+          "erosion_px": 0,
+          "plane_threshold_m": 0.002,
+          "min_inlier_ratio": 0.9,
+          "max_holdout_m": 0.003,
+          "max_normal_dot": 0.1,
+          "max_condition_number": 10,
+          "regular_cube_constraint": true
+        },
+        "face_pixel_counts": [
+          {
+            "selected": 1499,
+            "valid": 1447,
+            "training": 724,
+            "validation": 723
+          },
+          {
+            "selected": 587,
+            "valid": 421,
+            "training": 209,
+            "validation": 212
+          },
+          {
+            "selected": 982,
+            "valid": 982,
+            "training": 492,
+            "validation": 490
+          }
+        ],
+        "approved": false,
+        "motion_enabled": false,
+        "time_alignment": "NOT_ESTABLISHED",
+        "notice": "device and host receive clocks kept separate; no reference pose/camera extrinsic here",
+        "quality": {
+          "consistency": "REJECTED",
+          "reason": "face patch not bounded by the measured cube dimensions"
+        }
+      },
+      {
+        "schema_version": "c-cube-center-observation-1",
+        "source": "real_measured",
+        "camera_serial": "CP2L863000KL",
+        "frame_sha256": "1f7ba1a5e91c7b604978e6eef7745a2f39ef9637d709a9e132b9d91150b802bb",
+        "camera_stamp_s": 158244.465051,
+        "camera_clock_domain": "orbbec_CP2L863000KL_d9fa430c23ee46bb87d1019354ece4c0",
+        "host_receive_stamp_s": 281774.609836388,
+        "host_clock_domain": "host_monotonic",
+        "center_camera_m": null,
+        "config": {
+          "camera_serial": "CP2L863000KL",
+          "edge_m": 0.05,
+          "edge_source": "operator ruler measured regular cube 50x50x50 mm",
+          "roi_source": "C35 pose03 rectified RGB manual visible face interiors before depth fit",
+          "face_polygons_xy": [
+            [
+              [
+                431,
+                471
+              ],
+              [
+                475,
+                477
+              ],
+              [
+                459,
+                505
+              ],
+              [
+                411,
+                501
+              ]
+            ],
+            [
+              [
+                482,
+                483
+              ],
+              [
+                489,
+                505
+              ],
+              [
+                475,
+                542
+              ],
+              [
+                470,
+                515
+              ]
+            ],
+            [
+              [
+                412,
+                517
+              ],
+              [
+                456,
+                521
+              ],
+              [
+                463,
+                544
+              ],
+              [
+                424,
+                540
+              ]
+            ]
+          ],
+          "erosion_px": 0,
+          "plane_threshold_m": 0.002,
+          "min_inlier_ratio": 0.9,
+          "max_holdout_m": 0.003,
+          "max_normal_dot": 0.1,
+          "max_condition_number": 10,
+          "regular_cube_constraint": true
+        },
+        "face_pixel_counts": [
+          {
+            "selected": 1499,
+            "valid": 1431,
+            "training": 715,
+            "validation": 716
+          },
+          {
+            "selected": 587,
+            "valid": 461,
+            "training": 229,
+            "validation": 232
+          },
+          {
+            "selected": 982,
+            "valid": 982,
+            "training": 492,
+            "validation": 490
+          }
+        ],
+        "approved": false,
+        "motion_enabled": false,
+        "time_alignment": "NOT_ESTABLISHED",
+        "notice": "device and host receive clocks kept separate; no reference pose/camera extrinsic here",
+        "quality": {
+          "consistency": "REJECTED",
+          "reason": "face patch not bounded by the measured cube dimensions"
+        }
+      }
+    ]
+  },
+  "valid_calibration_pose_count": 0,
+  "qualification": "geometry qualified + provisional timing only",
+  "planned_split": {
+    "training_minimum": 6,
+    "validation_minimum": 4,
+    "assignment": "preassigned by logical placement, never split repeated images"
+  },
+  "predeclared_diagnostic_thresholds": {
+    "vision_max_holdout_m": 0.003,
+    "exposure_bracket_gap_s": 0.1,
+    "exposure_bracket_step_rad": 0.01,
+    "rgb_depth_skew_s": 0.02,
+    "point_mapping_max_residual_m": 0.005,
+    "design_max_condition_number": 1000000.0
+  },
+  "acceptance_notice": "diagnostic thresholds only; no physical safety/accuracy acceptance approved",
+  "T_base_camera": null,
+  "approved": false,
+  "motion_enabled": false,
+  "hardware_operations": "head camera capture + left can2/61..65 READ06 only; no rest/enable/targets/zero/clear/flash",
+  "source_model_sha256": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce"
+}

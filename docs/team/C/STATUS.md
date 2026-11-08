@@ -1,5 +1,13 @@
 # C 开发与实测交付记录（持续更新至2026-11-08）
 
+## C35：继续真实固定块多姿态采集
+
+对应C1-01/C1-02/C1-03，M1/M2a。新增prepare_fixed_camera_point_sample.py装配原帧SHA/原设备时间/曝光插值五轴FK和三面中心，按预定train/validation分组、按采集顺序选首个视觉PASS，原失败决定保留。模型从主机重新读取核对SHA233a0fd9…f7edce，安装现场逐组确认，所有时间仍PROVISIONAL、未批准。完整回归297 passed，实际前三个候选CLI运行成功；尚无外参矩阵。详见C35_FIELD_SESSION.md和evidence/fixed_camera_C35_session.json。
+
+已读A1-04及D1-02远程接口，未覆盖其源码；A当前仍Mock反馈实现，C quintic插值不能被离散端点契约静默丢弃。用户只能手托、方向不超过45°且限相机前方，采样按可视小范围换姿，不强推关节。
+
+本批实际硬件仅头相机+左61–65位置READ；无任何运动/Rest/使能/Flash等命令。继续采训练/独立验证，失败记录不作为真实能力缺失结论。
+
 ## C34：GitHub任务分支交付与可复算真实样例
 
 对应C1-01/C1-02/C1-03交接准备，M0/M1/M2a/M3/M4。用户明确要求在继续C1-03前上传已有所得成果，覆盖此前“不推送”的限制；仅授权任务分支发布，不合并main或改其他成员分支。远程已fetch，main仍为1acbee0d51faf4d321a36d2cb105cfd9d6ee0fc5，其他A/D任务分支保留。GitHub入口docs/team/C/README.md按接收方列接口/调用/限制。

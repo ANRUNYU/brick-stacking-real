@@ -1,5 +1,7 @@
 # C31 当前交接补充（2026-11-08）
 
+**C35当前采集：** [C35_FIELD_SESSION.md](C35_FIELD_SESSION.md)记录实际固定块多姿态、具名五轴曝光FK和三面中心候选；当前3训练候选、时间PROVISIONAL，无有效外参/TCP。新增prepare_fixed_camera_point_sample.py及297回归。A1-04/D1-02接口已审阅，C与A的连续插值语义仍需显式适配，不能将Mock反馈当真实能力；未改其他成员源码。
+
 **C34发布交接：** 本次用户授权将当前成果上传GitHub任务分支，统一从[README.md](README.md)进入。新增裁剪真实RGB-D/原始五轴/ROI/时钟最小样例，供A/B/D离线复算；290回归通过，未合并main。历史“未推送”描述对应当时，不代表当前授权范围。
 
 **C33最新补充：** 已用实拍RGB-D建立局部桌面坐标与50mm红块中心候选/实拍叠图，沿用CameraFrame/BlockDetection/BlockPose/RigidTransform。新入口[OBSERVED_TABLE_COORDINATES.md](OBSERVED_TABLE_COORDINATES.md)含调用/帧SHA/几何假设与误差。相机内建系不等于左基座外参，T_base_camera/T_base_table仍null；几何检查FAIL原样保留，不是执行目标。289回归通过，无新增硬件动作。
