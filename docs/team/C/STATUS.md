@@ -422,3 +422,11 @@ calibration/measurement_templates/left_wrist_theta_ranges.json明确null/verifie
 新增tools/solve_grasp_offset.py（复用localization.held_offset/RigidTransform），calibration/examples/grasp_offset_synthetic.json，tests/unit/test_grasp_offset_cli.py及ACTUAL_GRASP_CALIBRATION.md；输出c-flange-grasp-candidate-1，T_flange_block明确命名，公共接口未变、没有假设零TCP或默认世界姿态。版本/身份/时钟/预设/物体朝向必须显式，持续夹持与重新抓握分组；独立验证滑移保留为FAIL。CLI样例实际运行并输出到artifacts，source synthetic。
 
 8项新增回归，全套188 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c26-grasp。NEXT_FIELD_SESSION/HANDOFF_ABD/TASK_STATUS同步；A/B/D输入和M2a/M3/M4/M5的格式、单位、时间和验收依赖见新文档。已询问现场稳定整手抓握预设，不需要用户为软件工作随意摆路线/手势。真实外参、V2 Theta量程、实际grasp预设及共同坐标6D观测仍缺，无真实抓放验收。
+
+## 无预设时的候选与左O6实际接口（2026-11-08，C1-04/C2-03，M1/M3）
+
+用户确认无预设并指出C负责规划，C先实现物体侧面接触/期望朝向候选，不以D未交预设停工。新增planning/block_grasps.py、tools/plan_block_grasp.py、cube_face_grasp_synthetic.json、4项回归和GRASP_CANDIDATES.md；复用RigidTransform，未修改公共模型/SDK。world姿态、接近方向显式，几何grasp frame与真实flange/TCP分开，无默认零偏移。CLI已实际输出两候选（sample仅synthetic）。
+
+SSH读取本机O6源码/手动菜单与配置；原生SocketCAN按SN识别左手，5个READ（两接口SN，左身份后固件/角度/故障），当次can1/0x28，SN LHO6-04-322-L-Z-1-D，固件3.0.4、六fault0、raw[253,175,253,253,254,254]。本机映射o6:left:can1为identity standard→hardware raw，不是模型rad标定。证据left_o6_candidate_inputs_20261108.json下载hash与主机一致。无右手查询/进程操作，无控制/速度写/使能/Rest/Flash写入；未执行既有单指脚本。
+
+192 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c27-faces。HANDOFF_ABD/TASK_STATUS/ACTUAL_GRASP_CALIBRATION同步，M1/M3输入输出、单位与限制见新文档。后续依赖是实际空载通道/方向/开口/稳定抓握、V2量程/头部外参及完整碰撞覆盖，未产生动作许可或真实抓取成功。只询问现场清空左手条件，不要求用户提供已有预设。

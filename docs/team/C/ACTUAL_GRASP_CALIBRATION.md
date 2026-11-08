@@ -43,3 +43,7 @@ artifacts/planning_venv/Scripts/python.exe tools/solve_grasp_offset.py calibrati
 先核实现有整手稳定抓握预设；未验证时不让用户随意摆一个手势充当预设。随后确定外参实测方案及积木可观测坐标轴。持续夹持采样可检查物体相对法兰是否滑移；重新抓握多次才评估复现误差，不能混在同一平均值中。当前尚不执行抓握、使能或自动轨迹。
 
 已测188 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c26-grasp；8项新增回归验证法兰命名、独立验证滑移、缺失姿态/朝向、时钟/预设变化及样本泄漏拒绝。仅软件验证，未新增真实抓取验收。
+
+## 无预设时继续规划（2026-11-08）
+
+用户确认目前无抓握预设，C先承担候选设计，不再要求用户提供既有预设或摆路径。GRASP_CANDIDATES.md记录实际左手只读身份/六路反馈/配置映射核验，以及新增两组立方体对面接触几何与可运行CLI。手能否实现0.05m方块夹持、模型rad映射和接触稳定性仍待现场核验，未执行任何手指动作。

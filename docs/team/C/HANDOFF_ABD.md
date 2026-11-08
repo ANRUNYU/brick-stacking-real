@@ -158,3 +158,9 @@ A→C仍须保留原始角度到模型符号/零位版本与时间语义，但�
 用户同意暂停笔尖TCP采集，不继续要求笔尖多姿态；首两组raw归档，第2组编码器姿态无明显改变，不能算独立方向。当前入口ACTUAL_GRASP_CALIBRATION.md。左腕仍Rest；本轮无CAN命令，已关闭残留SSH会话。不要让A/D把暂停理解为已恢复保持或已验证抓握。
 
 新增solve_grasp_offset.py复用held_offset与RigidTransform，直接估计T_flange_block，输出具名法兰/积木系，无零TCP假设。样例grasp_offset_synthetic.json已跑CLI，训练/验证各3，报告始终未批准；实际所需A/B/D输入、单位、时间、版本和M2a/M3/M4/M5交接在新文档表格。已询问现场是否存在稳定整手抓握预设，尚不执行抓握。真实头部外参、V2范围和物体6D朝向仍缺，不以软件PASS替代。全套188 passed。
+
+## 无预设时的C抓取候选（2026-11-08，C1-04/C2-03，M1/M3）
+
+现场无整手预设，C先生成抓取接触几何/期望朝向，不要求用户摆路线、不等待D才开工。block_grasps.py与plan_block_grasp.py复用RigidTransform，50mm立方体的两组相对侧面接触/所需开口/显式接近方向已输出synthetic样例；逻辑grasp系不是默认TCP。当前不映射到实际手指命令、无flange目标/IK/轨迹/完整碰撞通过。调用、接口和依赖见GRASP_CANDIDATES.md。
+
+本轮SSH只读核验：左手当次can1/0x28、SN LHO6-04-322-L-Z-1-D、固件3.0.4、六fault0；硬件raw[253,175,253,253,254,254]，SDK顺序thumb_flex/thumb_abd/index/middle/ring/pinky，百分比非rad。o6:left:can1标准raw→硬件raw identity，仍不是物理URDF rad映射；按SN重新绑定总线。摘要和配置hash见evidence/left_o6_candidate_inputs_20261108.json，未发右手请求/运动、速度写、使能/Rest/Flash写。全套192 passed。C下一步协助手指方向/抓握实测，现场条件已询问，未执行。
