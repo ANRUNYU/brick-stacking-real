@@ -38,7 +38,8 @@ device stamp 保持相机时钟；host_receive_stamp_s 属于主机 monotonic，
 - c31_static_pose01 的旧线程记录：47组完整读数但最大间隔1.694 s，失败。相机原生初始化阻塞同进程采样，已改为独立只读进程，不降低门槛。
 - c31_static_pose01_retry：98组完整五轴读数，最大间隔0.051552 s，最大关节跨度0.000191748 rad，静止采集 PASS。但复核图像中机械臂/固定方块均未入镜，因此不能生成中心或外参样本；保留为采集链验证。
 - visible/settled 两次复拍仍无固定块入镜，且关节跨度超过采集前门槛，因此均失败；桌面投影变化，相机/底座是否移动尚未确认。用户请求再次拍照，继续复核，不假定安装未变。三次采集的原件SHA及清单见 evidence/fixed_camera_acquisition_C31.json。
-- 正在重采入镜姿态；未生成有效标定矩阵。原始文件在机器人 /home/qwer/c_calibration_runs/ 对应目录，本地镜像 artifacts/c_real_calibration/。这些目录不进 git；对外证据应按授权和白名单另行归档。
+- review/threeface 两次后续照片已看到固定红块，安装框外侧可见；但手托期间最大关节跨度分别0.03885/0.02112 rad，超过原定0.001 rad门槛，不能用于静止关联。threeface的三个中心检查均FAIL，最大面检查误差4.260/3.060/5.022 mm，保留3 mm门槛；窄侧面掠视，不能靠放宽阈值宣称测量通过。诊断原件见 evidence/mounted_cube_center_C31.json，读数/帧SHA见 fixed_camera_acquisition_C31.json。
+- 下一次需现场确认稳固支撑，避免仅靠手悬空；在不改变方块安装的前提下让两个侧面更宽。未生成有效标定矩阵。原始文件在机器人 /home/qwer/c_calibration_runs/ 对应目录，本地镜像 artifacts/c_real_calibration/。这些目录不进 git；对外证据应按授权和白名单另行归档。
 
 ## A/B/D 交接
 
