@@ -49,7 +49,7 @@ def stationary_summary(cycles,camera_report,*,max_joint_span_rad,max_state_gap_s
 
 
 def collect(camera_main,joint_capture,output,*,camera_serial,attachment_id,
-            max_joint_span_rad,max_state_gap_s,pose_id,joint_process_factory=None):
+            max_joint_span_rad,max_state_gap_s,pose_id,joint_process_factory=None,record_clock_metadata=False):
     output=Path(output)
     if not attachment_id or not camera_serial or not pose_id:raise ValueError('pose, attachment and camera identities required')
     # Validate before opening either camera or CAN.
@@ -71,7 +71,9 @@ def collect(camera_main,joint_capture,output,*,camera_serial,attachment_id,
     camera_exit=None
     try:
         time.sleep(.3)
-        camera_exit=camera_main(['--capture','--serial',camera_serial,'--frames','3','--seconds','10','--output',str(output/'camera')])
+        camera_args=['--capture','--serial',camera_serial,'--frames','3','--seconds','10','--output',str(output/'camera')]
+        if record_clock_metadata:camera_args.insert(0,'--record-clock-metadata')
+        camera_exit=camera_main(camera_args)
         time.sleep(.3)
     finally:
         if process is not None:
@@ -132,14 +134,16 @@ def start_worker(joint_tool,joint_sha,output):
 def main():
     p=argparse.ArgumentParser(__doc__);p.add_argument('output',type=Path)
     p.add_argument('--camera-tool',type=Path,required=True);p.add_argument('--joint-tool',type=Path,required=True);p.add_argument('--joint-tool-sha',required=True)
+    p.add_argument('--camera-tool-sha',default=CAMERA_TOOL_SHA)
+    p.add_argument('--record-clock-metadata',action='store_true')
     p.add_argument('--camera-serial',required=True);p.add_argument('--attachment-id',required=True)
     p.add_argument('--pose-id',required=True)
     p.add_argument('--max-joint-span-rad',type=float,required=True);p.add_argument('--max-state-gap-s',type=float,required=True);a=p.parse_args()
-    camera=load(a.camera_tool,CAMERA_TOOL_SHA,'camera_read');joint=load(a.joint_tool,a.joint_tool_sha,'joint_read')
+    camera=load(a.camera_tool,a.camera_tool_sha,'camera_read');joint=load(a.joint_tool,a.joint_tool_sha,'joint_read')
     r=collect(camera.main,joint.capture,a.output,camera_serial=a.camera_serial,attachment_id=a.attachment_id,
               max_joint_span_rad=a.max_joint_span_rad,max_state_gap_s=a.max_state_gap_s,pose_id=a.pose_id,
-              joint_process_factory=lambda output:start_worker(a.joint_tool,a.joint_tool_sha,output))
-    r['source_locks']=dict(camera_sha256=CAMERA_TOOL_SHA,joint_sha256=a.joint_tool_sha,
+              joint_process_factory=lambda output:start_worker(a.joint_tool,a.joint_tool_sha,output),record_clock_metadata=a.record_clock_metadata)
+    r['source_locks']=dict(camera_sha256=a.camera_tool_sha,joint_sha256=a.joint_tool_sha,
                            recorder_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest())
     (a.output/'record_manifest.json').write_text(json.dumps(r,indent=2,allow_nan=False),encoding='utf-8')
     print(json.dumps(r,allow_nan=False))

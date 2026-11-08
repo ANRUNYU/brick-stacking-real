@@ -1,5 +1,9 @@
 # C31 当前交接补充（2026-11-08）
 
+**C33最新补充：** 已用实拍RGB-D建立局部桌面坐标与50mm红块中心候选/实拍叠图，沿用CameraFrame/BlockDetection/BlockPose/RigidTransform。新入口[OBSERVED_TABLE_COORDINATES.md](OBSERVED_TABLE_COORDINATES.md)含调用/帧SHA/几何假设与误差。相机内建系不等于左基座外参，T_base_camera/T_base_table仍null；几何检查FAIL原样保留，不是执行目标。289回归通过，无新增硬件动作。
+
+**C32最新补充：** 用户无法脱手支撑，改为检查曝光附近读数并按SDK global曝光映射插值。tools/c_head_camera_probe.py新增可选--record-clock-metadata；tools/associate_camera_joint_samples.py输出五轴命名rad、原始帧/设备/主机时间、boot epoch及插值括号，始终PROVISIONAL。真实相机已证实global非零、SDK时钟REALTIME；不能直接拿device/arrival替代曝光，CLOCK_MONOTONIC_RAW也不能当Python monotonic。B仍需给时间误差界与曝光参考；A保留原始读数，未提供七轴执行替代；D确认安装未改变。命令、283回归与真实证据见STATUS.md C32/evidence/camera_clock_association_C32.json。未验收标定、无运动目标。
+
 最新采集/求解入口 [FIXED_CAMERA_CALIBRATION.md](FIXED_CAMERA_CALIBRATION.md)。无标记50mm方块固定在L5候选段，用61–65读取和厂家FK，联合估计固定相机外参及未知中心偏移；不要求已知笔尖TCP，不使用未核验腕量化。模型/安装/图像/epoch明确，几何单位m。工具及267回归通过，真实多姿态仍未完成；不要使用尚不存在的外参执行。B的设备—主机延迟映射仍UNKNOWN；静止接收时间覆盖不是时钟标定。A/B/D最小接口和M1/M2a/M3交接见该文档；本批只有头部开流/五轴位置READ，无运动目标。
 
 # C → A/B/D 滚动交接文档

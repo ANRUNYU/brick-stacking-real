@@ -1,5 +1,27 @@
 # C 开发与实测交付记录（持续更新至2026-11-08）
 
+## C33：已录RGB-D桌面建系与50mm方块定位诊断
+
+对应C1-01/C1-02/C1-03，M1/M2a；详见[OBSERVED_TABLE_COORDINATES.md](OBSERVED_TABLE_COORDINATES.md)。新增table_coordinates.py、observe_table_cube.py，复用既有六类模型/几何接口，支持实拍叠图；不新增公共Protocol，不把相机系/局部桌面系当基座系。输入为真实c32_clock_probe01、用户50mm实测尺寸、明确手选单块顶面和清洁桌面ROI。约(-255,+83,+25)mm是局部桌面中心候选，25mm来自平放模型。
+
+2mm拟合支持不足保留；3mm诊断拟合后检查阈值仍3mm，三帧总体FAIL：顶面深度及边界与模型有偏差，桌面检查有孤立深度异常。T_base_camera/T_base_table保持null，所有候选未批准。evidence/observed_table_cube_C33.json保留配置、原帧SHA、误差与首轮失败；实拍预览已渲染检查。完整回归289 passed（--basetemp=.test-tmp-c33-final），新增右手系/退化/已知尺寸及既有BlockPose合成集成验证。全部为录制数据分析，无新增硬件动作。
+
+B交付桌面局部几何/兼容BlockPose，A明确未知base变换禁止执行，D交付50mm平放模型/对称性。实际相机—左基座标定、手部抓握偏移、整场景及M3/M5/M6仍未验收。
+
+## C32：手托条件下的相机曝光时间—五轴配对准备
+
+对应 C1-01/C1-02/C1-03，M1/M2a。用户明确无法脱手支撑；不继续要求整段5s绝对静止，也不自动使能/锁关节。已分析旧threeface记录：三帧跨度0.13261s，图像接收窗口前后各0.05s内五轴最大变化0.000815rad。但此窗口边界不是已测曝光延迟界，不能凭它推翻原始整段FAIL。
+
+修改tools/c_head_camera_probe.py：新增可选--record-clock-metadata，只读原始帧device/system/global时间戳、SDK实际主机时钟类型，并逐帧记录realtime/monotonic/CLOCK_MONOTONIC_RAW桥接。原有CameraFrame的device stamp和clock_domain不变。零global保持不可用，不回退为曝光时间；桥接微秒级括号不是SDK全局拟合误差。采集器新增可选camera SHA与时钟开关，旧v4固定SHA默认兼容。
+
+新增tools/associate_camera_joint_samples.py：核对left/can2/61–65、原始06/rad一致、boot epoch及覆盖；按SDK映射的深度曝光时刻做五轴线性插值，限制前后读数间隔/角差和RGB-D曝光偏差，不外推、不伪造腕角。结果始终PROVISIONAL，时间误差界仍null、NOT_VALIDATED，不直接批准标定/动作。此工具不是执行轨迹插值。
+
+已部署主机c32_clock_observation_20261108目录并核对SHA。相机助手ef2dcc43ff8949cce7d299af32baa2f00a93c1bd30cb5cb3c30fe18c31cea590；采集器e9c83adf963168a9c15eef0d244b3952839b35a109d2ff87dd4d0151d13e8fb7。c32_clock_probe01真实采集三帧，实际SDK时钟REALTIME，global均非零；RGB SDK到达相对global约30.398–30.687ms，深度18.252–18.587ms；原始时钟与桥接/五轴配对保留evidence/camera_clock_association_C32.json。该次只是时间接口实测，照片无固定块入镜，不计正式标定姿态。
+
+验证：`artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c32-association`：283 passed；CLI已对真实采集运行，参数--max-bracket-gap-s .1 --max-bracket-step-rad .01 --max-rgb-depth-skew-s .02。这些是采集质量限制，不是真机运动限值。A交接关节原始时间与插值依据，B交接SDK时钟语义/桥接/未验证误差界，D交接安装版本不可默认为未变；不改公共Protocol。仍缺固定块当前安装确认、入镜多姿态/独立验证、时间精度验收及实际抓握关系。
+
+硬件操作：本批仅相机开流与五轴位置READ。没有调用相机timer_sync/reset/enable_global_timestamp，没有SDK/固件修改，也无机器人Rest/使能/运动目标。厂家时钟说明已核对：https://github.com/orbbec/OrbbecSDK_v2/blob/main/docs/tutorial/timestamp.md 。
+
 ## 当前增量 C31：无标记固定块联合标定与真实采集
 
 对应 C1-01/C1-02/C1-03，M1/M2a。操作说明与输入输出见 [FIXED_CAMERA_CALIBRATION.md](FIXED_CAMERA_CALIBRATION.md)，当前状态以 TASK_STATUS.md 为准；下文早期批次按历史记录保留。

@@ -14,6 +14,44 @@ import time
 import uuid
 
 
+def clock_anchor():
+    """Bracket a host-clock bridge; never equate SDK RAW with Python monotonic."""
+    before = time.monotonic()
+    realtime = time.time()
+    raw = time.clock_gettime(time.CLOCK_MONOTONIC_RAW) if hasattr(time, 'CLOCK_MONOTONIC_RAW') else None
+    after = time.monotonic()
+    return dict(monotonic_before_s=before,monotonic_after_s=after,
+                realtime_s=realtime,monotonic_raw_s=raw)
+
+
+def frame_clocks(color,depth,sdk_clock_type,anchor):
+    """Read camera clock metadata only; no timer reset, synchronization or writes."""
+    name = str(sdk_clock_type).split('.')[-1]
+    if name not in ('REALTIME','MONOTONIC'):
+        raise ValueError('explicit known SDK host clock type required')
+    before,after=anchor['monotonic_before_s'],anchor['monotonic_after_s']
+    if after < before:
+        raise ValueError('invalid host clock bridge bracket')
+    origin=anchor['realtime_s'] if name=='REALTIME' else anchor['monotonic_raw_s']
+    if origin is None:
+        raise ValueError('SDK monotonic RAW clock bridge unavailable')
+    rows={}
+    for label,f in (('color',color),('depth',depth)):
+        device=f.get_timestamp_us();system=f.get_system_timestamp_us();glob=f.get_global_timestamp_us()
+        if min(device,system,glob)<0:
+            raise ValueError('negative camera clock metadata')
+        rows[label]=dict(device_timestamp_us=device,system_timestamp_us=system,
+                global_timestamp_us=glob,global_available=glob>0,
+                global_host_monotonic_candidate_s=(glob/1e6-origin+(before+after)/2) if glob>0 else None,
+                sdk_receive_minus_global_s=(system-glob)/1e6 if glob>0 and system>0 else None)
+    return dict(schema_version='c-orbbec-clock-observation-1',sdk_host_clock_type=name,
+                sdk_host_clock_domain='host_realtime' if name=='REALTIME' else 'linux_clock_monotonic_raw',
+                host_bridge=anchor,bridge_bracket_s=after-before,frames=rows,
+                device_to_host_mapping_source='SDK global timestamp fitter; raw readings retained',
+                device_to_host_mapping_error_bound_s=None,timing_acceptance='NOT_VALIDATED',
+                approved=False,motion_enabled=False)
+
+
 def decode_rgb(data, encoding, width, height):
     import cv2
     import numpy as np
@@ -97,7 +135,7 @@ def choose_profile(profiles, formats, *, width=1280, height=800, fps=15):
     return min(candidates, key=lambda p: formats.index(str(p.get_format()).split(".")[-1]))
 
 
-def capture(sdk, device, serial, output, report, *, count, seconds, max_skew_ms):
+def capture(sdk, device, serial, output, report, *, count, seconds, max_skew_ms, record_clock_metadata=False):
     import cv2
     import numpy as np
     pipe = sdk.Pipeline(device)
@@ -137,6 +175,11 @@ def capture(sdk, device, serial, output, report, *, count, seconds, max_skew_ms)
             host_receive_monotonic_s = time.monotonic()
             if not frames:
                 continue
+            clocks = None
+            if record_clock_metadata:
+                original_color,original_depth=frames.get_color_frame(),frames.get_depth_frame()
+                if original_color and original_depth:
+                    clocks=frame_clocks(original_color,original_depth,report['sdk_host_clock_type'],clock_anchor())
             align_start = time.monotonic()
             aligned = align.process(frames)
             align_end = time.monotonic()
@@ -196,6 +239,10 @@ def capture(sdk, device, serial, output, report, *, count, seconds, max_skew_ms)
                     "clock_domain": epoch, "source": "real_measured",
                     "host_receive_stamp_s": host_receive_monotonic_s, "host_clock_domain": "host_monotonic", "registered": True,
                     "rectified": True, "depth_unit": "m"}
+            if record_clock_metadata:
+                if clocks is None:
+                    raise ValueError('original color/depth clock metadata missing')
+                meta['clock_observation']=clocks
             pending.append((name, rgb, dm, meta))
             valid = np.isfinite(dm) & (dm > 0)
             report["frames"].append({"file": name, "rgb_stamp_s": ct, "depth_stamp_s": dt,
@@ -203,6 +250,8 @@ def capture(sdk, device, serial, output, report, *, count, seconds, max_skew_ms)
                 "timing_s": {"wait": host_receive_monotonic_s-wait_start, "align": align_end-align_start, "decode_depth": decode_end-decode_start, "rectify": rectify_end-decode_end},
                 "host_receive_stamp_s": host_receive_monotonic_s, "host_clock_domain": "host_monotonic",
                 "valid_depth_ratio": float(valid.mean()), "median_depth_m": float(np.median(dm[valid])) if valid.any() else None})
+            if record_clock_metadata:
+                report['frames'][-1]['clock_observation']=clocks
         report["result"] = "CAPTURED" if len(report["frames"]) == count else "INCOMPLETE"
         report["notice"] = "Capture is not depth accuracy, alignment accuracy or block-detection acceptance. Clock is per-camera; no arm/world transform."
     finally:
@@ -227,6 +276,7 @@ def capture(sdk, device, serial, output, report, *, count, seconds, max_skew_ms)
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--capture", action="store_true", help="otherwise inventory only")
+    p.add_argument("--record-clock-metadata", action="store_true", help="read SDK global/system/device clocks and host bridge; no clock synchronization/reset")
     p.add_argument("--serial")
     p.add_argument("--uid", help="explicit enumerated USB UID if list serial is unavailable")
     p.add_argument("--frames", type=int, default=10)
@@ -241,7 +291,7 @@ def main(argv=None):
     if args.capture and not args.serial:
         p.error("capture requires explicit serial number")
     args.output.mkdir(parents=True)
-    report = {"started_at": datetime.now(timezone.utc).isoformat(), "scope": "camera_only", "tool_version": "c-head-1280x800-15-v4-separate-distortion",
+    report = {"started_at": datetime.now(timezone.utc).isoformat(), "scope": "camera_only", "tool_version": "c-head-1280x800-15-v5-clock-observation",
         "robot_motion_accessed": False, "can_accessed": False, "devices": [],
         "frames": [], "rejected_skew": 0, "errors": [], "cleanup_errors": [], "result": "ERROR"}
     try:
@@ -249,6 +299,8 @@ def main(argv=None):
         report["binding_version"] = importlib.metadata.version("pyorbbecsdk2")
         report["sdk_version"] = sdk.get_version()
         context = sdk.Context()
+        if args.record_clock_metadata:
+            report['sdk_host_clock_type']=str(context.get_timestamp_clock_type())
         devices = context.query_devices()
         for i in range(devices.get_count()):
             report["devices"].append({"serial": devices.get_device_serial_number_by_index(i),
@@ -267,7 +319,7 @@ def main(argv=None):
                                   "firmware": info.get_firmware_version(), "connection": info.get_connection_type()}
             if report["selected"]["serial"] != args.serial:
                 raise ValueError("opened device serial does not match explicit requested serial")
-            capture(sdk,device,args.serial,args.output,report,count=args.frames,seconds=args.seconds,max_skew_ms=args.max_skew_ms)
+            capture(sdk,device,args.serial,args.output,report,count=args.frames,seconds=args.seconds,max_skew_ms=args.max_skew_ms,record_clock_metadata=args.record_clock_metadata)
         else:
             report["result"] = "INVENTORY" if report["devices"] else "NO_DEVICES"
     except Exception as exc:
