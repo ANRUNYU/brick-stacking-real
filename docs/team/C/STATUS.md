@@ -10,6 +10,8 @@
 
 A获原始反馈/具名时间依据，B获可复算RGB-D/K/裁剪来源/时钟，D获几何候选和明确失败原因。源样例不含装臂目标，不能充作联合标定姿态。现场继续时块应固定在原金属框，整段臂支撑后可靠近相机；已拆需新安装版本。
 
+发布结果：已成功push codex/c-calibration-planning；远程ls-remote回读首批HEAD=daffacb8887cf273cff0a831754f5069b425666f，main仍1acbee0d51faf4d321a36d2cb105cfd9d6ee0fc5。没有force push、PR合并或Issue创建。新增.gitattributes为真实fixture保留原字节，已直接读取提交中的Git blob逐项验证manifest SHA，避免Windows/Linux自动换行破坏复算。GitHub Actions API当前未取得可用结果，不能宣称远程CI通过；已通过的是本地290项验证。
+
 ## C33：已录RGB-D桌面建系与50mm方块定位诊断
 
 对应C1-01/C1-02/C1-03，M1/M2a；详见[OBSERVED_TABLE_COORDINATES.md](OBSERVED_TABLE_COORDINATES.md)。新增table_coordinates.py、observe_table_cube.py，复用既有六类模型/几何接口，支持实拍叠图；不新增公共Protocol，不把相机系/局部桌面系当基座系。输入为真实c32_clock_probe01、用户50mm实测尺寸、明确手选单块顶面和清洁桌面ROI。约(-255,+83,+25)mm是局部桌面中心候选，25mm来自平放模型。
