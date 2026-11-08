@@ -430,3 +430,11 @@ calibration/measurement_templates/left_wrist_theta_ranges.json明确null/verifie
 SSH读取本机O6源码/手动菜单与配置；原生SocketCAN按SN识别左手，5个READ（两接口SN，左身份后固件/角度/故障），当次can1/0x28，SN LHO6-04-322-L-Z-1-D，固件3.0.4、六fault0、raw[253,175,253,253,254,254]。本机映射o6:left:can1为identity standard→hardware raw，不是模型rad标定。证据left_o6_candidate_inputs_20261108.json下载hash与主机一致。无右手查询/进程操作，无控制/速度写/使能/Rest/Flash写入；未执行既有单指脚本。
 
 192 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c27-faces。HANDOFF_ABD/TASK_STATUS/ACTUAL_GRASP_CALIBRATION同步，M1/M3输入输出、单位与限制见新文档。后续依赖是实际空载通道/方向/开口/稳定抓握、V2量程/头部外参及完整碰撞覆盖，未产生动作许可或真实抓取成功。只询问现场清空左手条件，不要求用户提供已有预设。
+
+## 左食指单次试动工具与真实只读预览（2026-11-08，C1-04/C1-05，M1/M2a）
+
+用户答复“可以清空左手并保持支撑”，该问题明确只确认条件，不是已清空或动作授权。准备c_o6_index_probe.py（标准库native SocketCAN、固定左ID/手总线与SN、新鲜位置/速度/fault、默认预览），配test_o6_index_probe.py和O6_INDEX_FIELD_TRIAL.md。拟议一次食指目标raw253→245、归一化速度10%，其他五路目标保留新鲜读数；没有默认rad映射、安全力参数或自动许可。无回位/速度恢复，退出不等于电机停，真实执行还要求物理停止条件和具体授权。
+
+通过SSH只读查看SDK O6.close/stop_polling，确认它们停止线程/通信而非运动停止。真实运行新工具run_trial execute=false，四个READ（SN/角度/速度/fault），当前原始六位置[253,175,253,253,254,254]、速度读回0、fault0，0控制写。预览下载hash一致，证据left_index_readonly_preview_20261108.json；没有上传/修改SDK或干预右手。
+
+14项新回归，完整206 passed（.test-tmp-c28-final）；CLI失败提示改进后针对14项再次通过（.test-tmp-c28-exit）。故障/超时/中断不盲目反向、不虚假stop；起点/身份/现场条件/非法范围缺失拒绝写。HANDOFF_ABD/TASK_STATUS/GRASP_CANDIDATES同步。未做真实手指运动、接触力、稳定抓握或臂轨迹验收，仍待现场条件与授权。

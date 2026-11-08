@@ -164,3 +164,9 @@ A→C仍须保留原始角度到模型符号/零位版本与时间语义，但�
 现场无整手预设，C先生成抓取接触几何/期望朝向，不要求用户摆路线、不等待D才开工。block_grasps.py与plan_block_grasp.py复用RigidTransform，50mm立方体的两组相对侧面接触/所需开口/显式接近方向已输出synthetic样例；逻辑grasp系不是默认TCP。当前不映射到实际手指命令、无flange目标/IK/轨迹/完整碰撞通过。调用、接口和依赖见GRASP_CANDIDATES.md。
 
 本轮SSH只读核验：左手当次can1/0x28、SN LHO6-04-322-L-Z-1-D、固件3.0.4、六fault0；硬件raw[253,175,253,253,254,254]，SDK顺序thumb_flex/thumb_abd/index/middle/ring/pinky，百分比非rad。o6:left:can1标准raw→硬件raw identity，仍不是物理URDF rad映射；按SN重新绑定总线。摘要和配置hash见evidence/left_o6_candidate_inputs_20261108.json，未发右手请求/运动、速度写、使能/Rest/Flash写。全套192 passed。C下一步协助手指方向/抓握实测，现场条件已询问，未执行。
+
+## 一次空载左食指试动准备（2026-11-08，C1-04/C1-05，M1/M2a）
+
+新增独立tools/c_o6_index_probe.py及14项回归，默认read-only；真实主机只读预览成功。当前提案raw食指253→245、速度10%归一化，其他目标取执行前读数；不回位、不恢复速度。SDK close/stop_polling仅停止通信，不是电机停止，不能用于硬件stop接口验收。执行须另有当次空手/支撑/夹碰空间/能停左O6的物理停止确认与具体授权；目前只有可清空的条件答复，未执行任何控制帧。
+
+O6_INDEX_FIELD_TRIAL.md给出精确命令、现场责任、原始预览hash和失败退出行为；evidence/left_index_readonly_preview_20261108.json是成功READ_ONLY_PREVIEW，六位置[253,175,253,253,254,254]、速度读回0、fault0。速度0不是已确认停止；新鲜SN/起点每次重读，起点偏离拒绝。接口c-o6-index-trial-1不替代ArmAdapter/HandAdapter生产执行方法；试动反馈达标也不构成物理运动或稳定抓取验收。全套206 passed，本轮无运动/速度写/使能/Rest/Flash写。
