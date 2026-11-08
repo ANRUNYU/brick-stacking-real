@@ -19,6 +19,31 @@ def test_only_five_left_read_requests():
             probe.position_request(mid)
 
 
+def test_standard_ids_do_not_subscribe_to_kernel_error_receive_list():
+    filters = list(struct.iter_unpack('=II', probe.receive_filters()))
+    assert [mid for mid, _ in filters] == list(range(61, 68)) + [0x642, 0x643]
+    for mid, mask in filters:
+        # CAN_ERR_FLAG changes kernel subscription semantics, rather than
+        # simply rejecting frames. This caused the real can2 receive failure.
+        assert not mask & 0x20000000
+        assert (mid & mask) == (mid & 0x7FF)
+        assert ((mid | 0x80000000) & mask) != (mid & mask)
+        assert ((mid | 0x40000000) & mask) != (mid & mask)
+
+
+def test_v2_only_exact_mode_read_and_strict_response():
+    for mid in (66, 67):
+        frame = probe.v2_mode_request(mid)
+        assert probe.CAN_FRAME.unpack(frame) == (0x600+mid, 8, bytes.fromhex('670b000000000476'))
+        reply = probe.CAN_FRAME.pack(0x600+mid, 8, bytes([mid, 11, 2, 0, 0, 0, 0, 255]))
+        row = probe.decode_received(reply, 0)
+        assert row['control_mode'] == 2 and row['position_sdk_rad'] is None
+        assert probe.decode_received(reply, socket.MSG_DONTROUTE) is None
+        assert probe.decode_received(frame, 0) is None
+    with pytest.raises(ValueError):
+        probe.v2_mode_request(61)
+
+
 def test_echo_and_nonstandard_packets_rejected():
     good = probe.CAN_FRAME.pack(61, 5, b'\x06'+struct.pack('<f', .25))
     assert probe.decode_received(good, 0)['position_sdk_rad'] == .25

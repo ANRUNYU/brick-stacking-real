@@ -13,15 +13,19 @@
 
 现场SDK src/linkerbot/arm/a7/motor.py:124–156确认J1…J5为标准CAN ID、单字节06查询，返回命令字节后float32 little-endian rad。src/linkerbot/arm/p7/motor_v2.py:498–502确认read_initial_state发送FF×7+FD的Rest状态切换；start_polling是控制心跳。未找到经核验的V2纯实时角度查询，因此不猜协议、不将缓存当新鲜数据。
 
-## 本轮独立工具
+## 接口问题已定位并修复（2026-11-08）
 
-tools/c_left_arm_readonly_probe.py仅标准库，固定can2、仅允许61…65的06查询；66/67只被动接收原始反馈。无SDK构造、无使能/解除使能/回零/模式/Flash写入；剔除本机TX、扩展/RTR/error/无效数据。V2量化尚未实测确认，因此保留raw、不套默认范围换算。输出始终calibration_sample_valid=false，不对公共ArmAdapter接口增加不兼容要求。
+问题是C原生SocketCAN采集工具的接收掩码错误，**不是电机不能运转**。旧掩码0xE00007FF误含CAN_ERR_FLAG；SocketCAN据此选择错误帧接收列表，普通反馈不进入该socket。应为CAN_EFF_FLAG | CAN_RTR_FLAG | CAN_SFF_MASK，即0xC00007FF。官方说明：https://www.kernel.org/doc/html/latest/networking/can.html#can-filter-usage-optimisation 。
 
-在Linux机器人主机的经审阅源码副本上运行：`python3 c_left_arm_readonly_probe.py <新输出.json>`。输出目录须已存在，文件必须不存在。原始工具本轮经SSH stdin运行，未修改原脚本或SDK。
+SSH主机同时建立旧/新掩码两个socket，对同一次左J1只读06请求，只有新掩码收到实际反馈（flags=0）；旧socket没有收到。另用成功脚本环境p7_sdk_venv的python-can、不带过滤器，也读到同一关节角度。这确定了工具接收问题，之前的无应答窗口不能用于诊断电机/接线/上电或要求A新建驱动。
 
-结果：5个查询写入SocketCAN成功，2.254秒窗口内收到0个合格响应。send成功表示内核接受请求，不能当作驱动应答或物理执行证据。can2当时UP/LOWER_UP、1Mbps、ERROR-ACTIVE、tx/rx错误计数0；不能仅据此判定设备断电、接线错误或SDK错误。无CAN接口配置改变，无右臂/手命令。
+修复后在can2实读J1…J5（61…65），依次约[-0.007167,-0.004650,2.649036,0.000128,-1.290078]rad，五轴反馈收取间跨度约2.86ms。它们是此次姿态、SDK符号约定的实读值，不是目标值/零位/完整七轴状态，也不自动套用到未来采样。
 
-原始报告：/home/qwer/c_calibration_runs/left_readonly_C22_9b6c0c59-88a1-40c3-abb2-48c45b10a479.json；SHA256 52f73c33b56fb5afb8c45067ced2b1126909317b559d854afe34dbcff4c1e01f。本地内容副本evidence/left_readonly_capture_C22.json。时间是host_monotonic收取/出队时间，并非设备采样时间；epoch仅本会话标识，不与其他会话时钟合并。
+J6/J7分别在0x642/0x643发送670b000000000476（Flash控制模式READ），收到420b0200000000ff、430b0200000000ff，均模式2。**全部七个电机通信已确认**，没有写Flash或发送状态/运动命令。模式2并不等于当前已使能，也不是腕部实时角度。
+
+tools/c_left_arm_readonly_probe.py现仅发送左J1…J5位置读和左J6/J7模式读，分开missing_motor_ids与missing_position_ids，不把模式回应当角度。原始V2运行反馈仍只保存raw，不套未验证量化。没有SDK构造/使能/解除使能/回零/模式写入。输出仍非有效完整TCP样本；公共ArmAdapter不变。
+
+Linux调用：`python3 tools/c_left_arm_readonly_probe.py <不存在的输出.json>`。目录须存在。已在主机用审阅后的源码通过SSH stdin运行，未修改SDK、旧脚本或右手进程。新增回归覆盖内核过滤语义、7个read-only请求精确字节与严格回应匹配；全套163 passed。此次无需另写暂时无应答日志，直接纠正原因。
 
 ## A/C交接及下一入口
 
@@ -29,4 +33,4 @@ M2a需要A或经现场审核的状态入口提供：左设备/总线绑定版本
 
 若取得V2纯查询协议，先审源码和字节再复用本工具；若厂家仅支持Rest触发或使能后反馈，则下一轮须准备机械支撑、当前状态/模式检查、退出方案及明确现场操作授权，再改变状态。此轮不执行Rest获取角度。固定点接触和8组姿态采集必须等完整可靠状态入口；不要为采样自行搬动已上电机械臂。
 
-验证：7项工具回归（只允许5个read ID、拒本机回显/控制帧/非标准帧/NaN、V2不默认量化、窗口约束）；全套161 passed，命令 `artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c22-final`。软件测试与本轮真实CAN查询分别报告，不代表TCP/完整避碰或执行验收。
+验证：`artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c23-final`，163 passed。

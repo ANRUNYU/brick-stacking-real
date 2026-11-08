@@ -137,6 +137,6 @@ D/C：新增具名rad主动关节→mimic展开→全部指节FK→FCL12mesh检�
 
 用户提供两份历史运动脚本，SSH逐行审查及hash见LEFT_STATE_ACQUISITION.md。V1脚本实际漏左J1且包含右臂；V2脚本read_initial_state会发Rest，后续使能/5度运动/解除使能，未直接执行或import。不要让D调度器或B采集进程调用这些脚本作为无副作用状态API。
 
-C已独立实现c_left_arm_readonly_probe.py：只允许can2左61…65的06读请求，不实例化SDK；66/67原始帧仅监听，不默认量化。主机实际5请求、0合格响应（2.254秒），未发送控制/使能/Rest/Flash写入。报告c-left-readonly-probe-1与原始证据left_readonly_capture_C22.json；完整状态和calibration_sample_valid均false，有效TCP样本0。
+2026-11-08纠正：C的SocketCAN工具误用了含CAN_ERR_FLAG的接收掩码，原无反馈窗口是工具问题，不能作为电机无应答证据或A必须新建状态程序的依据。已以同请求双socket并行实测定位并修正为0xC00007FF。J1…J5位置已实读；J6/J7模式READ均返回2，七个电机通信均确认。没有发送使能、Rest或目标，也未干预右手。具体原因、方法、当前工具及163项回归见LEFT_STATE_ACQUISITION.md。
 
-A→C仍需具名七轴rad值、逐轴时间/原始反馈、clock/epoch、设备/映射版本、新鲜度/跨轴时差、状态/故障；V2纯查询协议或已审核状态出口尚缺。公共ArmAdapter未变；诊断报告不是其可执行扩展。C→B/D目前没有新的有效TCP或外参，旧候选不可提升为approved。7项新增工具回归，全套161 passed；实机通信无应答独立记录，不作为测试通过。现场无需重测安装尺寸。
+A→C仍须保留原始角度到模型符号/零位版本与时间语义，但不再因本工具错误阻塞在“电机无反馈”。J6/J7现有SDK通过Rest触发运行反馈；下一次在腕部可靠支撑且得到具体现场授权后可采其原始角度反馈，不直接运行5度测试脚本。C→B/D仍无完整真实TCP或光学外参，不把模式读/五轴角度当完整标定。公共接口不变。

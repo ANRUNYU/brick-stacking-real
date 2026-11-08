@@ -1,4 +1,4 @@
-"""Bounded Linux SocketCAN position queries for LEFT J1..5; no V2 commands.
+"""Bounded Linux SocketCAN LEFT J1..5 angle and J6/7 Flash mode READS.
 
 Standalone standard-library tool. Never imports or constructs the motion SDK.
 J6/J7 packets are retained raw: quantization and state source need validation.
@@ -18,6 +18,20 @@ CAN_FRAME = struct.Struct('=IB3x8s')
 LEFT_IDS = tuple(range(61, 68))
 
 
+def receive_filters():
+    # SocketCAN's CAN_ERR_FLAG in can_mask selects the error receive list;
+    # it must NOT be added here as a supposed ordinary-frame exclusion.
+    # Standard data IDs: CAN_EFF_FLAG | CAN_RTR_FLAG | CAN_SFF_MASK.
+    ids = LEFT_IDS + (0x600 + 66, 0x600 + 67)
+    return b''.join(struct.pack('=II', mid, 0xC00007FF) for mid in ids)
+
+
+def v2_mode_request(motor_id):
+    if motor_id not in (66, 67):
+        raise ValueError('only LEFT J6/7 Flash control-mode READ is allowed')
+    return CAN_FRAME.pack(0x600 + motor_id, 8, bytes.fromhex('670b000000000476'))
+
+
 def position_request(motor_id):
     if motor_id not in range(61, 66):
         raise ValueError('only LEFT A7 J1..5 position reads are allowed')
@@ -29,6 +43,13 @@ def decode_received(frame, flags):
     if flags & socket.MSG_DONTROUTE or len(frame) != CAN_FRAME.size:
         return None
     motor_id, size, payload = CAN_FRAME.unpack(frame)
+    if motor_id in (0x600 + 66, 0x600 + 67):
+        mid = motor_id - 0x600
+        if size != 8 or payload[:2] != bytes([mid, 0x0B]) or payload[6:] != b'\x00\xff':
+            return None
+        return dict(motor_id=mid, raw_hex=payload.hex(),
+                    control_mode=int.from_bytes(payload[2:6], 'little', signed=True),
+                    position_sdk_rad=None, notice='Flash mode READ; not runtime angle/state')
     if motor_id not in LEFT_IDS or size > 8:
         return None
     payload = payload[:size]
@@ -62,8 +83,7 @@ def capture(timeout_s=0.35, passive_s=0.5):
                   complete_seven_axis_state=False)
     start = time.monotonic()
     with socket.socket(socket.AF_CAN, socket.SOCK_RAW, socket.CAN_RAW) as bus:
-        filters = b''.join(struct.pack('=II', mid, 0xE00007FF) for mid in LEFT_IDS)
-        bus.setsockopt(socket.SOL_CAN_RAW, socket.CAN_RAW_FILTER, filters)
+        bus.setsockopt(socket.SOL_CAN_RAW, socket.CAN_RAW_FILTER, receive_filters())
         bus.bind(('can2',))
 
         def receive_until(deadline, expected=None):
@@ -90,17 +110,22 @@ def capture(timeout_s=0.35, passive_s=0.5):
                 break
         else:
             raise RuntimeError('receive queue did not drain; no requests sent')
-        for mid in range(61, 66):
+        for mid in LEFT_IDS:
             sent_at = time.monotonic()
-            count = bus.send(position_request(mid))
+            packet = position_request(mid) if mid <= 65 else v2_mode_request(mid)
+            count = bus.send(packet)
             if count != CAN_FRAME.size:
                 raise RuntimeError('incomplete CAN position request')
-            report['transmitted'].append(dict(motor_id=mid, data_hex='06',
+            wire_id, size, payload = CAN_FRAME.unpack(packet)
+            report['transmitted'].append(dict(motor_id=mid, arbitration_id=wire_id,
+                                              data_hex=payload[:size].hex(),
                                               host_send_monotonic_s=sent_at))
             receive_until(sent_at + timeout_s, mid)
         receive_until(time.monotonic() + passive_s)
     observed = {row['motor_id'] for row in report['received']}
     report['missing_motor_ids'] = [mid for mid in LEFT_IDS if mid not in observed]
+    positioned = {r['motor_id'] for r in report['received'] if r.get('position_sdk_rad') is not None}
+    report['missing_position_ids'] = [mid for mid in LEFT_IDS if mid not in positioned]
     report['elapsed_s'] = time.monotonic() - start
     report['status'] = 'DIAGNOSTIC_ONLY'
     return report

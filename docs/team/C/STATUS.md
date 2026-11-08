@@ -392,3 +392,9 @@ SSH只读核对进程/监听端口/资料：未发现可直接使用的关节状
 新增tools/c_left_arm_readonly_probe.py及tests/unit/test_left_readonly_probe.py，仅固定can2左61…65各一次06，V2只接收raw，无SDK实例化/控制命令。真实主机运行2.254秒、5查询、0响应，七轴完整状态false、有效TCP样本仍0。没有更改CAN配置/第三方SDK/右手进程。真实设备操作仅寄存器读请求；运动/使能/解除使能/回零/Flash写入均0。不能再将本轮描述为完全不发送CAN帧。
 
 文档LEFT_STATE_ACQUISITION.md记录源文件hash/行号、运行方式、M2a输入要求与剩余V2状态依赖；evidence/left_readonly_capture_C22.json保存主机报告内容，原始路径/hash见文档。HANDOFF_ABD与TASK_STATUS同步。输入接口版本c-left-readonly-probe-1，未修改公共协议；7项新回归，全套161 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c22-final。没有产出有效标定矩阵或真机规划验收。
+
+## 接口根因修复（2026-11-08，C1-02/C1-03/M2a）
+
+用户指出电机已有运动能力，应查接口。对照python-can无过滤接收与原生socket、硬件RX计数，并行同一次请求的两个接收socket，确定C代码0xE00007FF错误订阅了内核错误帧列表。修复为0xC00007FF，真实读回J1…J5；按SDK已核验READ协议读J6/J7模式，两者均返回2。七个电机通信确认，原先窗口的0接收不代表电机问题，本次直接修复并纠正文档，不继续积累暂时无应答日志。
+
+修改tools/c_left_arm_readonly_probe.py及回归：明确标准帧过滤、V2精确模式READ及回应匹配、通信完整性与角度完整性分开。全套163 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c23-final。输入c-left-readonly-probe-1兼容增加mode读及missing_position_ids；无公共接口改动。HANDOFF_ABD/TASK_STATUS/LEFT_STATE_ACQUISITION纠正。无硬件运动；仅位置/模式READ。V2腕部状态采样仍需明确Rest操作的支撑/授权，未以当前五轴和模式构造TCP。
