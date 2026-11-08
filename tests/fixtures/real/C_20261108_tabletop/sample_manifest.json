@@ -1,0 +1,114 @@
+{
+  "schema_version": "c-team-data-sample-1",
+  "source": "real_recorded_derived_crop",
+  "source_capture_id": "c32_clock_probe01",
+  "local_source_commit": "d621e8d6365a89532f9f93014c79463d4f990b3f",
+  "camera_serial": "CP2L863000KL",
+  "source_profile": {
+    "width": 1280,
+    "height": 800,
+    "fps": 15,
+    "color": "RGB",
+    "depth": "Y16",
+    "registered": true,
+    "rectified": true
+  },
+  "crop_xywh": [
+    575,
+    410,
+    545,
+    280
+  ],
+  "derived_profile": "gemini335L_1280x800_15_rectified_crop575_410_545_280_C34",
+  "source_record_manifest": {
+    "schema_version": "c-static-calibration-record-1",
+    "attachment_id": "left_L5_cube_mount_candidate_20261108_v1",
+    "pose_id": "timing_probe_only",
+    "reference_frame": "L5_Link",
+    "camera_serial": "CP2L863000KL",
+    "camera_exit": 0,
+    "joint_read_only_ids": [
+      61,
+      62,
+      63,
+      64,
+      65
+    ],
+    "joint_requests_per_cycle": 5,
+    "target_writes": 0,
+    "enable_rest_zero_flash_commands": 0,
+    "quality": {
+      "schema_version": "c-static-acquisition-quality-1",
+      "stationary_capture_quality": "PASS",
+      "complete_joint_cycles": 98,
+      "incomplete_joint_cycles": 0,
+      "joint_span_rad": [
+        0.00016777962446212769,
+        0.00019174814224243164,
+        7.43865966796875e-05,
+        9.587407112121582e-05,
+        9.608268737792969e-05
+      ],
+      "max_state_gap_s": 0.05146321898791939,
+      "camera_host_window_covered": true,
+      "clock_epoch": "linux_boot:f9016d4a-56d7-4a83-a8c2-3fa6d11f8153",
+      "max_joint_span_rad_threshold": 0.001,
+      "max_state_gap_s_threshold": 0.2,
+      "time_association": "static-pose assumption using host arrival times; device timestamps retained separately",
+      "device_host_latency_mapping": "UNKNOWN",
+      "calibration_sample_valid": false,
+      "approved": false,
+      "motion_enabled": false
+    },
+    "errors": [],
+    "sampler": "isolated_readonly_process",
+    "notice": "only raw static recording; attachment identity/center visibility/FK and independent physical calibration still require checks",
+    "source_locks": {
+      "camera_sha256": "ef2dcc43ff8949cce7d299af32baa2f00a93c1bd30cb5cb3c30fe18c31cea590",
+      "joint_sha256": "e5e67311b1d4738301683b75de02f8361a9f92b7aeb6d684a36ae020af79b787",
+      "recorder_sha256": "e9c83adf963168a9c15eef0d244b3952839b35a109d2ff87dd4d0151d13e8fb7"
+    }
+  },
+  "frames": [
+    {
+      "file": "camera/frame_000.npz",
+      "original_sha256": "a72e04f2702e143321fb73adfa9de5a75a915c69e829a5c5ece4a7bdcbde2e21",
+      "sha256": "b0f60a8849d3a6045925fa9c810a35fddfe049434b545678b11e639a7a5eaa83"
+    },
+    {
+      "file": "camera/frame_001.npz",
+      "original_sha256": "b394e7aa6566df026c1fd12c3928862c3de68eeccfaa21ea0247dbf732ec9762",
+      "sha256": "fda75f34b06c1aa179c0653ec9ed9fe518fedc1f576b234e4dc42b38b3d97e1d"
+    },
+    {
+      "file": "camera/frame_002.npz",
+      "original_sha256": "dc288f3f0bd0e2207b3b93514077090b02dc041c9c44574eb713ac9bd1cf7a2e",
+      "sha256": "6c117234d44962398636624072cce8e42a2dda7285d1942d302e9ea19e65e979"
+    }
+  ],
+  "units": {
+    "depth": "m",
+    "joint_position": "rad",
+    "quaternion": "xyzw"
+  },
+  "status": "diagnostic fixture only; geometry FAIL and time association PROVISIONAL; not a valid calibration pose",
+  "T_base_camera": null,
+  "T_base_table": null,
+  "approved": false,
+  "motion_enabled": false,
+  "limitations": [
+    "tabletop crop; not the original full-resolution image",
+    "no robot/attached target in view in this recording",
+    "device/SDK/host clocks retained separately; timing error bound unknown",
+    "all independent validation outliers retained",
+    "no TCP/grasp, complete collision, or execution acceptance"
+  ],
+  "files_sha256": {
+    "joint_cycles.json": "ba0141ca0b6aa9f3876840dbf92c1cdeafa114e9db91d539e410c0a05611750d",
+    "roi_config.json": "54e67a4208fd1e7b613309d35264d009560c4ffe2bf9dbffaa2a0de3836f4019",
+    "camera/camera_report.json": "9d8dcb0d3124c4ba27ae5ad0c19431b7b37e1992ace1d3ef16e601968988ee39",
+    "camera/frame_000.npz": "b0f60a8849d3a6045925fa9c810a35fddfe049434b545678b11e639a7a5eaa83",
+    "camera/frame_001.npz": "fda75f34b06c1aa179c0653ec9ed9fe518fedc1f576b234e4dc42b38b3d97e1d",
+    "camera/frame_002.npz": "6c117234d44962398636624072cce8e42a2dda7285d1942d302e9ea19e65e979"
+  }
+}

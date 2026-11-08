@@ -29,6 +29,8 @@ def package_source(root, output):
         if relative.parts[0] == "calibration" and len(relative.parts) > 1 and relative.parts[1] not in {"examples", "measurement_templates", "installation", "README.md"}:
             continue
         extra = relative.as_posix() in {"config/planning/requirements-linux-fcl.txt", "docs/team/C/evidence/windows_planning_C17.lock"}
+        extra = extra or (relative.parts[:4]==('tests','fixtures','real','C_20261108_tabletop') and path.suffix=='.npz')
+        extra = extra or relative.as_posix()=='docs/team/C/assets/table_cube_candidate_C33.png'
         if path == output or not (len(relative.parts) == 1 and path.name in ROOT_FILES
                 or relative.parts[0] in SOURCE_DIRS and (path.suffix in SUFFIXES or extra)):
             continue

@@ -1,5 +1,15 @@
 # C 开发与实测交付记录（持续更新至2026-11-08）
 
+## C34：GitHub任务分支交付与可复算真实样例
+
+对应C1-01/C1-02/C1-03交接准备，M0/M1/M2a/M3/M4。用户明确要求在继续C1-03前上传已有所得成果，覆盖此前“不推送”的限制；仅授权任务分支发布，不合并main或改其他成员分支。远程已fetch，main仍为1acbee0d51faf4d321a36d2cb105cfd9d6ee0fc5，其他A/D任务分支保留。GitHub入口docs/team/C/README.md按接收方列接口/调用/限制。
+
+新增tests/fixtures/real/C_20261108_tabletop：三帧真实RGB-D裁剪、有效K及源K/SHA/profile、原始98组五轴读数、ROI与全部时钟。输入源为c32_clock_probe01，用户实测0.05m规则块；只裁去无关人物区域，RGB/深度不改，K主点补偿、分组像素相位显式记录。修改observe_table_cube支持可选分组像素偏移，保持默认兼容；新增实际录制回归，确保射线不变、异常值/FAIL和base未知不被隐藏。打包器仅白名单新增该最小样例NPZ及诊断预览PNG，不包含大体积原始录像/SDK/虚拟环境。
+
+验证：`artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c34-publish`，290 passed。三帧裁剪前后T_camera_table/中心逐项对照误差<1e-12；实际样例曝光配对CLI运行成功，仍PROVISIONAL。原模型/协议未改，无硬件动作。待上传前审查当前文件及35个本地历史提交，无凭证模式命中；SSH凭证从未写入仓库。所有几何FAIL、时钟误差未知、无有效外参/TCP和真实闭环限制保留。
+
+A获原始反馈/具名时间依据，B获可复算RGB-D/K/裁剪来源/时钟，D获几何候选和明确失败原因。源样例不含装臂目标，不能充作联合标定姿态。现场继续时块应固定在原金属框，整段臂支撑后可靠近相机；已拆需新安装版本。
+
 ## C33：已录RGB-D桌面建系与50mm方块定位诊断
 
 对应C1-01/C1-02/C1-03，M1/M2a；详见[OBSERVED_TABLE_COORDINATES.md](OBSERVED_TABLE_COORDINATES.md)。新增table_coordinates.py、observe_table_cube.py，复用既有六类模型/几何接口，支持实拍叠图；不新增公共Protocol，不把相机系/局部桌面系当基座系。输入为真实c32_clock_probe01、用户50mm实测尺寸、明确手选单块顶面和清洁桌面ROI。约(-255,+83,+25)mm是局部桌面中心候选，25mm来自平放模型。

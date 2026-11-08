@@ -41,7 +41,9 @@ def observe(path,config):
     if radius:top=cv2.erode(top,np.ones((2*radius+1,2*radius+1),np.uint8))
     valid=np.isfinite(frame.depth_m)&(frame.depth_m>0)
     def xyz(m):return backproject(np.c_[xx[m],yy[m]],frame.depth_m[m],frame.k)
-    train=table&valid&(xx%4==0)&(yy%4==0);check=table&valid&(xx%4==2)&(yy%4==2)
+    offset=config.get('pixel_partition_offset_xy',[0,0])
+    if len(offset)!=2 or any(type(v) is not int or v<0 for v in offset):raise ValueError('nonnegative integer source-pixel partition offset required')
+    train=table&valid&((xx+offset[0])%4==0)&((yy+offset[1])%4==0);check=table&valid&((xx+offset[0])%4==2)&((yy+offset[1])%4==2)
     top_check=top.astype(bool)&valid
     if min(train.sum(),check.sum(),top_check.sum())<20:raise ValueError('insufficient independent table and valid top points')
     points=xyz(train)

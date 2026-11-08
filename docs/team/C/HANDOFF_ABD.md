@@ -1,5 +1,7 @@
 # C31 当前交接补充（2026-11-08）
 
+**C34发布交接：** 本次用户授权将当前成果上传GitHub任务分支，统一从[README.md](README.md)进入。新增裁剪真实RGB-D/原始五轴/ROI/时钟最小样例，供A/B/D离线复算；290回归通过，未合并main。历史“未推送”描述对应当时，不代表当前授权范围。
+
 **C33最新补充：** 已用实拍RGB-D建立局部桌面坐标与50mm红块中心候选/实拍叠图，沿用CameraFrame/BlockDetection/BlockPose/RigidTransform。新入口[OBSERVED_TABLE_COORDINATES.md](OBSERVED_TABLE_COORDINATES.md)含调用/帧SHA/几何假设与误差。相机内建系不等于左基座外参，T_base_camera/T_base_table仍null；几何检查FAIL原样保留，不是执行目标。289回归通过，无新增硬件动作。
 
 **C32最新补充：** 用户无法脱手支撑，改为检查曝光附近读数并按SDK global曝光映射插值。tools/c_head_camera_probe.py新增可选--record-clock-metadata；tools/associate_camera_joint_samples.py输出五轴命名rad、原始帧/设备/主机时间、boot epoch及插值括号，始终PROVISIONAL。真实相机已证实global非零、SDK时钟REALTIME；不能直接拿device/arrival替代曝光，CLOCK_MONOTONIC_RAW也不能当Python monotonic。B仍需给时间误差界与曝光参考；A保留原始读数，未提供七轴执行替代；D确认安装未改变。命令、283回归与真实证据见STATUS.md C32/evidence/camera_clock_association_C32.json。未验收标定、无运动目标。
@@ -10,7 +12,7 @@
 
 **当前更正（2026-11-08）：本机灵心巧手O6无触觉，现场用户确认。禁止用触觉API/全零矩阵推断接触；已撤销轻触请求，能力守卫拒绝本机触觉查询。电机电流可用（用户确认），实际协议/单位/换算待核验，未知项null，不把SDK百分比torque当作Nm/电流实测。当前C主线为C1-03真实坐标链、C1-04路径及C1-05/M3闭环，尚未完成真机抓放。最新任务表TASK_STATUS.md优先于下方历史批次。**
 
-更新：2026-11-08；本地分支 codex/c-calibration-planning。维护约定：每个可合并任务同时更新本页和 STATUS.md，并将新证据加入 evidence/。最终交接从本页进入；尚未发送给其他成员、未推送/合并。本文是滚动交接，不是全部任务完成声明。
+更新：2026-11-08；任务分支 codex/c-calibration-planning。维护约定：每个可合并任务同时更新本页和 STATUS.md，并将新证据加入 evidence/。当前GitHub交付从README.md进入；未合并main，未通过邮件/聊天主动发送给其他成员。本文是滚动交接，不是全部任务完成声明。
 
 ## 当前统一事实
 
