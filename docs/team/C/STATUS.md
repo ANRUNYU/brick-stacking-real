@@ -438,3 +438,11 @@ SSH读取本机O6源码/手动菜单与配置；原生SocketCAN按SN识别左手
 通过SSH只读查看SDK O6.close/stop_polling，确认它们停止线程/通信而非运动停止。真实运行新工具run_trial execute=false，四个READ（SN/角度/速度/fault），当前原始六位置[253,175,253,253,254,254]、速度读回0、fault0，0控制写。预览下载hash一致，证据left_index_readonly_preview_20261108.json；没有上传/修改SDK或干预右手。
 
 14项新回归，完整206 passed（.test-tmp-c28-final）；CLI失败提示改进后针对14项再次通过（.test-tmp-c28-exit）。故障/超时/中断不盲目反向、不虚假stop；起点/身份/现场条件/非法范围缺失拒绝写。HANDOFF_ABD/TASK_STATUS/GRASP_CANDIDATES同步。未做真实手指运动、接触力、稳定抓握或臂轨迹验收，仍待现场条件与授权。
+
+## 已部署SDK测试复用与只读触觉（2026-11-08，C1-04/C1-05/C2-02，M1/M2a/M3）
+
+用户指出手指均可运动并提供tests/hand/o6命令，C通过SSH只读完整fixture与angle/speed/torque/force关键用例和现有reports，不运行pytest、不修改SDK。单指历史7/7记通过，结合用户陈述不再重做单指动作；上一轮8raw提案撤下为下一动作，未执行。速度报告记录1/6通过但备注混有shell命令，不将其直接用于速度验收或故障判定。测试fixture先设置speed/acceleration/open全100，所谓读取用例也不能盲跑；side=left不自动解析实际总线。来源hash与历史原记录见o6_sdk_test_audit_20261108.json。
+
+新增o6_sdk_pose_references_candidate.json（开/半闭/全闭百分比源参考、无物理force/rad映射、未验收50mm夹持）、tools/c_o6_tactile_probe.py及3个片段解析回归。工具复用自有标准库SocketHand，只读SN+B1…B5 A4，不运行单指工具main或运动分支。实机按SN识别左手后五指各两轮10×4均收齐、全raw0，接触条件未确认，不当力/压力标定；raw下载hash一致，精简证据left_o6_tactile_summary_20261108.json。无速度/目标/使能/Rest/Flash写入及右手控制。
+
+全套209 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c29-final。HANDOFF_ABD/TASK_STATUS/GRASP_CANDIDATES同步，O6_SDK_TEST_REVIEW说明源码参考、fixture副作用、真实触觉结果和下一轻触只读步骤。依赖仍为接触响应/量纲、实际50mm开口与稳定夹持、基座外参/模型映射和完整碰撞，未虚构完成抓放验收。

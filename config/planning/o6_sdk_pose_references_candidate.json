@@ -1,0 +1,62 @@
+{
+  "schema_version": "c-o6-sdk-pose-references-1",
+  "source": "deployed SDK tests read over SSH, not physical grasp calibration",
+  "source_audit": "docs/team/C/evidence/o6_sdk_test_audit_20261108.json",
+  "units": "normalized_percent_not_rad_or_degree",
+  "joint_order": [
+    "thumb_flex",
+    "thumb_abd",
+    "index",
+    "middle",
+    "ring",
+    "pinky"
+  ],
+  "reference_poses": {
+    "sdk_all_open": [
+      100,
+      100,
+      100,
+      100,
+      100,
+      100
+    ],
+    "sdk_half_close_example": [
+      50,
+      100,
+      50,
+      50,
+      50,
+      50
+    ],
+    "sdk_all_closed": [
+      0,
+      100,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "test_speed_labels_percent": {
+    "LOW": 10,
+    "MID": 30,
+    "HIGH": 100
+  },
+  "test_torque_labels_percent": {
+    "LOW": 10,
+    "MID": 50,
+    "HIGH": 100
+  },
+  "physical_speed_rad_s": null,
+  "physical_torque_nm": null,
+  "pressure_force_calibration": null,
+  "validated_for_50mm_block": false,
+  "approved": false,
+  "execution_enabled": false,
+  "notes": [
+    "thumb_abd=100 is a test pose choice, not a measured safety limit",
+    "50 percent does not mean 50mm opening",
+    "all_closed is not a safe block grasp target",
+    "fixture initializes speed/acceleration/full-open before ostensibly read-only tests"
+  ]
+}

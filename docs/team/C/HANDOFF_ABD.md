@@ -170,3 +170,9 @@ A→C仍须保留原始角度到模型符号/零位版本与时间语义，但�
 新增独立tools/c_o6_index_probe.py及14项回归，默认read-only；真实主机只读预览成功。当前提案raw食指253→245、速度10%归一化，其他目标取执行前读数；不回位、不恢复速度。SDK close/stop_polling仅停止通信，不是电机停止，不能用于硬件stop接口验收。执行须另有当次空手/支撑/夹碰空间/能停左O6的物理停止确认与具体授权；目前只有可清空的条件答复，未执行任何控制帧。
 
 O6_INDEX_FIELD_TRIAL.md给出精确命令、现场责任、原始预览hash和失败退出行为；evidence/left_index_readonly_preview_20261108.json是成功READ_ONLY_PREVIEW，六位置[253,175,253,253,254,254]、速度读回0、fault0。速度0不是已确认停止；新鲜SN/起点每次重读，起点偏离拒绝。接口c-o6-index-trial-1不替代ArmAdapter/HandAdapter生产执行方法；试动反馈达标也不构成物理运动或稳定抓取验收。全套206 passed，本轮无运动/速度写/使能/Rest/Flash写。
+
+## 复用已部署SDK测试，不重复证明手指运动（2026-11-08，M1/M2a/M3）
+
+用户已确认手指可动，SSH读取O6测试/fixture/已有报告：单指交互7/7记通过（报告未绑定SN），速度报告备注混有shell文本，不能直接验收速度或当机械故障。取消上轮单指8raw方案作为下一动作；未执行。config/planning/o6_sdk_pose_references_candidate.json保存可追溯开/半闭/全闭百分比参考，非rad、非开口mm、非50mm已验收抓握。不要把test_all_closed直接用于抓块。
+
+o6_hand fixture先100%速度/加速度全开，即便选读取测试也有动作，C没有运行该pytest命令。O6_SIDE只选ID，仍须按SN发现总线。新c_o6_tactile_probe.py绕过fixture完成两轮五指只读矩阵采集：10组完整10×4、全0，raw未标定，无接触响应验收。证据/源码hash/历史报告和主动读取报告见O6_SDK_TEST_REVIEW.md、evidence/o6_sdk_test_audit_20261108.json及left_o6_tactile_summary_20261108.json。全套209 passed，真实控制写入0。下一现场可只轻触食指触觉区域读变化，无需再动手指或让用户设计路线。
