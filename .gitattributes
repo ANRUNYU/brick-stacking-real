@@ -1,0 +1,2 @@
+# Recorded fixture hashes describe exact bytes on both Windows and Linux.
+tests/fixtures/real/C_20261108_tabletop/** -text
