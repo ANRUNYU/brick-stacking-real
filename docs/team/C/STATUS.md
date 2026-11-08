@@ -398,3 +398,9 @@ SSH只读核对进程/监听端口/资料：未发现可直接使用的关节状
 用户指出电机已有运动能力，应查接口。对照python-can无过滤接收与原生socket、硬件RX计数，并行同一次请求的两个接收socket，确定C代码0xE00007FF错误订阅了内核错误帧列表。修复为0xC00007FF，真实读回J1…J5；按SDK已核验READ协议读J6/J7模式，两者均返回2。七个电机通信确认，原先窗口的0接收不代表电机问题，本次直接修复并纠正文档，不继续积累暂时无应答日志。
 
 修改tools/c_left_arm_readonly_probe.py及回归：明确标准帧过滤、V2精确模式READ及回应匹配、通信完整性与角度完整性分开。全套163 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c23-final。输入c-left-readonly-probe-1兼容增加mode读及missing_position_ids；无公共接口改动。HANDOFF_ABD/TASK_STATUS/LEFT_STATE_ACQUISITION纠正。无硬件运动；仅位置/模式READ。V2腕部状态采样仍需明确Rest操作的支撑/授权，未以当前五轴和模式构造TCP。
+
+## 支撑下真实Rest反馈采集（2026-11-08，C1-02/C1-03，M2a）
+
+新增tools/c_left_wrist_rest_capture.py及tests/unit/test_supported_rest_capture.py，复用已修复只读帧工具，具体字节/模式核验、故障取消/无退出恢复和现场支持/授权检查。本轮用户明确允许可靠支撑下两腕各一次Rest。实机执行，七轴原始反馈齐全、两腕status0/fault0、收取跨度4.456ms；额外只读61…65使能位均false。没有使能/目标/回零/清故障/Flash写入，左腕最终Rest。动作/依赖/摘要同步LEFT_STATE_ACQUISITION/HANDOFF_ABD/TASK_STATUS及evidence/left_supported_rest_20261108.json。
+
+接口c-left-supported-rest-1，仅原始采集、非公共控制API；不批准标定。固定点接触现场答复和V2量化来源待补，不能从一组数据或默认量程得出有效TCP。原始数据下载SHA核验通过；全套171 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c24-final。没有重复Rest或自动规划运动。

@@ -34,3 +34,15 @@ M2a需要A或经现场审核的状态入口提供：左设备/总线绑定版本
 若取得V2纯查询协议，先审源码和字节再复用本工具；若厂家仅支持Rest触发或使能后反馈，则下一轮须准备机械支撑、当前状态/模式检查、退出方案及明确现场操作授权，再改变状态。此轮不执行Rest获取角度。固定点接触和8组姿态采集必须等完整可靠状态入口；不要为采样自行搬动已上电机械臂。
 
 验证：`artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c23-final`，163 passed。
+
+## 已授权并执行的腕部Rest采样（2026-11-08）
+
+用户明确允许在可靠支撑下，对左J6/J7各发一次Rest获取反馈。本轮工具c_left_wrist_rest_capture.py先只读核对两轴模式2，随后各一次FF×7+FD，均返回status=0、fault=0。66原始位置32462、67为33376；J1…J5角度已读齐，七轴接收时间跨度4.456ms。随后额外只读2B寄存器，61…65均返回2b00（未使能）。这是当次时刻读回，不等于可手推/制动器释放或后续状态不变。
+
+本轮不再属于“无状态转换”：实际发了2个Rest、2个模式READ、5个角度READ，之后另5个使能位READ。无使能、目标、回零、清故障、Flash写入；右手未动。左腕退出保持Rest，没有自动恢复/使能，现场须继续可靠支撑。本轮授权不用于额外Rest或自动改变姿态。
+
+原始数据已保存主机，下载后SHA256核验一致，见evidence/left_supported_rest_20261108.json。数据是成功真实采集，非Mock；但笔尖在此次采集期间的固定点接触确认仍待用户回答；V2的CAN COM Theta MIN/MAX尚未从驱动器读回。原始U16保留，不把SDK默认±12.5rad静默认证为实测。模式/状态/故障已确认，不等同于角度量化/物理精度验收。
+
+目前尚无有效pivot输入或标定矩阵。后续可继续保留接触确认后的原始姿态候选，同时完成V2量化来源核验；完整pivot需4训练+4独立验证、多个不同方向，不能重复静止姿态充数。不要以本次支持授权自动下发运动目标。
+
+工具调用（必须另有具体现场支持/Rest授权，不能作为只读API）：`python3 tools/c_left_wrist_rest_capture.py <新输出.json> --supported-wrist --allow-rest --authorization-ref <现场授权记录>`。失败不重试、不自动使能或Rest其他轴；有匹配模式、状态、故障检查，保留部分原始反馈。测试覆盖模式不符零Rest、首轴故障取消后续、精确2Rest/无退出恢复、支持/授权缺失拒绝；全套171 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c24-final。
