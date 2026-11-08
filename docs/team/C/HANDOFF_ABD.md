@@ -146,3 +146,9 @@ A→C仍须保留原始角度到模型符号/零位版本与时间语义，但�
 已获用户对可靠支撑下左66/67各一次Rest的明确授权，C执行两轴模式READ→各一次Rest→61…65角度READ，七轴原始反馈齐全，腕部status0/fault0，host_monotonic接收跨度4.456ms。之后61…65使能位READ均false。左腕仍Rest，无自动恢复；A/D接管前必须重新确认实际状态，不假定holding或已使能，不直接启动旧运动脚本。
 
 最小采集工具c_left_wrist_rest_capture.py及调用/限制见LEFT_STATE_ACQUISITION.md，171项回归通过。该工具有状态转换，不是ArmAdapter.get_joint_state替代接口。摘要evidence/left_supported_rest_20261108.json含原始帧/时刻/授权/动作计数/主机文件SHA；真实成功采集与有效标定分开：固定点接触确认待用户答复，V2 Theta量化范围尚未读回，TCP矩阵仍未知。B/D不应使用本次数据生成已批准世界目标或执行规划。
+
+## 固定点候选与兼容转换入口（2026-11-08，M2a）
+
+首组接触由用户确认，raw candidate 1已关联原始hash；左腕可在支撑下轻松手动调整。C提供prepare_tcp_pivot_sample.py复用锁定SDK URDF/FK生成现有pivot行格式，无公共模型改动；严格要求已核验每腕Theta范围/证据，原始角度一致性、完整七轴、接触/时钟/时差。调用见NEXT_FIELD_SESSION。A/厂家仍需66/67本机Theta MIN/MAX参数来源（rad、设备/版本、确认时间/方法），禁止用默认值自证。B/D尚无新的有效TCP矩阵。
+
+采集工具未来用Linux boot epoch+独立capture_id，避免一组一个epoch阻断多姿态整合；首组旧UUID未伪装成host boot ID。180软件回归通过；本轮没有新增硬件操作。下一阶段由现场保持同一点接触，逐组改变朝向采raw；不自动使能/运动，不把重复静止样本充作不同姿态。

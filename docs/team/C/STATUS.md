@@ -404,3 +404,13 @@ SSH只读核对进程/监听端口/资料：未发现可直接使用的关节状
 新增tools/c_left_wrist_rest_capture.py及tests/unit/test_supported_rest_capture.py，复用已修复只读帧工具，具体字节/模式核验、故障取消/无退出恢复和现场支持/授权检查。本轮用户明确允许可靠支撑下两腕各一次Rest。实机执行，七轴原始反馈齐全、两腕status0/fault0、收取跨度4.456ms；额外只读61…65使能位均false。没有使能/目标/回零/清故障/Flash写入，左腕最终Rest。动作/依赖/摘要同步LEFT_STATE_ACQUISITION/HANDOFF_ABD/TASK_STATUS及evidence/left_supported_rest_20261108.json。
 
 接口c-left-supported-rest-1，仅原始采集、非公共控制API；不批准标定。固定点接触现场答复和V2量化来源待补，不能从一组数据或默认量程得出有效TCP。原始数据下载SHA核验通过；全套171 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c24-final。没有重复Rest或自动规划运动。
+
+## 第1组接触确认与原始数据转换（2026-11-08，C1-01/C1-02/C1-03，M2a）
+
+用户明确确认首组全程同一点接触、笔杆未松，并确认左腕在可靠支撑下可轻松手动调整。首组成功原始反馈保留为fixed-point raw candidate 1；没有将其提升为有效TCP输入。证据left_supported_rest_20261108.json仅补关联现场确认，原始主机文件/hash保持不改。
+
+新增tools/prepare_tcp_pivot_sample.py：离线将raw→具名SDK关节→锁SHA SDK URDF FK→已有pivot sample行，复用既有urdf_forward_kinematics及sample_id/clock/epoch/T_base_flange。要求接触证据、逐腕已核验Theta范围及来源、显式接收跨度阈值；拒绝缺轴/重复/故障/时钟错误/NaN/过大时差/模型hash错误/原始字节与解码值不符。没有默认量程，不使用另一套几何类型，不自动批准。示例调用见NEXT_FIELD_SESSION.md。真实raw加unknown量程模板已运行拒绝，未写FK或TCP矩阵。
+
+calibration/measurement_templates/left_wrist_theta_ranges.json明确null/verified=false。A/厂家需提供每台66/67实际CAN COM Theta MIN/MAX（rad）、对应设备/固件/配置版本、读取/确认时间及证据；优先从本机参数读回或本机出厂参数记录获取，不盲猜寄存器索引，不改Flash，不把通用手册默认值当实测。未要求重测安装几何。
+
+后续Rest采集工具将capture_id与Linux boot clock epoch分开，仍兼容原schema字段。首组旧epoch为capture UUID，未经绑定证据不得直接重命名后混合；原始样本不丢弃。此轮没有连接/发送新的CAN命令；179项后又补原始字节一致性拒绝，最终全套180 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c25-final。

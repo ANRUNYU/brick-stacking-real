@@ -1,0 +1,5 @@
+{
+  "notice": "UNKNOWN; fill only from actual drive readback or device-specific manufacturer parameter confirmation. Do not copy SDK defaults and mark verified.",
+  "66": {"units": "rad", "theta_min_rad": null, "theta_max_rad": null, "verified": false, "evidence": null},
+  "67": {"units": "rad", "theta_min_rad": null, "theta_max_rad": null, "verified": false, "evidence": null}
+}

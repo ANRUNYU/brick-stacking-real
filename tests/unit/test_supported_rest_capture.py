@@ -68,6 +68,7 @@ def run_fake(monkeypatch, **settings):
     for name, value in [('AF_CAN', 29), ('CAN_RAW', 1), ('SOL_CAN_RAW', 101), ('CAN_RAW_FILTER', 1)]:
         monkeypatch.setattr(rest.socket, name, value, raising=False)
     monkeypatch.setattr(rest.socket, 'socket', lambda *args: bus)
+    monkeypatch.setattr(rest, 'host_clock_epoch', lambda: 'linux_boot:synthetic-test')
     result = rest.capture(supported_wrist=True, allow_rest=True, authorization_ref='test-only')
     return bus, result
 

@@ -22,12 +22,18 @@ def rest_request(mid):
     return CAN_FRAME.pack(mid, 8, b'\xff'*7 + b'\xfd')
 
 
+def host_clock_epoch():
+    # Monotonic clock is shared within a Linux boot, not within a capture UUID.
+    boot_id = str(uuid.UUID(Path('/proc/sys/kernel/random/boot_id').read_text().strip()))
+    return 'linux_boot:' + boot_id
+
+
 def capture(*, supported_wrist, allow_rest, authorization_ref):
     if supported_wrist is not True or allow_rest is not True or not isinstance(authorization_ref, str) or not authorization_ref.strip():
         raise ValueError('physical support and explicit Rest authorization required')
     r = dict(schema_version='c-left-supported-rest-1', source='real',
              arm_role='left', interface='can2', clock_domain='host_monotonic',
-             epoch=str(uuid.uuid4()), authorization_ref=authorization_ref,
+             epoch=host_clock_epoch(), capture_id=str(uuid.uuid4()), authorization_ref=authorization_ref,
              physically_supported_confirmed=True, transmitted=[], received=[],
              calibration_sample_valid=False, status='INCOMPLETE',
              warning='Rest removes holding; no automatic re-enable or restore',

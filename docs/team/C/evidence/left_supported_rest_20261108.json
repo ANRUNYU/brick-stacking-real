@@ -73,7 +73,14 @@
     false,
     false
   ],
-  "contact_confirmation": "pending",
+  "contact_confirmation": {
+    "confirmed": true,
+    "source": "user onsite reply",
+    "statement": "始终接触同一点，笔杆未松动",
+    "date": "2026-11-08",
+    "covers": "the recorded capture only"
+  },
   "v2_theta_range_readback": "unknown",
-  "calibration_sample_valid": false
+  "calibration_sample_valid": false,
+  "fixed_point_raw_candidate_index": 1
 }

@@ -14,9 +14,15 @@
 
 用户准备：可刚性固定、轻且不松动的细指针，以及稳固的固定参考凹点。仅先确认物品，不在未明确安装方式前动臂。指针尖端作为候选TCP，旋转方向另有约束；普通手指接触点不能默认为刚性TCP。
 
-A需要提供：不构造P7、不触发模式/Flash写入的已验收状态出口；每条样本sample_id、T_base_flange(4×4,m)、joint/model/mapping版本、设备ID、host stamp、clock_domain、epoch。若只能给q，C在匹配哈希模型做FK，并保留零位/轴向来源。未知/缓存无新鲜度状态不接入真实采样。当前C不会主动发CAN。
+A/C状态入口现已可用：C已实读左61…65位置与66/67模式，并经用户授权在可靠支撑下各发一次Rest取得腕部原始反馈。全七轴通信正常，未实例化P7、未写Flash/使能/发送目标。后续每条样本保留sample_id、原始帧/逐轴收取时间、model/mapping版本、设备ID、clock_domain/epoch。不是等待A完成新驱动；A仍需提供实际轴向/零位/安全与执行依据。
 
-受控采样方案（尚未执行）：保持指针尖端位于同一物理凹点，采至少4个绕不同轴的训练姿态和至少4个另行采集的验证姿态，建议增加覆盖。由现场动作负责人/A执行小范围姿态变化并确认尖端未滑移；C仅接收记录，不用求解器自动移动机器人。位置/方向限制、速度、停止策略和真实路径检查先明确，不沿用synthetic演示轨迹。
+受控采样方案：首组原始反馈已采，用户确认全程同点接触、笔杆未松。其余姿态尚未采。保持尖端在同一凹点，至少4个绕不同轴的训练姿态和4个独立验证姿态。由现场动作负责人执行已确认安全的小范围姿态变化；不得强推有阻力/制动/已使能的关节。C不自动发送运动目标；当前左腕Rest，须可靠支撑。每组新的Rest采集要在相应现场支持和授权范围内，不自动复用旧的一次性授权。
+
+仍缺V2实际CAN COM Theta MIN/MAX及其设备特定证据；这是原始位置计数到rad的量程，不是要求重测机械安装尺寸。measurement_templates/left_wrist_theta_ranges.json保持null/verified=false，收到读回/厂家本机参数确认后才填。可以继续收集明确接触的raw候选，不能用默认值提升有效性。
+
+转换入口tools/prepare_tcp_pivot_sample.py（PYTHONPATH=src）：输入原始capture、已核验range_profile、SDK p7__left.urdf和新输出文件，加--sample-id、--contact-confirmed、--contact-evidence、--max-receive-span-s。模型SHA固定233a0fd9…f7edce，输出复用既有sample_id/clock_domain/epoch/host_stamp_s/T_base_flange行格式；无TCP求解或自动批准。单行生成后再按实际会话装入原pivot输入schema；训练/验证仍各至少4组，静止/接触/范围/时钟证据均需保留。10ms等软件示例门槛不是已验收的真机安全参数，现场需预先明确。
+
+后续采集epoch使用Linux boot_id标识同一host_monotonic启动周期，capture_id独立UUID。首组旧格式epoch是采集UUID，原件保持不改；若和后续多姿态合并，必须有明确时钟绑定依据，不能直接统一字符串。
 
 输入模板：calibration/examples/tcp_pivot_synthetic.json（严禁将source/device改名当实测）；真实记录按同schema另建文件，operator/版本/时钟均必须实填。运行tools/solve_tcp_pivot.py生成candidate和独立验证统计，结果approved=false，TCP旋转null。训练姿态退化/模型错/epoch错/复用sample ID拒绝。独立验证误差门槛需采样前冻结，不能看结果后调整。
 
@@ -28,4 +34,4 @@ TCP可复验后，以指针接触分布在工作区不同XY/高度的可视参�
 
 ## 软件与现场责任边界
 
-C软件已提供求解、独立误差报告、mimic/模型转换、规划/碰撞及失效检查；A负责真实状态/执行/停止，B负责真实相机证据和时间，D负责实际预设/手状态/场景。没有发现场动作命令。用户不需重复安装环境，主机FCL环境已配好。
+C软件已提供求解、独立误差报告、mimic/模型转换、规划/碰撞及失效检查；A负责执行/停止，B负责真实相机证据和时间，D负责实际预设/手状态/场景。C已执行获准的两次左腕Rest，有实际状态转换，不能继续称完全无硬件操作；无使能/运动目标。用户不需重复安装环境，主机FCL已配好。
