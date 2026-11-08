@@ -55,7 +55,9 @@ def read_matrix(io, prefix):
     return dict(raw_u8_10x4=None,error='incomplete batch or no response; no retry')
 
 
-def capture(io, expected_serial):
+def capture(io, expected_serial, *, capabilities):
+    if capabilities.get('serial_number')!=expected_serial or capabilities.get('tactile',{}).get('present') is not True:
+        raise ValueError('device-specific tactile hardware absent/unverified; no requests sent')
     serial=io.read(0xC0)
     if '-L-' not in expected_serial or serial!=expected_serial:raise ValueError('expected LEFT SN required before sensor requests')
     rows=[]
@@ -73,10 +75,13 @@ def capture(io, expected_serial):
 
 
 def main():
-    p=argparse.ArgumentParser(__doc__);p.add_argument('output',type=Path);p.add_argument('--interface',required=True,choices=('can0','can1'));p.add_argument('--expected-serial',required=True);a=p.parse_args()
+    p=argparse.ArgumentParser(__doc__);p.add_argument('output',type=Path);p.add_argument('--interface',required=True,choices=('can0','can1'));p.add_argument('--expected-serial',required=True);p.add_argument('--capabilities',type=Path,required=True);a=p.parse_args()
+    capabilities=json.loads(a.capabilities.read_text(encoding='utf-8-sig'))
+    if capabilities.get('serial_number')!=a.expected_serial or capabilities.get('tactile',{}).get('present') is not True:
+        raise ValueError('device-specific tactile hardware absent/unverified; no socket opened')
     with a.output.open('x',encoding='utf-8') as f:
         io=SocketHand(a.interface)
-        try:json.dump(capture(io,a.expected_serial),f,indent=2,allow_nan=False)
+        try:json.dump(capture(io,a.expected_serial,capabilities=capabilities),f,indent=2,allow_nan=False)
         finally:io.close()
 
 

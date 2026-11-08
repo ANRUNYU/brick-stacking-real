@@ -153,5 +153,9 @@
       "host_receive_monotonic_s": 270336.691928742,
       "error": null
     }
-  ]
+  ],
+  "hardware_tactile_present": false,
+  "capability_source": "onsite user confirmation 2026-11-08",
+  "usable_for_contact_detection": false,
+  "interpretation": "raw protocol responses from a hand without tactile hardware; not a sensor baseline or contact evidence"
 }

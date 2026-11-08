@@ -446,3 +446,13 @@ SSH读取本机O6源码/手动菜单与配置；原生SocketCAN按SN识别左手
 新增o6_sdk_pose_references_candidate.json（开/半闭/全闭百分比源参考、无物理force/rad映射、未验收50mm夹持）、tools/c_o6_tactile_probe.py及3个片段解析回归。工具复用自有标准库SocketHand，只读SN+B1…B5 A4，不运行单指工具main或运动分支。实机按SN识别左手后五指各两轮10×4均收齐、全raw0，接触条件未确认，不当力/压力标定；raw下载hash一致，精简证据left_o6_tactile_summary_20261108.json。无速度/目标/使能/Rest/Flash写入及右手控制。
 
 全套209 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c29-final。HANDOFF_ABD/TASK_STATUS/GRASP_CANDIDATES同步，O6_SDK_TEST_REVIEW说明源码参考、fixture副作用、真实触觉结果和下一轻触只读步骤。依赖仍为接触响应/量纲、实际50mm开口与稳定夹持、基座外参/模型映射和完整碰撞，未虚构完成抓放验收。
+
+## C主线复核与无触觉硬件事实纠正（2026-11-08，C1-03/C1-04/C1-05）
+
+用户询问C计划进展，并明确本机灵心巧手O6没有触觉、可读取电机电流。此前把通用SDK触觉接口及全零回应作为继续核验线索是错误方向；原接口审计已提醒“API/TOUCH配置不构成有触觉证据”。立即取消轻触请求，不再请求单指可动重复验证，不扩展手驱动功能测试。真实电流协议/单位/换算尚未核验，能力文件保持null，不用默认值。
+
+新增config/planning/left_o6_hardware_capabilities.json（现场用户来源，tactile.present=false；current.available=true但readback未核验），触觉工具必须显式匹配设备能力，当前无触觉设备在打开socket/发送请求前拒绝。3项新增守卫回归，针对6项解析/能力测试通过；没有连接/控制硬件。原始全零数据不篡改，精简证据追加失效解释，不作为触觉基线或抓取接触证据。
+
+TASK_STATUS重写为当前九项任务实况，不用过期快照或回归计数冒充验收；HANDOFF_ABD/相关抓取文档头部明确纠正。C已有软件几何/标定工具/IK/轨迹/局部碰撞，真实外参/实际抓取关系仍未完成，M3单块闭环和M5/M6十块均未验收。接下来优先C1-03/C1-04→C1-05，不再围绕通用手SDK功能测试偏离。此轮未发CAN、未做手指/臂动作，未推送/合并。
+
+本轮完整仓库回归212 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c30-final。该结果只确认软件未回归，不改变上述实测任务状态。

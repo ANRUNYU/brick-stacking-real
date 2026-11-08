@@ -38,3 +38,11 @@ def test_new_start_discards_partial_and_conflicting_duplicate_rejected():
     b.add(frame(0,value=8))
     for i in range(1,9):b.add(frame(i,value=8))
     assert b.add(frame(9,value=8))==[[8]*4 for _ in range(10)]
+
+
+@pytest.mark.parametrize('profile',[{}, {'serial_number':'left','tactile':{'present':False}}, {'serial_number':'other','tactile':{'present':True}}])
+def test_no_installed_tactile_or_wrong_device_refused_before_read(profile):
+    class NoAccess:
+        def read(self,*args):raise AssertionError('must reject before any hardware access')
+    with pytest.raises(ValueError,match='absent/unverified'):
+        m.capture(NoAccess(),'left',capabilities=profile)

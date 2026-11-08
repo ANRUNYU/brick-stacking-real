@@ -1,0 +1,23 @@
+{
+  "schema_version": "c-hand-capabilities-1",
+  "manufacturer": "Linkerhand",
+  "model": "O6",
+  "side": "left",
+  "serial_number": "LHO6-04-322-L-Z-1-D",
+  "confirmed_by": "onsite user, 2026-11-08",
+  "tactile": {"present": false, "contact_detection_available": false},
+  "motor_current": {
+    "available": true,
+    "provenance": "onsite user confirmation; protocol field and units still to verify",
+    "wire_command": null,
+    "units": null,
+    "scale_to_A": null,
+    "verified_by_readback": false
+  },
+  "notes": [
+    "SDK tactile API and all-zero matrices do not establish installed tactile hardware",
+    "Do not interpret normalized SDK torque as measured motor current, Nm or grasp force without a verified mapping",
+    "Motor current alone does not establish contact location or successful grasp",
+    "Resolve current CAN interface by serial number; no fixed can0/can1 assumption"
+  ]
+}
