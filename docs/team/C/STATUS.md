@@ -414,3 +414,11 @@ SSH只读核对进程/监听端口/资料：未发现可直接使用的关节状
 calibration/measurement_templates/left_wrist_theta_ranges.json明确null/verified=false。A/厂家需提供每台66/67实际CAN COM Theta MIN/MAX（rad）、对应设备/固件/配置版本、读取/确认时间及证据；优先从本机参数读回或本机出厂参数记录获取，不盲猜寄存器索引，不改Flash，不把通用手册默认值当实测。未要求重测安装几何。
 
 后续Rest采集工具将capture_id与Linux boot clock epoch分开，仍兼容原schema字段。首组旧epoch为capture UUID，未经绑定证据不得直接重命名后混合；原始样本不丢弃。此轮没有连接/发送新的CAN命令；179项后又补原始字节一致性拒绝，最终全套180 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c25-final。
+
+## 实际抓取坐标链入口（2026-11-08，C1-03/C1-04/C2-02）
+
+用户询问笔尖TCP意义后同意暂停，保留raw、转实际抓取优先级。中断前第2组真实raw已成功采下；归档本地并核验主机SHA256 26d07a04ac16c091a6f65aa29114edfd15c8e371133498fc09ff723de9751a07，腕部位置与第1组相同，五轴仅微小变化，不当独立朝向。此次暂停后无任何CAN命令，关闭残留SSH会话。
+
+新增tools/solve_grasp_offset.py（复用localization.held_offset/RigidTransform），calibration/examples/grasp_offset_synthetic.json，tests/unit/test_grasp_offset_cli.py及ACTUAL_GRASP_CALIBRATION.md；输出c-flange-grasp-candidate-1，T_flange_block明确命名，公共接口未变、没有假设零TCP或默认世界姿态。版本/身份/时钟/预设/物体朝向必须显式，持续夹持与重新抓握分组；独立验证滑移保留为FAIL。CLI样例实际运行并输出到artifacts，source synthetic。
+
+8项新增回归，全套188 passed，命令artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c26-grasp。NEXT_FIELD_SESSION/HANDOFF_ABD/TASK_STATUS同步；A/B/D输入和M2a/M3/M4/M5的格式、单位、时间和验收依赖见新文档。已询问现场稳定整手抓握预设，不需要用户为软件工作随意摆路线/手势。真实外参、V2 Theta量程、实际grasp预设及共同坐标6D观测仍缺，无真实抓放验收。

@@ -1,0 +1,403 @@
+{
+  "dataset_id": "synthetic-dataset_id",
+  "arm_device_id": "synthetic-arm_device_id",
+  "model_version": "synthetic-model_version",
+  "joint_mapping_version": "synthetic-joint_mapping_version",
+  "grasp_version": "synthetic-grasp_version",
+  "hand_binding_version": "synthetic-hand_binding_version",
+  "block_id": "synthetic-block_id",
+  "world_frame": "synthetic-world_frame",
+  "flange_frame": "synthetic-flange_frame",
+  "block_frame": "synthetic-block_frame",
+  "clock_domain": "synthetic-clock_domain",
+  "epoch": "synthetic-epoch",
+  "pose_basis_version": "synthetic-pose_basis_version",
+  "source": "synthetic",
+  "arm_role": "left",
+  "units": "m",
+  "trial_kind": "continuous_hold",
+  "max_translation_residual_m": 0.001,
+  "max_rotation_residual_rad": 0.01,
+  "training": [
+    {
+      "clock_domain": "synthetic-clock_domain",
+      "epoch": "synthetic-epoch",
+      "grasp_version": "synthetic-grasp_version",
+      "block_id": "synthetic-block_id",
+      "pose_basis_version": "synthetic-pose_basis_version",
+      "sample_id": "0",
+      "flange_stamp_s": 0.0,
+      "block_stamp_s": 0.0,
+      "block_orientation_observed": true,
+      "T_world_flange": [
+        [
+          1.0,
+          -0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.2
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.3
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T_world_block": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.02
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.19
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.38
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "clock_domain": "synthetic-clock_domain",
+      "epoch": "synthetic-epoch",
+      "grasp_version": "synthetic-grasp_version",
+      "block_id": "synthetic-block_id",
+      "pose_basis_version": "synthetic-pose_basis_version",
+      "sample_id": "1",
+      "flange_stamp_s": 1.0,
+      "block_stamp_s": 1.0,
+      "block_orientation_observed": true,
+      "T_world_flange": [
+        [
+          0.9800665778412416,
+          -0.19866933079506122,
+          0.0,
+          0.1
+        ],
+        [
+          0.19866933079506122,
+          0.9800665778412416,
+          0.0,
+          0.2
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.3
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T_world_block": [
+        [
+          0.9800665778412416,
+          -0.19866933079506122,
+          0.0,
+          0.12158802486477545
+        ],
+        [
+          0.19866933079506122,
+          0.9800665778412416,
+          0.0,
+          0.19417272083748882
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.38
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "clock_domain": "synthetic-clock_domain",
+      "epoch": "synthetic-epoch",
+      "grasp_version": "synthetic-grasp_version",
+      "block_id": "synthetic-block_id",
+      "pose_basis_version": "synthetic-pose_basis_version",
+      "sample_id": "2",
+      "flange_stamp_s": 2.0,
+      "block_stamp_s": 2.0,
+      "block_orientation_observed": true,
+      "T_world_flange": [
+        [
+          0.9210609940028851,
+          -0.3894183423086505,
+          0.0,
+          0.2
+        ],
+        [
+          0.3894183423086505,
+          0.9210609940028851,
+          0.0,
+          0.2
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.3
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T_world_block": [
+        [
+          0.9210609940028851,
+          -0.3894183423086505,
+          0.0,
+          0.22231540330314423
+        ],
+        [
+          0.3894183423086505,
+          0.9210609940028851,
+          0.0,
+          0.19857775690614418
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.38
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "validation": [
+    {
+      "clock_domain": "synthetic-clock_domain",
+      "epoch": "synthetic-epoch",
+      "grasp_version": "synthetic-grasp_version",
+      "block_id": "synthetic-block_id",
+      "pose_basis_version": "synthetic-pose_basis_version",
+      "sample_id": "3",
+      "flange_stamp_s": 3.0,
+      "block_stamp_s": 3.0,
+      "block_orientation_observed": true,
+      "T_world_flange": [
+        [
+          0.8253356149096782,
+          -0.5646424733950355,
+          0.0,
+          0.30000000000000004
+        ],
+        [
+          0.5646424733950355,
+          0.8253356149096782,
+          0.0,
+          0.2
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.3
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T_world_block": [
+        [
+          0.8253356149096782,
+          -0.5646424733950355,
+          0.0,
+          0.322153137032144
+        ],
+        [
+          0.5646424733950355,
+          0.8253356149096782,
+          0.0,
+          0.20303949331880394
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.38
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "clock_domain": "synthetic-clock_domain",
+      "epoch": "synthetic-epoch",
+      "grasp_version": "synthetic-grasp_version",
+      "block_id": "synthetic-block_id",
+      "pose_basis_version": "synthetic-pose_basis_version",
+      "sample_id": "4",
+      "flange_stamp_s": 4.0,
+      "block_stamp_s": 4.0,
+      "block_orientation_observed": true,
+      "T_world_flange": [
+        [
+          0.6967067093471654,
+          -0.7173560908995228,
+          0.0,
+          0.4
+        ],
+        [
+          0.7173560908995228,
+          0.6967067093471654,
+          0.0,
+          0.2
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.3
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T_world_block": [
+        [
+          0.6967067093471654,
+          -0.7173560908995228,
+          0.0,
+          0.42110769509593854
+        ],
+        [
+          0.7173560908995228,
+          0.6967067093471654,
+          0.0,
+          0.20738005472451881
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.38
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "clock_domain": "synthetic-clock_domain",
+      "epoch": "synthetic-epoch",
+      "grasp_version": "synthetic-grasp_version",
+      "block_id": "synthetic-block_id",
+      "pose_basis_version": "synthetic-pose_basis_version",
+      "sample_id": "5",
+      "flange_stamp_s": 5.0,
+      "block_stamp_s": 5.0,
+      "block_orientation_observed": true,
+      "T_world_flange": [
+        [
+          0.5403023058681398,
+          -0.8414709848078965,
+          0.0,
+          0.5
+        ],
+        [
+          0.8414709848078965,
+          0.5403023058681398,
+          0.0,
+          0.2
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.3
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T_world_block": [
+        [
+          0.5403023058681398,
+          -0.8414709848078965,
+          0.0,
+          0.5192207559654418
+        ],
+        [
+          0.8414709848078965,
+          0.5403023058681398,
+          0.0,
+          0.21142639663747653
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.38
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  ]
+}

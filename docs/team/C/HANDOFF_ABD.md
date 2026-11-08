@@ -1,6 +1,6 @@
 # C → A/B/D 滚动交接文档
 
-更新：2026-11-07；本地分支 codex/c-calibration-planning。维护约定：每个可合并任务同时更新本页和 STATUS.md，并将新证据加入 evidence/。最终交接从本页进入；尚未发送给其他成员、未推送/合并。本文是滚动交接，不是全部任务完成声明。
+更新：2026-11-08；本地分支 codex/c-calibration-planning。维护约定：每个可合并任务同时更新本页和 STATUS.md，并将新证据加入 evidence/。最终交接从本页进入；尚未发送给其他成员、未推送/合并。本文是滚动交接，不是全部任务完成声明。
 
 ## 当前统一事实
 
@@ -152,3 +152,9 @@ A→C仍须保留原始角度到模型符号/零位版本与时间语义，但�
 首组接触由用户确认，raw candidate 1已关联原始hash；左腕可在支撑下轻松手动调整。C提供prepare_tcp_pivot_sample.py复用锁定SDK URDF/FK生成现有pivot行格式，无公共模型改动；严格要求已核验每腕Theta范围/证据，原始角度一致性、完整七轴、接触/时钟/时差。调用见NEXT_FIELD_SESSION。A/厂家仍需66/67本机Theta MIN/MAX参数来源（rad、设备/版本、确认时间/方法），禁止用默认值自证。B/D尚无新的有效TCP矩阵。
 
 采集工具未来用Linux boot epoch+独立capture_id，避免一组一个epoch阻断多姿态整合；首组旧UUID未伪装成host boot ID。180软件回归通过；本轮没有新增硬件操作。下一阶段由现场保持同一点接触，逐组改变朝向采raw；不自动使能/运动，不把重复静止样本充作不同姿态。
+
+## 当前方向：实际抓取坐标链（2026-11-08，C1-03/C1-04/C2-02）
+
+用户同意暂停笔尖TCP采集，不继续要求笔尖多姿态；首两组raw归档，第2组编码器姿态无明显改变，不能算独立方向。当前入口ACTUAL_GRASP_CALIBRATION.md。左腕仍Rest；本轮无CAN命令，已关闭残留SSH会话。不要让A/D把暂停理解为已恢复保持或已验证抓握。
+
+新增solve_grasp_offset.py复用held_offset与RigidTransform，直接估计T_flange_block，输出具名法兰/积木系，无零TCP假设。样例grasp_offset_synthetic.json已跑CLI，训练/验证各3，报告始终未批准；实际所需A/B/D输入、单位、时间、版本和M2a/M3/M4/M5交接在新文档表格。已询问现场是否存在稳定整手抓握预设，尚不执行抓握。真实头部外参、V2范围和物体6D朝向仍缺，不以软件PASS替代。全套188 passed。
