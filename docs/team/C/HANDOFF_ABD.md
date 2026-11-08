@@ -1,5 +1,7 @@
 # C31 当前交接补充（2026-11-08）
 
+**C35/C36最新：** 用户接受10mm拟合门槛，6组max6.724mm满足；独立验证按用户要求未做。相机→左基座参数在calibration/candidates，临时标定块偏移不是实际TCP。当前实拍两块基座坐标、抓取几何/10槽位见[C36_SCENE_GEOMETRY.md](C36_SCENE_GEOMETRY.md)。C→A41点Mock样例/3反馈场景已跑通，未合并A源码。304软件回归后按用户要求不扩大测试。真实动作仍需A七轴状态、D稳定预设/持物TF及完整场景。
+
 **C35当前采集：** [C35_FIELD_SESSION.md](C35_FIELD_SESSION.md)记录实际固定块多姿态、具名五轴曝光FK和三面中心候选；当前3训练候选、时间PROVISIONAL，无有效外参/TCP。新增prepare_fixed_camera_point_sample.py及297回归。A1-04/D1-02接口已审阅，C与A的连续插值语义仍需显式适配，不能将Mock反馈当真实能力；未改其他成员源码。
 
 **C34发布交接：** 本次用户授权将当前成果上传GitHub任务分支，统一从[README.md](README.md)进入。新增裁剪真实RGB-D/原始五轴/ROI/时钟最小样例，供A/B/D离线复算；290回归通过，未合并main。历史“未推送”描述对应当时，不代表当前授权范围。

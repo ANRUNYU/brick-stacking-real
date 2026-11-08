@@ -1,0 +1,168 @@
+{
+  "schema_version": "c-point-target-joint-1",
+  "source": "real",
+  "context": {
+    "dataset_id": "C35_left_head_point_fit_only_user10mm_20261108",
+    "camera_serial": "CP2L863000KL",
+    "camera_profile_version": "0cff4d6eb086ce64dbcdfa9db5095d1e6a751e2229a4d5ac2a1b4a390d99f997",
+    "arm_device_id": "operator_selected_left_P7_can2_61_to_67",
+    "model_version": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+    "joint_mapping_version": "left_can2_61_to_65_read06_float32_sdk_v1",
+    "target_id": "C35_calibration_cube_50mm",
+    "target_geometry_version": "38b26b49853f053f5667a1388c1a777ce390b7cdf130f8294aab9ce1b73bc940",
+    "attachment_version": "left_L5_cube_mount_operator_confirmed_C35_v1",
+    "clock_domain": "host_monotonic",
+    "epoch": "linux_boot:f9016d4a-56d7-4a83-a8c2-3fa6d11f8153"
+  },
+  "base_frame": "L_arm_root",
+  "camera_frame": "camera_CP2L863000KL_color_optical_frame",
+  "reference_frame": "L5_Link",
+  "T_base_camera": [
+    [
+      -0.16972409524928267,
+      -0.7371861377998347,
+      0.6540262454424699,
+      0.11714959197610521
+    ],
+    [
+      -0.9834563230208996,
+      0.08406755112932099,
+      -0.16045655972046927,
+      -0.08851466859718904
+    ],
+    [
+      0.0633039667163291,
+      -0.6704395909273868,
+      -0.7392586575178507,
+      0.26546394196542816
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "point_offset_reference_m": [
+    0.0057841599534800515,
+    0.006451959989130316,
+    -0.03434186042669945
+  ],
+  "point_orientation_xyzw": null,
+  "report": {
+    "schema_version": "c-point-target-joint-1",
+    "candidate_id": "C35_left_head_point_fit_only_user10mm_20261108",
+    "reference_frame": "L5_Link",
+    "point_offset_reference_m": [
+      0.0057841599534800515,
+      0.006451959989130316,
+      -0.03434186042669945
+    ],
+    "point_orientation_xyzw": null,
+    "fit": {
+      "n": 6,
+      "rmse_m": 0.003751258691832552,
+      "p95_m": 0.006017740069197831,
+      "max_m": 0.006724269862361948
+    },
+    "validation": null,
+    "training_residuals": [
+      {
+        "sample_id": "C35_training_pose01",
+        "residual_base_m": [
+          0.0004910295980343066,
+          4.850912012774322e-05,
+          -0.0016229970423073392
+        ],
+        "norm_m": 0.0016963438920866464
+      },
+      {
+        "sample_id": "C35_training_pose02",
+        "residual_base_m": [
+          0.0012686005987631171,
+          -0.002900313569822427,
+          -0.0010303659925712805
+        ],
+        "norm_m": 0.003329087016154076
+      },
+      {
+        "sample_id": "C35_training_pose03_retry",
+        "residual_base_m": [
+          -0.0003803150243280179,
+          0.006195212207087977,
+          0.0025866022835541735
+        ],
+        "norm_m": 0.006724269862361948
+      },
+      {
+        "sample_id": "C35_training_pose04",
+        "residual_base_m": [
+          -0.0016957252447800802,
+          0.002114972777969626,
+          0.00023849313152696228
+        ],
+        "norm_m": 0.002721299860567107
+      },
+      {
+        "sample_id": "C35_training_pose05_near",
+        "residual_base_m": [
+          0.000331379676471219,
+          -0.001563027354305635,
+          -0.0003186279398003644
+        ],
+        "norm_m": 0.0016292301139824502
+      },
+      {
+        "sample_id": "C35_training_pose06",
+        "residual_base_m": [
+          -1.4969604160322558e-05,
+          -0.0038953531810572845,
+          0.00014689555959762624
+        ],
+        "norm_m": 0.0038981506897054815
+      }
+    ],
+    "validation_residuals": [],
+    "training_ids": [
+      "C35_training_pose01",
+      "C35_training_pose02",
+      "C35_training_pose03_retry",
+      "C35_training_pose04",
+      "C35_training_pose05_near",
+      "C35_training_pose06"
+    ],
+    "validation_ids": [],
+    "linear_condition_number": 1244.185599452927,
+    "converged": true,
+    "iterations": 10,
+    "fit_quality": "PASS",
+    "diagnostic_fit_only": true,
+    "independent_validation": "NOT_PERFORMED",
+    "consistency": "INCOMPLETE",
+    "approved": false,
+    "motion_enabled": false,
+    "scope": "joint point mapping consistency; no target orientation, grasp calibration, absolute metrology or motion permission"
+  },
+  "approved": false,
+  "motion_enabled": false,
+  "notice": "unmarked point center mode; no labelled target orientation, grasp offset or physical approval",
+  "operator_acceptance": {
+    "accepted": true,
+    "scope": "six-pose fitting residual only",
+    "max_residual_m": 0.01,
+    "source": "user explicitly accepts errors within 10 mm",
+    "declared_after_fit": true,
+    "date_local": "2026-11-08",
+    "previous_diagnostic_max_residual_m": 0.005
+  },
+  "independent_validation": "NOT_PERFORMED_AT_USER_REQUEST",
+  "timing_acceptance": "NOT_VALIDATED",
+  "calibration_status": "OPERATOR_ACCEPTED_FIT_ONLY",
+  "coordinate_use_accepted": true,
+  "execution_approval": false,
+  "units": {
+    "length": "m",
+    "angle": "rad",
+    "quaternion": "xyzw"
+  }
+}

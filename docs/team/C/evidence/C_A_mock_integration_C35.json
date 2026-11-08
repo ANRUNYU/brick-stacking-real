@@ -1,0 +1,121 @@
+{
+  "schema_version": "c-a-mock-integration-1",
+  "source": "synthetic",
+  "a_commit": "cb4abcacacfb37f1e3f4aa8348330e1a22558e31",
+  "input_sha256": "b17dcafbf1beb923d63b6dbb0723ce39422ca67ec75393a06d71a3a99e4a6b03",
+  "contract_version": "0.1",
+  "joint_names": [
+    "J1",
+    "J2",
+    "J3",
+    "J4",
+    "J5",
+    "J6",
+    "J7"
+  ],
+  "point_count": 41,
+  "reports": [
+    {
+      "case": "fresh_feedback",
+      "status_before_final_check": "RUNNING",
+      "result": {
+        "command_id": "917a364ea7a64972b373d3e7925baf95",
+        "status": "SUCCEEDED",
+        "feedback": {
+          "sample_id": "synthetic-post-dispatch-feedback",
+          "source": "mock",
+          "device_id": "mock-arm",
+          "frame_id": "active_arm_base",
+          "device_stamp": null,
+          "host_receive_stamp": 12.406214225548888,
+          "clock_domain": "host_monotonic",
+          "epoch": "c99da6ecd3834237b71555f151d01ccd",
+          "validity": "VALID",
+          "reason": null,
+          "joint_names": [
+            "J1",
+            "J2",
+            "J3",
+            "J4",
+            "J5",
+            "J6",
+            "J7"
+          ],
+          "joint_bindings": {
+            "J1": {
+              "sdk_index": 0,
+              "device_joint_id": "mock-J1"
+            },
+            "J2": {
+              "sdk_index": 1,
+              "device_joint_id": "mock-J2"
+            },
+            "J3": {
+              "sdk_index": 2,
+              "device_joint_id": "mock-J3"
+            },
+            "J4": {
+              "sdk_index": 3,
+              "device_joint_id": "mock-J4"
+            },
+            "J5": {
+              "sdk_index": 4,
+              "device_joint_id": "mock-J5"
+            },
+            "J6": {
+              "sdk_index": 5,
+              "device_joint_id": "mock-J6"
+            },
+            "J7": {
+              "sdk_index": 6,
+              "device_joint_id": "mock-J7"
+            }
+          },
+          "q_rad": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "dq_rad_s": null,
+          "enabled": null,
+          "fault": null
+        },
+        "started_host_monotonic_s": 10.0,
+        "ended_host_monotonic_s": 12.406214225548888,
+        "reason": null
+      }
+    },
+    {
+      "case": "missing_feedback",
+      "status_before_final_check": "RUNNING",
+      "result": {
+        "command_id": "3bcde0bf82c0497286763d6324954d67",
+        "status": "FAILED",
+        "feedback": null,
+        "started_host_monotonic_s": 10.0,
+        "ended_host_monotonic_s": 13.405214225548889,
+        "reason": "permit or trajectory expired during mock execution"
+      }
+    },
+    {
+      "case": "cancel",
+      "status_before_final_check": "CANCELLED",
+      "result": {
+        "command_id": "4611695186874d9a84fd2e093085f826",
+        "status": "CANCELLED",
+        "feedback": null,
+        "started_host_monotonic_s": 10.0,
+        "ended_host_monotonic_s": 10.0,
+        "reason": "mock execution cancelled"
+      }
+    }
+  ],
+  "continuous_interpolation_preserved": false,
+  "real_execution": "NOT_TESTED",
+  "motion_enabled": false,
+  "notice": "Mock dispatch/feedback contract only; A point contract cannot encode C quintic basis. No real trajectory approval."
+}

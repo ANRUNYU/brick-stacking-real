@@ -75,11 +75,27 @@ def associate(cycles,camera,*,max_bracket_gap_s,max_bracket_step_rad,max_rgb_dep
                 scope='candidate association diagnostics, not a calibration matrix, complete seven-axis state or motion permission')
 
 
+def associate_qualified_frames(cycles,camera,**thresholds):
+    """Keep independently qualified images; retain every rejected frame reason."""
+    results=[];rejections=[]
+    for frame in camera.get('frames',[]):
+        one=dict(camera,frames=[frame])
+        try:results.append(associate(cycles,one,**thresholds))
+        except ValueError as exc:rejections.append(dict(image_file=frame.get('file'),reason=str(exc)))
+    if not results:raise ValueError('no exposure-qualified image: '+str(rejections))
+    combined=dict(results[0]);combined['samples']=[row for r in results for row in r['samples']]
+    combined['frame_rejections']=rejections
+    combined['frame_qualification']='independent per-image brackets; unchanged thresholds; all rejections retained'
+    return combined
+
+
 def main():
     p=argparse.ArgumentParser(__doc__);p.add_argument('capture_directory',type=Path);p.add_argument('output',type=Path)
     for key in ('max-bracket-gap-s','max-bracket-step-rad','max-rgb-depth-skew-s'):p.add_argument('--'+key,type=float,required=True)
+    p.add_argument('--keep-qualified-frames',action='store_true')
     a=p.parse_args();root=a.capture_directory
-    r=associate(json.loads((root/'joint_cycles.json').read_text()),json.loads((root/'camera/camera_report.json').read_text()),
+    qualify=associate_qualified_frames if a.keep_qualified_frames else associate
+    r=qualify(json.loads((root/'joint_cycles.json').read_text()),json.loads((root/'camera/camera_report.json').read_text()),
                 max_bracket_gap_s=a.max_bracket_gap_s,max_bracket_step_rad=a.max_bracket_step_rad,max_rgb_depth_skew_s=a.max_rgb_depth_skew_s)
     with a.output.open('x',encoding='utf-8') as f:json.dump(r,f,indent=2,allow_nan=False)
 

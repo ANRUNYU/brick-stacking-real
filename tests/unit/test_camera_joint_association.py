@@ -41,6 +41,18 @@ def test_exposure_interpolation_preserves_raw_time_and_provisional_status(record
     assert r['timing_acceptance']=='NOT_VALIDATED' and not r['approved']
 
 
+def test_per_frame_qualification_retains_failure_without_relaxing_brackets(recording):
+    import copy
+    c,r=recording;bad=copy.deepcopy(r['frames'][0]);bad['file']='bad.npz'
+    bad['clock_observation']['frames']['depth']['global_timestamp_us']=0
+    r['frames'].insert(0,bad)
+    selected=m.associate_qualified_frames(c,r,max_bracket_gap_s=.1,max_bracket_step_rad=.01,max_rgb_depth_skew_s=.02)
+    assert [s['image_file'] for s in selected['samples']]==['frame_000.npz']
+    assert selected['frame_rejections'][0]['image_file']=='bad.npz'
+    assert 'unavailable' in selected['frame_rejections'][0]['reason']
+    assert not selected['calibration_sample_valid'] and not selected['approved']
+
+
 @pytest.mark.parametrize('bad',['epoch','raw','zero_global','bridge','extrapolate','gap','step','skew'])
 def test_incompatible_or_unobservable_association_rejected(recording,bad):
     c,r=recording;obs=r['frames'][0]['clock_observation']

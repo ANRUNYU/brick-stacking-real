@@ -41,6 +41,14 @@ def prepare(root,centers,association,urdf,*,group,operator_evidence):
         decisions.append(dict(image_file=filename,frame_sha256=sha,vision_quality=quality,reason=center['quality'].get('reason')))
         if quality=='PASS' and selected is None:selected=(row,center,path,sha)
     if selected is None:raise ValueError('no vision-qualified image; keep rejected capture, no pose output')
+    for rejected in association.get('frame_rejections',[]):
+        filename=rejected['image_file'];path=root/'camera'/filename
+        if Path(filename).name!=filename:raise ValueError('rejected frame must remain in capture directory')
+        sha=digest(path);center=by_sha.get(sha)
+        decisions.append(dict(image_file=filename,frame_sha256=sha,vision_quality=center['quality'].get('consistency','REJECTED') if center else 'NOT_AVAILABLE',
+                              exposure_qualification='REJECTED',reason=rejected['reason']))
+    order={frame['file']:i for i,frame in enumerate(camera['frames'])} if camera.get('frames') else {}
+    decisions.sort(key=lambda r:order.get(r['image_file'],0))
     row,center,path,sha=selected
     with np.load(path,allow_pickle=False) as data:meta=json.loads(str(data['metadata'].item()))
     if center['camera_serial']!=manifest['camera_serial'] or meta['camera_id']!=manifest['camera_serial'] or center['camera_stamp_s']!=meta['stamp_s'] or center['camera_clock_domain']!=meta['clock_domain']:
@@ -77,8 +85,8 @@ def main():
     p.add_argument('--group',choices=['training','validation'],required=True);p.add_argument('--operator-evidence',required=True)
     for name in ('max-bracket-gap-s','max-bracket-step-rad','max-rgb-depth-skew-s'):p.add_argument('--'+name,type=float,required=True)
     a=p.parse_args()
-    from associate_camera_joint_samples import associate
-    association=associate(json.loads((a.capture/'joint_cycles.json').read_text()),json.loads((a.capture/'camera/camera_report.json').read_text()),
+    from associate_camera_joint_samples import associate_qualified_frames
+    association=associate_qualified_frames(json.loads((a.capture/'joint_cycles.json').read_text()),json.loads((a.capture/'camera/camera_report.json').read_text()),
                           max_bracket_gap_s=a.max_bracket_gap_s,max_bracket_step_rad=a.max_bracket_step_rad,max_rgb_depth_skew_s=a.max_rgb_depth_skew_s)
     r=prepare(a.capture,json.loads(a.centers.read_text()),association,a.urdf,group=a.group,operator_evidence=a.operator_evidence)
     with a.output.open('x',encoding='utf-8') as f:json.dump(r,f,indent=2,allow_nan=False)

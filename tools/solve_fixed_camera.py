@@ -11,6 +11,8 @@ def solve(data):
     kind=data.get('observation_kind','target_pose')
     if kind not in ('target_pose','point_center'):raise ValueError('explicit supported observation kind required')
     point_mode=kind=='point_center'
+    fit_only=data.get('diagnostic_fit_only',False)
+    if type(fit_only) is not bool or (fit_only and not point_mode):raise ValueError('fit-only diagnostic is explicit point mode only')
     context=('dataset_id','camera_serial','camera_profile_version','arm_device_id','model_version',
              'joint_mapping_version','target_id','target_geometry_version','attachment_version','clock_domain','epoch')
     for key in context:
@@ -47,7 +49,7 @@ def solve(data):
         raise ValueError('same image/joint sample reused; training/validation evidence leakage')
     if point_mode:
         x,report=solve_point_target(*groups,camera_frame=data['camera_frame'],candidate_id=data['dataset_id'],
-                                  max_residual_m=data['max_translation_residual_m'],max_condition_number=data['max_condition_number'])
+                                  max_residual_m=data['max_translation_residual_m'],max_condition_number=data['max_condition_number'],diagnostic_fit_only=fit_only)
         return dict(schema_version=report['schema_version'],source=data['source'],context={k:data[k] for k in context},
                     base_frame=x.target_frame,camera_frame=x.source_frame,reference_frame=reference,
                     T_base_camera=x.matrix.tolist(),point_offset_reference_m=report['point_offset_reference_m'],

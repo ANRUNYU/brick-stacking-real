@@ -14,9 +14,10 @@ def _skew(v):
 
 
 def solve_point_target(training,validation,*,camera_frame,candidate_id,
-                       max_residual_m,max_condition_number):
+                       max_residual_m,max_condition_number,diagnostic_fit_only=False):
     training,validation=tuple(training),tuple(validation)
-    if len(training)<6 or len(validation)<4 or not candidate_id or not camera_frame:
+    if type(diagnostic_fit_only) is not bool:raise ValueError('explicit boolean fit-only mode required')
+    if len(training)<6 or (not diagnostic_fit_only and len(validation)<4) or (diagnostic_fit_only and validation) or not candidate_id or not camera_frame:
         raise ValueError('>=6 training +4 independent validation poses and identities required')
     if any(not np.isscalar(x) or not np.isfinite(x) or x<=0 for x in (max_residual_m,max_condition_number)) or max_condition_number<=1:
         raise ValueError('explicit residual/conditioning thresholds required')
@@ -67,12 +68,19 @@ def solve_point_target(training,validation,*,camera_frame,candidate_id,
     def stats(group):
         e=np.linalg.norm(residual(group,p,rotation,t).reshape(-1,3),axis=1)
         return dict(n=len(e),rmse_m=float(np.sqrt(np.mean(e**2))),p95_m=float(np.percentile(e,95)),max_m=float(e.max()))
-    fit,check=stats(training),stats(validation)
+    fit,check=stats(training),stats(validation) if validation else None
+    fit_quality='PASS' if converged and fit['max_m']<=max_residual_m else 'FAIL'
+    def per_pose(group):
+        errors=residual(group,p,rotation,t).reshape(-1,3)
+        return [dict(sample_id=row[0],residual_base_m=error.tolist(),norm_m=float(np.linalg.norm(error))) for row,error in zip(group,errors)]
     report=dict(schema_version='c-point-target-joint-1',candidate_id=candidate_id,reference_frame=signature[1],
                 point_offset_reference_m=p.tolist(),point_orientation_xyzw=None,fit=fit,validation=check,
+                training_residuals=per_pose(training),validation_residuals=per_pose(validation) if validation else [],
                 training_ids=ids[:len(training)],validation_ids=ids[len(training):],linear_condition_number=condition,
                 converged=converged,iterations=iteration+1,
-                consistency='PASS' if converged and max(fit['max_m'],check['max_m'])<=max_residual_m else 'FAIL',
+                fit_quality=fit_quality,diagnostic_fit_only=diagnostic_fit_only,
+                independent_validation='NOT_PERFORMED' if diagnostic_fit_only else 'PERFORMED',
+                consistency='INCOMPLETE' if diagnostic_fit_only else ('PASS' if converged and max(fit['max_m'],check['max_m'])<=max_residual_m else 'FAIL'),
                 approved=False,motion_enabled=False,
                 scope='joint point mapping consistency; no target orientation, grasp calibration, absolute metrology or motion permission')
     return transform,report

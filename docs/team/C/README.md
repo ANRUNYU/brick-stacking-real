@@ -1,5 +1,7 @@
 # C → A/B/D 交付入口（2026-11-08）
 
+**最新C35/C36：** [6组拟合结果](C35_FIELD_SESSION.md)最大6.724mm，用户接受10mm标准；独立验证按用户要求未做。[参数](../../../calibration/candidates/C35_left_head_fit_only_user10mm_20261108.json)及[可复算输入](evidence/fixed_camera_C35_fit_inputs.json)已提供。[当前实拍场景几何](C36_SCENE_GEOMETRY.md)输出两目标基座位置、抓取候选与10槽位。C→A Mock接口3场景已联调；最后完整软件回归304通过。此后不扩大测试/哈希检查。以下早期“无外参”指当时状态；当前有用户接受的fit-only参数，实际抓握TCP/真机闭环仍未完成。
+
 任务分支：[`codex/c-calibration-planning`](https://github.com/ANRUNYU/brick-stacking-real/tree/codex/c-calibration-planning)。本次用户明确授权上传所得成果；不合并main、不改其他成员分支、不创建Issue。历史记录中的“未推送”描述对应当时状态。
 
 当前真实状态：主臂左P7，O6无触觉（用户确认）。已有真实RGB-D、关节读取和录制数据分析；**尚无验收通过的T_base_camera、抓握TCP或真机抓放闭环**。所有几何候选保持未批准，不提供运动许可。

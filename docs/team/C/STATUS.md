@@ -1,5 +1,13 @@
 # C 开发与实测交付记录（持续更新至2026-11-08）
 
+## C35/C36 当前结果：6组拟合按用户10mm标准接受，继续场景几何
+
+C1-03：6组对应已求解，RMSE3.751mm/max6.724mm。用户在看到结果后明确接受10mm以内，并取消新增独立验证组；原5mm诊断结果保留。新增显式fit-only模式保持默认独立验证要求不变，结果validation=null/consistency=INCOMPLETE，operator_acceptance=true仅针对拟合，真实动作仍关闭。参数在calibration/candidates/C35_left_head_fit_only_user10mm_20261108.json，求解输入/失败记录/重复帧敏感度在evidence/。24种同姿态重复帧组合已分析，最大外参平移变化2.94mm，不冒充独立精度验证。最后完整回归304 passed；后续遵从用户不扩大测试/哈希审查。
+
+C1-05离线接口：C的41点七轴synthetic样例已接A的cb4abcacacfb37f1e3f4aa8348330e1a22558e31 Mock，外部新鲜反馈SUCCEEDED、缺反馈过期FAILED、取消CANCELLED，运行工具c_a_mock_replay.py与样例c_to_a_contract_mock.json已交付。只验证接口，未声称真实执行/连续quintic语义已通过。
+
+C1-04/C2-01/C2-03：取当前真实桌面图像，c_scene_geometry.py复用既有坐标/BlockPose/抓取/槽位实现，实际输出红、黄两目标的左基座坐标，各2抓取候选，10个四层槽位。设计接近/侧间隙仍明确synthetic，真实TCP/七轴起点/完整场景未接入；IK、轨迹、完整碰撞分别未通过/未执行。详见C36_SCENE_GEOMETRY.md，输出evidence/scene_geometry_C36.json。此步仅相机开流，无CAN/机械臂/手指动作。
+
 ## C35：继续真实固定块多姿态采集
 
 对应C1-01/C1-02/C1-03，M1/M2a。新增prepare_fixed_camera_point_sample.py装配原帧SHA/原设备时间/曝光插值五轴FK和三面中心，按预定train/validation分组、按采集顺序选首个视觉PASS，原失败决定保留。模型从主机重新读取核对SHA233a0fd9…f7edce，安装现场逐组确认，所有时间仍PROVISIONAL、未批准。完整回归297 passed，实际前三个候选CLI运行成功；尚无外参矩阵。详见C35_FIELD_SESSION.md和evidence/fixed_camera_C35_session.json。

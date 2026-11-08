@@ -25,6 +25,31 @@ def test_unmarked_point_recovers_extrinsic_and_unknown_mount_offset():
     assert report['point_orientation_xyzw'] is None and report['consistency']=='PASS' and not tf.approved
 
 
+def test_explicit_fit_only_never_claims_independent_validation():
+    rows,x,_=samples()
+    tf,r=solve_point_target(rows[:6],[],camera_frame='camera',candidate_id='synthetic-fit-only',max_residual_m=.002,max_condition_number=1e6,diagnostic_fit_only=True)
+    np.testing.assert_allclose(tf.matrix,x,atol=1e-9)
+    assert r['fit_quality']=='PASS' and r['consistency']=='INCOMPLETE'
+    assert r['validation'] is None and r['independent_validation']=='NOT_PERFORMED'
+    assert len(r['training_residuals'])==6 and not r['approved'] and not r['motion_enabled']
+
+
+def test_fit_only_preserves_large_training_errors():
+    rows,_,_=samples(.01)
+    _,r=solve_point_target(rows[:6],[],camera_frame='camera',candidate_id='synthetic-noisy',max_residual_m=.002,max_condition_number=1e6,diagnostic_fit_only=True)
+    assert r['fit_quality']=='FAIL' and r['consistency']=='INCOMPLETE'
+    assert r['fit']['max_m']>.002 and r['validation'] is None
+
+
+@pytest.mark.parametrize('bad',['implicit','nonempty','string'])
+def test_fit_only_does_not_weaken_default_validation_requirement(bad):
+    rows,_,_=samples();flag=True;check=[]
+    if bad=='implicit':flag=False
+    elif bad=='nonempty':check=rows[12:]
+    else:flag='true'
+    with pytest.raises(ValueError):solve_point_target(rows[:6],check,camera_frame='camera',candidate_id='synthetic',max_residual_m=.002,max_condition_number=1e6,diagnostic_fit_only=flag)
+
+
 def test_noisy_data_and_heldout_outlier_not_dropped():
     rows,_,_=samples(.0001);_,r=solve(rows);assert r['consistency']=='PASS'
     i,a,c,t,clock=rows[-1];rows[-1]=(i,a,c+[.02,0,0],t,clock)

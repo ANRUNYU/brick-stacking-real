@@ -39,6 +39,14 @@ def test_first_vision_qualified_image_selected_with_failures_retained(inputs):
     assert r['context']['source']=='synthetic' and not r['calibration_sample_valid'] and not r['motion_enabled']
 
 
+def test_vision_and_exposure_must_pass_on_same_image(inputs):
+    _,centers,a,_=inputs
+    centers[0]['quality']['consistency']='PASS';centers[1]['quality']['consistency']='FAIL'
+    a['frame_rejections']=[dict(image_file=a['samples'][0]['image_file'],reason='bracket step too large')]
+    a['samples']=a['samples'][1:]
+    with pytest.raises(ValueError,match='no vision-qualified'):prepare(inputs)
+
+
 @pytest.mark.parametrize('bad',['all_failed','duplicate','model','clock','promoted_timing','mount'])
 def test_unqualified_point_candidate_rejected(inputs,bad):
     root,centers,a,urdf=inputs

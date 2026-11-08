@@ -1,6 +1,18 @@
 # C35 手托固定方块现场标定会话
 
-2026-11-08，C1-01/C1-02/C1-03，M1/M2a。当前采集中，尚无外参矩阵。用户保持50mm块在L5候选金属框刚性固定；只在相机前方、可靠人工支撑和无阻力范围换姿，不能要求背面盲区或大于45°转向。可抬高、微倾或改变左右位置；数据退化由软件检查，不能靠强推关节凑姿态。
+2026-11-08，C1-01/C1-02/C1-03，M1/M2a。本轮6组求解已完成。用户保持50mm块在L5候选金属框刚性固定；只在相机前方、可靠人工支撑和无阻力范围换姿，不能要求背面盲区或大于45°转向。
+
+## 当前结论
+
+用户明确停止新增独立验证组，并接受10mm以内误差。6组拟合RMSE3.751mm、P95为6.018mm、最大6.724mm，符合用户10mm拟合门槛。原5mm诊断未通过的事实保留；10mm为看到结果后用户确认的标准，不倒填成预先声明。求解结果是OPERATOR_ACCEPTED_FIT_ONLY，独立验证未做、时间误差界未知，motion_enabled=false。不把这些限制扩展成重复采样要求。
+
+结果：[候选参数](../../../calibration/candidates/C35_left_head_fit_only_user10mm_20261108.json)；复算输入[evidence/fixed_camera_C35_fit_inputs.json](evidence/fixed_camera_C35_fit_inputs.json)。候选点偏移约(5.78,6.45,-34.34)mm，是临时固定方块中心相对L5的位置，**不是手部抓握TCP**。
+
+```bash
+python tools/solve_fixed_camera.py docs/team/C/evidence/fixed_camera_C35_fit_inputs.json artifacts/C35_recomputed.json
+```
+
+默认求解接口仍要求独立验证。新增显式diagnostic_fit_only=true仅输出拟合候选：validation=null、independent_validation=NOT_PERFORMED、consistency=INCOMPLETE；不会把同组残差冒充独立误差。304项软件回归已通过；此后按用户要求不继续扩大测试/哈希检查。
 
 输入模型从实际主机重新读取，SHA233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce，与既有SDK FK版本一致。未修改/提交SDK。安装版本left_L5_cube_mount_operator_confirmed_C35_v1，来源为用户逐组“可以采”对保持固定的指示的答复及照片复核，不复用之前未知/可能拆下的安装偏移。
 
@@ -12,8 +24,12 @@
 |训练2|PASS/PASS/PASS|第一帧|几何通过，时间PROVISIONAL|
 |训练3首次|FAIL/REJECTED/REJECTED|不选|保留失败，不计入求解|
 |训练3重采|FAIL/PASS/FAIL|第二帧|几何通过，时间PROVISIONAL|
+|训练4|PASS/FAIL/PASS|第一帧|几何通过，时间PROVISIONAL|
+|训练5首次/首次重采|未同时通过视觉和曝光配对|不选|失败保留，不跨帧拼接通过项|
+|训练5靠近重采|PASS/FAIL/FAIL|第一帧|几何通过，时间PROVISIONAL|
+|训练6|PASS/FAIL/PASS|第一帧|几何通过，时间PROVISIONAL|
 
-前三组的设计矩阵秩9/15，尚不求解。计划至少6组训练+4组独立验证；同一姿态三重复帧不能拆为独立姿态。选择规则是**求外参前按采集顺序选择首个视觉PASS**，不能看标定残差挑图。
+6组设计矩阵秩15/15，条件数1244.19。原计划6组求解+4组独立验证，用户后续明确取消新增验证组；同一姿态重复帧没有冒充独立姿态。选择规则是**求外参前按采集顺序选择首个同时通过视觉和曝光配对的帧**，不能看标定残差挑图。
 
 静止整段FAIL原样保留；当前采用SDK映射曝光时刻配对五轴，原设备时钟、SDK时钟、host桥接和各轴前后读数保留。此方法不把device或arrival换名成曝光，SDK映射/插值误差尚未独立定界，故仍不是有效标定验收样本。
 
@@ -37,4 +53,4 @@ A的远程a1-04分支cb4abca已阅读：Trajectory使用J1…J7+time_from_start_
 
 D的d1-02只读适配文档已阅读：SN核验、percent/raw分开；仍不能推断无触觉设备的接触或把percent转换为rad。未合并/覆盖其他成员源码。
 
-A/B/D当前可用交付是具名L5参考、相机中心、版本/原始时钟与拒绝原因；相机→基座、实际抓握关系和M3/M5/M6真实闭环仍未完成。
+A/B/D当前可用交付包括具名L5参考、相机中心、原始时钟/拒绝原因，以及用户接受的fit-only相机→左基座参数。实际抓握关系和M3/M5/M6真实闭环仍未完成。A的实接口Mock已用C的41点合成样例跑通：外部新鲜反馈成功、缺反馈过期失败、取消保持取消；证据C_A_mock_integration_C35.json。连续quintic语义没有因离散点重放而自动验收。
