@@ -7,7 +7,7 @@ name = "brick-stacking-real"
 version = "0.2.0"
 description = "Offline-first perception and geometry for real brick stacking"
 requires-python = ">=3.11"
-dependencies = ["numpy>=1.26,<3", "opencv-python-headless>=4.10,<6", "PyYAML>=6,<7"]
+dependencies = ["numpy>=1.26,<3", "opencv-python-headless>=4.10,<5", "PyYAML>=6,<7"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8,<10"]

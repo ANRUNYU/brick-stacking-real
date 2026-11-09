@@ -1,5 +1,13 @@
 # C 开发与实测交付记录（持续更新至2026-11-08）
 
+## 2026-11-09 GitHub CI修复与进展同步
+
+远程main仍为1acbee0基线，C任务分支已上传580b2fe，尚无C的PR或合并；已列出的6个PR均未合并。用户看到的问题是C分支Actions失败，并非已发生的合并冲突。
+
+失败运行42474083090的Ubuntu/Python3.12日志显示：CI安装opencv-python-headless 5.0.0.93，缺少calibrateRobotWorldHandEye，导致4项固定相机标定测试失败；296通过、FCL可选模块跳过。此前本地使用4.12.0。修复pyproject.toml的OpenCV范围从>=4.10,<6改为>=4.10,<5，避免未适配的大版本API变化；没有修改标定数值、放宽检查或删除测试。
+
+当前C进展同步：6组头部→左基座拟合max6.724mm，用户已接受10mm门槛，独立验证按用户要求未做。两块实拍基座坐标、4个抓取几何候选、10槽位已生成，C→A Mock三场景已跑通。实际抓握TCP、完整七轴起点和完整碰撞/真机闭环仍待接入。本次不合并main、不改其他成员分支，无硬件动作。
+
 ## C35/C36 当前结果：6组拟合按用户10mm标准接受，继续场景几何
 
 C1-03：6组对应已求解，RMSE3.751mm/max6.724mm。用户在看到结果后明确接受10mm以内，并取消新增独立验证组；原5mm诊断结果保留。新增显式fit-only模式保持默认独立验证要求不变，结果validation=null/consistency=INCOMPLETE，operator_acceptance=true仅针对拟合，真实动作仍关闭。参数在calibration/candidates/C35_left_head_fit_only_user10mm_20261108.json，求解输入/失败记录/重复帧敏感度在evidence/。24种同姿态重复帧组合已分析，最大外参平移变化2.94mm，不冒充独立精度验证。最后完整回归304 passed；后续遵从用户不扩大测试/哈希审查。
