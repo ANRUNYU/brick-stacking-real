@@ -1,0 +1,204 @@
+{
+  "schema_version": "c-wrist-camera-fixed-board-corners-1",
+  "source": "real",
+  "dataset_id": "C48_left_wrist_fixed_board_corners_stationary5_user10mm_20261109",
+  "observation_kind": "fixed_board_corners",
+  "base_frame": "L_arm_root",
+  "reference_frame": "L8_Link",
+  "camera_frame": "camera_AY6M8630086_color_optical_frame",
+  "T_reference_camera": [
+    [
+      0.20389546165737885,
+      0.9131780363832247,
+      0.35289164708562276,
+      0.031277823786071426
+    ],
+    [
+      0.9783692188011324,
+      -0.17720480596492796,
+      -0.10673391422314989,
+      -0.023945566300042978
+    ],
+    [
+      -0.034932970357339686,
+      0.3670208857956334,
+      -0.9295565378027321,
+      0.06733404759713836
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "report": {
+    "schema_version": "c-wrist-camera-fixed-board-corners-1",
+    "candidate_id": "C48_left_wrist_fixed_board_corners_stationary5_user10mm_20261109",
+    "base_frame": "L_arm_root",
+    "camera_mount_frame": "L8_Link",
+    "camera_frame": "camera_AY6M8630086_color_optical_frame",
+    "target_center_base_m": [
+      0.5804457726176698,
+      -0.17481972345080193,
+      -0.4523910595604332
+    ],
+    "T_base_board": [
+      [
+        0.044342210794769604,
+        0.9385887291159523,
+        0.34217680505600295,
+        0.5804457726176699
+      ],
+      [
+        0.9975067797832917,
+        -0.0604195850578919,
+        0.03646502471958944,
+        -0.17481972345080193
+      ],
+      [
+        0.05489984178666012,
+        0.3397067431151962,
+        -0.9389277586981157,
+        -0.45239105956043313
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "fit": {
+      "n_poses": 5,
+      "n_points": 270,
+      "rmse_m": 0.00958799575196222,
+      "p95_m": 0.016080884276716997,
+      "max_m": 0.022544555110154935,
+      "center_rmse_m": 0.008626341261771723,
+      "center_max_m": 0.010999734586129078
+    },
+    "validation": null,
+    "training_residuals": [
+      {
+        "sample_id": "C48_pose_01",
+        "flipped_180": false,
+        "residual_base_m": [
+          -0.001689709858780919,
+          -0.003779246929475455,
+          0.008986145733011097
+        ],
+        "norm_m": 0.009893868904312642,
+        "corner_rmse_m": 0.01013893018752614,
+        "corner_max_m": 0.012422824552181844
+      },
+      {
+        "sample_id": "C48_pose_02",
+        "flipped_180": false,
+        "residual_base_m": [
+          0.003238365621297201,
+          -0.005023092947996771,
+          0.0025747762164824994
+        ],
+        "norm_m": 0.0065075300403746456,
+        "corner_rmse_m": 0.007231652688216085,
+        "corner_max_m": 0.008834933251735531
+      },
+      {
+        "sample_id": "C48_pose_03",
+        "flipped_180": false,
+        "residual_base_m": [
+          -0.00026834859298396907,
+          0.0023545123694017067,
+          -0.0024158004555493995
+        ],
+        "norm_m": 0.0033840554525679392,
+        "corner_rmse_m": 0.004077322119510375,
+        "corner_max_m": 0.006836950976189307
+      },
+      {
+        "sample_id": "C48_pose_04",
+        "flipped_180": false,
+        "residual_base_m": [
+          -0.008748807169606465,
+          0.006161301313670237,
+          -0.0025477245134614135
+        ],
+        "norm_m": 0.010999734586129078,
+        "corner_rmse_m": 0.011424761247157052,
+        "corner_max_m": 0.015245085144168176
+      },
+      {
+        "sample_id": "C48_pose_06",
+        "flipped_180": false,
+        "residual_base_m": [
+          0.007468500000075484,
+          0.0002865261944001163,
+          -0.006597396980482506
+        ],
+        "norm_m": 0.009969264588187267,
+        "corner_rmse_m": 0.012546070361947034,
+        "corner_max_m": 0.022544555110154935
+      }
+    ],
+    "validation_residuals": [],
+    "training_ids": [
+      "C48_pose_01",
+      "C48_pose_02",
+      "C48_pose_03",
+      "C48_pose_04",
+      "C48_pose_06"
+    ],
+    "validation_ids": [],
+    "fit_quality": "PASS",
+    "diagnostic_fit_only": true,
+    "independent_validation": "NOT_PERFORMED",
+    "consistency": "INCOMPLETE",
+    "approved": false,
+    "motion_enabled": false,
+    "scope": "fixed table board multi-corner eye-in-hand calibration; not hand TCP or execution approval"
+  },
+  "approved": false,
+  "motion_enabled": false,
+  "units": {
+    "length": "m",
+    "angle": "rad",
+    "quaternion": "xyzw"
+  },
+  "all_6_poses_point_center_reference": {
+    "T_reference_camera": [
+      [
+        0.2888256214624122,
+        0.8837291520619083,
+        0.3682425100158757,
+        0.02577196679540974
+      ],
+      [
+        0.9566926474018219,
+        -0.2810047122183577,
+        -0.07599690861061974,
+        -0.03770836688554205
+      ],
+      [
+        0.03631719694778762,
+        0.3742447561516648,
+        -0.9266185427126075,
+        0.060976078733150176
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "linear_condition_number": 298.57019025943106,
+    "fit": {
+      "n": 6,
+      "rmse_m": 0.011433344197888377,
+      "p95_m": 0.01572838116302001,
+      "max_m": 0.01669836848636861
+    },
+    "excluded_in_stationary5": "pose_05 had 0.81 mrad joint drift during camera buffer readout"
+  }
+}

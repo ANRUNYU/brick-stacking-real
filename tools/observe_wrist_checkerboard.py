@@ -26,7 +26,8 @@ def observe(image, metadata, *, columns, rows, square_m):
         (columns, rows), flags=cv2.CALIB_CB_NORMALIZE_IMAGE | cv2.CALIB_CB_EXHAUSTIVE)
     result = dict(schema_version='c-wrist-checkerboard-observation-1', source=metadata['source'],
         camera_serial=metadata['camera_serial'], board_inner_corners=[columns, rows], square_m=square_m,
-        camera_metadata=metadata, center_camera_m=None, approved=False, motion_enabled=False,
+        camera_metadata=metadata, center_camera_m=None, corners_camera_m=None,
+        approved=False, motion_enabled=False,
         depth_validation='NOT_PERFORMED', robot_pose_association='NOT_PERFORMED')
     if not found:
         result['status'] = 'BOARD_NOT_VISIBLE'
@@ -45,12 +46,14 @@ def observe(image, metadata, *, columns, rows, square_m):
             predicted = cv2.projectPoints(obj, rv, tv, k, distortion)[0].reshape(-1, 2)
             error = np.linalg.norm(predicted - corners.reshape(-1, 2), axis=1)
             candidates.append(dict(center_camera_m=xyz.mean(0).tolist(),
+                corners_camera_m=xyz.tolist(),
                 reprojection_rms_px=float(np.sqrt(np.mean(error ** 2))), reprojection_max_px=float(error.max())))
     candidates.sort(key=lambda c: c['reprojection_rms_px'])
     result.update(status='RGB_CANDIDATE' if candidates else 'PNP_FAILED', candidates=candidates,
         corners_xy=corners.reshape(-1, 2).tolist())
     if candidates:
         result['center_camera_m'] = candidates[0]['center_camera_m']
+        result['corners_camera_m'] = candidates[0]['corners_camera_m']
         result['center_ambiguity_m'] = max(float(np.linalg.norm(np.array(c['center_camera_m']) - result['center_camera_m'])) for c in candidates)
     return result
 
