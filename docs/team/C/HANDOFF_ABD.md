@@ -1,5 +1,7 @@
 # C31 当前交接补充（2026-11-08）
 
+**C37：** 用户新增20mm棋盘格，头部已识别9×6内角点；RGB/深度存在25.894mm差异，尚不用于替换C35。按用户提议转为桌面固定棋盘格+左腕相机路线，实际左腕视野已查看，安装参考段待确认；当前不产出新的手眼矩阵。详见[C37_CHECKERBOARD.md](C37_CHECKERBOARD.md)。
+
 **C35/C36最新：** 用户接受10mm拟合门槛，6组max6.724mm满足；独立验证按用户要求未做。相机→左基座参数在calibration/candidates，临时标定块偏移不是实际TCP。当前实拍两块基座坐标、抓取几何/10槽位见[C36_SCENE_GEOMETRY.md](C36_SCENE_GEOMETRY.md)。C→A41点Mock样例/3反馈场景已跑通，未合并A源码。304软件回归后按用户要求不扩大测试。真实动作仍需A七轴状态、D稳定预设/持物TF及完整场景。
 
 **C35当前采集：** [C35_FIELD_SESSION.md](C35_FIELD_SESSION.md)记录实际固定块多姿态、具名五轴曝光FK和三面中心候选；当前3训练候选、时间PROVISIONAL，无有效外参/TCP。新增prepare_fixed_camera_point_sample.py及297回归。A1-04/D1-02接口已审阅，C与A的连续插值语义仍需显式适配，不能将Mock反馈当真实能力；未改其他成员源码。

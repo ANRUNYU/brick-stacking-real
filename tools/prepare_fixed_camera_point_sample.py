@@ -58,11 +58,11 @@ def prepare(root,centers,association,urdf,*,group,operator_evidence):
     if c.shape!=(3,) or not np.isfinite(c).all() or c[2]<=0:raise ValueError('finite observed optical center required')
     profile=dict(profiles=camera['profiles'],aligned_geometry=camera['aligned_geometry'],serial=manifest['camera_serial'])
     hash_json=lambda x:hashlib.sha256(json.dumps(x,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
-    geometry=dict(edge_m=center['config']['edge_m'],edge_source=center['config']['edge_source'])
+    geometry=center.get('target_geometry',dict(edge_m=center['config']['edge_m'],edge_source=center['config']['edge_source']))
     context=dict(source=association['source'],units='m',arm_role='left',base_frame='L_arm_root',reference_frame='L5_Link',attachment_reference_frame='L5_Link',
                  camera_serial=manifest['camera_serial'],camera_frame=meta['frame_id'],camera_profile_version=hash_json(profile),
                  arm_device_id='operator_selected_left_P7_can2_61_to_67',model_version=MODEL_SHA256,
-                 joint_mapping_version='left_can2_61_to_65_read06_float32_sdk_v1',target_id='C35_calibration_cube_50mm',
+                 joint_mapping_version='left_can2_61_to_65_read06_float32_sdk_v1',target_id=center.get('target_id','C35_calibration_cube_50mm'),
                  target_geometry_version=hash_json(geometry),attachment_version=manifest['attachment_id'],
                  clock_domain=association['clock_domain'],epoch=association['epoch'],observation_kind='point_center')
     time_evidence=dict(method='SDK global exposure mapping + bracketed linear joint interpolation',timing_acceptance='NOT_VALIDATED',
