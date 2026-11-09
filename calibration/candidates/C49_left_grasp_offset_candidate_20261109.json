@@ -1,0 +1,174 @@
+{
+  "schema_version": "c-flange-grasp-candidate-1",
+  "source": "real",
+  "target_frame": "L8_Link",
+  "source_frame": "block_blue_c49_moved",
+  "T_flange_block": [
+    [
+      0.15480020997792482,
+      -0.9382171944611726,
+      0.30949215015602083,
+      0.07586991333158201
+    ],
+    [
+      0.39807125102849805,
+      0.34594687588391376,
+      0.8496234684675126,
+      -0.05690331244539592
+    ],
+    [
+      -0.9041991893910307,
+      -0.00832196392483664,
+      0.4270299413636434,
+      -0.08791317485014416
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "units": "m",
+  "context": {
+    "dataset_id": "C49_left_flange_grasp_offset_user10mm_20261109",
+    "arm_device_id": "operator_selected_left_P7_can2_61_to_67",
+    "model_version": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+    "joint_mapping_version": "left_can2_61_to_65_read06_66_to_67_rest_v2_verified",
+    "grasp_version": "left_o6_pinch_50mm_raw_245_58_246_246_254_254_v1",
+    "hand_binding_version": "left_can1_0x28_LHO6-04-322-L-Z-1-D",
+    "block_id": "blue_50mm_calibration_block_moved",
+    "world_frame": "L_arm_root",
+    "flange_frame": "L8_Link",
+    "block_frame": "block_blue_c49_moved",
+    "clock_domain": "host_monotonic",
+    "epoch": "linux_boot:f9016d4a-56d7-4a83-a8c2-3fa6d11f8153",
+    "pose_basis_version": "c48_wrist_handeye_bridged_board_grid_c49_v1"
+  },
+  "trial_kind": "continuous_hold",
+  "report": {
+    "schema_version": "c-held-offset-1",
+    "candidate_id": "C49_left_flange_grasp_offset_user10mm_20261109",
+    "grasp_version": "left_o6_pinch_50mm_raw_245_58_246_246_254_254_v1",
+    "training_ids": [
+      "C49_grasp_hold_01",
+      "C49_grasp_hold_02",
+      "C49_grasp_hold_03"
+    ],
+    "validation_ids": [
+      "C49_grasp_hold_04",
+      "C49_grasp_hold_05",
+      "C49_grasp_hold_06"
+    ],
+    "fit": {
+      "n": 3,
+      "max_translation_m": 3.616623962240735e-05,
+      "max_rotation_rad": 5.859609519661495e-05
+    },
+    "validation": {
+      "n": 3,
+      "max_translation_m": 3.758253034116243e-05,
+      "max_rotation_rad": 8.482105883312168e-05
+    },
+    "consistency": "PASS",
+    "approved": false,
+    "motion_enabled": false,
+    "scope": "pose-pair consistency only; upstream calibration accuracy not established"
+  },
+  "approved": false,
+  "motion_enabled": false,
+  "notice": "relative pose consistency only; upstream camera/FK accuracy, stable grasp and collision not established",
+  "hand_preset_observed": {
+    "interface": "can1",
+    "serial_number": "LHO6-04-322-L-Z-1-D",
+    "angles_raw": [
+      245,
+      58,
+      246,
+      246,
+      254,
+      254
+    ],
+    "joint_names": [
+      "thumb_flex",
+      "thumb_abd",
+      "index",
+      "middle",
+      "ring",
+      "pinky"
+    ]
+  },
+  "block_reference": {
+    "schema_version": "c-table-block-reference-1",
+    "block_id": "blue_50mm_calibration_block_moved",
+    "color": "blue",
+    "edge_m": 0.05,
+    "base_frame": "L_arm_root",
+    "block_frame": "block_blue_c49_moved",
+    "board_grid_alignment": {
+      "c0": 2.9400000000000004,
+      "r0": 0.9,
+      "square_size_m": 0.01938,
+      "center_in_board_m": [
+        0.004457200000000008,
+        -0.006008000000000003,
+        -0.025
+      ],
+      "squares_used": 21,
+      "reproj_rmse_px": 0.2704118944373257,
+      "iou": 0.4481044126786824
+    },
+    "T_base_board_new": [
+      [
+        0.08417158250077339,
+        0.9964512756273212,
+        0.0,
+        0.5053905828515485
+      ],
+      [
+        0.9964512756273212,
+        -0.08417158250077339,
+        0.0,
+        -0.19758127546268747
+      ],
+      [
+        0.0,
+        -0.0,
+        -1.0,
+        -0.45239105956043313
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "T_base_block": [
+      [
+        0.9964512756273212,
+        0.08417158250077339,
+        -0.0,
+        0.49977907316510195
+      ],
+      [
+        -0.08417158250077339,
+        0.9964512756273212,
+        -0.0,
+        -0.1926341899692967
+      ],
+      [
+        -0.0,
+        0.0,
+        1.0,
+        -0.4273910595604331
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  }
+}
