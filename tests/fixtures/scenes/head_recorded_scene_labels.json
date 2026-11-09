@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "source": "manual_visual_review_of_color_rectified_frame_000",
+  "purpose": "Provisional 2D same-scene regression labels; not measured 3D ground truth",
+  "data_reference": "artifacts/vision-head-20261106-02",
+  "image_size_wh": [640,480],
+  "configuration_frame": "frame_000.npz",
+  "same_static_scene_frames": "frame_001.npz..frame_009.npz",
+  "min_iou": 0.25,
+  "objects": [
+    {"id":"red_back","color":"red","bbox_xywh":[287,282,25,27]},
+    {"id":"red_front_left","color":"red","bbox_xywh":[196,301,30,36]},
+    {"id":"red_front_middle","color":"red","bbox_xywh":[227,300,28,38]},
+    {"id":"red_front_right","color":"red","bbox_xywh":[312,304,28,36]},
+    {"id":"yellow_back_left","color":"yellow","bbox_xywh":[202,281,30,27]},
+    {"id":"yellow_back_right","color":"yellow","bbox_xywh":[233,281,26,28]},
+    {"id":"yellow_front","color":"yellow","bbox_xywh":[254,306,29,34]},
+    {"id":"blue_back_left","color":"blue","bbox_xywh":[261,282,22,28]},
+    {"id":"blue_back_right","color":"blue","bbox_xywh":[313,282,24,28]},
+    {"id":"green_front","color":"green","bbox_xywh":[284,306,25,33]}
+  ]
+}

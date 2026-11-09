@@ -26,3 +26,20 @@ def test_heightmap_preserves_unknown_and_bounds():
                           bounds_xy_m=[[0, 1], [0, 1]], resolution_m=.5)
     assert grid.shape == (2, 2) and grid[0, 0] == .1
     assert np.isnan(grid[1, 1]) and np.isnan(grid[0, 1])
+
+
+def test_optional_ransac_confidence_stops_supported_plane_without_spending_budget():
+    rng=np.random.default_rng(20)
+    xy=rng.uniform(-1,1,(300,2));points=np.column_stack((xy,np.ones(300)))
+    stats={}
+    plane=fit_table_plane(points,normal_hint=[0,0,-1],distance_threshold_m=.001,
+        iterations=1000,min_inlier_ratio=.8,confidence=.9999,statistics=stats)
+    assert stats['trials']==64 and stats['budget']==1000
+    assert plane.rms_m<1e-10
+
+
+@pytest.mark.parametrize('confidence',[0.,1.,float('nan')])
+def test_bad_ransac_confidence_rejected(confidence):
+    with pytest.raises(ValueError,match='confidence'):
+        fit_table_plane([[0,0,1],[1,0,1],[0,1,1]],normal_hint=[0,0,-1],
+            distance_threshold_m=.001,iterations=100,min_inlier_ratio=.8,confidence=confidence)

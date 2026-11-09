@@ -1,0 +1,37 @@
+{
+  "numpy": "2.5.4",
+  "opencv": "5.0.0",
+  "pyyaml": "6.0.3",
+  "frozen_algorithm_verified": true,
+  "capture_tool_sha256": "8561db40c72ea86f879ebb679502579cf36cec0cb02a6282e9ce4aab7a27990c",
+  "capture_serial": "CP2L863000KL",
+  "intrinsics_source": "current_device",
+  "opencv_threads_requested": 1,
+  "OPENBLAS_NUM_THREADS_requested": 1,
+  "OMP_NUM_THREADS_requested": 1,
+  "robot_control_accessed": false,
+  "reports": [
+    {
+      "run": "Perception_TabletopBlocks_RGBD_202611062057",
+      "temporal_acceptance": {
+        "result": "PASS",
+        "unstable_frame_indices": [],
+        "reason": "all_post_warmup_frames_confirmed"
+      },
+      "min_s": 0.6365712330007227,
+      "median_s": 0.6582022069997038,
+      "max_s": 0.7365116449946072
+    },
+    {
+      "run": "Perception_TabletopBlocks_RGBD_202611062057_R02",
+      "temporal_acceptance": {
+        "result": "PASS",
+        "unstable_frame_indices": [],
+        "reason": "all_post_warmup_frames_confirmed"
+      },
+      "min_s": 1.0977009550115326,
+      "median_s": 1.1424965585028986,
+      "max_s": 1.4164625869889278
+    }
+  ]
+}

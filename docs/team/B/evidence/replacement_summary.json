@@ -1,0 +1,25 @@
+{
+  "stable_capture_frames": 20,
+  "resolutions": [
+    [
+      640,
+      480
+    ],
+    [
+      1280,
+      800
+    ]
+  ],
+  "new_camera_serial": "CP2L863000KL",
+  "windows_results": "PASS",
+  "linux_results": "PASS",
+  "unit_tests_passed": 89,
+  "first_replacement_startup_capture_result": "FAIL_PRESERVED",
+  "recorded_development_regression_frames_passed": 50,
+  "real_time_acceptance": false,
+  "metric_accuracy_verified": false,
+  "release_ready": false,
+  "robot_control_accessed": false,
+  "authorized_old_usb_node_exists_at_shutdown": false,
+  "next_capture_requires_identity_and_usb_node_recheck": true
+}

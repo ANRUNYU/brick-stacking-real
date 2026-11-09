@@ -1,0 +1,31 @@
+schema_version: 1
+project: {dry_run: true, environment: offline}
+operation: {mode: DEVELOPMENT_TEST, manual_intervention_allowed: true}
+tabletop:
+  camera_id: CP2L8630008J
+  image_size_wh: [640, 480]
+  roi_polygon_uv: [[50, 358], [114, 238], [490, 240], [580, 359]]
+  roi_source: visually_reviewed_frame_000_table_boundary_candidate
+  nominal_edge_m: 0.05
+  measured_edge_m: null
+  normal_hint_camera: [0, 0, -1]
+  plane_threshold_m: 0.004
+  plane_iterations: 150
+  plane_sample_limit: 8000
+  min_plane_inlier_ratio: 0.6
+  max_plane_rms_m: 0.003
+  candidate_height_range_m: [0.035, 0.065]
+  top_band_m: 0.008
+  max_height_spread_m: 0.015
+  span_relative_tolerance: 0.45
+  min_area_px: 100
+  top_min_points: 12
+  opening_kernel_px: 3
+  hsv:
+    red: [[[0, 160, 85], [7, 255, 255]], [[170, 160, 85], [179, 255, 255]]]
+    yellow: [[[12, 210, 135], [32, 255, 255]]]
+    green: [[[35, 90, 35], [85, 255, 255]]]
+    blue: [[[95, 90, 50], [130, 255, 255]]]
+  # Development profile tuned on this capture session; no independent holdout.
+  # A complete first-frame face has >=239 mask pixels; 100 rejects tiny fragments.
+  # ROI is invalid if camera/table move. Consecutive frames are not independent scenes.

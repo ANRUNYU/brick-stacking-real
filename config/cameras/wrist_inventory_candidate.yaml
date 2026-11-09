@@ -1,0 +1,27 @@
+schema_version: 1
+observed_on: '2026-11-06'
+source: linux_usb_sysfs_and_official_sdk_pid_mapping
+devices:
+  - serial: AY6M863005Z
+    vid: '0x2bc5'
+    pid: '0x0670'
+    usb_product: Orbbec(R) Gemini(TM)
+    sdk_model_name: Orbbec Gemini2
+    model_by_official_pid: Gemini2
+    physical_role: null
+    firmware: null
+  - serial: AY6M86300EM
+    vid: '0x2bc5'
+    pid: '0x0670'
+    usb_product: Orbbec(R) Gemini(TM)
+    sdk_model_name: Orbbec Gemini2
+    model_by_official_pid: Gemini2
+    physical_role: null
+    firmware: null
+official_reference:
+  repo: orbbec/OrbbecSDK_v2
+  commit: f5d59930ccb9a189f200e58fba4e2ae42664792d
+  path: src/device/gemini2/G2DeviceInfo.cpp
+permissions_changed_for_these_devices: false
+capture_tested: false
+# Do not assign left/right role or reuse the head camera calibration.
