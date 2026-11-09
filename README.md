@@ -60,3 +60,11 @@ python tools/inspect_urdf.py path/to/arm.urdf
 先补充实机 RGB-D 记录与分辨率、对齐方式，再做固定标注测试集、桌面分离与多视角实例分割。未知安装变换、TCP、限位、安全速度始终保留未知值。
 
 入口文档：[设备清单](docs/HARDWARE_INVENTORY.md)、[API 审计](docs/API_AUDIT.md)、[开放问题](docs/OPEN_QUESTIONS.md)、[测试计划](docs/TEST_PLAN.md)。远端为ANRUNYU/brick-stacking-real。本机Git可克隆及分支上传预检；GitHub插件可见性仍受限。早期运行记录的source_commit=null仅为当时状态，不表示当前仓库未初始化。
+
+## B 视觉开发更新（2026-11-09）
+
+真实头部 RGB-D 自适应感知、回放与当前限制见 [B 交接](docs/team/B/HANDOFF_20261109.md)。这是开发候选，非真机定位/抓放验收。
+
+## 系统设计修订（2026-11-09）
+
+[设计方案 v0.3](BRICK_STACKING_REAL_ROBOT_DESIGN_v0.2.md)已依据11月7日交接包修订；文件名保留旧版本用于兼容引用。当前范围为单臂两阶段，原稿与引用源已归档，待团队评审，不代表真机验收。

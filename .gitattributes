@@ -1,3 +1,5 @@
 # Preserve handoff snapshot hashes and raw terminal evidence across platforms.
 docs/handoff/20261107/** -text whitespace=cr-at-eol,-blank-at-eof
 **/*.terminal.txt -text -diff
+docs/design_sources/handoff_20261107/** -text
+docs/design_history/BRICK_STACKING_REAL_ROBOT_DESIGN_v0.2_original_20261105.md -text

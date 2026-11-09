@@ -1,0 +1,5 @@
+# Reproducible recorded-RGB-D validation environment (Python 3.12).
+# This is not the ROS/robot controller or camera SDK environment.
+numpy==2.5.4
+opencv-python-headless==5.0.0.93
+PyYAML==6.0.3

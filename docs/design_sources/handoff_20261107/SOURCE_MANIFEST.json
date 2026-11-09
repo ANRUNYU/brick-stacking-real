@@ -1,0 +1,21 @@
+{
+  "archive_sha256": "f9aa340de8be2f7ec6ad01ea6dc55e31aa9a629ac1187c5a56737564785fb026",
+  "review_date": "2026-11-09",
+  "original_design_sha256": "6fa503d1ac2b5ffe32b3f0e8d7be5250e4a7bbc20bac5e268da381e4dfe4e529",
+  "files": {
+    "README.md": "a9231922f2eba51c72b7f4468a9ec9b8e9e59e139b44c3578be386abf9cc1429",
+    "REPOSITORY_INTEGRATION.md": "ce9ecba0dd457d7a977c95784145ed6746cbc885a3f8242cc2820f0fb394c627",
+    "interface_audit/DESIGN_REVIEW.md": "6d9f16851ded0207f6e40d610afc1a437c64f40eaeb15553f67cafd3038d0b55",
+    "interface_audit/HARDWARE_INTERFACES.md": "28619af45c6fae7a25a730fc171914e4a57f64d03e0c9e36a8c86cde94f590e1",
+    "interface_audit/device_map.json": "1cb207fe58d04f8ef4b1c26aec742d560cc50d5d709b787919f08ec40e9379d5",
+    "interface_audit/evidence/camera_role_binding.json": "477daa9a1ecd96159d0e3009859b810c97c79100709b317f99a29134fb194c54",
+    "team_plan/docs/TEAM_PLAN.md": "4d5e8c5eb50eee35a9ea14c3daa76d0a18c5f6cd0cc39984643e0591dc9a84fa",
+    "team_plan/docs/CONTRACTS.md": "c584cf2f3cd28b9573fdaf7642507c101001e1caee922347d23d8a790fe0f4d3",
+    "team_plan/docs/ACCEPTANCE.md": "b753ad70e761e02855561514d9b331fb3a44e38206af6763964f95289d43ca42",
+    "team_plan/docs/MERGE_PLAN.md": "34b8ff4e914d1d719a792f60f0c6e8a8a11df2a3c41518e465b1281fbcac72fb",
+    "team_plan/docs/team/A.md": "dc68e37b591996c9e7f5d9a38f32b11dbcdc77050050530bf15291cdf85d9920",
+    "team_plan/docs/team/B.md": "e56605e423cd2e0920d521c847857f7b47951944f8bca9e7dd5c2c0c838f8c0c",
+    "team_plan/docs/team/C.md": "3a16f97ddee1d9cd661d856e9680f7298086f9e94970feefac0f128b4e0c5348",
+    "team_plan/docs/team/D.md": "ea3dd811a1dddcd19c444aa1fdc4316056883277d4c5575c2a841a8a6909f4c7"
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "date": "2026-11-07",
+  "timezone": "Asia/Shanghai",
+  "method": "Operator covers named physical camera color lens; compare streamed RGB brightness and spatial contrast statistics. No images exported. Sequential per-camera sampling.",
+  "motion_commands_sent": false,
+  "images_exported": false,
+  "operator_reports": [
+    "左腕已遮住",
+    "右腕已遮住",
+    "头部已遮住",
+    "已全部移开"
+  ],
+  "samples": [
+    {
+      "phase": "baseline",
+      "serial": "AY6M86300GH",
+      "frames": 15,
+      "mean_rgb": 100.32,
+      "dark_fraction": 0.0108,
+      "pixel_std": 55.22
+    },
+    {
+      "phase": "baseline",
+      "serial": "AY6M8630086",
+      "frames": 15,
+      "mean_rgb": 106.84,
+      "dark_fraction": 0,
+      "pixel_std": 53.43
+    },
+    {
+      "phase": "left_covered",
+      "serial": "AY6M86300GH",
+      "frames": 15,
+      "mean_rgb": 107.39,
+      "dark_fraction": 0.0085,
+      "pixel_std": 56.03
+    },
+    {
+      "phase": "left_covered",
+      "serial": "AY6M8630086",
+      "frames": 15,
+      "mean_rgb": 10.92,
+      "dark_fraction": 0.9962,
+      "pixel_std": 3.09
+    },
+    {
+      "phase": "right_covered",
+      "serial": "AY6M86300GH",
+      "frames": 15,
+      "mean_rgb": 4.44,
+      "dark_fraction": 1,
+      "pixel_std": 1.56
+    },
+    {
+      "phase": "right_covered",
+      "serial": "AY6M8630086",
+      "frames": 15,
+      "mean_rgb": 112.76,
+      "dark_fraction": 0.0208,
+      "pixel_std": 55.83
+    },
+    {
+      "phase": "head_baseline",
+      "serial": "CP2L863000KL",
+      "frames": 15,
+      "mean_rgb": 115.07,
+      "dark_fraction": 0.1262,
+      "pixel_std": 56.04
+    },
+    {
+      "phase": "head_covered",
+      "serial": "CP2L863000KL",
+      "frames": 15,
+      "mean_rgb": 116.85,
+      "dark_fraction": 0,
+      "pixel_std": 21.95
+    },
+    {
+      "phase": "head_restored",
+      "serial": "CP2L863000KL",
+      "frames": 15,
+      "mean_rgb": 115.49,
+      "dark_fraction": 0.0965,
+      "pixel_std": 51.13
+    }
+  ],
+  "bindings": {
+    "left_wrist": "AY6M8630086",
+    "right_wrist": "AY6M86300GH",
+    "head": "CP2L863000KL"
+  },
+  "head_basis": "A-B-A contrast change and restoration; head brightness did not fall and was not used as a darkness test.",
+  "limitations": [
+    "Role binding only; no RGB-depth registration or extrinsics calibration verified."
+  ]
+}
