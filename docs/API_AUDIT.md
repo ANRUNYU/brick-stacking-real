@@ -1,5 +1,8 @@
 # 官方接口审计（2026-11-05）
 
+> 本文保留2026-11-05静态官方审计。最新[实机接口](hardware/HARDWARE_INTERFACES.md)及[原始证据](handoff/20261107/interface_audit/README.md)记录了应答、角色与文件哈希。下文false/未连接描述当次历史审计；动作能力仍未验收。
+
+
 这是静态源码/文档审计，不是 SDK 安装或真机验收。来源标记 `official_sdk`；实际硬件匹配均为 false。机器可读版本索引见 `sources.lock.json`。所有新业务代码独立实现，未复制第三方控制实现。
 
 ## 固定来源

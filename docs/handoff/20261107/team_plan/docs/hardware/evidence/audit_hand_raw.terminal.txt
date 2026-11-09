@@ -1,0 +1,71 @@
+> > > > > > > > > > >         self.x36 = [-1] * 
+[23;80H 6 # 电流
+        self.xb0,self.xb1,self.xb2,self.xb3,self.xb4,self.xb5 = [-1] * 5,[-1] * 
+[23;80H 5,[-1] * 5,[-1] * 5,[-1] * 5,[-1] * 5
+        self.thumb_matrix = np.full((10, 4), -1)
+        self.index_matrix = np.full((10, 4), -1)
+        self.middle_matrix = np.full((10, 4), -1)
+        self.ring_matrix = np.full((10, 4), -1)
+        self.little_matrix = np.full((10, 4), -1)
+        self.matrix_map = {
+            0: 0,
+            16: 1,
+            32: 2,
+            48: 3,
+            64: 4,
+            80: 5,
+            96: 6,
+            112: 7,
+            128: 8,
+            144: 9,
+            160: 10,
+            176: 11,
+        }
+        self.serial_number = []
+        self.serial_number_map = {
+            0: 0,
+            1: 1,
+            2: 2,
+            3: 3,
+        }
+        # Fault codes
+
+        self.joint_angles = [0] * 6
+        self.pressures = [200] * 6  # Default torque 200
+        self.bus = self.init_can_bus(can_channel, baudrate)
+        self.normal_force, self.tangential_force, self.tangential_force_dir, sel
+[23;80Hlf.approach_inc = [[-1] * 6 for _ in range(4)]
+        self.is_lock = False
+        self.version = None
+        # Start the receiving thread
+        self.running = True
+
+        self.receive_thread = threading.Thread(target=self.receive_response)    
+        self.receive_thread.daemon = True
+        self.receive_thread.start()
+        self.get_version()
+        time.sleep(0.1)
+        self._check_touch_type()
+
+    def _check_touch_type(self):
+        '''根据SN编码判断压感类型'''
+        self.sn = self.get_serial_number()
+        time.sleep(0.1)
+        if self.sn != "-1":
+            parts = self.sn.split("-")
+            if parts[4] == "A":
+                self.touch_type = 1
+            elif parts[4] == "B":
+                self.touch_type = 2
+13:    def __init__(self, can_id, can_channel='can0', baudrate=1000000,yaml=""):[24;1H
+14:        self.can_id = can_id
+165:    def send_frame(self, frame_property, data_list,sleep=0.005):
+169:        msg = can.Message(arbitration_id=self.can_id, data=data, is_extended
+[23;80Hd_id=False)
+254:        if msg.arbitration_id == self.can_id:
+ACTION=="add", SUBSYSTEM=="net", KERNEL=="can[0-3]", TAG+="systemd", ENV{SYSTEMD
+[23;80HD_WANTS}+="robot-can-up@%k.service"
+HAND_RAW can0 0x27 0xc2 [('0x27', 'c2030002')]
+HAND_RAW can0 0x27 0xc0 [('0x27', 'c0004c484f362d30'), ('0x27', 'c001342d3237362
+[23;80H2d'), ('0x27', 'c002522d5a2d312d'), ('0x27', 'c00344')]
+

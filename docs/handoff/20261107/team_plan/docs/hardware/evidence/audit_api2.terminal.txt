@@ -1,0 +1,370 @@
+/parameter_events
+/rosout
+0035f236c98b644aba6d9e972359df3fa1af4342
+qwer@qwer-ThinkPad-L14-Gen-2:~$ > > > > > > > > > >     SensorSource.ANGLE: 1 / 
+[23;80H 60,
+    SensorSource.FORCE_SENSOR: 1 / 30,
+}
+
+
+class O6:
+    """Main interface for O6 robotic hand control.
+
+    This class provides a unified interface for controlling the O6 robotic hand,[24;1H
+    integrating angle control, speed control, sensor data acquisition, and      
+    unified sensor streaming.
+
+    The O6 class should be used as a context manager to ensure proper resource  
+    cleanup:
+
+    ```python
+    with O6(side='left', interface_name='can0') as hand:
+        # Control angles
+        hand.angle.set_angles([50, 30, 60, 60, 60, 60])
+
+        # Start polling sensors
+        hand.start_polling({SensorSource.ANGLE: 0.05, SensorSource.TEMPERATURE: 
+[23;80H 1.0})
+
+        # Read cached data
+        snap = hand.get_snapshot()
+        print(snap.angle, snap.temperature)
+
+        # Stream all events
+        for event in hand.stream():
+            match event:
+                case AngleEvent(data=ad):
+                    print(f"Angles: {ad.angles}")
+                case TemperatureEvent(data=td):
+                    print(f"Temps: {td.temperatures}")
+            if should_stop():
+                break
+
+        hand.stop_polling()
+        hand.stop_stream()
+    ```
+
+    Attributes:
+        angle: AngleManager instance for joint angle control and sensing.       
+        speed: SpeedManager instance for motor speed control and sensing.       
+        acceleration: AccelerationManager instance for motor acceleration contro
+[23;80Hol.
+        force_sensor: ForceSensorManager instance for force sensor data acquisit
+[23;80Htion.
+        torque: TorqueManager instance for joint torque control and sensing.    
+        temperature: TemperatureManager instance for temperature data acquisitio
+[23;80Hon.
+        fault: FaultManager instance for fault status reading.
+        version: VersionManager instance for device version information.        
+
+    Args:
+        side: Side of the hand (left or right, default: left).
+        interface_name: Name of the CAN interface (e.g., 'can0', 'vcan0').      
+        interface_type: Type of CAN interface backend (default: 'socketcan').   
+    """
+
+    def __init__(
+        self,
+        side: Literal["left", "right"],
+        interface_name: str,
+        interface_type: str = "socketcan",
+        angle_mapping_path: str | Path | None = None,
+    ) -> None:
+        """Initialize the O6 robotic hand interface.
+
+        Args:
+            side: Side of the hand (left or right, default: left).
+            interface_name: Name of the CAN interface (e.g., 'can0', 'vcan0').  
+            interface_type: Type of CAN interface backend (default: 'socketcan')
+[23;80H).
+            angle_mapping_path: Optional TOML path for angle mapping persistence
+[23;80He.
+        """
+        # Create CAN message dispatcher
+        self._bus_error: Exception | None = None
+        self._dispatcher = CANMessageDispatcher(
+            interface_name=interface_name,
+            interface_type=interface_type,
+            on_bus_error=self._on_bus_error,
+        )
+
+        if side not in ("left", "right"):
+            raise ValidationError(f"side must be 'left' or 'right', got {side!r}
+[23;80H}")
+        self._arbitration_id = 0x27 if side == "right" else 0x28
+
+        # Create subsystem managers
+        self.angle = AngleManager(
+            arbitration_id=self._arbitration_id,
+            dispatcher=self._dispatcher,
+            angle_mapping_path=angle_mapping_path,
+            side=side,
+            interface_name=interface_name,
+        )
+        self.force_sensor = ForceSensorManager(
+            arbitration_id=self._arbitration_id, dispatcher=self._dispatcher    
+        )
+        self.torque = TorqueManager(
+            arbitration_id=self._arbitration_id, dispatcher=self._dispatcher    
+        )
+        self.speed = SpeedManager(
+            arbitration_id=self._arbitration_id, dispatcher=self._dispatcher    
+        )
+        self.acceleration = AccelerationManager(
+            arbitration_id=self._arbitration_id, dispatcher=self._dispatcher    
+        )
+        self.temperature = TemperatureManager(
+            arbitration_id=self._arbitration_id, dispatcher=self._dispatcher    
+        )
+        self.fault = FaultManager(
+            arbitration_id=self._arbitration_id, dispatcher=self._dispatcher    
+        )
+        self.version = VersionManager(
+            arbitration_id=self._arbitration_id, dispatcher=self._dispatcher    
+        )
+        # State tracking
+        self._closed = False
+
+        # Unified stream
+        self._unified_queue: IterableQueue[SensorEvent] | None = None
+
+        # Polling
+        self._stop_polling = threading.Event()
+        self._stop_polling.set()
+        self._polling_threads: dict[str, threading.Thread] = {}
+
+        self._polling_senders: dict[str, Callable[[], None]] = {
+            "angle": self.angle._send_sense_request,
+            "torque": self.torque._send_sense_request,
+            "speed": self.speed._send_sense_request,
+            "acceleration": self.acceleration._send_sense_request,
+            "temperature": self.temperature._send_sense_request,
+            "fault": self.fault._send_fault_request,
+"""Version information and serial number management for O6 robotic hand.        
+
+This module provides the VersionManager class for reading device version informa
+[23;80Hation.
+"""
+
+import threading
+import time
+from collections.abc import Mapping
+from dataclasses import dataclass, field
+
+import can
+
+from linkerbot.comm import CANMessageDispatcher
+from linkerbot.relay import DataRelay
+
+
+@dataclass(frozen=True)
+class Version:
+    """Version number in semantic versioning format.
+
+    Attributes:
+        major: Major version number.
+        minor: Minor version number.
+        patch: Patch/revision number.
+    """
+
+    major: int
+    minor: int
+    patch: int
+
+    def __str__(self) -> str:
+        """Return version string in format 'V{major}.{minor}.{patch}'."""       
+        return f"V{self.major}.{self.minor}.{self.patch}"
+
+
+@dataclass(frozen=True)
+class DeviceInfo:
+    """Complete device information including version numbers and serial number. [24;1H
+
+    Attributes:
+        serial_number: Device serial number (e.g., 'LHO6-03-123-L-B-1-A').      
+        pcb_version: PCB hardware version.
+        firmware_version: Embedded firmware version.
+        mechanical_version: Mechanical structure version.
+        timestamp: Unix timestamp when the data was retrieved.
+    """
+
+    serial_number: str
+    pcb_version: Version
+    firmware_version: Version
+    mechanical_version: Version
+    timestamp: float
+
+
+@dataclass(frozen=True)
+class SerialNumberFrames:
+    """Internal helper for accumulating serial number frames."""
+
+    frames: Mapping[int, bytes] = field(default_factory=dict)
+    started_at: float = field(default_factory=time.time)
+
+    def add_frame(self, frame_id: int, data: bytes) -> "SerialNumberFrames":    
+        new_frames = {**self.frames, frame_id: data}
+        return SerialNumberFrames(frames=new_frames, started_at=self.started_at)[24;1H
+
+    def is_complete(self) -> bool:
+        # Internal: Check if all frames received
+        return len(self.frames) == 4 and all(i in self.frames for i in range(0, 
+[23;80H 4))
+
+    def assemble(self) -> str:
+        # Internal: Assemble and decode
+        data = bytearray()
+        for i in range(0, 4):
+            data.extend(self.frames[i])
+        return data.rstrip(b"\x00").decode("ascii", errors="ignore")
+
+
+class VersionManager:
+    """Manager for device version information.
+
+    This class provides methods to read device information including serial numb
+[23;80Hber,
+    PCB version, firmware version, and mechanical version.
+    """
+
+    _SN_CMD = 0xC0
+    _PCB_VERSION_CMD = 0xC1
+    _FIRMWARE_VERSION_CMD = 0xC2
+    _MECHANICAL_VERSION_CMD = 0xC4
+
+    def __init__(self, arbitration_id: int, dispatcher: CANMessageDispatcher) ->
+[23;80H> None:
+        """Initialize the version manager.
+
+        Args:
+            arbitration_id: Arbitration ID for version information requests.    
+            dispatcher: Message dispatcher for communication.
+        """
+        self._arbitration_id = arbitration_id
+        self._dispatcher = dispatcher
+        self._dispatcher.subscribe(self._on_message)
+        self._request_lock = threading.Lock()
+
+        # Serial number frame assembly
+        self._sn_frames: SerialNumberFrames | None = None
+        self._sn_relay = DataRelay[str]()
+
+        # Version number relays
+        self._pcb_relay = DataRelay[Version]()
+        self._firmware_relay = DataRelay[Version]()
+        self._mechanical_relay = DataRelay[Version]()
+
+    _QUERY_TIMEOUT_MS: float = 20
+
+    def get_device_info(self) -> DeviceInfo:
+        """Get complete device information including all version numbers and ser
+[23;80Hrial number.
+
+        Queries are sent sequentially to avoid overwhelming the device firmware.[24;1H
+
+        Returns:
+            DeviceInfo containing all device information.
+
+        Raises:
+            TimeoutError: If any request times out.
+
+        Example:
+            >>> manager = VersionManager(arbitration_id, dispatcher)
+            >>> info = manager.get_device_info()
+            >>> print(f"Serial Number: {info.serial_number}")
+            >>> print(f"PCB Version: {info.pcb_version}")
+            >>> print(f"Firmware Version: {info.firmware_version}")
+            >>> print(f"Mechanical Version: {info.mechanical_version}")
+        """
+        with self._request_lock:
+            timeout = self._QUERY_TIMEOUT_MS
+            fw = self._get_firmware_version_blocking(timeout)
+            mech = self._get_mechanical_version_blocking(timeout)
+            pcb = self._get_pcb_version_blocking(timeout)
+            sn = self._get_serial_number_blocking(timeout)
+
+            return DeviceInfo(
+                serial_number=sn,
+                pcb_version=pcb,
+                firmware_version=fw,
+                mechanical_version=mech,
+                timestamp=time.time(),
+            )
+
+    def _get_serial_number_blocking(self, timeout_ms: float) -> str:
+        msg = can.Message(
+            arbitration_id=self._arbitration_id,
+            data=[self._SN_CMD],
+            is_extended_id=False,
+        )
+
+        def send() -> None:
+            self._sn_frames = None
+            self._dispatcher.send(msg)
+
+        return self._sn_relay.request(send, timeout_ms / 1000.0)
+
+    def _get_pcb_version_blocking(self, timeout_ms: float) -> Version:
+        # O6 only sends command byte, no extra 0x01
+        msg = can.Message(
+            arbitration_id=self._arbitration_id,
+            data=[self._PCB_VERSION_CMD],
+            is_extended_id=False,
+43:    def to_list(self) -> list[float]:
+58:    def to_raw(self) -> list[int]:
+63:    def from_list(cls, values: list[float]) -> "O6Angle":
+92:    def from_raw(cls, values: list[int]) -> "O6Angle":
+102:    def __getitem__(self, index: int) -> float:
+116:    def __len__(self) -> int:
+138:    1. Angle control: set_angles() - send 6 target angles and cache response[24;1H
+143:    _CONTROL_CMD = 0x01
+144:    _SENSE_CMD = [0x01]
+147:    def __init__(
+176:    def set_angles(self, angles: O6Angle | list[float]) -> None:
+179:        This method sends 6 target angles to the hand. The hand will respond[24;1H
+204:        self._send_raw_angles(raw_angles)
+206:    def set_raw_angles(self, raw_angles: list[int]) -> None:
+212:        self._send_raw_angles(validate_raw_values(raw_angles, self._ANGLE_CO
+[23;80HOUNT))
+214:    def get_angle_mapping(self) -> list[list[int]]:
+218:    def get_default_angle_mapping(self) -> list[list[int]]:
+222:    def set_angle_mapping(self, mapping: list[list[int]]) -> None:
+226:    def reset_angle_mapping(self) -> None:
+230:    def _send_raw_angles(self, raw_angles: list[int]) -> None:
+238:        self._dispatcher.send(msg)
+240:    def get_blocking(self, timeout_ms: float = 100) -> AngleData:
+243:        This method sends a sensing request and blocks until 6 current angle
+[23;80Hes
+262:        return self._relay.request(self._send_sense_request, timeout_ms / 10
+[23;80H000.0)
+264:    def get_snapshot(self) -> AngleData | None:
+277:    def _set_event_sink(self, sink: Callable[[AngleData], None]) -> None:   
+280:    def _send_sense_request(self) -> None:
+286:        self._dispatcher.send(msg)
+288:    def _on_message(self, msg: can.Message) -> None:
+293:        # Filter: only process angle response messages (start with 0x01)    
+    def _send(self, data: bytes) -> None:
+        msg = can.Message(
+            arbitration_id=self._id,
+            data=data,
+            is_extended_id=False,
+        )
+        self._dispatcher.send(msg)
+
+    def _on_message(self, msg: can.Message) -> None:
+        if msg.arbitration_id != self._id:
+            return
+        if not msg.data:
+            return
+        cmd = msg.data[0]
+        relay = self._read_relays.get(cmd)
+        if relay is not None:
+            relay.push(bytes(msg.data[1:]))
+
+    def _get_relay(self, cmd: int) -> DataRelay[bytes]:
+        relay = self._read_relays.get(cmd)
+        if relay is None:
+            relay = DataRelay()
+load extensions from /home/qwer/brick_vision_venv/lib/python3.12/site-packages/p
+[23;80Hpyorbbecsdk/extensions
+

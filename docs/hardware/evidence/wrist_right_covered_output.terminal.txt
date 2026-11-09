@@ -1,0 +1,5 @@
+BRIGHTNESS {"phase": "right_covered", "serial": "AY6M86300GH", "frames": 15, "me
+[23;80Hean_rgb": 4.44, "dark_fraction": 1.0, "pixel_std": 1.56}
+BRIGHTNESS {"phase": "right_covered", "serial": "AY6M8630086", "frames": 15, "me
+[23;80Hean_rgb": 112.76, "dark_fraction": 0.0208, "pixel_std": 55.83}
+qwer@qwer-ThinkPad-L14-Gen-2:~$ 

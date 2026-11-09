@@ -1,0 +1,27 @@
+> > > > > > > > > > > > > > > > > > > > > > > MO
+[23;80HOTOR {"iface": "can2", "joint": 1, "id": 61, "position_rad": -0.01617870479822158
+[23;80H88, "enabled_raw": "00", "temperature": 25.074106216430664, "read_ok": true}     
+MOTOR {"iface": "can2", "joint": 2, "id": 62, "position_rad": -0.002468750346451
+[23;80H19978, "enabled_raw": "00", "temperature": 25.602249145507812, "read_ok": true}  
+MOTOR {"iface": "can2", "joint": 3, "id": 63, "position_rad": 0.0284425616264343
+[23;80H326, "enabled_raw": "00", "temperature": 27.99076271057129, "read_ok": true}     
+MOTOR {"iface": "can2", "joint": 4, "id": 64, "position_rad": -0.051058128476142
+[23;80H288, "enabled_raw": "00", "temperature": 28.354555130004883, "read_ok": true}    
+MOTOR {"iface": "can2", "joint": 5, "id": 65, "position_rad": 0.1349796652793884
+[23;80H43, "enabled_raw": "00", "temperature": 29.332101821899414, "read_ok": true}     
+MOTOR {"iface": "can2", "joint": 6, "id": 66, "mode": 2, "read_ok": true}       
+MOTOR {"iface": "can2", "joint": 7, "id": 67, "mode": 2, "read_ok": true}       
+MOTOR {"iface": "can3", "joint": 1, "id": 51, "position_rad": 0.0219071637839078
+[23;80H89, "enabled_raw": "00", "temperature": 25.08964729309082, "read_ok": true}      
+MOTOR {"iface": "can3", "joint": 2, "id": 52, "position_rad": -0.056253951042890
+[23;80H055, "enabled_raw": "00", "temperature": 25.65541648864746, "read_ok": true}     
+MOTOR {"iface": "can3", "joint": 3, "id": 53, "position_rad": -0.668890237808227
+[23;80H75, "enabled_raw": "00", "temperature": 28.029808044433594, "read_ok": true}     
+MOTOR {"iface": "can3", "joint": 4, "id": 54, "position_rad": -0.011547703295946
+[23;80H6121, "enabled_raw": "00", "temperature": 28.198043823242188, "read_ok": true}   
+MOTOR {"iface": "can3", "joint": 5, "id": 55, "position_rad": 0.5299370884895325
+[23;80H5, "enabled_raw": "00", "temperature": 29.709211349487305, "read_ok": true}      
+MOTOR {"iface": "can3", "joint": 6, "id": 56, "mode": 2, "read_ok": true}       
+MOTOR {"iface": "can3", "joint": 7, "id": 57, "mode": 2, "read_ok": true}       
+HAND_ERROR can0 No data received within 500ms
+

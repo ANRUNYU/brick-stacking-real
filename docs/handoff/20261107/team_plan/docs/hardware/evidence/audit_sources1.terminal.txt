@@ -1,0 +1,346 @@
+<src -maxdepth 3 -type f \( -name '*.yaml' -o -name '*launch*' \) | head -40; fi
+[23;80Hind /sys/class/net/can* -maxdepth 0 -print; for x in /sys/class/net/can*; do echo
+[23;80Ho "$x $(readlink -f "$x/device")"; done
+"""Bounded right-O6 feedback query; no motion/configuration commands.
+
+This is an ACTIVE read: SDK transmits sensor requests. --query is explicit.     
+No pytest fixtures, set_angles, set_speed, set_torque or CAN mode changes.      
+"""
+import argparse
+from dataclasses import asdict, is_dataclass
+from datetime import datetime, timezone
+import importlib.util
+import json
+import math
+from pathlib import Path
+import signal
+import subprocess
+import sys
+import time
+
+
+def main():
+    p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument("--query", action="store_true")
+    p.add_argument("--output", type=Path, required=True)
+    args = p.parse_args()
+    if not sys.platform.startswith("linux"):
+        p.error("run on the Linux robot host")
+    if args.output.exists():
+        p.error("report exists; choose another path")
+    report = {"started_at": datetime.now(timezone.utc).isoformat(),
+        "interface": "can1", "side": "right", "source": "real_measured",        
+        "query_requested": args.query, "motion_commands_sent": False,
+        "interface_configuration_changed": False, "motion_tested": False,       
+        "control_ready": False, "communication_passed": False,
+        "samples": [], "errors": [], "cleanup_errors": [], "device_info": None} [24;1H
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    def save():
+        args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False, 
+[23;80H default=str, allow_nan=False), encoding="utf-8")
+    hand = None
+    def timeout_handler(*_):
+        raise TimeoutError("20-second diagnostic deadline exceeded")
+    try:
+        links = json.loads(subprocess.check_output(["ip", "-j", "-details", "lin
+[23;80Hnk", "show", "can1"], text=True, timeout=3))
+        report["can_before"] = links
+        data = links[0].get("linkinfo", {}).get("info_data", {})
+        if "UP" not in links[0].get("flags", []) or data.get("bittiming", {}).ge
+[23;80Het("bitrate") != 1000000:
+            raise ValueError("can1 must already be UP at 1 Mbps")
+        if "LISTEN-ONLY" in json.dumps(data.get("ctrlmode", [])).upper():       
+            raise ValueError("can1 is listen-only; requests cannot be sent")    
+        spec = importlib.util.find_spec("linkerbot")
+        report["sdk_origin"] = spec.origin if spec else None
+        if spec is None or "927290b8e27f9e2df3cc5b0a0776c36e2fb5175e" not in str
+[23;80Hr(spec.origin):
+            raise ValueError("unexpected SDK source; do not instantiate")       
+        if not args.query:
+            report["result"] = "PREVIEW"
+        else:
+            signal.signal(signal.SIGALRM, timeout_handler)
+            signal.alarm(20)
+            from linkerbot import O6
+            hand = O6(side="right", interface_name="can1")
+            # Reviewed constructor starts sensor polling. Stop it, then make    
+            # explicit bounded reads; neither this nor close is a hand stop.    
+            hand.stop_polling()
+            save()
+            try:
+                info = hand.version.get_device_info()
+                report["device_info"] = asdict(info) if is_dataclass(info) else 
+[23;80H {"representation": str(info)}
+            except Exception as exc:
+                report["errors"].append({"stage": "identity", "error": f"{type(e
+[23;80Hexc).__name__}: {exc}"})
+            save()
+            previous_stamp = None
+            for index in range(3):
+                try:
+                    value = hand.angle.get_blocking(timeout_ms=500)
+                    angles = list(value.angles.to_list())
+                    stamp = float(value.timestamp)
+                    valid = len(angles) == 6 and all(math.isfinite(a) and 0 <= a
+[23;80Ha <= 100 for a in angles)
+                    fresh = math.isfinite(stamp) and 0 <= time.time() - stamp <=
+[23;80H= 2 and (previous_stamp is None or stamp > previous_stamp)
+                    report["samples"].append({"index": index, "angles_percent": 
+[23;80H angles,
+                        "sdk_timestamp_s": stamp, "valid": valid, "fresh": fresh
+[23;80Hh})
+                    previous_stamp = stamp
+                except Exception as exc:
+                    report["errors"].append({"stage": f"angle_{index}", "error":
+[23;80H: f"{type(exc).__name__}: {exc}"})
+                save()
+                time.sleep(.15)
+            identity = report["device_info"] or {}
+            report["communication_passed"] = (bool(identity.get("serial_number")
+[23;80H)) and len(report["samples"]) == 3
+                and all(s["valid"] and s["fresh"] for s in report["samples"]) an
+[23;80Hnd not report["errors"])
+            report["result"] = "PASS" if report["communication_passed"] else "IN
+[23;80HNCONCLUSIVE"
+    except Exception as exc:
+        report["errors"].append({"stage": "setup", "error": f"{type(exc).__name_
+[23;80H__}: {exc}"})
+        report["result"] = "ERROR"
+    finally:
+        if hand is not None:
+            try:
+                hand.close()
+            except Exception as exc:
+                report["cleanup_errors"].append(str(exc))
+        if hasattr(signal, "alarm"):
+            signal.alarm(0)
+        save()
+    print(json.dumps(report, ensure_ascii=False, default=str, allow_nan=False)) [24;1H
+    return 0 if report.get("result") in {"PREVIEW", "PASS"} and not report["clea
+[23;80Hanup_errors"] else 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+"""Camera-only Orbbec inventory and bounded RGB-D capture, no robot imports.    
+
+Standalone on the Linux vision venv; helper functions are testable on Windows.  
+No firmware update, persistent property writes, CAN, arm/hand or motion access. [24;1H
+"""
+import argparse
+from datetime import datetime, timezone
+import importlib.metadata
+import json
+from pathlib import Path
+import time
+import uuid
+
+
+def decode_rgb(data, encoding, width, height):
+    import cv2
+    import numpy as np
+    raw = np.frombuffer(data, np.uint8)
+    name = encoding.split(".")[-1]
+    if name in {"RGB", "BGR"}:
+        if raw.size != width * height * 3:
+            raise ValueError("unexpected RGB row stride/size")
+        image = raw.reshape(height, width, 3).copy()
+        return image if name == "RGB" else image[:, :, ::-1].copy()
+    if name == "MJPG":
+        image = cv2.imdecode(raw, cv2.IMREAD_COLOR)
+        if image is None or image.shape[:2] != (height, width):
+            raise ValueError("invalid MJPEG frame")
+        return cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    if name == "YUYV":
+        if raw.size != width * height * 2:
+            raise ValueError("unexpected YUYV row stride/size")
+        return cv2.cvtColor(raw.reshape(height, width, 2), cv2.COLOR_YUV2RGB_YUY
+[23;80HYV)
+    raise ValueError(f"unsupported color encoding: {encoding}")
+
+
+def depth_to_metres(raw, scale_mm):
+    import numpy as np
+    if not np.isfinite(scale_mm) or scale_mm <= 0:
+        raise ValueError("invalid device depth scale")
+    values = np.asarray(raw, np.float32) * scale_mm / 1000.
+    values[~np.isfinite(values) | (values <= 0)] = np.nan
+    return values
+
+
+def rectify_pair(rgb, depth_m, k, distortion):
+    """Apply one common map to registered RGB/depth; do not fill depth holes."""[24;1H
+    import cv2
+    import numpy as np
+    model = distortion["model"].split(".")[-1]
+    if model not in {"NONE", "BROWN_CONRADY", "BROWN_CONRADY_K6"}:
+        raise ValueError(f"unverified distortion model: {model}")
+    if rgb.shape[:2] != depth_m.shape:
+        raise ValueError("D2C output must match color dimensions")
+    names = ["k1", "k2", "p1", "p2", "k3", "k4", "k5", "k6"]
+    d = np.array([distortion[n] for n in names], float)
+    if not np.isfinite(d).all():
+        raise ValueError("nonfinite camera distortion")
+    if model == "NONE":
+        if np.any(d != 0):
+            raise ValueError("NONE model with nonzero coefficients")
+        return rgb.copy(), depth_m.copy()
+    if model == "BROWN_CONRADY":
+        if np.any(d[5:] != 0):
+            raise ValueError("Brown model has unverified extra coefficients")   
+        d = d[:5]
+    h, w = depth_m.shape
+    x, y = cv2.initUndistortRectifyMap(k, d, None, k, (w, h), cv2.CV_32FC1)     
+    return (cv2.remap(rgb, x, y, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTAN
+[23;80HNT),
+            cv2.remap(depth_m, x, y, cv2.INTER_NEAREST, borderMode=cv2.BORDER_CO
+[23;80HONSTANT, borderValue=float("nan")))
+
+
+def describe_profile(profile):
+    return {"width": profile.get_width(), "height": profile.get_height(),       
+            "fps": profile.get_fps(), "format": str(profile.get_format())}      
+
+
+def choose_profile(profiles, formats):
+    candidates = []
+    for i in range(profiles.get_count()):
+        profile = profiles.get_stream_profile_by_index(i).as_video_stream_profil
+[23;80Hle()
+        if str(profile.get_format()).split(".")[-1] in formats:
+            candidates.append(profile)
+    if not candidates:
+        raise ValueError("no supported stream profile")
+    # Modest initial bandwidth; actual selection is recorded, not guessed.      
+    return min(candidates, key=lambda p: (abs(p.get_width()-640)+abs(p.get_heigh
+[23;80Hht()-480),
+                                         abs(p.get_fps()-15), formats.index(str(
+[23;80H(p.get_format()).split(".")[-1])))
+
+
+def capture(sdk, device, serial, output, report, *, count, seconds, max_skew_ms)
+[23;80H):
+    import cv2
+    import numpy as np
+    pipe = sdk.Pipeline(device)
+    started = False
+    try:
+        color = choose_profile(pipe.get_stream_profile_list(sdk.OBSensorType.COL
+[23;80HLOR_SENSOR), ["RGB", "MJPG", "YUYV", "BGR"])
+        depth = choose_profile(pipe.get_stream_profile_list(sdk.OBSensorType.DEP
+[23;80HPTH_SENSOR), ["Y16"])
+        report["profiles"] = {"color": describe_profile(color), "depth": describ
+[23;80Hbe_profile(depth)}
+        config = sdk.Config()
+        config.enable_stream(color)
+        config.enable_stream(depth)
+        config.set_frame_aggregate_output_mode(sdk.OBFrameAggregateOutputMode.FU
+[23;80HULL_FRAME_REQUIRE)
+        align = sdk.AlignFilter(align_to_stream=sdk.OBStreamType.COLOR_STREAM)  
+        align.set_match_target_resolution(True)
+        pipe.enable_frame_sync()
+        pipe.start(config)
+        started = True
+        intr = color.get_intrinsic()
+        k = np.array([[intr.fx, 0., intr.cx], [0., intr.fy, intr.cy], [0., 0., 1
+[23;80H1.]])
+        if not np.isfinite(k).all() or intr.fx <= 0 or intr.fy <= 0:
+            raise ValueError("invalid device camera intrinsics")
+        dist = color.get_distortion()
+        distortion = {name: float(getattr(dist, name)) for name in ("k1", "k2", 
+[23;80H "k3", "k4", "k5", "k6", "p1", "p2")}
+        distortion["model"] = str(dist.model)
+        report["calibration"] = {"K": k.tolist(), "distortion": distortion,     
+                                 "width": intr.width, "height": intr.height, "ex
+[23;80Hxtrinsics_available": False}
+        epoch = f"orbbec_{serial}_{uuid.uuid4().hex}"
+        end = time.monotonic() + seconds
+        previous_stamp = -1.
+        warmup = 0
+        while len(report["frames"]) < count and time.monotonic() < end:
+            frames = pipe.wait_for_frames(1000)
+            if not frames:
+                continue
+            aligned = align.process(frames)
+            if not aligned:
+                continue
+            frames = aligned.as_frame_set()
+            c, d = frames.get_color_frame(), frames.get_depth_frame()
+            if not c or not d:
+                continue
+            warmup += 1
+            if warmup <= 5:
+                continue
+            ct, dt = c.get_timestamp_us()/1e6, d.get_timestamp_us()/1e6
+            if abs(ct-dt)*1000 > max_skew_ms:
+                report["rejected_skew"] += 1
+                continue
+            if ct <= previous_stamp:
+                raise ValueError("camera timestamp repeated or reset")
+            previous_stamp = ct
+            w, h = c.get_width(), c.get_height()
+            if (w, h) != (intr.width, intr.height):
+                raise ValueError("stream/intrinsic resolution mismatch")        
+            rgb = decode_rgb(c.get_data(), str(c.get_format()), w, h)
+            if d.get_format() != sdk.OBFormat.Y16:
+                raise ValueError("aligned depth is not Y16")
+            raw = np.frombuffer(d.get_data(), np.uint16)
+            if raw.size != d.get_width()*d.get_height():
+                raise ValueError("unexpected depth row stride/size")
+            dm = depth_to_metres(raw.reshape(d.get_height(),d.get_width()), d.ge
+[23;80Het_depth_scale())
+            if not report["frames"]:
+                cv2.imwrite(str(output/"color_raw.png"), cv2.cvtColor(rgb,cv2.CO
+[23;80HOLOR_RGB2BGR))
+            rgb, dm = rectify_pair(rgb, dm, k, distortion)
+            index = len(report["frames"])
+            name = f"frame_{index:03d}.npz"
+            meta = {"camera_id": serial, "frame_id": f"camera_{serial}_color_opt
+[23;80Htical_frame", "stamp_s": ct,
+                    "clock_domain": epoch, "source": "real_measured", "registere
+[23;80Hed": True,
+                    "rectified": True, "depth_unit": "m"}
+            np.savez_compressed(output/name, rgb=rgb, depth_m=dm, k=k, metadata=
+[23;80H=json.dumps(meta))
+            valid = np.isfinite(dm) & (dm > 0)
+            report["frames"].append({"file": name, "rgb_stamp_s": ct, "depth_sta
+[23;80Hamp_s": dt,
+                "skew_ms": abs(ct-dt)*1000, "depth_scale_mm": d.get_depth_scale(
+[23;80H(),
+                "valid_depth_ratio": float(valid.mean()), "median_depth_m": floa
+[23;80Hat(np.median(dm[valid])) if valid.any() else None})
+            if index == 0:
+                cv2.imwrite(str(output/"color_rectified.png"), cv2.cvtColor(rgb,
+[23;80H,cv2.COLOR_RGB2BGR))
+                viz = np.zeros_like(dm, np.uint8)
+                if valid.any():
+                    lo, hi = np.percentile(dm[valid], [5,95])
+captures/vision-head-replacement-20261106-05/camera_report.json
+captures/vision-head-replacement-20261106-06-stable-highres/camera_report.json  
+captures/vision-head-replacement-20261106-06-stable-highres.stdout.log
+captures/vision-head-newlayout-20261106-04/camera_report.json
+captures/vision-head-newlayout-20261106-01/camera_report.json
+captures/vision-head-20261106-01/camera_report.json
+captures/can0-passive-20261106-02.json
+captures/vision-head-newlayout-20261106-04-highres/camera_report.json
+captures/right-o6-feedback-20261106-01.json
+captures/vision-head-20261106-02/camera_report.json
+captures/vision-inventory-20261106-01/camera_report.json
+captures/can-passive-01.json
+captures/vision-head-replacement-20261106-06-stable/camera_report.json
+captures/vision-head-replacement-20261106-06-stable.stdout.log
+captures/head_profiles_20261106_04.json
+captures/vision-head-adaptive-20261106-03/camera_report.json
+/sys/class/net/can0
+/sys/class/net/can1
+/sys/class/net/can2
+/sys/class/net/can3
+/sys/class/net/can0 /sys/devices/pci0000:00/0000:00:14.0/usb3/3-6/3-6.3/3-6.3.1/
+[23;80H/3-6.3.1:1.0
+/sys/class/net/can1 /sys/devices/pci0000:00/0000:00:14.0/usb3/3-6/3-6.3/3-6.3.2/
+[23;80H/3-6.3.2:1.0
+/sys/class/net/can2 /sys/devices/pci0000:00/0000:00:14.0/usb3/3-6/3-6.3/3-6.3.3/
+[23;80H/3-6.3.3:1.0
+/sys/class/net/can3 /sys/devices/pci0000:00/0000:00:14.0/usb3/3-6/3-6.3/3-6.3.4/
+[23;80H/3-6.3.4:1.0
+qwer@qwer-ThinkPad-L14-Gen-2:~$[1C

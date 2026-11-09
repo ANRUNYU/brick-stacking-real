@@ -1,0 +1,292 @@
+{
+  "schema_version": 1,
+  "snapshot_date": "2026-11-07",
+  "timezone": "Asia/Shanghai",
+  "host": "10.157.173.135",
+  "dry_run": true,
+  "motion_enabled": false,
+  "production_ready": false,
+  "binding_policy": "SN + physical path + read-only identity; never enumeration index",
+  "hands": [
+    {
+      "role": "right_hand",
+      "interface": "can0",
+      "standard_can_id": 39,
+      "serial": "LHO6-04-276-R-Z-1-D",
+      "identity_verified": true,
+      "motion_verified_this_audit": false,
+      "touch_verified": false
+    },
+    {
+      "role": "left_hand",
+      "interface": "can1",
+      "standard_can_id": 40,
+      "serial": "LHO6-04-322-L-Z-1-D",
+      "identity_verified": true,
+      "motion_verified_this_audit": false,
+      "touch_verified": false
+    }
+  ],
+  "arms": [
+    {
+      "role": "left_arm",
+      "model": "P7_protocol_layout",
+      "interface": "can2",
+      "usb_path": "/sys/devices/pci0000:00/0000:00:14.0/usb3/3-6/3-6.3/3-6.3.3/3-6.3.3:1.0",
+      "side_evidence": [
+        "existing_control_scripts",
+        "user_prior_control_confirmation"
+      ],
+      "physical_joint_labels_reverified_this_audit": false,
+      "joints": [
+        {
+          "name": "J1",
+          "sdk_index": 0,
+          "can_id": 61,
+          "protocol": "A7Motor",
+          "read_response_verified": true
+        },
+        {
+          "name": "J2",
+          "sdk_index": 1,
+          "can_id": 62,
+          "protocol": "A7Motor",
+          "read_response_verified": true
+        },
+        {
+          "name": "J3",
+          "sdk_index": 2,
+          "can_id": 63,
+          "protocol": "A7Motor",
+          "read_response_verified": true
+        },
+        {
+          "name": "J4",
+          "sdk_index": 3,
+          "can_id": 64,
+          "protocol": "A7Motor",
+          "read_response_verified": true
+        },
+        {
+          "name": "J5",
+          "sdk_index": 4,
+          "can_id": 65,
+          "protocol": "A7Motor",
+          "read_response_verified": true
+        },
+        {
+          "name": "J6",
+          "sdk_index": 5,
+          "can_id": 66,
+          "protocol": "MotorV2_PTM",
+          "read_response_verified": true
+        },
+        {
+          "name": "J7",
+          "sdk_index": 6,
+          "can_id": 67,
+          "protocol": "MotorV2_PTM",
+          "read_response_verified": true
+        }
+      ],
+      "joint_limits": null,
+      "zero_calibration": null,
+      "tcp": null,
+      "safe_stop_verified": false
+    },
+    {
+      "role": "right_arm",
+      "model": "P7_protocol_layout",
+      "interface": "can3",
+      "usb_path": "/sys/devices/pci0000:00/0000:00:14.0/usb3/3-6/3-6.3/3-6.3.4/3-6.3.4:1.0",
+      "side_evidence": [
+        "existing_control_scripts",
+        "user_prior_control_confirmation"
+      ],
+      "physical_joint_labels_reverified_this_audit": false,
+      "joints": [
+        {
+          "name": "J1",
+          "sdk_index": 0,
+          "can_id": 51,
+          "protocol": "A7Motor",
+          "read_response_verified": true
+        },
+        {
+          "name": "J2",
+          "sdk_index": 1,
+          "can_id": 52,
+          "protocol": "A7Motor",
+          "read_response_verified": true
+        },
+        {
+          "name": "J3",
+          "sdk_index": 2,
+          "can_id": 53,
+          "protocol": "A7Motor",
+          "read_response_verified": true
+        },
+        {
+          "name": "J4",
+          "sdk_index": 3,
+          "can_id": 54,
+          "protocol": "A7Motor",
+          "read_response_verified": true
+        },
+        {
+          "name": "J5",
+          "sdk_index": 4,
+          "can_id": 55,
+          "protocol": "A7Motor",
+          "read_response_verified": true
+        },
+        {
+          "name": "J6",
+          "sdk_index": 5,
+          "can_id": 56,
+          "protocol": "MotorV2_PTM",
+          "read_response_verified": true
+        },
+        {
+          "name": "J7",
+          "sdk_index": 6,
+          "can_id": 57,
+          "protocol": "MotorV2_PTM",
+          "read_response_verified": true
+        }
+      ],
+      "joint_limits": null,
+      "zero_calibration": null,
+      "tcp": null,
+      "safe_stop_verified": false
+    }
+  ],
+  "cameras": [
+    {
+      "role": "head",
+      "role_evidence": "2026-11-07 operator-assisted color-lens occlusion and restoration; evidence/camera_role_binding.json",
+      "serial": "CP2L863000KL",
+      "model": "Orbbec Gemini 335L",
+      "firmware": "1.4.60",
+      "usb_path": "2-3.4.3",
+      "color": {
+        "width": 640,
+        "height": 480,
+        "fps": 15,
+        "format": "OBFormat.MJPG",
+        "fx": 368.1024169921875,
+        "fy": 368.163330078125,
+        "cx": 322.947021484375,
+        "cy": 237.29510498046875
+      },
+      "depth": {
+        "width": 640,
+        "height": 480,
+        "fps": 15,
+        "format": "OBFormat.Y16",
+        "fx": 377.61968994140625,
+        "fy": 377.61968994140625,
+        "cx": 319.70001220703125,
+        "cy": 244.5
+      },
+      "depth_scale_mm": [
+        1.0
+      ],
+      "frames_verified": 15,
+      "nonzero_depth_ratio_range": [
+        0.9412369791666667,
+        0.9437890625
+      ],
+      "max_rgb_depth_skew_ms": 0.019,
+      "registration_verified": false,
+      "extrinsics": null,
+      "ordinary_user_access_verified": false,
+      "concurrent_streaming_verified": false,
+      "physical_role_verified": true
+    },
+    {
+      "role": "right_wrist",
+      "role_evidence": "2026-11-07 operator-assisted color-lens occlusion and restoration; evidence/camera_role_binding.json",
+      "serial": "AY6M86300GH",
+      "model": "Orbbec Gemini 2",
+      "firmware": "1.4.92",
+      "usb_path": "2-3.4.4",
+      "color": {
+        "width": 640,
+        "height": 480,
+        "fps": 15,
+        "format": "OBFormat.RGB",
+        "fx": 517.2816162109375,
+        "fy": 517.3043823242188,
+        "cx": 324.88470458984375,
+        "cy": 241.26663208007812
+      },
+      "depth": {
+        "width": 640,
+        "height": 400,
+        "fps": 15,
+        "format": "OBFormat.Y16",
+        "fx": 304.3924560546875,
+        "fy": 304.3924560546875,
+        "cx": 319.467529296875,
+        "cy": 198.4596710205078
+      },
+      "depth_scale_mm": [
+        1.0
+      ],
+      "frames_verified": 15,
+      "nonzero_depth_ratio_range": [
+        0.146546875,
+        0.159546875
+      ],
+      "max_rgb_depth_skew_ms": 23.504,
+      "registration_verified": false,
+      "extrinsics": null,
+      "ordinary_user_access_verified": false,
+      "concurrent_streaming_verified": false,
+      "physical_role_verified": true
+    },
+    {
+      "role": "left_wrist",
+      "role_evidence": "2026-11-07 operator-assisted color-lens occlusion and restoration; evidence/camera_role_binding.json",
+      "serial": "AY6M8630086",
+      "model": "Orbbec Gemini 2",
+      "firmware": "1.4.92",
+      "usb_path": "2-3.4.2",
+      "color": {
+        "width": 640,
+        "height": 480,
+        "fps": 15,
+        "format": "OBFormat.RGB",
+        "fx": 517.2506713867188,
+        "fy": 517.0243530273438,
+        "cx": 320.98687744140625,
+        "cy": 236.98263549804688
+      },
+      "depth": {
+        "width": 640,
+        "height": 400,
+        "fps": 15,
+        "format": "OBFormat.Y16",
+        "fx": 306.0580749511719,
+        "fy": 306.0580749511719,
+        "cx": 319.8875732421875,
+        "cy": 197.19290161132812
+      },
+      "depth_scale_mm": [
+        1.0
+      ],
+      "frames_verified": 15,
+      "nonzero_depth_ratio_range": [
+        0.16984375,
+        0.18690625
+      ],
+      "max_rgb_depth_skew_ms": 20.706,
+      "registration_verified": false,
+      "extrinsics": null,
+      "ordinary_user_access_verified": false,
+      "concurrent_streaming_verified": false,
+      "physical_role_verified": true
+    }
+  ]
+}

@@ -1,3 +1,23 @@
+# 设备清单（2026-11-07实测更新）
+inventory_id: inventory_20261107_observed；身份与接口审计，不是运动/精度验收。
+
+|角色|接口/身份|证据|
+|---|---|---|
+|右O6|can0 / 0x27 / LHO6-04-276-R-Z-1-D|SN、版本、六通道状态、温度和故障读取|
+|左O6|can1 / 0x28 / LHO6-04-322-L-Z-1-D|同上|
+|左臂P7协议布局|can2 / 十进制61—67|七轴只读回应；侧别结合脚本与用户历史控制确认|
+|右臂P7协议布局|can3 / 十进制51—57|同上|
+|头部335L|CP2L863000KL|身份/单机RGB-D、遮挡—恢复|
+|左腕Gemini2|AY6M8630086|身份/单机RGB-D、双向遮挡|
+|右腕Gemini2|AY6M86300GH|同上|
+
+实测Ubuntu24.04.5/Jazzy/x86_64，四路PCAN-USB为1Mbps，三相机共享5Gbps USB上游。普通用户相机访问、配准/时间映射、外参/TCP/限位/零位/停止、腕轴跟踪、触觉与抓放仍未验收。运动保持禁用。
+
+见[完整接口](hardware/HARDWARE_INTERFACES.md)、[设备快照](../config/observed/hardware_20261107.json)、[原始证据](handoff/20261107/interface_audit/README.md)及[当前计划](PROJECT_PLAN.md)。
+
+## 2026-11-05历史清单
+以下保留来源沿革；旧未连接/Gemini335/拓扑未知状态由上述新证据部分更新。
+
 # 设备清单
 
 inventory_id: inventory_20261105_draft；状态：团队提供型号，个体硬件未连接核验。

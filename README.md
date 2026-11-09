@@ -1,6 +1,8 @@
 # brick-stacking-real
 
 [D1-01 公共契约、离线预览与 M0 样例索引](docs/team/D1-01.md)
+> **当前开发入口（2026-11-07）**：[两阶段单臂计划与完整交付](docs/PROJECT_PLAN.md)。当前只做单臂单块视觉抓放和单臂十块自主搭建；双臂交接暂不开发。身份审计已补充实测，动作/标定仍待验收。
+
 
 独立真机项目的 **Python 离线开发 v0.2.0**。依据根目录两份设计/命名文档，从头实现；未导入 Rabokit 控制代码，未安装或实例化任何硬件 SDK。Windows 开发，Ubuntu 24.04 + ROS 2 Jazzy 部署目标已由团队确认。
 
@@ -53,8 +55,8 @@ python tools/inspect_urdf.py path/to/arm.urdf
 
 ## 状态与后续
 
-M0：工程隔离、接口来源审计已建立，设备个体待核验，Ubuntu 24.04/Jazzy 部署目标已确认。M1：合成数据的保守视觉原型可运行，未完成真实数据集验收。M2–M6 的部分任务/交接逻辑已有 Mock 验证，各阶段真实验收仍未完成。
+历史离线里程碑M0：工程隔离和来源审计已建立；设备身份于2026-11-07补充实测，后续旧M编号仅作历史参考，Ubuntu 24.04/Jazzy 部署目标已确认。M1：合成数据的保守视觉原型可运行，未完成真实数据集验收。M2–M6 的部分任务/交接逻辑已有 Mock 验证，各阶段真实验收仍未完成。
 
 先补充实机 RGB-D 记录与分辨率、对齐方式，再做固定标注测试集、桌面分离与多视角实例分割。未知安装变换、TCP、限位、安全速度始终保留未知值。
 
-入口文档：[设备清单](docs/HARDWARE_INVENTORY.md)、[API 审计](docs/API_AUDIT.md)、[开放问题](docs/OPEN_QUESTIONS.md)、[测试计划](docs/TEST_PLAN.md)。团队已指定远端 ANRUNYU/brick-stacking-real，但本轮连接器返回 404、Git 网络查询失败，未发布代码。该目录尚未初始化独立 Git 仓库；运行记录中 `source_commit=null` 明示当前状态，并记录源码摘要。
+入口文档：[设备清单](docs/HARDWARE_INVENTORY.md)、[API 审计](docs/API_AUDIT.md)、[开放问题](docs/OPEN_QUESTIONS.md)、[测试计划](docs/TEST_PLAN.md)。远端为ANRUNYU/brick-stacking-real。本机Git可克隆及分支上传预检；GitHub插件可见性仍受限。早期运行记录的source_commit=null仅为当时状态，不表示当前仓库未初始化。

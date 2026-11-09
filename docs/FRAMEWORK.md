@@ -1,5 +1,8 @@
 # 离线任务框架 v0.2
 
+> **当前范围**：[单臂两阶段](PROJECT_PLAN.md)。本页保留离线代码事实；已有handoff逻辑暂不扩展。身份/取流实测不改变Mock与真实执行的边界。
+
+
 ```text
 CameraFrame -> BlockDetector -> diagnostic localization   [M1 原型]
 

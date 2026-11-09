@@ -1,0 +1,299 @@
+export T<o]rbbec|[l]inker'; ls /opt/ros; cat /etc/os-release
+2026-11-07T11:32:32+08:00
+qwer-ThinkPad-L14-Gen-2
+Linux qwer-ThinkPad-L14-Gen-2 7.0.0-31-generic #31~24.04.1-Ubuntu SMP PREEMPT_DY
+[23;80HYNAMIC Mon Aug 10 09:38:02 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 002 Device 026: ID 35d6:3510 Bridgesil USB3.2 Hub
+Bus 002 Device 027: ID 0bda:8153 Realtek Semiconductor Corp. RTL8153 Gigabit Eth
+[23;80Hhernet Adapter
+Bus 002 Device 058: ID 05e3:0626 Genesys Logic, Inc. Hub
+Bus 002 Device 059: ID 35d6:3510 Bridgesil USB3.2 Hub
+Bus 002 Device 060: ID 2bc5:0670 Orbbec 3D Technology International, Inc Orbbec(
+[23;80H(R) Gemini(TM)
+Bus 002 Device 061: ID 2bc5:0804 Orbbec 3D Technology International, Inc Orbbec 
+[23;80H Gemini 335L
+Bus 002 Device 062: ID 2bc5:0670 Orbbec 3D Technology International, Inc Orbbec(
+[23;80H(R) Gemini(TM)
+Bus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 003 Device 002: ID 04d9:0499 Holtek Semiconductor, Inc. Optical Mouse       
+Bus 003 Device 003: ID 04f2:b6be Chicony Electronics Co., Ltd Integrated Camera [24;1H
+Bus 003 Device 004: ID 8087:0032 Intel Corp. AX210 Bluetooth
+Bus 003 Device 006: ID 35d6:2510 Bridgesil USB2.1 Hub
+Bus 003 Device 007: ID 1a40:0101 Terminus Technology Inc. Hub
+Bus 003 Device 045: ID 05e3:0610 Genesys Logic, Inc. Hub
+Bus 003 Device 046: ID 0c72:000c PEAK System PCAN-USB
+Bus 003 Device 047: ID 0c72:000c PEAK System PCAN-USB
+Bus 003 Device 048: ID 0c72:000c PEAK System PCAN-USB
+Bus 003 Device 049: ID 0c72:000c PEAK System PCAN-USB
+Bus 003 Device 050: ID 35d6:2510 Bridgesil USB2.1 Hub
+Bus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/1p, 480M
+/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 10000M       
+    |__ Port 003: Dev 026, If 0, Class=Hub, Driver=hub/4p, 5000M
+        |__ Port 001: Dev 027, If 0, Class=Vendor Specific Class, Driver=r8152, 
+[23;80H 5000M
+        |__ Port 003: Dev 058, If 0, Class=Hub, Driver=hub/4p, 5000M
+        |__ Port 004: Dev 059, If 0, Class=Hub, Driver=hub/4p, 5000M
+            |__ Port 002: Dev 060, If 0, Class=Video, Driver=uvcvideo, 5000M    
+            |__ Port 002: Dev 060, If 1, Class=Video, Driver=uvcvideo, 5000M    
+            |__ Port 002: Dev 060, If 2, Class=Video, Driver=uvcvideo, 5000M    
+            |__ Port 002: Dev 060, If 3, Class=Video, Driver=uvcvideo, 5000M    
+            |__ Port 002: Dev 060, If 4, Class=Video, Driver=uvcvideo, 5000M    
+            |__ Port 002: Dev 060, If 5, Class=Video, Driver=uvcvideo, 5000M    
+            |__ Port 002: Dev 060, If 6, Class=Vendor Specific Class, Driver=[no
+[23;80Hone], 5000M
+            |__ Port 002: Dev 060, If 7, Class=Human Interface Device, Driver=us
+[23;80Hsbhid, 5000M
+            |__ Port 003: Dev 061, If 0, Class=Video, Driver=uvcvideo, 5000M    
+            |__ Port 003: Dev 061, If 1, Class=Video, Driver=uvcvideo, 5000M    
+            |__ Port 003: Dev 061, If 2, Class=Video, Driver=uvcvideo, 5000M    
+            |__ Port 003: Dev 061, If 3, Class=Video, Driver=uvcvideo, 5000M    
+            |__ Port 003: Dev 061, If 4, Class=Video, Driver=uvcvideo, 5000M    
+            |__ Port 003: Dev 061, If 5, Class=Video, Driver=uvcvideo, 5000M    
+            |__ Port 003: Dev 061, If 6, Class=Human Interface Device, Driver=us
+[23;80Hsbhid, 5000M
+            |__ Port 004: Dev 062, If 0, Class=Video, Driver=uvcvideo, 5000M    
+            |__ Port 004: Dev 062, If 1, Class=Video, Driver=uvcvideo, 5000M    
+            |__ Port 004: Dev 062, If 2, Class=Video, Driver=uvcvideo, 5000M    
+            |__ Port 004: Dev 062, If 3, Class=Video, Driver=uvcvideo, 5000M    
+            |__ Port 004: Dev 062, If 4, Class=Video, Driver=uvcvideo, 5000M    
+            |__ Port 004: Dev 062, If 5, Class=Video, Driver=uvcvideo, 5000M    
+            |__ Port 004: Dev 062, If 6, Class=Vendor Specific Class, Driver=[no
+[23;80Hone], 5000M
+            |__ Port 004: Dev 062, If 7, Class=Human Interface Device, Driver=us
+[23;80Hsbhid, 5000M
+/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/12p, 480M        
+    |__ Port 001: Dev 002, If 0, Class=Human Interface Device, Driver=usbhid, 1.
+[23;80H.5M
+    |__ Port 006: Dev 006, If 0, Class=Hub, Driver=hub/4p, 480M
+        |__ Port 001: Dev 007, If 0, Class=Hub, Driver=hub/4p, 480M
+        |__ Port 003: Dev 045, If 0, Class=Hub, Driver=hub/4p, 480M
+            |__ Port 001: Dev 046, If 0, Class=[unknown], Driver=peak_usb, 12M  
+            |__ Port 002: Dev 047, If 0, Class=[unknown], Driver=peak_usb, 12M  
+            |__ Port 003: Dev 048, If 0, Class=[unknown], Driver=peak_usb, 12M  
+            |__ Port 004: Dev 049, If 0, Class=[unknown], Driver=peak_usb, 12M  
+        |__ Port 004: Dev 050, If 0, Class=Hub, Driver=hub/4p, 480M
+    |__ Port 007: Dev 003, If 0, Class=Video, Driver=uvcvideo, 480M
+    |__ Port 007: Dev 003, If 1, Class=Video, Driver=uvcvideo, 480M
+    |__ Port 007: Dev 003, If 2, Class=Video, Driver=uvcvideo, 480M
+    |__ Port 007: Dev 003, If 3, Class=Video, Driver=uvcvideo, 480M
+    |__ Port 007: Dev 003, If 4, Class=Application Specific Interface, Driver=[n
+[23;80Hnone], 480M
+    |__ Port 010: Dev 004, If 0, Class=Wireless, Driver=btusb, 12M
+    |__ Port 010: Dev 004, If 1, Class=Wireless, Driver=btusb, 12M
+/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 10000M       
+87: can0: <NOARP,UP,LOWER_UP,ECHO> mtu 16 qdisc pfifo_fast state UP mode DEFAULT
+[23;80HT group default qlen 10
+    link/can  promiscuity 0  allmulti 0 minmtu 16 maxmtu 16
+    can state ERROR-ACTIVE (berr-counter tx 0 rx 0) restart-ms 0
+          bitrate 1000000 sample-point 0.750
+          tq 125 prop-seg 2 phase-seg1 3 phase-seg2 2 sjw 1 brp 1
+          pcan_usb: tseg1 1..16 tseg2 1..8 sjw 1..4 brp 1..64 brp_inc 1
+          clock 8000000
+          re-started bus-errors arbit-lost error-warn error-pass bus-off        
+          0          0          0          0          0          0         numtx
+[23;80Hxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 
+[23;80H tso_max_segs 65535 gro_max_size 65536 parentbus usb parentdev 3-6.3.1:1.0       
+    RX:  bytes packets errors dropped  missed   mcast
+        195082   32212      0       0       0       0
+    TX:  bytes packets errors dropped carrier collsns
+          7889    4664      0       0       0       0
+88: can1: <NOARP,UP,LOWER_UP,ECHO> mtu 16 qdisc pfifo_fast state UP mode DEFAULT
+[23;80HT group default qlen 10
+    link/can  promiscuity 0  allmulti 0 minmtu 16 maxmtu 16
+    can state ERROR-ACTIVE (berr-counter tx 0 rx 0) restart-ms 0
+          bitrate 1000000 sample-point 0.750
+          tq 125 prop-seg 2 phase-seg1 3 phase-seg2 2 sjw 1 brp 1
+          pcan_usb: tseg1 1..16 tseg2 1..8 sjw 1..4 brp 1..64 brp_inc 1
+          clock 8000000
+          re-started bus-errors arbit-lost error-warn error-pass bus-off        
+          0          0          0          0          0          0         numtx
+[23;80Hxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 
+[23;80H tso_max_segs 65535 gro_max_size 65536 parentbus usb parentdev 3-6.3.2:1.0       
+    RX:  bytes packets errors dropped  missed   mcast
+        190033   31373      0       0       0       0
+    TX:  bytes packets errors dropped carrier collsns
+          7688    4550      0       0       0       0
+89: can2: <NOARP,UP,LOWER_UP,ECHO> mtu 16 qdisc pfifo_fast state UP mode DEFAULT
+[23;80HT group default qlen 10
+    link/can  promiscuity 0  allmulti 0 minmtu 16 maxmtu 16
+    can state ERROR-ACTIVE (berr-counter tx 0 rx 0) restart-ms 0
+          bitrate 1000000 sample-point 0.750
+          tq 125 prop-seg 2 phase-seg1 3 phase-seg2 2 sjw 1 brp 1
+          pcan_usb: tseg1 1..16 tseg2 1..8 sjw 1..4 brp 1..64 brp_inc 1
+          clock 8000000
+          re-started bus-errors arbit-lost error-warn error-pass bus-off        
+          0          0          0          0          0          0         numtx
+[23;80Hxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 
+[23;80H tso_max_segs 65535 gro_max_size 65536 parentbus usb parentdev 3-6.3.3:1.0       
+    RX:  bytes packets errors dropped  missed   mcast
+         48951    6123      0       0       0       0
+    TX:  bytes packets errors dropped carrier collsns
+         48942    6141      0       0       0       0
+90: can3: <NOARP,UP,LOWER_UP,ECHO> mtu 16 qdisc pfifo_fast state UP mode DEFAULT
+[23;80HT group default qlen 10
+    link/can  promiscuity 0  allmulti 0 minmtu 16 maxmtu 16
+    can state ERROR-ACTIVE (berr-counter tx 0 rx 0) restart-ms 0
+          bitrate 1000000 sample-point 0.750
+          tq 125 prop-seg 2 phase-seg1 3 phase-seg2 2 sjw 1 brp 1
+          pcan_usb: tseg1 1..16 tseg2 1..8 sjw 1..4 brp 1..64 brp_inc 1
+          clock 8000000
+          re-started bus-errors arbit-lost error-warn error-pass bus-off        
+          0          0          0          0          0          0         numtx
+[23;80Hxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 
+[23;80H tso_max_segs 65535 gro_max_size 65536 parentbus usb parentdev 3-6.3.4:1.0       
+    RX:  bytes packets errors dropped  missed   mcast
+            87      15      0       0       0       0
+    TX:  bytes packets errors dropped carrier collsns
+            70      32      0       0       0       0
+/dev/v4l/by-id:
+总计 0
+lrwxrwxrwx 1 root root 12 11月  5 11:22 usb-Chicony_Electronics_Co._Ltd._Integra
+[23;80Hated_Camera_0001-video-index0 -> ../../video2
+lrwxrwxrwx 1 root root 12 11月  5 11:22 usb-Chicony_Electronics_Co._Ltd._Integra
+[23;80Hated_Camera_0001-video-index1 -> ../../video3
+lrwxrwxrwx 1 root root 13 11月  6 21:57 usb-Orbbec_R__Orbbec_Gemini_335L_CP2L863
+[23;80H3000KL-video-index0 -> ../../video10
+lrwxrwxrwx 1 root root 13 11月  6 21:57 usb-Orbbec_R__Orbbec_Gemini_335L_CP2L863
+[23;80H3000KL-video-index1 -> ../../video11
+lrwxrwxrwx 1 root root 13 11月  6 21:57 usb-Orbbec_R__Orbbec_Gemini_335L_CP2L863
+[23;80H3000KL-video-index2 -> ../../video12
+lrwxrwxrwx 1 root root 13 11月  6 21:57 usb-Orbbec_R__Orbbec_Gemini_335L_CP2L863
+[23;80H3000KL-video-index3 -> ../../video13
+lrwxrwxrwx 1 root root 13 11月  6 21:57 usb-Orbbec_R__Orbbec_Gemini_335L_CP2L863
+[23;80H3000KL-video-index4 -> ../../video14
+lrwxrwxrwx 1 root root 13 11月  6 21:57 usb-Orbbec_R__Orbbec_Gemini_335L_CP2L863
+[23;80H3000KL-video-index5 -> ../../video15
+lrwxrwxrwx 1 root root 12 11月  6 21:57 usb-Orbbec_R__Orbbec_R__Gemini_TM__AY6M8
+[23;80H8630086-video-index0 -> ../../video8
+lrwxrwxrwx 1 root root 12 11月  6 21:57 usb-Orbbec_R__Orbbec_R__Gemini_TM__AY6M8
+[23;80H8630086-video-index1 -> ../../video7
+lrwxrwxrwx 1 root root 13 11月  6 21:57 usb-Orbbec_R__Orbbec_R__Gemini_TM__AY6M8
+[23;80H86300GH-video-index0 -> ../../video22
+lrwxrwxrwx 1 root root 13 11月  6 21:57 usb-Orbbec_R__Orbbec_R__Gemini_TM__AY6M8
+[23;80H86300GH-video-index1 -> ../../video19
+
+/dev/v4l/by-path:
+总计 0
+lrwxrwxrwx 1 root root 12 11月  6 21:57 pci-0000:00:0d.0-usb-0:3.4.2:1.0-video-i
+[23;80Hindex0 -> ../../video4
+lrwxrwxrwx 1 root root 12 11月  6 21:57 pci-0000:00:0d.0-usb-0:3.4.2:1.0-video-i
+[23;80Hindex1 -> ../../video5
+lrwxrwxrwx 1 root root 12 11月  6 21:57 pci-0000:00:0d.0-usb-0:3.4.2:1.2-video-i
+[23;80Hindex0 -> ../../video6
+lrwxrwxrwx 1 root root 12 11月  6 21:57 pci-0000:00:0d.0-usb-0:3.4.2:1.2-video-i
+[23;80Hindex1 -> ../../video7
+lrwxrwxrwx 1 root root 12 11月  6 21:57 pci-0000:00:0d.0-usb-0:3.4.2:1.4-video-i
+[23;80Hindex0 -> ../../video8
+lrwxrwxrwx 1 root root 12 11月  6 21:57 pci-0000:00:0d.0-usb-0:3.4.2:1.4-video-i
+[23;80Hindex1 -> ../../video9
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usb-0:3.4.3:1.0-video-i
+[23;80Hindex0 -> ../../video10
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usb-0:3.4.3:1.0-video-i
+[23;80Hindex1 -> ../../video11
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usb-0:3.4.3:1.0-video-i
+[23;80Hindex2 -> ../../video12
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usb-0:3.4.3:1.0-video-i
+[23;80Hindex3 -> ../../video13
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usb-0:3.4.3:1.0-video-i
+[23;80Hindex4 -> ../../video14
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usb-0:3.4.3:1.0-video-i
+[23;80Hindex5 -> ../../video15
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usb-0:3.4.3:1.4-video-i
+[23;80Hindex0 -> ../../video16
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usb-0:3.4.3:1.4-video-i
+[23;80Hindex1 -> ../../video17
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usb-0:3.4.4:1.0-video-i
+[23;80Hindex0 -> ../../video18
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usb-0:3.4.4:1.0-video-i
+[23;80Hindex1 -> ../../video19
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usb-0:3.4.4:1.2-video-i
+[23;80Hindex0 -> ../../video20
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usb-0:3.4.4:1.2-video-i
+[23;80Hindex1 -> ../../video21
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usb-0:3.4.4:1.4-video-i
+[23;80Hindex0 -> ../../video22
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usb-0:3.4.4:1.4-video-i
+[23;80Hindex1 -> ../../video23
+lrwxrwxrwx 1 root root 12 11月  6 21:57 pci-0000:00:0d.0-usbv3-0:3.4.2:1.0-video
+[23;80Ho-index0 -> ../../video4
+lrwxrwxrwx 1 root root 12 11月  6 21:57 pci-0000:00:0d.0-usbv3-0:3.4.2:1.0-video
+[23;80Ho-index1 -> ../../video5
+lrwxrwxrwx 1 root root 12 11月  6 21:57 pci-0000:00:0d.0-usbv3-0:3.4.2:1.2-video
+[23;80Ho-index0 -> ../../video6
+lrwxrwxrwx 1 root root 12 11月  6 21:57 pci-0000:00:0d.0-usbv3-0:3.4.2:1.2-video
+[23;80Ho-index1 -> ../../video7
+lrwxrwxrwx 1 root root 12 11月  6 21:57 pci-0000:00:0d.0-usbv3-0:3.4.2:1.4-video
+[23;80Ho-index0 -> ../../video8
+lrwxrwxrwx 1 root root 12 11月  6 21:57 pci-0000:00:0d.0-usbv3-0:3.4.2:1.4-video
+[23;80Ho-index1 -> ../../video9
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usbv3-0:3.4.3:1.0-video
+[23;80Ho-index0 -> ../../video10
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usbv3-0:3.4.3:1.0-video
+[23;80Ho-index1 -> ../../video11
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usbv3-0:3.4.3:1.0-video
+[23;80Ho-index2 -> ../../video12
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usbv3-0:3.4.3:1.0-video
+[23;80Ho-index3 -> ../../video13
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usbv3-0:3.4.3:1.0-video
+[23;80Ho-index4 -> ../../video14
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usbv3-0:3.4.3:1.0-video
+[23;80Ho-index5 -> ../../video15
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usbv3-0:3.4.3:1.4-video
+[23;80Ho-index0 -> ../../video16
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usbv3-0:3.4.3:1.4-video
+[23;80Ho-index1 -> ../../video17
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usbv3-0:3.4.4:1.0-video
+[23;80Ho-index0 -> ../../video18
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usbv3-0:3.4.4:1.0-video
+[23;80Ho-index1 -> ../../video19
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usbv3-0:3.4.4:1.2-video
+[23;80Ho-index0 -> ../../video20
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usbv3-0:3.4.4:1.2-video
+[23;80Ho-index1 -> ../../video21
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usbv3-0:3.4.4:1.4-video
+[23;80Ho-index0 -> ../../video22
+lrwxrwxrwx 1 root root 13 11月  6 21:57 pci-0000:00:0d.0-usbv3-0:3.4.4:1.4-video
+[23;80Ho-index1 -> ../../video23
+lrwxrwxrwx 1 root root 12 11月  5 11:22 pci-0000:00:14.0-usb-0:7:1.0-video-index
+[23;80Hx0 -> ../../video0
+lrwxrwxrwx 1 root root 12 11月  5 11:22 pci-0000:00:14.0-usb-0:7:1.0-video-index
+[23;80Hx1 -> ../../video1
+lrwxrwxrwx 1 root root 12 11月  5 11:22 pci-0000:00:14.0-usb-0:7:1.2-video-index
+[23;80Hx0 -> ../../video2
+lrwxrwxrwx 1 root root 12 11月  5 11:22 pci-0000:00:14.0-usb-0:7:1.2-video-index
+[23;80Hx1 -> ../../video3
+lrwxrwxrwx 1 root root 12 11月  5 11:22 pci-0000:00:14.0-usbv2-0:7:1.0-video-ind
+[23;80Hdex0 -> ../../video0
+lrwxrwxrwx 1 root root 12 11月  5 11:22 pci-0000:00:14.0-usbv2-0:7:1.0-video-ind
+[23;80Hdex1 -> ../../video1
+lrwxrwxrwx 1 root root 12 11月  5 11:22 pci-0000:00:14.0-usbv2-0:7:1.2-video-ind
+[23;80Hdex0 -> ../../video2
+lrwxrwxrwx 1 root root 12 11月  5 11:22 pci-0000:00:14.0-usbv2-0:7:1.2-video-ind
+[23;80Hdex1 -> ../../video3
+  59244 /usr/share/code/chrome_crashpad_handler --monitor-self-annotation=ptype=
+[23;80H=crashpad-handler --no-rate-limit --database=/home/qwer/.config/Code/Crashpad --u
+[23;80Hurl=appcenter://code?aid=fba07a4d-84bd-4fc8-a125-9640fc8ce171&uid=c76d1a11-df94-4
+[23;80H4e1e-b2cf-45ea2f1bb64b&iid=c76d1a11-df94-4e1e-b2cf-45ea2f1bb64b&sid=c76d1a11-df94
+[23;80H4-4e1e-b2cf-45ea2f1bb64b --annotation=_companyName=Microsoft --annotation=_produc
+[23;80HctName=VSCode --annotation=_version=1.145.0 --annotation=lsb-release=Ubuntu 24.04
+[23;80H4.5 LTS --annotation=plat=Linux --annotation=prod=Electron --annotation=ver=43.8.
+[23;80H.3 --initial-client-fd=36 --shared-client-connection
+jazzy
+PRETTY_NAME="Ubuntu 24.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="24.04"
+VERSION="24.04.5 LTS (Noble Numbat)"
+VERSION_CODENAME=noble
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-poli
+[23;80Hicy"
+UBUNTU_CODENAME=noble
+LOGO=ubuntu-logo
+qwer@qwer-ThinkPad-L14-Gen-2:~$[1C

@@ -1,0 +1,14 @@
+{
+  "motors_read_verified": 14,
+  "hand_identity_verified": 2,
+  "cameras_single_stream_verified": 3,
+  "frames_per_camera": 15,
+  "images_exported": false,
+  "motion_commands_sent": false,
+  "wrist_role_binding_complete": true,
+  "registration_verified": false,
+  "code_syntax": "PASS",
+  "evidence_consistency": "PASS",
+  "head_role_binding_complete": true,
+  "all_three_camera_roles_verified": true
+}
