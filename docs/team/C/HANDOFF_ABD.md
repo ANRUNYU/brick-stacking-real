@@ -1,5 +1,7 @@
 # C31 当前交接补充（2026-11-08）
 
+**C37：** 用户新增20mm棋盘格，头部已识别9×6内角点；RGB/深度存在25.894mm差异，尚不用于替换C35。按用户提议转为桌面固定棋盘格+左腕相机路线，实际左腕视野已查看，安装参考段待确认；当前不产出新的手眼矩阵。详见[C37_CHECKERBOARD.md](C37_CHECKERBOARD.md)。
+
 **C35/C36最新：** 用户接受10mm拟合门槛，6组max6.724mm满足；独立验证按用户要求未做。相机→左基座参数在calibration/candidates，临时标定块偏移不是实际TCP。当前实拍两块基座坐标、抓取几何/10槽位见[C36_SCENE_GEOMETRY.md](C36_SCENE_GEOMETRY.md)。C→A41点Mock样例/3反馈场景已跑通，未合并A源码。304软件回归后按用户要求不扩大测试。真实动作仍需A七轴状态、D稳定预设/持物TF及完整场景。
 
 **C35当前采集：** [C35_FIELD_SESSION.md](C35_FIELD_SESSION.md)记录实际固定块多姿态、具名五轴曝光FK和三面中心候选；当前3训练候选、时间PROVISIONAL，无有效外参/TCP。新增prepare_fixed_camera_point_sample.py及297回归。A1-04/D1-02接口已审阅，C与A的连续插值语义仍需显式适配，不能将Mock反馈当真实能力；未改其他成员源码。
@@ -192,3 +194,7 @@ O6_INDEX_FIELD_TRIAL.md给出精确命令、现场责任、原始预览hash和�
 用户已确认手指可动，SSH读取O6测试/fixture/已有报告：单指交互7/7记通过（报告未绑定SN），速度报告备注混有shell文本，不能直接验收速度或当机械故障。取消上轮单指8raw方案作为下一动作；未执行。config/planning/o6_sdk_pose_references_candidate.json保存可追溯开/半闭/全闭百分比参考，非rad、非开口mm、非50mm已验收抓握。不要把test_all_closed直接用于抓块。
 
 o6_hand fixture先100%速度/加速度全开，即便选读取测试也有动作，C没有运行该pytest命令。O6_SIDE只选ID，仍须按SN发现总线。新c_o6_tactile_probe.py绕过fixture完成两轮五指只读矩阵采集：10组完整10×4、全0，raw未标定，无接触响应验收。证据/源码hash/历史报告和主动读取报告见O6_SDK_TEST_REVIEW.md、evidence/o6_sdk_test_audit_20261108.json及left_o6_tactile_summary_20261108.json。全套209 passed，真实控制写入0。下一现场可只轻触食指触觉区域读变化，无需再动手指或让用户设计路线。
+
+## C38（2026-11-09，C1-02/C1-03，M1/M2a）
+
+详见[C38_WRIST_HAND_EYE.md](C38_WRIST_HAND_EYE.md)。真实七轴反馈已取得；两次腕Rest、零位置目标、零使能。头部与左腕同时开流取图，中央棋盘头部54角点/RMS0.148px，腕图被手掌/机身遮挡，没有棋盘，不能求新的手眼矩阵。新增原始八系数RGB棋盘工具与复用点求解器的眼在手上求解接口，合成方向回归1 passed，实际双相机检测结果已保留。用户授权左臂运动并说明无人支撑；当前单关节测试不能替代整臂抬起路径，先需可靠支撑进入棋盘视野或A的协调到位入口。没有修改C35矩阵或把像素精度当真实验收。
