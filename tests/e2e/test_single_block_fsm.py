@@ -19,7 +19,8 @@ CONFIG = Path(__file__).resolve().parents[2] / "config/offline_task.yaml"
 
 @pytest.fixture
 def scenario():
-    def build(*, failed_grasps=0, placement_error=0., change_evidence=lambda evidence, request: evidence):
+    def build(*, failed_grasps=0, placement_error=0., verification_for=None,
+              change_evidence=lambda evidence, request: evidence):
         config = load_config(CONFIG)
         frame = config["scene"]["frame_id"]
         slot = Slot("slot-1", 0, "red", (0., 0., .025), frame, ())
@@ -57,7 +58,7 @@ def scenario():
             config=config, scene_manager=manager, port=world,
             event_sink=lambda name, details: events.append((name, details)),
             evidence_for=evidence_for, device_id=DEVICE, calibration_hash=CALIBRATION,
-            timeout_s=1., clock=lambda: clock[0],
+            timeout_s=1., clock=lambda: clock[0], verification_for=verification_for,
         )
         return fsm, world, manager, events, clock
 
@@ -139,3 +140,48 @@ def test_bad_placement_is_not_committed(scenario):
     assert fsm.run().stage == TaskStage.SAFE_HALT
     assert manager.states["slot-1"] == SlotState.UNVERIFIED
     assert not manager.occupants and world.events[-1]["stage"] == "MOCK_STOP"
+
+
+def visual_fixture(*, phase, block_id, slot, before, after, scene_version, config_hash, calibration_hash):
+    assert slot.slot_id == "slot-1"
+    refs = (before.observation_id, after.observation_id)
+    return {
+        "sample_id": f"visual:{phase}:{after.observation_id}", "source": "mock",
+        "device_id": "mock-camera", "frame_id": "mock-camera-optical", "device_stamp": None,
+        "object_id": block_id, "phase": phase, "validity": "VALID", "verdict": "PASS",
+        "reason": None, "error_m": None, "clock_domain": after.clock_domain, "epoch": after.epoch,
+        "host_receive_stamp": after.stamp_s, "scene_version": scene_version,
+        "config_hash": config_hash, "calibration_hash": calibration_hash,
+        "observation_refs": refs, "image_refs": tuple(f"mock-image:{ref}" for ref in refs),
+        "scope": "held" if phase == "PICK" else "released_stable",
+    }
+
+
+def test_consumes_pick_and_place_evidence(scenario):
+    fsm, _, manager, events, _ = scenario(verification_for=visual_fixture)
+    assert fsm.run().stage == TaskStage.DONE
+    assert manager.states["slot-1"] == SlotState.PLACED_VERIFIED
+    assert [row["phase"] for name, row in events if name == "visual_verification"] == ["PICK", "PLACE"]
+
+
+@pytest.mark.parametrize(("phase", "override", "reason"), [
+    ("PICK", {"verdict": "FAIL"}, "not verified"),
+    ("PICK", {"verdict": "UNKNOWN", "reason": "occluded"}, "not verified"),
+    ("PICK", {"host_receive_stamp": -1.}, "stale/future"),
+    ("PICK", {"observation_refs": ("old-before", "old-after")}, "context mismatch"),
+    ("PLACE", {"calibration_hash": "changed-camera-geometry"}, "context mismatch"),
+    ("PLACE", {"scope": "position_only"}, "scope or provenance insufficient"),
+])
+def test_visual_evidence_cannot_advance_transaction(scenario, phase, override, reason):
+    def verification_for(**request):
+        result = visual_fixture(**request)
+        return {**result, **override} if request["phase"] == phase else result
+
+    fsm, world, manager, _, _ = scenario(verification_for=verification_for)
+    result = fsm.run()
+    assert result.stage == TaskStage.SAFE_HALT and reason in result.reason
+    assert not manager.occupants
+    if phase == "PICK":
+        assert [event["stage"] for event in world.events] == ["PRE_GRASP", "GRASP", "MOCK_STOP"]
+    else:
+        assert manager.states["slot-1"] == SlotState.UNVERIFIED
