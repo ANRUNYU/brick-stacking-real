@@ -1,7 +1,13 @@
 """Mock transitions are software fixtures; no CAN, ROS, or SDK imports."""
 import json
 from pathlib import Path
+import time
+from typing import cast
+from uuid import uuid4
+
 import numpy as np
+
+from brick_stacking.contracts import HandChannels, HandRole, HandState
 from brick_stacking.models.camera_frame import CameraFrame
 
 
@@ -45,8 +51,43 @@ class MockArm:
 class MockHand:
     hardware_enabled = False
 
-    def __init__(self):
+    def __init__(
+        self,
+        *,
+        role: HandRole = "left",
+        raw_u8: HandChannels = (0, 0, 0, 0, 0, 0),
+    ):
+        if role not in ("left", "right"):
+            raise ValueError("select left or right")
+        values = tuple(raw_u8)
+        if len(values) != 6 or any(type(value) is not int or not 0 <= value <= 255 for value in values):
+            raise ValueError("mock hand requires six raw_u8 channels in [0, 255]")
+        self._role = role
+        self._raw_u8 = cast(HandChannels, values)
+        self._epoch = uuid4().hex
         self._preset = "UNKNOWN"
+
+    def read_hand_state(self) -> HandState:
+        serial = f"mock-o6-{self._role}"
+        return {
+            "sample_id": uuid4().hex,
+            "source": "mock",
+            "device_id": serial,
+            "frame_id": f"{self._role}_hand",
+            "device_stamp": None,
+            "host_receive_stamp": time.monotonic(),
+            "clock_domain": "host_monotonic",
+            "epoch": self._epoch,
+            "validity": "VALID",
+            "reason": None,
+            "role": self._role,
+            "hand_sn": serial,
+            "raw_u8": self._raw_u8,
+            "mapping_version": "mock-raw-u8-v1",
+            "fault_valid": False,
+            "temperature_valid": False,
+            "tactile_valid": False,
+        }
 
     def simulate_preset(self, name):
         if name not in {"MOCK_OPEN", "MOCK_HOLD"}:

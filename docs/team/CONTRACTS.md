@@ -13,7 +13,7 @@
 |类型|必要内容|生产者|使用者|
 |---|---|---|---|
 |ArmState|关节名、q_rad、dq_rad_s（可未知）、使能/故障（可未知）、时间和有效位|A|C/D|
-|HandState|角色/SN、六通道原始值、映射版本、故障/温度/触觉能力有效位|D|C/任务逻辑|
+|HandState|角色/SN、六通道 `raw_u8` 或 `percent`、映射版本、故障/温度/触觉能力有效位。仅有 SDK 百分比时 `raw_u8=null`|D|C/任务逻辑|
 |RGBDObservation|相机SN、RGB/depth引用、K/D、原始尺度、profile、空间配准标志和时间差|B|B感知/C标定|
 |BlockObservation|observation_id、camera frame位姿、颜色、尺寸来源、质量/协方差或未知、可见性|B|C/D|
 |LocalizedBlock|observation_id、world位姿、输入TF/校准版本、误差/有效性|C|D|
