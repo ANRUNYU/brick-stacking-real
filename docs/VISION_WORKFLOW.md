@@ -115,4 +115,3 @@ python -m brick_stacking.app.tabletop_runner --config config/vision_profiles/hea
 此前黄色重复区域问题已进一步修复，并增加连续帧一致性检查。76 项视觉/定位测试通过；两组历史数据回归及一组新采集会话的二维匹配检查通过，Windows/Linux 固定依赖验证结果一致。完整验收尚未完成：待新物理布局、在线性能和独立定位误差测试。保持开发候选，不作为完成版本发布。
 
 本轮报告：[冻结候选验证记录](TEST_REPORTS/ADAPTIVE_CANDIDATE_VALIDATION_20261106.md)。纯录制数据验证的固定依赖见根目录 `requirements-vision-validation.txt`；不要安装到机器人控制环境或覆盖原相机 SDK 环境。
-
