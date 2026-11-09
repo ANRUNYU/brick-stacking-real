@@ -70,6 +70,9 @@ class OfflineExecutionManager:
         return TaskResult(self.stage, tuple(self.scene_manager.occupants), reason, self.recovery_attempts,
                           reobservations=self.reobservations)
 
+    def _verify_transition(self, phase, block_id, slot, before, after):
+        """Optional additional evidence supplied by the single-block workflow."""
+
     def _halt(self, reason):
         self._stage(TaskStage.SAFE_HALT, reason=reason)
         # Reject device adapters before invoking even a stop method.
@@ -197,6 +200,7 @@ class OfflineExecutionManager:
                 if (self.port.payload != block.object_id or held is None or not held.visible or held.ambiguous
                         or held.location != BlockLocation.HELD_LEFT):
                     return self._halt("pick not verified")
+                self._verify_transition("PICK", block.object_id, slot, snapshot, picked)
                 self._stage(TaskStage.TRANSPORT)
                 self._step("TRANSPORT", block.object_id, slot)
                 self._stage(TaskStage.PLACE)
@@ -214,6 +218,7 @@ class OfflineExecutionManager:
                     verdict = self._placement_verdict(after, block.object_id, slot)
                 if verdict != "PASS":
                     return self._halt(f"placement {verdict}; occupancy retained as unverified")
+                self._verify_transition("PLACE", block.object_id, slot, picked, after)
                 self.scene_manager.commit_verified(slot.slot_id, block.object_id)
                 snapshot = None
             self._stage(TaskStage.FINAL_STABILITY_CHECK)

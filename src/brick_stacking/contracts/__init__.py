@@ -179,6 +179,10 @@ class VerificationEvidence(Sample):
     error_m: float | None
     image_refs: tuple[str, ...]
     observation_refs: tuple[str, ...]
+    scene_version: NotRequired[str]
+    config_hash: NotRequired[str]
+    calibration_hash: NotRequired[str]
+    scope: NotRequired[Literal["held", "position_only", "released_stable"]]
 
 
 class ExecutionResult(TypedDict):
