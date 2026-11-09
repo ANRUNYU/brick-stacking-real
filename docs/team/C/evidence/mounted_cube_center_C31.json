@@ -1,0 +1,548 @@
+[
+  {
+    "schema_version": "c-cube-center-observation-1",
+    "source": "real_measured",
+    "camera_serial": "CP2L863000KL",
+    "frame_sha256": "1344391395b18b71cdbaed64a787083dc14ba9c2f5f66260a2aea07567a03b83",
+    "camera_stamp_s": 154447.346808,
+    "camera_clock_domain": "orbbec_CP2L863000KL_9832ca6ce1ed4a39b234325e74ececc7",
+    "host_receive_stamp_s": 277977.498210603,
+    "host_clock_domain": "host_monotonic",
+    "center_camera_m": [
+      -0.22589061063284827,
+      0.08968506958574313,
+      0.5156947622834814
+    ],
+    "config": {
+      "camera_serial": "CP2L863000KL",
+      "edge_m": 0.05,
+      "edge_source": "operator ruler measurement 50x50x50 mm; regular cube",
+      "roi_source": "manual three visible face interior polygons from rectified frame000; diagnostic only; capture failed stationary quality",
+      "face_polygons_xy": [
+        [
+          [
+            348,
+            469
+          ],
+          [
+            396,
+            467
+          ],
+          [
+            389,
+            499
+          ],
+          [
+            340,
+            503
+          ]
+        ],
+        [
+          [
+            405,
+            480
+          ],
+          [
+            413,
+            496
+          ],
+          [
+            408,
+            520
+          ],
+          [
+            399,
+            508
+          ]
+        ],
+        [
+          [
+            340,
+            518
+          ],
+          [
+            390,
+            515
+          ],
+          [
+            399,
+            531
+          ],
+          [
+            354,
+            533
+          ]
+        ]
+      ],
+      "erosion_px": 0,
+      "plane_threshold_m": 0.002,
+      "min_inlier_ratio": 0.9,
+      "max_holdout_m": 0.003,
+      "max_normal_dot": 0.1,
+      "max_condition_number": 10,
+      "regular_cube_constraint": true
+    },
+    "face_pixel_counts": [
+      {
+        "selected": 1660,
+        "valid": 1660,
+        "training": 830,
+        "validation": 830
+      },
+      {
+        "selected": 346,
+        "valid": 224,
+        "training": 112,
+        "validation": 112
+      },
+      {
+        "selected": 829,
+        "valid": 829,
+        "training": 415,
+        "validation": 414
+      }
+    ],
+    "approved": false,
+    "motion_enabled": false,
+    "time_alignment": "NOT_ESTABLISHED",
+    "notice": "device and host receive clocks kept separate; no reference pose/camera extrinsic here",
+    "quality": {
+      "schema_version": "c-three-face-center-1",
+      "face_reports": [
+        {
+          "normal_camera": [
+            0.004971508079588866,
+            -0.6865166342757663,
+            -0.7270971014727591
+          ],
+          "offset_m": 0.41265157051211404,
+          "inlier_ratio": 1.0,
+          "fit_rms_m": 0.0005844168909632848,
+          "validation_n": 830,
+          "validation_p95_m": 0.001110817905354308,
+          "validation_max_m": 0.0019013366273308852,
+          "fitted_cube_normal_camera": [
+            0.01020310600667145,
+            -0.6888495554677774,
+            -0.7248325231111414
+          ],
+          "constrained_validation_p95_m": 0.0011519841131975316,
+          "constrained_validation_max_m": 0.0019522443830705463
+        },
+        {
+          "normal_camera": [
+            0.9930305981318391,
+            0.0005060836510543121,
+            0.1178557383128201
+          ],
+          "offset_m": 0.13863203839975055,
+          "inlier_ratio": 0.9464285714285714,
+          "fit_rms_m": 0.0008765782836447909,
+          "validation_n": 112,
+          "validation_p95_m": 0.001962643377380351,
+          "validation_max_m": 0.0030356123931113144,
+          "fitted_cube_normal_camera": [
+            0.9959694845018316,
+            -0.05759611308461989,
+            0.06875662658027816
+          ],
+          "constrained_validation_p95_m": 0.002202390833679877,
+          "constrained_validation_max_m": 0.004259740166008576
+        },
+        {
+          "normal_camera": [
+            0.09093313415775263,
+            0.715754716681571,
+            -0.6924062035108678
+          ],
+          "offset_m": 0.2883792516839879,
+          "inlier_ratio": 1.0,
+          "fit_rms_m": 0.0004374245737531676,
+          "validation_n": 414,
+          "validation_p95_m": 0.0008629859454488157,
+          "validation_max_m": 0.001544249254071095,
+          "fitted_cube_normal_camera": [
+            0.08911050762380802,
+            0.722612605542825,
+            -0.6854854774111835
+          ],
+          "constrained_validation_p95_m": 0.0008392023594165069,
+          "constrained_validation_max_m": 0.0015005029000734436
+        }
+      ],
+      "max_abs_normal_dot": 0.08110314092207589,
+      "normal_condition_number": 1.0863567890851096,
+      "regular_cube_constraint": true,
+      "converged": true,
+      "consistency": "FAIL",
+      "orientation_xyzw": null,
+      "approved": false,
+      "motion_enabled": false,
+      "scope": "three-face depth/size consistency only; no labelled orientation, absolute sensor accuracy or calibration approval"
+    }
+  },
+  {
+    "schema_version": "c-cube-center-observation-1",
+    "source": "real_measured",
+    "camera_serial": "CP2L863000KL",
+    "frame_sha256": "c31a42381ea4598862499ba6ea3773585123d067a89bcd67587766edfcb916d1",
+    "camera_stamp_s": 154447.413544,
+    "camera_clock_domain": "orbbec_CP2L863000KL_9832ca6ce1ed4a39b234325e74ececc7",
+    "host_receive_stamp_s": 277977.564922054,
+    "host_clock_domain": "host_monotonic",
+    "center_camera_m": [
+      -0.2261201339258774,
+      0.08931794394288443,
+      0.5155607013967382
+    ],
+    "config": {
+      "camera_serial": "CP2L863000KL",
+      "edge_m": 0.05,
+      "edge_source": "operator ruler measurement 50x50x50 mm; regular cube",
+      "roi_source": "manual three visible face interior polygons from rectified frame000; diagnostic only; capture failed stationary quality",
+      "face_polygons_xy": [
+        [
+          [
+            348,
+            469
+          ],
+          [
+            396,
+            467
+          ],
+          [
+            389,
+            499
+          ],
+          [
+            340,
+            503
+          ]
+        ],
+        [
+          [
+            405,
+            480
+          ],
+          [
+            413,
+            496
+          ],
+          [
+            408,
+            520
+          ],
+          [
+            399,
+            508
+          ]
+        ],
+        [
+          [
+            340,
+            518
+          ],
+          [
+            390,
+            515
+          ],
+          [
+            399,
+            531
+          ],
+          [
+            354,
+            533
+          ]
+        ]
+      ],
+      "erosion_px": 0,
+      "plane_threshold_m": 0.002,
+      "min_inlier_ratio": 0.9,
+      "max_holdout_m": 0.003,
+      "max_normal_dot": 0.1,
+      "max_condition_number": 10,
+      "regular_cube_constraint": true
+    },
+    "face_pixel_counts": [
+      {
+        "selected": 1660,
+        "valid": 1660,
+        "training": 830,
+        "validation": 830
+      },
+      {
+        "selected": 346,
+        "valid": 213,
+        "training": 107,
+        "validation": 106
+      },
+      {
+        "selected": 829,
+        "valid": 829,
+        "training": 415,
+        "validation": 414
+      }
+    ],
+    "approved": false,
+    "motion_enabled": false,
+    "time_alignment": "NOT_ESTABLISHED",
+    "notice": "device and host receive clocks kept separate; no reference pose/camera extrinsic here",
+    "quality": {
+      "schema_version": "c-three-face-center-1",
+      "face_reports": [
+        {
+          "normal_camera": [
+            0.0002902735993089871,
+            -0.6813135488037416,
+            -0.7319916419998859
+          ],
+          "offset_m": 0.41330288292395345,
+          "inlier_ratio": 0.9987951807228915,
+          "fit_rms_m": 0.0006281126663992367,
+          "validation_n": 830,
+          "validation_p95_m": 0.0011748892795023086,
+          "validation_max_m": 0.002298055160225909,
+          "fitted_cube_normal_camera": [
+            0.0035666483951965963,
+            -0.6849568372340525,
+            -0.7285749173184243
+          ],
+          "constrained_validation_p95_m": 0.0012026653625108572,
+          "constrained_validation_max_m": 0.002343162480985716
+        },
+        {
+          "normal_camera": [
+            0.99534455989262,
+            -0.0036917635598181925,
+            0.09630980206596448
+          ],
+          "offset_m": 0.15071816040732466,
+          "inlier_ratio": 0.9439252336448598,
+          "fit_rms_m": 0.000913700949612084,
+          "validation_n": 106,
+          "validation_p95_m": 0.002191939657631904,
+          "validation_max_m": 0.002974845676899096,
+          "fitted_cube_normal_camera": [
+            0.9960720328639376,
+            -0.06202788080323759,
+            0.063190563768351
+          ],
+          "constrained_validation_p95_m": 0.0022560434213276352,
+          "constrained_validation_max_m": 0.003059862961246416
+        },
+        {
+          "normal_camera": [
+            0.09170630044063313,
+            0.7139108176187831,
+            -0.6942055163612373
+          ],
+          "offset_m": 0.2898172504421693,
+          "inlier_ratio": 1.0,
+          "fit_rms_m": 0.0004010826941766155,
+          "validation_n": 414,
+          "validation_p95_m": 0.0007856630870094181,
+          "validation_max_m": 0.0014175805001072628,
+          "fitted_cube_normal_camera": [
+            0.0884747668294625,
+            0.7259384775098946,
+            -0.6820451176462515
+          ],
+          "constrained_validation_p95_m": 0.0008107655502673073,
+          "constrained_validation_max_m": 0.0013140116341935903
+        }
+      ],
+      "max_abs_normal_dot": 0.06769379937471262,
+      "normal_condition_number": 1.077056389821176,
+      "regular_cube_constraint": true,
+      "converged": true,
+      "consistency": "FAIL",
+      "orientation_xyzw": null,
+      "approved": false,
+      "motion_enabled": false,
+      "scope": "three-face depth/size consistency only; no labelled orientation, absolute sensor accuracy or calibration approval"
+    }
+  },
+  {
+    "schema_version": "c-cube-center-observation-1",
+    "source": "real_measured",
+    "camera_serial": "CP2L863000KL",
+    "frame_sha256": "07f7dfdc6a41d16c7b5a7044198791d73ead947e0688ffcfd55ebe938e2d91e2",
+    "camera_stamp_s": 154447.48028,
+    "camera_clock_domain": "orbbec_CP2L863000KL_9832ca6ce1ed4a39b234325e74ececc7",
+    "host_receive_stamp_s": 277977.630820209,
+    "host_clock_domain": "host_monotonic",
+    "center_camera_m": [
+      -0.22594490400861356,
+      0.08965744707444534,
+      0.5156925409348067
+    ],
+    "config": {
+      "camera_serial": "CP2L863000KL",
+      "edge_m": 0.05,
+      "edge_source": "operator ruler measurement 50x50x50 mm; regular cube",
+      "roi_source": "manual three visible face interior polygons from rectified frame000; diagnostic only; capture failed stationary quality",
+      "face_polygons_xy": [
+        [
+          [
+            348,
+            469
+          ],
+          [
+            396,
+            467
+          ],
+          [
+            389,
+            499
+          ],
+          [
+            340,
+            503
+          ]
+        ],
+        [
+          [
+            405,
+            480
+          ],
+          [
+            413,
+            496
+          ],
+          [
+            408,
+            520
+          ],
+          [
+            399,
+            508
+          ]
+        ],
+        [
+          [
+            340,
+            518
+          ],
+          [
+            390,
+            515
+          ],
+          [
+            399,
+            531
+          ],
+          [
+            354,
+            533
+          ]
+        ]
+      ],
+      "erosion_px": 0,
+      "plane_threshold_m": 0.002,
+      "min_inlier_ratio": 0.9,
+      "max_holdout_m": 0.003,
+      "max_normal_dot": 0.1,
+      "max_condition_number": 10,
+      "regular_cube_constraint": true
+    },
+    "face_pixel_counts": [
+      {
+        "selected": 1660,
+        "valid": 1660,
+        "training": 830,
+        "validation": 830
+      },
+      {
+        "selected": 346,
+        "valid": 215,
+        "training": 110,
+        "validation": 105
+      },
+      {
+        "selected": 829,
+        "valid": 829,
+        "training": 415,
+        "validation": 414
+      }
+    ],
+    "approved": false,
+    "motion_enabled": false,
+    "time_alignment": "NOT_ESTABLISHED",
+    "notice": "device and host receive clocks kept separate; no reference pose/camera extrinsic here",
+    "quality": {
+      "schema_version": "c-three-face-center-1",
+      "face_reports": [
+        {
+          "normal_camera": [
+            0.003205664633864049,
+            -0.6816611633390574,
+            -0.7316609748438812
+          ],
+          "offset_m": 0.4141507479394581,
+          "inlier_ratio": 1.0,
+          "fit_rms_m": 0.0005854896105988372,
+          "validation_n": 830,
+          "validation_p95_m": 0.0011447522253653526,
+          "validation_max_m": 0.0018797301378408182,
+          "fitted_cube_normal_camera": [
+            0.005812733869583364,
+            -0.6849070977078696,
+            -0.7286072190380385
+          ],
+          "constrained_validation_p95_m": 0.0011238412785923985,
+          "constrained_validation_max_m": 0.001921334363069866
+        },
+        {
+          "normal_camera": [
+            0.9968125110590085,
+            -0.0004994126641408442,
+            0.07977824504979554
+          ],
+          "offset_m": 0.15905276466907786,
+          "inlier_ratio": 0.9545454545454546,
+          "fit_rms_m": 0.0008664189483492656,
+          "validation_n": 105,
+          "validation_p95_m": 0.0017925595543882566,
+          "validation_max_m": 0.004726462781371427,
+          "fitted_cube_normal_camera": [
+            0.995870223749632,
+            -0.06205057493650767,
+            0.06627385305613674
+          ],
+          "constrained_validation_p95_m": 0.001988871662904427,
+          "constrained_validation_max_m": 0.005021785248332564
+        },
+        {
+          "normal_camera": [
+            0.09535099707629607,
+            0.7147560313138028,
+            -0.6928434188596277
+          ],
+          "offset_m": 0.289689336266801,
+          "inlier_ratio": 1.0,
+          "fit_rms_m": 0.00046534196149270016,
+          "validation_n": 414,
+          "validation_p95_m": 0.0008999136584456632,
+          "validation_max_m": 0.0015032278418952716,
+          "fitted_cube_normal_camera": [
+            0.09060192919479704,
+            0.7259834665193354,
+            -0.6817179011634874
+          ],
+          "constrained_validation_p95_m": 0.0009092189697877973,
+          "constrained_validation_max_m": 0.0014765674571954011
+        }
+      ],
+      "max_abs_normal_dot": 0.054834751713547854,
+      "normal_condition_number": 1.0717495713871459,
+      "regular_cube_constraint": true,
+      "converged": true,
+      "consistency": "FAIL",
+      "orientation_xyzw": null,
+      "approved": false,
+      "motion_enabled": false,
+      "scope": "three-face depth/size consistency only; no labelled orientation, absolute sensor accuracy or calibration approval"
+    }
+  }
+]

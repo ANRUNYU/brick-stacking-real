@@ -1,0 +1,86 @@
+{
+  "source": "real",
+  "session_date": "2026-11-08",
+  "schema_version": "c-left-supported-rest-1",
+  "clock_domain": "host_monotonic",
+  "epoch": "1f1b6057-23fc-4f69-9c02-3c6fc74c508e",
+  "remote_path": "/home/qwer/c_calibration_runs/left_supported_rest_34d1edfa-434d-4891-bd17-541c8582bdbf.json",
+  "raw_sha256": "887cc4cfc4d74484bda0aa66817ff2fe855696fd57adb29f8acb4f170a0ba3e1",
+  "received_positions": [
+    {
+      "motor_id": 66,
+      "raw_hex": "007ece7ff8170018",
+      "status": 0,
+      "fault": 0,
+      "position_sdk_rad": null,
+      "notice": "raw V2 feedback; quantization not verified",
+      "host_receive_monotonic_s": 258616.606255517,
+      "position_raw_u16": 32462,
+      "velocity_raw_u12": 2047
+    },
+    {
+      "motor_id": 67,
+      "raw_hex": "0082607ff8030015",
+      "status": 0,
+      "fault": 0,
+      "position_sdk_rad": null,
+      "notice": "raw V2 feedback; quantization not verified",
+      "host_receive_monotonic_s": 258616.607066926,
+      "position_raw_u16": 33376,
+      "velocity_raw_u12": 2047
+    },
+    {
+      "motor_id": 61,
+      "raw_hex": "0684d5eabb",
+      "position_sdk_rad": -0.007166566327214241,
+      "host_receive_monotonic_s": 258616.607822356
+    },
+    {
+      "motor_id": 62,
+      "raw_hex": "06f49497bb",
+      "position_sdk_rad": -0.004625910893082619,
+      "host_receive_monotonic_s": 258616.608633465
+    },
+    {
+      "motor_id": 63,
+      "raw_hex": "06cd892940",
+      "position_sdk_rad": 2.649035692214966,
+      "host_receive_monotonic_s": 258616.609296663
+    },
+    {
+      "motor_id": 64,
+      "raw_hex": "061e361139",
+      "position_sdk_rad": 0.00013848437811248004,
+      "host_receive_monotonic_s": 258616.609914269
+    },
+    {
+      "motor_id": 65,
+      "raw_hex": "06ec20a5bf",
+      "position_sdk_rad": -1.290067195892334,
+      "host_receive_monotonic_s": 258616.610711519
+    }
+  ],
+  "receive_span_s": 0.004456002003280446,
+  "rest_commands_sent": 2,
+  "enable_commands_sent": 0,
+  "target_commands_sent": 0,
+  "flash_writes_sent": 0,
+  "final_wrist_state": "Rest confirmed, no automatic re-enable",
+  "j1_to_j5_enabled_readback": [
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "contact_confirmation": {
+    "confirmed": true,
+    "source": "user onsite reply",
+    "statement": "始终接触同一点，笔杆未松动",
+    "date": "2026-11-08",
+    "covers": "the recorded capture only"
+  },
+  "v2_theta_range_readback": "unknown",
+  "calibration_sample_valid": false,
+  "fixed_point_raw_candidate_index": 1
+}

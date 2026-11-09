@@ -1,0 +1,27 @@
+{
+  "schema_version": "c-installation-evidence-1",
+  "date": "2026-11-07",
+  "arm_model": "P7",
+  "active_arm": "left",
+  "source": "user_reported_physical_verification_of_vendor_geometry",
+  "user_confirmed_matches_vendor": true,
+  "repeat_dimension_measurements_required": false,
+  "raw_measurements_supplied": false,
+  "measurement_uncertainty_m": null,
+  "units": "m",
+  "frame_convention": "T_A_B maps B to A",
+  "vendor_reference": "linker-bot/linker-sim-assets main p7_torso (commit not pinned)",
+  "vendor_base_link_to_left_arm_root": {
+    "matrix": [[1,0,0,0],[0,1,0,0.164],[0,0,1,0],[0,0,0,1]],
+    "target_frame": "vendor_base_link",
+    "source_frame": "L_arm_root",
+    "provenance": "vendor mounting declaration; matching installation confirmed by user"
+  },
+  "simulation_stand_height_is_physical_measurement": false,
+  "T_world_vendor_base_link": null,
+  "T_vendor_base_link_head_color_optical": null,
+  "T_flange_tcp": null,
+  "joint_zero_direction_validation_run_id": null,
+  "approved_for_motion": false,
+  "motion_enabled": false
+}

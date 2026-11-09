@@ -1,0 +1,19 @@
+{
+  "scene_version": "C36_observed_scene_proposal_v1",
+  "table_frame": "table_C36_proposed_placement",
+  "geometry_version": "operator_50mm_regular_cube",
+  "edge_m": 0.05,
+  "edge_source": "user measured 50x50x50 mm regular cube class",
+  "placement_anchor_xy": [600, 630],
+  "objects": [
+    {"candidate_id": "red_right_frame_local_C36", "color": "red", "top_corners_xy": [[684,476],[705,493],[683,511],[663,492]]},
+    {"candidate_id": "yellow_near_frame_local_C36", "color": "yellow", "top_corners_xy": [[444,616],[476,640],[449,670],[414,644]]}
+  ],
+  "mock_grasp_design": {
+    "source": "synthetic geometry from existing cube_face_grasp_synthetic example; D must replace with actual preset/hand geometry",
+    "finger_side_clearance_m": 0.005,
+    "pregrasp_distance_m": 0.08,
+    "hardware_validated": false
+  },
+  "notice": "Frame-local manual observations and proposed placement; not persistent block identity or an execution plan. No real TCP is assumed."
+}

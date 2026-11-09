@@ -1,0 +1,1320 @@
+{
+  "schema_version": "c-observed-scene-geometry-1",
+  "source": "real_recorded_with_mock_grasp_design",
+  "scene_version": "C36_observed_scene_proposal_v1",
+  "calibration_id": "C35_left_head_point_fit_only_user10mm_20261108",
+  "operator_fit_acceptance": {
+    "accepted": true,
+    "scope": "six-pose fitting residual only",
+    "max_residual_m": 0.01,
+    "source": "user explicitly accepts errors within 10 mm",
+    "declared_after_fit": true,
+    "date_local": "2026-11-08",
+    "previous_diagnostic_max_residual_m": 0.005
+  },
+  "independent_validation": "NOT_PERFORMED_AT_USER_REQUEST",
+  "input_device_stamp_s": 162087.25729,
+  "input_clock_domain": "orbbec_CP2L863000KL_b01bc74c32ff4ee097f420175eb80117",
+  "T_base_table_candidate": {
+    "target_frame": "L_arm_root",
+    "source_frame": "table_C36_proposed_placement",
+    "matrix": [
+      [
+        -0.1690954118113735,
+        0.9826310599574106,
+        0.07643913730096566,
+        0.4201669945988557
+      ],
+      [
+        -0.9829978208770513,
+        -0.17377269783414806,
+        0.05931554297490683,
+        -0.1326184630913277
+      ],
+      [
+        0.07156832997428623,
+        -0.06510951923041274,
+        0.995308356566082,
+        -0.5286695455513277
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "source": "derived_unapproved",
+    "approved": false
+  },
+  "blocks": [
+    {
+      "color": "red",
+      "block_pose": {
+        "candidate_id": "red_right_frame_local_C36",
+        "frame_id": "L_arm_root",
+        "stamp_s": 162087.25729,
+        "center_m": [
+          0.5812261768578034,
+          -0.2760929321841137,
+          -0.50737057729576
+        ],
+        "orientation_xyzw": null,
+        "calibration_id": "C35_left_head_point_fit_only_user10mm_20261108",
+        "source": "recorded_geometry_with_accepted_fit",
+        "control_ready": false
+      },
+      "T_base_block_representative": {
+        "target_frame": "L_arm_root",
+        "source_frame": "red_right_frame_local_C36",
+        "matrix": [
+          [
+            -0.8511246145702217,
+            0.5193687984095443,
+            0.07643913730096566,
+            0.5812261768578034
+          ],
+          [
+            -0.51608855692418,
+            -0.8544789451902878,
+            0.05931554297490683,
+            -0.2760929321841137
+          ],
+          [
+            0.09612227569407122,
+            0.011035554590357472,
+            0.995308356566082,
+            -0.50737057729576
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source": "derived_unapproved",
+        "approved": false
+      },
+      "geometry": {
+        "top_center_camera_m": [
+          0.056579039152489324,
+          0.14229235124629963,
+          0.8875581713168891
+        ],
+        "top_vertices_camera_m": [
+          [
+            0.05837298122154676,
+            0.12081674628030781,
+            0.9097333294100008
+          ],
+          [
+            0.08746247777359639,
+            0.14251938895677807,
+            0.8869548173134257
+          ],
+          [
+            0.05406340181555731,
+            0.1644635585617993,
+            0.8646726741952183
+          ],
+          [
+            0.02641729579925683,
+            0.1413697111863134,
+            0.8888718643489114
+          ]
+        ],
+        "observed_corner_edges_m": [
+          0.04284931880588155,
+          0.04575520469241811,
+          0.04339624141053417,
+          0.04334502187946045
+        ],
+        "edge_errors_m": [
+          -0.0071506811941184495,
+          -0.004244795307581893,
+          -0.0066037585894658316,
+          -0.0066549781205395495
+        ],
+        "adjacent_edge_abs_cos": 0.061759914288351064,
+        "orientation_semantics": "one geometric representative; unmarked resting cube yaw is equivalent modulo pi/2",
+        "assumptions": [
+          "cube rests flat on fitted table",
+          "edge is measured",
+          "manual RGB corners identify top boundary"
+        ],
+        "base_transform": null,
+        "approved": false,
+        "motion_enabled": false
+      },
+      "top_depth_p95_error_m": 0.0022337697530910587,
+      "top_depth_max_error_m": 0.0033153322791267953,
+      "base_origin_distance_m": 0.8194364396170046,
+      "grasp_geometry": {
+        "candidates": [
+          {
+            "candidate_id": "red_right_frame_local_C36_face_grasp_0",
+            "target": {
+              "target_frame": "L_arm_root",
+              "source_frame": "red_right_frame_local_C36_face_grasp_0",
+              "matrix": [
+                [
+                  -0.8511246145702217,
+                  0.5193687984095439,
+                  0.07643913730096566,
+                  0.5812261768578034
+                ],
+                [
+                  -0.51608855692418,
+                  -0.8544789451902877,
+                  0.05931554297490683,
+                  -0.2760929321841137
+                ],
+                [
+                  0.09612227569407122,
+                  0.011035554590356371,
+                  0.995308356566082,
+                  -0.50737057729576
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "source": "geometric_grasp_candidate",
+              "approved": false
+            },
+            "pregrasp": {
+              "target_frame": "L_arm_root",
+              "source_frame": "red_right_frame_local_C36_face_grasp_0",
+              "matrix": [
+                [
+                  -0.8511246145702217,
+                  0.5193687984095439,
+                  0.07643913730096566,
+                  0.5873413078418807
+                ],
+                [
+                  -0.51608855692418,
+                  -0.8544789451902877,
+                  0.05931554297490683,
+                  -0.27134768874612114
+                ],
+                [
+                  0.09612227569407122,
+                  0.011035554590356371,
+                  0.995308356566082,
+                  -0.4277459087704734
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "source": "geometric_grasp_candidate",
+              "approved": false
+            },
+            "face_axis_block": 0,
+            "contacts": [
+              {
+                "point_block_m": [
+                  -0.025,
+                  0.0,
+                  0.0
+                ],
+                "point_world_m": [
+                  0.6025042922220589,
+                  -0.2631907182610092,
+                  -0.5097736341881117
+                ],
+                "outward_normal_world": [
+                  0.8511246145702217,
+                  0.51608855692418,
+                  -0.09612227569407122
+                ]
+              },
+              {
+                "point_block_m": [
+                  0.025,
+                  0.0,
+                  0.0
+                ],
+                "point_world_m": [
+                  0.5599480614935479,
+                  -0.28899514610721816,
+                  -0.5049675204034082
+                ],
+                "outward_normal_world": [
+                  -0.8511246145702217,
+                  -0.51608855692418,
+                  0.09612227569407122
+                ]
+              }
+            ],
+            "object_width_m": 0.05,
+            "required_opening_m": 0.060000000000000005,
+            "approach_world": [
+              0.07643913730096566,
+              0.05931554297490683,
+              0.995308356566082
+            ],
+            "travel_direction_world": [
+              -0.07643913730096566,
+              -0.05931554297490683,
+              -0.995308356566082
+            ],
+            "input_capture_stamp_s": null,
+            "flange_goal": null,
+            "hand_preset": null,
+            "ik": "NOT_CHECKED",
+            "trajectory": "NOT_GENERATED",
+            "full_collision": "UNKNOWN",
+            "motion_enabled": false
+          },
+          {
+            "candidate_id": "red_right_frame_local_C36_face_grasp_1",
+            "target": {
+              "target_frame": "L_arm_root",
+              "source_frame": "red_right_frame_local_C36_face_grasp_1",
+              "matrix": [
+                [
+                  0.5193687984095443,
+                  0.8511246145702208,
+                  0.07643913730096566,
+                  0.5812261768578034
+                ],
+                [
+                  -0.8544789451902878,
+                  0.5160885569241797,
+                  0.05931554297490683,
+                  -0.2760929321841137
+                ],
+                [
+                  0.011035554590357472,
+                  -0.09612227569407177,
+                  0.995308356566082,
+                  -0.50737057729576
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "source": "geometric_grasp_candidate",
+              "approved": false
+            },
+            "pregrasp": {
+              "target_frame": "L_arm_root",
+              "source_frame": "red_right_frame_local_C36_face_grasp_1",
+              "matrix": [
+                [
+                  0.5193687984095443,
+                  0.8511246145702208,
+                  0.07643913730096566,
+                  0.5873413078418807
+                ],
+                [
+                  -0.8544789451902878,
+                  0.5160885569241797,
+                  0.05931554297490683,
+                  -0.27134768874612114
+                ],
+                [
+                  0.011035554590357472,
+                  -0.09612227569407177,
+                  0.995308356566082,
+                  -0.4277459087704734
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "source": "geometric_grasp_candidate",
+              "approved": false
+            },
+            "face_axis_block": 1,
+            "contacts": [
+              {
+                "point_block_m": [
+                  0.0,
+                  -0.025,
+                  0.0
+                ],
+                "point_world_m": [
+                  0.5682419568975648,
+                  -0.25473095855435646,
+                  -0.5076464661605189
+                ],
+                "outward_normal_world": [
+                  -0.5193687984095443,
+                  0.8544789451902878,
+                  -0.011035554590357472
+                ]
+              },
+              {
+                "point_block_m": [
+                  0.0,
+                  0.025,
+                  0.0
+                ],
+                "point_world_m": [
+                  0.594210396818042,
+                  -0.2974549058138709,
+                  -0.507094688431001
+                ],
+                "outward_normal_world": [
+                  0.5193687984095443,
+                  -0.8544789451902878,
+                  0.011035554590357472
+                ]
+              }
+            ],
+            "object_width_m": 0.05,
+            "required_opening_m": 0.060000000000000005,
+            "approach_world": [
+              0.07643913730096566,
+              0.05931554297490683,
+              0.995308356566082
+            ],
+            "travel_direction_world": [
+              -0.07643913730096566,
+              -0.05931554297490683,
+              -0.995308356566082
+            ],
+            "input_capture_stamp_s": null,
+            "flange_goal": null,
+            "hand_preset": null,
+            "ik": "NOT_CHECKED",
+            "trajectory": "NOT_GENERATED",
+            "full_collision": "UNKNOWN",
+            "motion_enabled": false
+          }
+        ],
+        "rejected": [
+          {
+            "block_axis": 2,
+            "reason": "closing faces not perpendicular to supplied approach"
+          }
+        ],
+        "geometry_version": "operator_50mm_regular_cube",
+        "scope": "opposed face-center geometry only; contact/friction, opening capability, reachability and hand/environment collision not established"
+      }
+    },
+    {
+      "color": "yellow",
+      "block_pose": {
+        "candidate_id": "yellow_near_frame_local_C36",
+        "frame_id": "L_arm_root",
+        "stamp_s": 162087.25729,
+        "center_m": [
+          0.4158407413487622,
+          0.05257266546551359,
+          -0.5142559393286363
+        ],
+        "orientation_xyzw": null,
+        "calibration_id": "C35_left_head_point_fit_only_user10mm_20261108",
+        "source": "recorded_geometry_with_accepted_fit",
+        "control_ready": false
+      },
+      "T_base_block_representative": {
+        "target_frame": "L_arm_root",
+        "source_frame": "yellow_near_frame_local_C36",
+        "matrix": [
+          [
+            -0.6741267303871266,
+            0.7346497190268604,
+            0.07643913730096566,
+            0.4158407413487622
+          ],
+          [
+            -0.7324260169206288,
+            -0.6782579126699312,
+            0.05931554297490683,
+            0.05257266546551359
+          ],
+          [
+            0.0954215966924841,
+            -0.015999819823383127,
+            0.995308356566082,
+            -0.5142559393286363
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source": "derived_unapproved",
+        "approved": false
+      },
+      "geometry": {
+        "top_center_camera_m": [
+          -0.23901519833525878,
+          0.2964585329371209,
+          0.7317452682756599
+        ],
+        "top_vertices_camera_m": [
+          [
+            -0.24888019923445448,
+            0.2737372647153848,
+            0.7553470958915953
+          ],
+          [
+            -0.20311267953818538,
+            0.29458894997682533,
+            0.7332490027339288
+          ],
+          [
+            -0.22747819551454754,
+            0.31928459309660256,
+            0.7080151699119009
+          ],
+          [
+            -0.27658971905384777,
+            0.2982233239596709,
+            0.7303698045652144
+          ]
+        ],
+        "observed_corner_edges_m": [
+          0.05493436409566844,
+          0.04289871183128708,
+          0.05792450683857942,
+          0.04462342062122695
+        ],
+        "edge_errors_m": [
+          0.004934364095668435,
+          -0.007101288168712923,
+          0.007924506838579419,
+          -0.005376579378773054
+        ],
+        "adjacent_edge_abs_cos": 0.11095333451558324,
+        "orientation_semantics": "one geometric representative; unmarked resting cube yaw is equivalent modulo pi/2",
+        "assumptions": [
+          "cube rests flat on fitted table",
+          "edge is measured",
+          "manual RGB corners identify top boundary"
+        ],
+        "base_transform": null,
+        "approved": false,
+        "motion_enabled": false
+      },
+      "top_depth_p95_error_m": 0.004099235063574059,
+      "top_depth_max_error_m": 0.007093955727480797,
+      "base_origin_distance_m": 0.6634354365380365,
+      "grasp_geometry": {
+        "candidates": [
+          {
+            "candidate_id": "yellow_near_frame_local_C36_face_grasp_0",
+            "target": {
+              "target_frame": "L_arm_root",
+              "source_frame": "yellow_near_frame_local_C36_face_grasp_0",
+              "matrix": [
+                [
+                  -0.6741267303871266,
+                  0.7346497190268597,
+                  0.07643913730096566,
+                  0.4158407413487622
+                ],
+                [
+                  -0.7324260169206288,
+                  -0.6782579126699313,
+                  0.05931554297490683,
+                  0.05257266546551359
+                ],
+                [
+                  0.0954215966924841,
+                  -0.015999819823384304,
+                  0.995308356566082,
+                  -0.5142559393286363
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "source": "geometric_grasp_candidate",
+              "approved": false
+            },
+            "pregrasp": {
+              "target_frame": "L_arm_root",
+              "source_frame": "yellow_near_frame_local_C36_face_grasp_0",
+              "matrix": [
+                [
+                  -0.6741267303871266,
+                  0.7346497190268597,
+                  0.07643913730096566,
+                  0.42195587233283943
+                ],
+                [
+                  -0.7324260169206288,
+                  -0.6782579126699313,
+                  0.05931554297490683,
+                  0.05731790890350614
+                ],
+                [
+                  0.0954215966924841,
+                  -0.015999819823384304,
+                  0.995308356566082,
+                  -0.4346312708033498
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "source": "geometric_grasp_candidate",
+              "approved": false
+            },
+            "face_axis_block": 0,
+            "contacts": [
+              {
+                "point_block_m": [
+                  -0.025,
+                  0.0,
+                  0.0
+                ],
+                "point_world_m": [
+                  0.43269390960844034,
+                  0.07088331588852931,
+                  -0.5166414792459484
+                ],
+                "outward_normal_world": [
+                  0.6741267303871266,
+                  0.7324260169206288,
+                  -0.0954215966924841
+                ]
+              },
+              {
+                "point_block_m": [
+                  0.025,
+                  0.0,
+                  0.0
+                ],
+                "point_world_m": [
+                  0.39898757308908406,
+                  0.03426201504249787,
+                  -0.5118703994113243
+                ],
+                "outward_normal_world": [
+                  -0.6741267303871266,
+                  -0.7324260169206288,
+                  0.0954215966924841
+                ]
+              }
+            ],
+            "object_width_m": 0.05,
+            "required_opening_m": 0.060000000000000005,
+            "approach_world": [
+              0.07643913730096566,
+              0.05931554297490683,
+              0.995308356566082
+            ],
+            "travel_direction_world": [
+              -0.07643913730096566,
+              -0.05931554297490683,
+              -0.995308356566082
+            ],
+            "input_capture_stamp_s": null,
+            "flange_goal": null,
+            "hand_preset": null,
+            "ik": "NOT_CHECKED",
+            "trajectory": "NOT_GENERATED",
+            "full_collision": "UNKNOWN",
+            "motion_enabled": false
+          },
+          {
+            "candidate_id": "yellow_near_frame_local_C36_face_grasp_1",
+            "target": {
+              "target_frame": "L_arm_root",
+              "source_frame": "yellow_near_frame_local_C36_face_grasp_1",
+              "matrix": [
+                [
+                  0.7346497190268604,
+                  0.6741267303871257,
+                  0.07643913730096566,
+                  0.4158407413487622
+                ],
+                [
+                  -0.6782579126699312,
+                  0.7324260169206286,
+                  0.05931554297490683,
+                  0.05257266546551359
+                ],
+                [
+                  -0.015999819823383127,
+                  -0.0954215966924842,
+                  0.995308356566082,
+                  -0.5142559393286363
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "source": "geometric_grasp_candidate",
+              "approved": false
+            },
+            "pregrasp": {
+              "target_frame": "L_arm_root",
+              "source_frame": "yellow_near_frame_local_C36_face_grasp_1",
+              "matrix": [
+                [
+                  0.7346497190268604,
+                  0.6741267303871257,
+                  0.07643913730096566,
+                  0.42195587233283943
+                ],
+                [
+                  -0.6782579126699312,
+                  0.7324260169206286,
+                  0.05931554297490683,
+                  0.05731790890350614
+                ],
+                [
+                  -0.015999819823383127,
+                  -0.0954215966924842,
+                  0.995308356566082,
+                  -0.4346312708033498
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "source": "geometric_grasp_candidate",
+              "approved": false
+            },
+            "face_axis_block": 1,
+            "contacts": [
+              {
+                "point_block_m": [
+                  0.0,
+                  -0.025,
+                  0.0
+                ],
+                "point_world_m": [
+                  0.3974744983730907,
+                  0.06952911328226187,
+                  -0.5138559438330518
+                ],
+                "outward_normal_world": [
+                  -0.7346497190268604,
+                  0.6782579126699312,
+                  0.015999819823383127
+                ]
+              },
+              {
+                "point_block_m": [
+                  0.0,
+                  0.025,
+                  0.0
+                ],
+                "point_world_m": [
+                  0.4342069843244337,
+                  0.03561621764876531,
+                  -0.5146559348242209
+                ],
+                "outward_normal_world": [
+                  0.7346497190268604,
+                  -0.6782579126699312,
+                  -0.015999819823383127
+                ]
+              }
+            ],
+            "object_width_m": 0.05,
+            "required_opening_m": 0.060000000000000005,
+            "approach_world": [
+              0.07643913730096566,
+              0.05931554297490683,
+              0.995308356566082
+            ],
+            "travel_direction_world": [
+              -0.07643913730096566,
+              -0.05931554297490683,
+              -0.995308356566082
+            ],
+            "input_capture_stamp_s": null,
+            "flange_goal": null,
+            "hand_preset": null,
+            "ik": "NOT_CHECKED",
+            "trajectory": "NOT_GENERATED",
+            "full_collision": "UNKNOWN",
+            "motion_enabled": false
+          }
+        ],
+        "rejected": [
+          {
+            "block_axis": 2,
+            "reason": "closing faces not perpendicular to supplied approach"
+          }
+        ],
+        "geometry_version": "operator_50mm_regular_cube",
+        "scope": "opposed face-center geometry only; contact/friction, opening capability, reachability and hand/environment collision not established"
+      }
+    }
+  ],
+  "proximity_ranking": [
+    {
+      "candidate_id": "yellow_near_frame_local_C36",
+      "distance_m": 0.6634354365380365
+    },
+    {
+      "candidate_id": "red_right_frame_local_C36",
+      "distance_m": 0.8194364396170046
+    }
+  ],
+  "proximity_scope": "distance ranking only; not IK reachability",
+  "ten_layer_targets": [
+    {
+      "slot": {
+        "slot_id": "L0_0",
+        "layer": 0,
+        "required_color": "red",
+        "center_m": [
+          -0.07500000000000001,
+          0.0,
+          0.025
+        ],
+        "frame_id": "table_C36_proposed_placement",
+        "supports": []
+      },
+      "T_base_block_desired": {
+        "target_frame": "L_arm_root",
+        "source_frame": "desired_L0_0",
+        "matrix": [
+          [
+            -0.1690954118113735,
+            0.9826310599574106,
+            0.07643913730096566,
+            0.43476012891723287
+          ],
+          [
+            -0.9829978208770513,
+            -0.17377269783414806,
+            0.05931554297490683,
+            -0.057410737951176155
+          ],
+          [
+            0.07156832997428623,
+            -0.06510951923041274,
+            0.995308356566082,
+            -0.5091544613852471
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source": "derived_unapproved",
+        "approved": false
+      },
+      "tool_release_goal": null,
+      "reason": "actual held-block/TCP offset not yet available"
+    },
+    {
+      "slot": {
+        "slot_id": "L0_1",
+        "layer": 0,
+        "required_color": "red",
+        "center_m": [
+          -0.025,
+          0.0,
+          0.025
+        ],
+        "frame_id": "table_C36_proposed_placement",
+        "supports": []
+      },
+      "T_base_block_desired": {
+        "target_frame": "L_arm_root",
+        "source_frame": "desired_L0_1",
+        "matrix": [
+          [
+            -0.1690954118113735,
+            0.9826310599574106,
+            0.07643913730096566,
+            0.42630535832666416
+          ],
+          [
+            -0.9829978208770513,
+            -0.17377269783414806,
+            0.05931554297490683,
+            -0.10656062899502873
+          ],
+          [
+            0.07156832997428623,
+            -0.06510951923041274,
+            0.995308356566082,
+            -0.5055760448865328
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source": "derived_unapproved",
+        "approved": false
+      },
+      "tool_release_goal": null,
+      "reason": "actual held-block/TCP offset not yet available"
+    },
+    {
+      "slot": {
+        "slot_id": "L0_2",
+        "layer": 0,
+        "required_color": "red",
+        "center_m": [
+          0.025,
+          0.0,
+          0.025
+        ],
+        "frame_id": "table_C36_proposed_placement",
+        "supports": []
+      },
+      "T_base_block_desired": {
+        "target_frame": "L_arm_root",
+        "source_frame": "desired_L0_2",
+        "matrix": [
+          [
+            -0.1690954118113735,
+            0.9826310599574106,
+            0.07643913730096566,
+            0.4178505877360955
+          ],
+          [
+            -0.9829978208770513,
+            -0.17377269783414806,
+            0.05931554297490683,
+            -0.1557105200388813
+          ],
+          [
+            0.07156832997428623,
+            -0.06510951923041274,
+            0.995308356566082,
+            -0.5019976283878185
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source": "derived_unapproved",
+        "approved": false
+      },
+      "tool_release_goal": null,
+      "reason": "actual held-block/TCP offset not yet available"
+    },
+    {
+      "slot": {
+        "slot_id": "L0_3",
+        "layer": 0,
+        "required_color": "red",
+        "center_m": [
+          0.07500000000000001,
+          0.0,
+          0.025
+        ],
+        "frame_id": "table_C36_proposed_placement",
+        "supports": []
+      },
+      "T_base_block_desired": {
+        "target_frame": "L_arm_root",
+        "source_frame": "desired_L0_3",
+        "matrix": [
+          [
+            -0.1690954118113735,
+            0.9826310599574106,
+            0.07643913730096566,
+            0.4093958171455268
+          ],
+          [
+            -0.9829978208770513,
+            -0.17377269783414806,
+            0.05931554297490683,
+            -0.20486041108273387
+          ],
+          [
+            0.07156832997428623,
+            -0.06510951923041274,
+            0.995308356566082,
+            -0.4984192118891042
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source": "derived_unapproved",
+        "approved": false
+      },
+      "tool_release_goal": null,
+      "reason": "actual held-block/TCP offset not yet available"
+    },
+    {
+      "slot": {
+        "slot_id": "L1_0",
+        "layer": 1,
+        "required_color": "yellow",
+        "center_m": [
+          -0.05,
+          0.0,
+          0.07500000000000001
+        ],
+        "frame_id": "table_C36_proposed_placement",
+        "supports": [
+          "L0_0",
+          "L0_1"
+        ]
+      },
+      "T_base_block_desired": {
+        "target_frame": "L_arm_root",
+        "source_frame": "desired_L1_0",
+        "matrix": [
+          [
+            -0.1690954118113735,
+            0.9826310599574106,
+            0.07643913730096566,
+            0.4343547004869968
+          ],
+          [
+            -0.9829978208770513,
+            -0.17377269783414806,
+            0.05931554297490683,
+            -0.0790199063243571
+          ],
+          [
+            0.07156832997428623,
+            -0.06510951923041274,
+            0.995308356566082,
+            -0.45759983530758586
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source": "derived_unapproved",
+        "approved": false
+      },
+      "tool_release_goal": null,
+      "reason": "actual held-block/TCP offset not yet available"
+    },
+    {
+      "slot": {
+        "slot_id": "L1_1",
+        "layer": 1,
+        "required_color": "yellow",
+        "center_m": [
+          0.0,
+          0.0,
+          0.07500000000000001
+        ],
+        "frame_id": "table_C36_proposed_placement",
+        "supports": [
+          "L0_1",
+          "L0_2"
+        ]
+      },
+      "T_base_block_desired": {
+        "target_frame": "L_arm_root",
+        "source_frame": "desired_L1_1",
+        "matrix": [
+          [
+            -0.1690954118113735,
+            0.9826310599574106,
+            0.07643913730096566,
+            0.4258999298964281
+          ],
+          [
+            -0.9829978208770513,
+            -0.17377269783414806,
+            0.05931554297490683,
+            -0.1281697973682097
+          ],
+          [
+            0.07156832997428623,
+            -0.06510951923041274,
+            0.995308356566082,
+            -0.4540214188088716
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source": "derived_unapproved",
+        "approved": false
+      },
+      "tool_release_goal": null,
+      "reason": "actual held-block/TCP offset not yet available"
+    },
+    {
+      "slot": {
+        "slot_id": "L1_2",
+        "layer": 1,
+        "required_color": "yellow",
+        "center_m": [
+          0.05,
+          0.0,
+          0.07500000000000001
+        ],
+        "frame_id": "table_C36_proposed_placement",
+        "supports": [
+          "L0_2",
+          "L0_3"
+        ]
+      },
+      "T_base_block_desired": {
+        "target_frame": "L_arm_root",
+        "source_frame": "desired_L1_2",
+        "matrix": [
+          [
+            -0.1690954118113735,
+            0.9826310599574106,
+            0.07643913730096566,
+            0.41744515930585946
+          ],
+          [
+            -0.9829978208770513,
+            -0.17377269783414806,
+            0.05931554297490683,
+            -0.17731968841206225
+          ],
+          [
+            0.07156832997428623,
+            -0.06510951923041274,
+            0.995308356566082,
+            -0.45044300231015727
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source": "derived_unapproved",
+        "approved": false
+      },
+      "tool_release_goal": null,
+      "reason": "actual held-block/TCP offset not yet available"
+    },
+    {
+      "slot": {
+        "slot_id": "L2_0",
+        "layer": 2,
+        "required_color": "blue",
+        "center_m": [
+          -0.025,
+          0.0,
+          0.125
+        ],
+        "frame_id": "table_C36_proposed_placement",
+        "supports": [
+          "L1_0",
+          "L1_1"
+        ]
+      },
+      "T_base_block_desired": {
+        "target_frame": "L_arm_root",
+        "source_frame": "desired_L2_0",
+        "matrix": [
+          [
+            -0.1690954118113735,
+            0.9826310599574106,
+            0.07643913730096566,
+            0.43394927205676076
+          ],
+          [
+            -0.9829978208770513,
+            -0.17377269783414806,
+            0.05931554297490683,
+            -0.10062907469753804
+          ],
+          [
+            0.07156832997428623,
+            -0.06510951923041274,
+            0.995308356566082,
+            -0.40604520922992465
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source": "derived_unapproved",
+        "approved": false
+      },
+      "tool_release_goal": null,
+      "reason": "actual held-block/TCP offset not yet available"
+    },
+    {
+      "slot": {
+        "slot_id": "L2_1",
+        "layer": 2,
+        "required_color": "blue",
+        "center_m": [
+          0.025,
+          0.0,
+          0.125
+        ],
+        "frame_id": "table_C36_proposed_placement",
+        "supports": [
+          "L1_1",
+          "L1_2"
+        ]
+      },
+      "T_base_block_desired": {
+        "target_frame": "L_arm_root",
+        "source_frame": "desired_L2_1",
+        "matrix": [
+          [
+            -0.1690954118113735,
+            0.9826310599574106,
+            0.07643913730096566,
+            0.42549450146619205
+          ],
+          [
+            -0.9829978208770513,
+            -0.17377269783414806,
+            0.05931554297490683,
+            -0.14977896574139063
+          ],
+          [
+            0.07156832997428623,
+            -0.06510951923041274,
+            0.995308356566082,
+            -0.40246679273121033
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source": "derived_unapproved",
+        "approved": false
+      },
+      "tool_release_goal": null,
+      "reason": "actual held-block/TCP offset not yet available"
+    },
+    {
+      "slot": {
+        "slot_id": "L3_0",
+        "layer": 3,
+        "required_color": "green",
+        "center_m": [
+          0.0,
+          0.0,
+          0.17500000000000002
+        ],
+        "frame_id": "table_C36_proposed_placement",
+        "supports": [
+          "L2_0",
+          "L2_1"
+        ]
+      },
+      "T_base_block_desired": {
+        "target_frame": "L_arm_root",
+        "source_frame": "desired_L3_0",
+        "matrix": [
+          [
+            -0.1690954118113735,
+            0.9826310599574106,
+            0.07643913730096566,
+            0.4335438436265247
+          ],
+          [
+            -0.9829978208770513,
+            -0.17377269783414806,
+            0.05931554297490683,
+            -0.122238243070719
+          ],
+          [
+            0.07156832997428623,
+            -0.06510951923041274,
+            0.995308356566082,
+            -0.35449058315226334
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source": "derived_unapproved",
+        "approved": false
+      },
+      "tool_release_goal": null,
+      "reason": "actual held-block/TCP offset not yet available"
+    }
+  ],
+  "measured_edge_m": 0.05,
+  "measured_edge_source": "user measured 50x50x50 mm regular cube class",
+  "grasp_design": {
+    "source": "synthetic geometry from existing cube_face_grasp_synthetic example; D must replace with actual preset/hand geometry",
+    "finger_side_clearance_m": 0.005,
+    "pregrasp_distance_m": 0.08,
+    "hardware_validated": false
+  },
+  "sensor_diagnostics": {
+    "consistency": "FAIL",
+    "table_validation_n": 372,
+    "table_max_abs_m": 0.0033659533507448547,
+    "table_p95_abs_m": 0.0022077716695757194,
+    "top_depth_n": 375,
+    "top_height_median_m": 0.05008559495627174,
+    "top_max_height_error_m": 0.0033153322791267953,
+    "top_p95_height_error_m": 0.0022337697530910587
+  },
+  "ik": "NOT_CHECKED",
+  "joint_trajectory": "NOT_GENERATED",
+  "full_collision": "UNKNOWN",
+  "motion_enabled": false,
+  "plan_result": {
+    "feasible": false,
+    "rejection_reason": "Need actual grasp-to-flange transform, fresh seven-axis start and complete scene collision check",
+    "segments": [],
+    "valid_until_host_monotonic_s": null
+  },
+  "missing": [
+    "actual stable hand preset and grasp offset",
+    "fresh seven-axis state",
+    "IK and timed joint route",
+    "complete arm/hand/payload/environment collision coverage"
+  ],
+  "notice": "desired grasp frames are not robot TCP/flange commands; slots are proposed geometry, not D-owned committed scene state"
+}

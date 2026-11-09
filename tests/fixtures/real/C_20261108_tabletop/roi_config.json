@@ -1,0 +1,60 @@
+{
+  "camera_serial": "CP2L863000KL",
+  "edge_m": 0.05,
+  "edge_source": "user ruler measurement 50x50x50 mm regular cube",
+  "roi_source": "manual review of recorded rectified RGB; isolated right red cube top; clear table patch; source crop [575,410,545,280]; pixel grid phase preserved",
+  "rests_on_table": true,
+  "table_polygon_xy": [
+    [
+      275,
+      50
+    ],
+    [
+      465,
+      55
+    ],
+    [
+      465,
+      190
+    ],
+    [
+      275,
+      200
+    ]
+  ],
+  "top_corners_xy": [
+    [
+      172,
+      66
+    ],
+    [
+      200,
+      55
+    ],
+    [
+      217,
+      78
+    ],
+    [
+      187,
+      89
+    ]
+  ],
+  "table_origin_xy": [
+    375,
+    140
+  ],
+  "top_erosion_px": 3,
+  "plane_threshold_m": 0.003,
+  "max_holdout_m": 0.003,
+  "max_edge_error_m": 0.004,
+  "max_adjacent_edge_abs_cos": 0.15,
+  "table_frame": "table_camera_defined_C33",
+  "candidate_id": "red_right_frame_local_C33",
+  "version": "observed_table_cube_C33_diagnostic_v2",
+  "color": "red",
+  "pixel_partition_offset_xy": [
+    575,
+    410
+  ]
+}

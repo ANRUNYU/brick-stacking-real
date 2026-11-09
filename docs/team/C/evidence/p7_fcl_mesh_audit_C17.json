@@ -1,0 +1,459 @@
+{
+  "source": "FCL_on_manufacturer_meshes_at_synthetic_model_poses",
+  "python_fcl": "0.7.0.11",
+  "model_sha256": "b898b9597d7d075cc5e7114d76a90d0ec514c387a5fd59411555455a6d722daa",
+  "results": [
+    {
+      "status": "FAIL",
+      "sampled_status": "FAIL",
+      "scope": "FCL triangle surfaces at supplied poses only",
+      "model_version": "b898b9597d7d075cc5e7114d76a90d0ec514c387a5fd59411555455a6d722daa",
+      "missing": [
+        "solid containment without intersecting surfaces",
+        "continuous joint-space motion",
+        "physical/unmodeled geometry"
+      ],
+      "pairs": [
+        {
+          "first": "L1_Link",
+          "second": "L2_Link",
+          "surface_intersection": true,
+          "distance_m": null,
+          "clearance_violation": true
+        },
+        {
+          "first": "L1_Link",
+          "second": "L3_Link",
+          "surface_intersection": false,
+          "distance_m": 0.07475928013840588,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L4_Link",
+          "surface_intersection": false,
+          "distance_m": 0.20909278762526867,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.32112159677709456,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.4208203039005955,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.4864055347547769,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.5622035820162908,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L3_Link",
+          "surface_intersection": true,
+          "distance_m": null,
+          "clearance_violation": true
+        },
+        {
+          "first": "L2_Link",
+          "second": "L4_Link",
+          "surface_intersection": false,
+          "distance_m": 0.12949077824438435,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.24220873433947565,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.34158170392794684,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.40750024874210355,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.4832251645422262,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L4_Link",
+          "surface_intersection": true,
+          "distance_m": null,
+          "clearance_violation": true
+        },
+        {
+          "first": "L3_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.04918037371807455,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.14875469229343413,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.21615650907327935,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.2902635759649455,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.000991157697242924,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.0566222287782641,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.1228607432563383,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.19810021515315718,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "L6_Link",
+          "surface_intersection": true,
+          "distance_m": null,
+          "clearance_violation": true
+        },
+        {
+          "first": "L5_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.02170620618158655,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.07996911240247606,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "L7_Link",
+          "surface_intersection": true,
+          "distance_m": null,
+          "clearance_violation": true
+        },
+        {
+          "first": "L6_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.013046116929290093,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "L8_Link",
+          "surface_intersection": true,
+          "distance_m": null,
+          "clearance_violation": true
+        }
+      ],
+      "full_collision": "UNKNOWN",
+      "motion_enabled": false,
+      "exclusions": [],
+      "q_sdk_rad": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "status": "FAIL",
+      "sampled_status": "FAIL",
+      "scope": "FCL triangle surfaces at supplied poses only",
+      "model_version": "b898b9597d7d075cc5e7114d76a90d0ec514c387a5fd59411555455a6d722daa",
+      "missing": [
+        "solid containment without intersecting surfaces",
+        "continuous joint-space motion",
+        "physical/unmodeled geometry"
+      ],
+      "pairs": [
+        {
+          "first": "L1_Link",
+          "second": "L2_Link",
+          "surface_intersection": true,
+          "distance_m": null,
+          "clearance_violation": true
+        },
+        {
+          "first": "L1_Link",
+          "second": "L3_Link",
+          "surface_intersection": false,
+          "distance_m": 0.07468316301019677,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L4_Link",
+          "surface_intersection": false,
+          "distance_m": 0.211293055145765,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.3126126337657106,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.41667353876522323,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.4821918197583829,
+          "clearance_violation": false
+        },
+        {
+          "first": "L1_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.5557856072413441,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L3_Link",
+          "surface_intersection": true,
+          "distance_m": null,
+          "clearance_violation": true
+        },
+        {
+          "first": "L2_Link",
+          "second": "L4_Link",
+          "surface_intersection": false,
+          "distance_m": 0.12950048349921434,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.2334476014341423,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.33713402144244475,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.40328531755019104,
+          "clearance_violation": false
+        },
+        {
+          "first": "L2_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.476509495060396,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L4_Link",
+          "surface_intersection": true,
+          "distance_m": null,
+          "clearance_violation": true
+        },
+        {
+          "first": "L3_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.04925221115659251,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.14866970028442997,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.21042459672906746,
+          "clearance_violation": false
+        },
+        {
+          "first": "L3_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.2853273937550639,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L5_Link",
+          "surface_intersection": false,
+          "distance_m": 0.0009913049336287931,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L6_Link",
+          "surface_intersection": false,
+          "distance_m": 0.05652903940493951,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.11714984515039559,
+          "clearance_violation": false
+        },
+        {
+          "first": "L4_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.19238889785492835,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "L6_Link",
+          "surface_intersection": true,
+          "distance_m": null,
+          "clearance_violation": true
+        },
+        {
+          "first": "L5_Link",
+          "second": "L7_Link",
+          "surface_intersection": false,
+          "distance_m": 0.02191493347101923,
+          "clearance_violation": false
+        },
+        {
+          "first": "L5_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.07615411487098127,
+          "clearance_violation": false
+        },
+        {
+          "first": "L6_Link",
+          "second": "L7_Link",
+          "surface_intersection": true,
+          "distance_m": null,
+          "clearance_violation": true
+        },
+        {
+          "first": "L6_Link",
+          "second": "L8_Link",
+          "surface_intersection": false,
+          "distance_m": 0.01327240052921648,
+          "clearance_violation": false
+        },
+        {
+          "first": "L7_Link",
+          "second": "L8_Link",
+          "surface_intersection": true,
+          "distance_m": null,
+          "clearance_violation": true
+        }
+      ],
+      "full_collision": "UNKNOWN",
+      "motion_enabled": false,
+      "exclusions": [],
+      "q_sdk_rad": [
+        0.2,
+        0.3,
+        -0.1,
+        0.2,
+        0.1,
+        -0.2,
+        0.15
+      ]
+    }
+  ],
+  "motion_enabled": false,
+  "missing": [
+    "hand",
+    "camera",
+    "torso",
+    "payload",
+    "environment",
+    "continuous articulated path",
+    "solid containment"
+  ]
+}

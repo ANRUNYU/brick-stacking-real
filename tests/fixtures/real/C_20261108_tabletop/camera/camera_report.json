@@ -1,0 +1,323 @@
+{
+  "started_at": "2026-11-08T08:42:33.345472+00:00",
+  "scope": "camera_only",
+  "tool_version": "c-head-1280x800-15-v5-clock-observation",
+  "robot_motion_accessed": false,
+  "can_accessed": false,
+  "devices": [
+    {
+      "serial": "CP2L863000KL",
+      "name": "Orbbec Gemini 335L",
+      "uid": "2-3.4.3-61"
+    },
+    {
+      "serial": "AY6M86300GH",
+      "name": "Orbbec Gemini2",
+      "uid": "2-3.4.4-62"
+    },
+    {
+      "serial": "AY6M8630086",
+      "name": "Orbbec Gemini2",
+      "uid": "2-3.4.2-60"
+    }
+  ],
+  "frames": [
+    {
+      "file": "frame_000.npz",
+      "rgb_stamp_s": 154906.878967,
+      "depth_stamp_s": 154906.878987,
+      "skew_ms": 0.020000006770715117,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.0505929869832471,
+        "align": 0.017455385997891426,
+        "decode_depth": 0.007242917024996132,
+        "rectify": 0.006763511977624148
+      },
+      "host_receive_stamp_s": 278437.025385762,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.8619873046875,
+      "median_depth_m": 1.6660000085830688,
+      "clock_observation": {
+        "schema_version": "c-orbbec-clock-observation-1",
+        "sdk_host_clock_type": "REALTIME",
+        "sdk_host_clock_domain": "host_realtime",
+        "host_bridge": {
+          "monotonic_before_s": 278437.025406288,
+          "monotonic_after_s": 278437.025409358,
+          "realtime_s": 1794127355.8595533,
+          "monotonic_raw_s": 278437.180011068
+        },
+        "bridge_bracket_s": 3.069988451898098e-06,
+        "frames": {
+          "color": {
+            "device_timestamp_us": 154906878967,
+            "system_timestamp_us": 1794127355858750,
+            "global_timestamp_us": 1794127355828352,
+            "global_available": true,
+            "global_host_monotonic_candidate_s": 278436.99420646037,
+            "sdk_receive_minus_global_s": 0.030398
+          },
+          "depth": {
+            "device_timestamp_us": 154906878987,
+            "system_timestamp_us": 1794127355846625,
+            "global_timestamp_us": 1794127355828373,
+            "global_available": true,
+            "global_host_monotonic_candidate_s": 278436.9942274412,
+            "sdk_receive_minus_global_s": 0.018252
+          }
+        },
+        "device_to_host_mapping_source": "SDK global timestamp fitter; raw readings retained",
+        "device_to_host_mapping_error_bound_s": null,
+        "timing_acceptance": "NOT_VALIDATED",
+        "approved": false,
+        "motion_enabled": false
+      }
+    },
+    {
+      "file": "frame_001.npz",
+      "rgb_stamp_s": 154906.945703,
+      "depth_stamp_s": 154906.945723,
+      "skew_ms": 0.020000006770715117,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.029732025985140353,
+        "align": 0.012761584017425776,
+        "decode_depth": 0.0033276440226472914,
+        "rectify": 0.003149494994431734
+      },
+      "host_receive_stamp_s": 278437.093106327,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.8618642578125,
+      "median_depth_m": 1.659999966621399,
+      "clock_observation": {
+        "schema_version": "c-orbbec-clock-observation-1",
+        "sdk_host_clock_type": "REALTIME",
+        "sdk_host_clock_domain": "host_realtime",
+        "host_bridge": {
+          "monotonic_before_s": 278437.093137933,
+          "monotonic_after_s": 278437.093146204,
+          "realtime_s": 1794127355.9272857,
+          "monotonic_raw_s": 278437.247747282
+        },
+        "bridge_bracket_s": 8.271017577499151e-06,
+        "frames": {
+          "color": {
+            "device_timestamp_us": 154906945703,
+            "system_timestamp_us": 1794127355925707,
+            "global_timestamp_us": 1794127355895089,
+            "global_available": true,
+            "global_host_monotonic_candidate_s": 278437.0609453083,
+            "sdk_receive_minus_global_s": 0.030618
+          },
+          "depth": {
+            "device_timestamp_us": 154906945723,
+            "system_timestamp_us": 1794127355913428,
+            "global_timestamp_us": 1794127355895109,
+            "global_available": true,
+            "global_host_monotonic_candidate_s": 278437.06096533546,
+            "sdk_receive_minus_global_s": 0.018319
+          }
+        },
+        "device_to_host_mapping_source": "SDK global timestamp fitter; raw readings retained",
+        "device_to_host_mapping_error_bound_s": null,
+        "timing_acceptance": "NOT_VALIDATED",
+        "approved": false,
+        "motion_enabled": false
+      }
+    },
+    {
+      "file": "frame_002.npz",
+      "rgb_stamp_s": 154907.012439,
+      "depth_stamp_s": 154907.012459,
+      "skew_ms": 0.01999997766688466,
+      "depth_scale_mm": 1.0,
+      "timing_s": {
+        "wait": 0.04339891602285206,
+        "align": 0.013787726988084614,
+        "decode_depth": 0.0034504850045777857,
+        "rectify": 0.0032469610450789332
+      },
+      "host_receive_stamp_s": 278437.159954092,
+      "host_clock_domain": "host_monotonic",
+      "valid_depth_ratio": 0.8644716796875,
+      "median_depth_m": 1.6699999570846558,
+      "clock_observation": {
+        "schema_version": "c-orbbec-clock-observation-1",
+        "sdk_host_clock_type": "REALTIME",
+        "sdk_host_clock_domain": "host_realtime",
+        "host_bridge": {
+          "monotonic_before_s": 278437.159988722,
+          "monotonic_after_s": 278437.159997011,
+          "realtime_s": 1794127355.9941366,
+          "monotonic_raw_s": 278437.314597838
+        },
+        "bridge_bracket_s": 8.289003744721413e-06,
+        "frames": {
+          "color": {
+            "device_timestamp_us": 154907012439,
+            "system_timestamp_us": 1794127355992513,
+            "global_timestamp_us": 1794127355961826,
+            "global_available": true,
+            "global_host_monotonic_candidate_s": 278437.12768238067,
+            "sdk_receive_minus_global_s": 0.030687
+          },
+          "depth": {
+            "device_timestamp_us": 154907012459,
+            "system_timestamp_us": 1794127355980433,
+            "global_timestamp_us": 1794127355961846,
+            "global_available": true,
+            "global_host_monotonic_candidate_s": 278437.12770240783,
+            "sdk_receive_minus_global_s": 0.018587
+          }
+        },
+        "device_to_host_mapping_source": "SDK global timestamp fitter; raw readings retained",
+        "device_to_host_mapping_error_bound_s": null,
+        "timing_acceptance": "NOT_VALIDATED",
+        "approved": false,
+        "motion_enabled": false
+      }
+    }
+  ],
+  "rejected_skew": 0,
+  "errors": [],
+  "cleanup_errors": [],
+  "result": "CAPTURED",
+  "binding_version": "2.1.3",
+  "sdk_version": "2.10.6",
+  "sdk_host_clock_type": "OBClockType.REALTIME",
+  "selected": {
+    "serial": "CP2L863000KL",
+    "name": "Orbbec Gemini 335L",
+    "firmware": "1.4.60",
+    "connection": "USB3.2"
+  },
+  "profiles": {
+    "color": {
+      "width": 1280,
+      "height": 800,
+      "fps": 15,
+      "format": "OBFormat.RGB"
+    },
+    "depth": {
+      "width": 1280,
+      "height": 800,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    }
+  },
+  "calibration": {
+    "K": [
+      [
+        609.669189453125,
+        0.0,
+        644.880615234375
+      ],
+      [
+        0.0,
+        609.7700805664062,
+        395.0197448730469
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "distortion": {
+      "k1": -0.031556159257888794,
+      "k2": 0.036501653492450714,
+      "k3": -0.012785496190190315,
+      "k4": 0.0,
+      "k5": 0.0,
+      "k6": 0.0,
+      "p1": -0.0005816970369778574,
+      "p2": 0.0004935592296533287,
+      "model": "OBCameraDistortionModel.BROWN_CONRADY_K6"
+    },
+    "width": 1280,
+    "height": 800,
+    "extrinsics_available": false
+  },
+  "aligned_geometry": {
+    "color": {
+      "K": [
+        [
+          609.669189453125,
+          0.0,
+          644.880615234375
+        ],
+        [
+          0.0,
+          609.7700805664062,
+          395.0197448730469
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "width": 1280,
+      "height": 800,
+      "distortion": {
+        "k1": -0.031556159257888794,
+        "k2": 0.036501653492450714,
+        "k3": -0.012785496190190315,
+        "k4": 0.0,
+        "k5": 0.0,
+        "k6": 0.0,
+        "p1": -0.0005816970369778574,
+        "p2": 0.0004935592296533287
+      },
+      "distortion_model": "OBCameraDistortionModel.BROWN_CONRADY_K6"
+    },
+    "depth": {
+      "K": [
+        [
+          609.669189453125,
+          0.0,
+          644.880615234375
+        ],
+        [
+          0.0,
+          609.7700805664062,
+          395.0197448730469
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "width": 1280,
+      "height": 800,
+      "distortion": {
+        "k1": 0.0,
+        "k2": 0.0,
+        "k3": 0.0,
+        "k4": 0.0,
+        "k5": 0.0,
+        "k6": 0.0,
+        "p1": 0.0,
+        "p2": 0.0
+      },
+      "distortion_model": "OBCameraDistortionModel.BROWN_CONRADY"
+    }
+  },
+  "notice": "Capture is not depth accuracy, alignment accuracy or block-detection acceptance. Clock is per-camera; no arm/world transform.",
+  "persistence_after_stop_s": 0.43526855600066483,
+  "timing_note": "Compression/write/previews deferred until pipe.stop; bounded RAM capture, not long-run recorder. Host receive clock is not device clock.",
+  "derived_frame_notice": "Source stream profiles retained; NPZ files are crops, not a camera mode. Use per-NPZ effective K and metadata crop provenance.",
+  "derived_frame_geometry": {
+    "width": 545,
+    "height": 280,
+    "crop_xywh": [
+      575,
+      410,
+      545,
+      280
+    ],
+    "profile_version": "gemini335L_1280x800_15_rectified_crop575_410_545_280_C34"
+  }
+}

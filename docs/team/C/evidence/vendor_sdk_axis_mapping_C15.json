@@ -1,0 +1,153 @@
+{
+  "source": "declared_model_convention_comparison_not_hardware_axis_test",
+  "mapping_candidate": "q_vendor=-q_sdk (all 7 revolute joints)",
+  "samples": [
+    {
+      "q_sdk": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "mapped_max_matrix_error": 0.0,
+      "unmapped_max_matrix_error": 0.0
+    },
+    {
+      "q_sdk": [
+        0.2,
+        0.3,
+        -0.1,
+        0.2,
+        0.1,
+        -0.2,
+        0.15
+      ],
+      "mapped_max_matrix_error": 0.0,
+      "unmapped_max_matrix_error": 0.8697591077707365
+    },
+    {
+      "q_sdk": [
+        -0.1,
+        0.4,
+        0.2,
+        -0.3,
+        0.15,
+        0.1,
+        -0.2
+      ],
+      "mapped_max_matrix_error": 0.0,
+      "unmapped_max_matrix_error": 0.6484369883765979
+    }
+  ],
+  "limits": {
+    "L1_Joint": {
+      "sdk": [
+        -2.91,
+        2.91
+      ],
+      "vendor": [
+        -2.91,
+        2.91
+      ],
+      "mapped_vendor_bounds": [
+        -2.91,
+        2.91
+      ],
+      "match": true
+    },
+    "L2_Joint": {
+      "sdk": [
+        -0.07,
+        3.2
+      ],
+      "vendor": [
+        -3.2,
+        0.07
+      ],
+      "mapped_vendor_bounds": [
+        -3.2,
+        0.07
+      ],
+      "match": true
+    },
+    "L3_Joint": {
+      "sdk": [
+        -2.69,
+        2.69
+      ],
+      "vendor": [
+        -2.69,
+        2.69
+      ],
+      "mapped_vendor_bounds": [
+        -2.69,
+        2.69
+      ],
+      "match": true
+    },
+    "L4_Joint": {
+      "sdk": [
+        -2.05,
+        2.05
+      ],
+      "vendor": [
+        -2.05,
+        2.05
+      ],
+      "mapped_vendor_bounds": [
+        -2.05,
+        2.05
+      ],
+      "match": true
+    },
+    "L5_Joint": {
+      "sdk": [
+        -2.69,
+        2.69
+      ],
+      "vendor": [
+        -2.69,
+        2.69
+      ],
+      "mapped_vendor_bounds": [
+        -2.69,
+        2.69
+      ],
+      "match": true
+    },
+    "L6_Joint": {
+      "sdk": [
+        -1.59,
+        1.59
+      ],
+      "vendor": [
+        -1.59,
+        1.59
+      ],
+      "mapped_vendor_bounds": [
+        -1.59,
+        1.59
+      ],
+      "match": true
+    },
+    "L7_Joint": {
+      "sdk": [
+        -1.59,
+        1.59
+      ],
+      "vendor": [
+        -1.59,
+        1.59
+      ],
+      "mapped_vendor_bounds": [
+        -1.59,
+        1.59
+      ],
+      "match": true
+    }
+  },
+  "approved_for_motion": false
+}

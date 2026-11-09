@@ -1,0 +1,145 @@
+{
+  "schema_version": "c-o6-sdk-test-audit-1",
+  "source": "ssh-read-deployed-sdk-tests-and-historical-reports",
+  "sdk_directory": "/home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e",
+  "files": [
+    {
+      "path": "tests/conftest.py",
+      "sha256": "950c5a37b8bf873094af9b30f45ca5fe1c6d398fdb6f0903c8d97fec894790c1"
+    },
+    {
+      "path": "tests/hand/o6/conftest.py",
+      "sha256": "cef797dfd7df340f202eb6e2b34ac9581a41994ea62a8c049c2e6b9e88133135"
+    },
+    {
+      "path": "tests/hand/o6/test_angle.py",
+      "sha256": "604aa933d1f8026734a54f6e6ce65740a03b3ff7f6e6d29be26862f025549d69"
+    },
+    {
+      "path": "tests/hand/o6/test_speed.py",
+      "sha256": "92af308edba280fd655de624a5014fca41c3e77f0fa7eb48f3eff6745eaebb22"
+    },
+    {
+      "path": "tests/hand/o6/test_torque.py",
+      "sha256": "94cbb00c54065ded778c8e037725007c7ca9bcd2de07efbb2b39da429397a1e0"
+    },
+    {
+      "path": "tests/hand/o6/test_force_sensor.py",
+      "sha256": "e818f34798f39462325c605d9b0a57aa6e3f0debe635a73d1cd97fefbad7f39d"
+    }
+  ],
+  "historical_reports": [
+    {
+      "path": "tests/reports/test_individual_finger_movement_20261106_142907.json",
+      "sha256": "e163c165382ffc8274d9a1b7751d6f8ea2084b034116a3c12516b40cd82a8727",
+      "test_name": "test_individual_finger_movement",
+      "timestamp_as_recorded": "2026-11-06T14:29:07.994693",
+      "timestamp_domain": "unspecified local time",
+      "summary": {
+        "total": 7,
+        "passed": 7,
+        "failed": 0,
+        "skipped": 0
+      },
+      "device_binding": "SN/hand side/interface not recorded",
+      "steps": [
+        {
+          "instruction": "Setting all fingers to fully open [100]*6",
+          "expected": "All fingers should be fully open / extended",
+          "passed": true,
+          "notes": ""
+        },
+        {
+          "instruction": "Bending thumb_flex (index 0) to 0 (others 100)",
+          "expected": "Only thumb_flex should be bent; all other joints remain open",
+          "passed": true,
+          "notes": ""
+        },
+        {
+          "instruction": "Bending thumb_abd (index 1) to 0 (others 100)",
+          "expected": "Only thumb_abd should be bent; all other joints remain open",
+          "passed": true,
+          "notes": ""
+        },
+        {
+          "instruction": "Bending index (index 2) to 0 (others 100)",
+          "expected": "Only index should be bent; all other joints remain open",
+          "passed": true,
+          "notes": ""
+        },
+        {
+          "instruction": "Bending middle (index 3) to 0 (others 100)",
+          "expected": "Only middle should be bent; all other joints remain open",
+          "passed": true,
+          "notes": ""
+        },
+        {
+          "instruction": "Bending ring (index 4) to 0 (others 100)",
+          "expected": "Only ring should be bent; all other joints remain open",
+          "passed": true,
+          "notes": ""
+        },
+        {
+          "instruction": "Bending pinky (index 5) to 0 (others 100)",
+          "expected": "Only pinky should be bent; all other joints remain open",
+          "passed": true,
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "path": "tests/reports/test_speed_affects_movement_20261106_213101.json",
+      "sha256": "00c058643fa5ce4c994212e342d4ecb60e6c770140efab802beb8f8519931e14",
+      "test_name": "test_speed_affects_movement",
+      "timestamp_as_recorded": "2026-11-06T21:31:01.627090",
+      "timestamp_domain": "unspecified local time",
+      "summary": {
+        "total": 6,
+        "passed": 1,
+        "failed": 5,
+        "skipped": 0
+      },
+      "device_binding": "SN/hand side/interface not recorded",
+      "steps": [
+        {
+          "instruction": "[LOW speed=10.0] Closing fingers",
+          "expected": "Fingers close at LOW speed (slow)",
+          "passed": false,
+          "notes": "-o addopts='' \\"
+        },
+        {
+          "instruction": "[LOW speed=10.0] Opening hand",
+          "expected": "Fingers fully open",
+          "passed": false,
+          "notes": "cd ~/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e"
+        },
+        {
+          "instruction": "[MID speed=30.0] Closing fingers",
+          "expected": "Fingers close at MID speed (medium)",
+          "passed": false,
+          "notes": "export O6_SIDE=left"
+        },
+        {
+          "instruction": "[MID speed=30.0] Opening hand",
+          "expected": "Fingers fully open",
+          "passed": false,
+          "notes": "~/p7_sdk_venv/bin/python -m pytest \\"
+        },
+        {
+          "instruction": "[HIGH speed=100.0] Closing fingers",
+          "expected": "Fingers close at HIGH speed (fast)",
+          "passed": false,
+          "notes": "-v -s \\"
+        },
+        {
+          "instruction": "[HIGH speed=100.0] Opening hand",
+          "expected": "Fingers fully open",
+          "passed": true,
+          "notes": ""
+        }
+      ]
+    }
+  ],
+  "new_pytest_execution": false,
+  "new_motor_commands_sent": 0
+}

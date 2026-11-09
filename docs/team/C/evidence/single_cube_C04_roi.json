@@ -1,0 +1,43 @@
+{
+  "schema_version": "c-manual-roi-1",
+  "source": "manual inspection of 8x nearest-neighbour crop, pixel range x245:300 y305:355; revised visible face junctions, not fitted to 50mm",
+  "measured_edge_m": 0.05,
+  "measurement_source": "user ruler measurement; uncertainty unknown",
+  "top_corners_uv": [
+    [
+      257,
+      329
+    ],
+    [
+      272,
+      315
+    ],
+    [
+      286,
+      328
+    ],
+    [
+      272,
+      341
+    ]
+  ],
+  "top_erosion_px": 3,
+  "table_rect_xyxy": [
+    180,
+    290,
+    370,
+    390
+  ],
+  "exclude_rect_xyxy": [
+    242,
+    302,
+    304,
+    367
+  ],
+  "normal_hint_camera": [
+    0,
+    0,
+    -1
+  ],
+  "ransac_threshold_m": 0.008
+}

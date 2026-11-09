@@ -1,0 +1,45 @@
+{
+  "commit": "d0224b8da58802fe7cb2e35dcc9771693c4543b6",
+  "source": "manufacturer_fixed_assembly_not_TCP_calibration",
+  "recipe_sha256": "d58f3fc7c9bcb56430b1291a2b8dde283a2df529db7f1a27ce5a3c9ed565ab6d",
+  "assembly_sha256": "4aca70b641295ceb0e0c6d489a54003d06afe46ed588e3f534e7dc174a0494ca",
+  "T_L8_hand_root": [
+    [
+      -3.673205103346574e-06,
+      -0.9999999999662689,
+      7.346410206594026e-06,
+      -1.46928204e-08
+    ],
+    [
+      -0.9999999999932537,
+      3.673205103247453e-06,
+      -2.6984871462320583e-11,
+      5.39697429e-14
+    ],
+    [
+      0.0,
+      -7.346410206643587e-06,
+      -0.9999999999730151,
+      0.002
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "mount_target_frame": "L8_Link",
+  "mount_source_frame": "lh_hand_base_link",
+  "approved_for_motion": false,
+  "verified_components": [
+    {
+      "path": "arms/p7/variants/left/arm.urdf",
+      "sha256": "b898b9597d7d075cc5e7114d76a90d0ec514c387a5fd59411555455a6d722daa"
+    },
+    {
+      "path": "hands/linkerhand_o6/linkerhand_o6_left.urdf",
+      "sha256": "e1e42ccd1ff55a28153acb025046f42d810ac97367f7bbfdaebe042d01cd75ba"
+    }
+  ]
+}

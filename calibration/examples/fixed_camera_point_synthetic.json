@@ -1,0 +1,500 @@
+{
+  "dataset_id": "synthetic-dataset_id",
+  "camera_serial": "synthetic-camera_serial",
+  "camera_profile_version": "synthetic-camera_profile_version",
+  "arm_device_id": "synthetic-arm_device_id",
+  "model_version": "synthetic-model_version",
+  "joint_mapping_version": "synthetic-joint_mapping_version",
+  "target_id": "synthetic-target_id",
+  "target_geometry_version": "synthetic-target_geometry_version",
+  "attachment_version": "synthetic-attachment_version",
+  "clock_domain": "synthetic-clock_domain",
+  "epoch": "synthetic-epoch",
+  "source": "synthetic",
+  "units": "m",
+  "arm_role": "left",
+  "base_frame": "base",
+  "flange_frame": "flange",
+  "camera_frame": "camera",
+  "target_frame": "target",
+  "max_translation_residual_m": 0.001,
+  "max_rotation_residual_rad": 0.01,
+  "max_condition_number": 1000000.0,
+  "training": [
+    {
+      "camera_profile_version": "synthetic-camera_profile_version",
+      "target_geometry_version": "synthetic-target_geometry_version",
+      "attachment_version": "synthetic-attachment_version",
+      "clock_domain": "synthetic-clock_domain",
+      "epoch": "synthetic-epoch",
+      "sample_id": "0",
+      "image_id": "image-0",
+      "joint_sample_id": "joint-0",
+      "target_rigidly_fixed": true,
+      "vision_validation": "PASS",
+      "time_alignment_evidence": "synthetic-clock-truth",
+      "T_base_reference": [
+        [
+          0.03239862000785515,
+          -0.771829228427018,
+          -0.6350039146078867,
+          0.013927445532188965
+        ],
+        [
+          -0.27515297612044376,
+          0.6038996672888168,
+          -0.7480615159066255,
+          0.2636500048362137
+        ],
+        [
+          0.9608543953969555,
+          0.1989593777488512,
+          -0.19280559341507936,
+          1.5771258499996779
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "reference_stamp_s": 0.0,
+      "center_camera_m": [
+        -0.4720798503812532,
+        0.4014577837418068,
+        0.6830311598985747
+      ],
+      "center_stamp_s": 0.0,
+      "center_quality": "PASS"
+    },
+    {
+      "camera_profile_version": "synthetic-camera_profile_version",
+      "target_geometry_version": "synthetic-target_geometry_version",
+      "attachment_version": "synthetic-attachment_version",
+      "clock_domain": "synthetic-clock_domain",
+      "epoch": "synthetic-epoch",
+      "sample_id": "1",
+      "image_id": "image-1",
+      "joint_sample_id": "joint-1",
+      "target_rigidly_fixed": true,
+      "vision_validation": "PASS",
+      "time_alignment_evidence": "synthetic-clock-truth",
+      "T_base_reference": [
+        [
+          0.9690003969598008,
+          0.22776220634618355,
+          -0.09572151300552623,
+          0.11609698426794357
+        ],
+        [
+          -0.21431847275853128,
+          0.5821879161089879,
+          -0.784298936994769,
+          0.08642137226754777
+        ],
+        [
+          -0.12290574814140834,
+          0.7805008697605613,
+          0.6129539700310359,
+          1.4286321285193297
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "reference_stamp_s": 1.0,
+      "center_camera_m": [
+        -0.26726229290302755,
+        0.22117074659616986,
+        0.610884436652422
+      ],
+      "center_stamp_s": 1.0,
+      "center_quality": "PASS"
+    },
+    {
+      "camera_profile_version": "synthetic-camera_profile_version",
+      "target_geometry_version": "synthetic-target_geometry_version",
+      "attachment_version": "synthetic-attachment_version",
+      "clock_domain": "synthetic-clock_domain",
+      "epoch": "synthetic-epoch",
+      "sample_id": "2",
+      "image_id": "image-2",
+      "joint_sample_id": "joint-2",
+      "target_rigidly_fixed": true,
+      "vision_validation": "PASS",
+      "time_alignment_evidence": "synthetic-clock-truth",
+      "T_base_reference": [
+        [
+          0.876104941081436,
+          -0.358343996738006,
+          0.3225363734751874,
+          -0.09878684604703608
+        ],
+        [
+          0.3148510088382508,
+          0.93189323036617,
+          0.18012176279184083,
+          -0.07354274480399926
+        ],
+        [
+          -0.3651150153667051,
+          -0.05625466380253656,
+          0.9292612325682345,
+          1.1386419220826935
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "reference_stamp_s": 2.0,
+      "center_camera_m": [
+        -0.4597614297800289,
+        0.17872324856293495,
+        0.3225781051181068
+      ],
+      "center_stamp_s": 2.0,
+      "center_quality": "PASS"
+    },
+    {
+      "camera_profile_version": "synthetic-camera_profile_version",
+      "target_geometry_version": "synthetic-target_geometry_version",
+      "attachment_version": "synthetic-attachment_version",
+      "clock_domain": "synthetic-clock_domain",
+      "epoch": "synthetic-epoch",
+      "sample_id": "3",
+      "image_id": "image-3",
+      "joint_sample_id": "joint-3",
+      "target_rigidly_fixed": true,
+      "vision_validation": "PASS",
+      "time_alignment_evidence": "synthetic-clock-truth",
+      "T_base_reference": [
+        [
+          0.7916292683734103,
+          -0.5888917353553462,
+          0.1628791744967663,
+          0.08349311876143728
+        ],
+        [
+          0.5035244771678855,
+          0.47776926994788954,
+          -0.7198608376528537,
+          0.38879255492498316
+        ],
+        [
+          0.3461014336107073,
+          0.6518765594218199,
+          0.6747375407734356,
+          1.8074219952256327
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "reference_stamp_s": 3.0,
+      "center_camera_m": [
+        -0.30205313048207827,
+        0.5412100388014922,
+        1.001374074757845
+      ],
+      "center_stamp_s": 3.0,
+      "center_quality": "PASS"
+    },
+    {
+      "camera_profile_version": "synthetic-camera_profile_version",
+      "target_geometry_version": "synthetic-target_geometry_version",
+      "attachment_version": "synthetic-attachment_version",
+      "clock_domain": "synthetic-clock_domain",
+      "epoch": "synthetic-epoch",
+      "sample_id": "4",
+      "image_id": "image-4",
+      "joint_sample_id": "joint-4",
+      "target_rigidly_fixed": true,
+      "vision_validation": "PASS",
+      "time_alignment_evidence": "synthetic-clock-truth",
+      "T_base_reference": [
+        [
+          0.6381673112082803,
+          0.46936117435121116,
+          0.6102807312350981,
+          0.25172362859780256
+        ],
+        [
+          -0.359171245359558,
+          0.8826328774727783,
+          -0.3032411913163973,
+          -0.29608472551843795
+        ],
+        [
+          -0.6809834795441504,
+          -0.025676674546670886,
+          0.7318484877159795,
+          1.5686472735148524
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "reference_stamp_s": 4.0,
+      "center_camera_m": [
+        -0.06040411682398572,
+        -0.1071132832330855,
+        0.7274421524591672
+      ],
+      "center_stamp_s": 4.0,
+      "center_quality": "PASS"
+    },
+    {
+      "camera_profile_version": "synthetic-camera_profile_version",
+      "target_geometry_version": "synthetic-target_geometry_version",
+      "attachment_version": "synthetic-attachment_version",
+      "clock_domain": "synthetic-clock_domain",
+      "epoch": "synthetic-epoch",
+      "sample_id": "5",
+      "image_id": "image-5",
+      "joint_sample_id": "joint-5",
+      "target_rigidly_fixed": true,
+      "vision_validation": "PASS",
+      "time_alignment_evidence": "synthetic-clock-truth",
+      "T_base_reference": [
+        [
+          0.977527565781451,
+          0.20260557437648216,
+          0.058230914203426604,
+          -0.1611120089358873
+        ],
+        [
+          -0.14468823542259704,
+          0.8457156644023053,
+          -0.5136441662424119,
+          -0.06856000302848936
+        ],
+        [
+          -0.1533139676209777,
+          0.49367600328164946,
+          0.8560250178097428,
+          1.7102250285006355
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "reference_stamp_s": 5.0,
+      "center_camera_m": [
+        -0.5296601989686212,
+        0.10255328557088667,
+        0.9075715310276398
+      ],
+      "center_stamp_s": 5.0,
+      "center_quality": "PASS"
+    }
+  ],
+  "validation": [
+    {
+      "camera_profile_version": "synthetic-camera_profile_version",
+      "target_geometry_version": "synthetic-target_geometry_version",
+      "attachment_version": "synthetic-attachment_version",
+      "clock_domain": "synthetic-clock_domain",
+      "epoch": "synthetic-epoch",
+      "sample_id": "6",
+      "image_id": "image-6",
+      "joint_sample_id": "joint-6",
+      "target_rigidly_fixed": true,
+      "vision_validation": "PASS",
+      "time_alignment_evidence": "synthetic-clock-truth",
+      "T_base_reference": [
+        [
+          0.8073374418569694,
+          0.5344317202190371,
+          -0.25017791948844215,
+          0.13479944837705746
+        ],
+        [
+          -0.5899324468138293,
+          0.7211949546222546,
+          -0.36312194318665536,
+          -0.28997478729515125
+        ],
+        [
+          -0.013636831453566561,
+          0.44075001287705595,
+          0.8975263021086246,
+          1.3938290190756757
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "reference_stamp_s": 6.0,
+      "center_camera_m": [
+        -0.25803864312807623,
+        -0.11644978191142573,
+        0.5965314130437784
+      ],
+      "center_stamp_s": 6.0,
+      "center_quality": "PASS"
+    },
+    {
+      "camera_profile_version": "synthetic-camera_profile_version",
+      "target_geometry_version": "synthetic-target_geometry_version",
+      "attachment_version": "synthetic-attachment_version",
+      "clock_domain": "synthetic-clock_domain",
+      "epoch": "synthetic-epoch",
+      "sample_id": "7",
+      "image_id": "image-7",
+      "joint_sample_id": "joint-7",
+      "target_rigidly_fixed": true,
+      "vision_validation": "PASS",
+      "time_alignment_evidence": "synthetic-clock-truth",
+      "T_base_reference": [
+        [
+          0.9257864137315706,
+          -0.17906588200509407,
+          0.3329488339847057,
+          0.0923709464543252
+        ],
+        [
+          0.04575760984820618,
+          0.927308287974933,
+          0.3714910230328292,
+          0.05448158209295922
+        ],
+        [
+          -0.37526758092195595,
+          -0.3286863991021479,
+          0.8666830411137897,
+          1.3644139767559826
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "reference_stamp_s": 7.0,
+      "center_camera_m": [
+        -0.26119041833272566,
+        0.32036508523245427,
+        0.533716337275858
+      ],
+      "center_stamp_s": 7.0,
+      "center_quality": "PASS"
+    },
+    {
+      "camera_profile_version": "synthetic-camera_profile_version",
+      "target_geometry_version": "synthetic-target_geometry_version",
+      "attachment_version": "synthetic-attachment_version",
+      "clock_domain": "synthetic-clock_domain",
+      "epoch": "synthetic-epoch",
+      "sample_id": "8",
+      "image_id": "image-8",
+      "joint_sample_id": "joint-8",
+      "target_rigidly_fixed": true,
+      "vision_validation": "PASS",
+      "time_alignment_evidence": "synthetic-clock-truth",
+      "T_base_reference": [
+        [
+          0.7620967791481864,
+          0.10681592244185992,
+          0.6385913074297637,
+          0.1267188928908478
+        ],
+        [
+          0.07344425886935377,
+          0.9656697727976289,
+          -0.2491742979203662,
+          -0.0251806385927478
+        ],
+        [
+          -0.6432841052374073,
+          0.23679579518621233,
+          0.7280888073106451,
+          1.7057110854708544
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "reference_stamp_s": 8.0,
+      "center_camera_m": [
+        -0.19097556310995628,
+        0.18034090997653154,
+        0.8727581579527571
+      ],
+      "center_stamp_s": 8.0,
+      "center_quality": "PASS"
+    },
+    {
+      "camera_profile_version": "synthetic-camera_profile_version",
+      "target_geometry_version": "synthetic-target_geometry_version",
+      "attachment_version": "synthetic-attachment_version",
+      "clock_domain": "synthetic-clock_domain",
+      "epoch": "synthetic-epoch",
+      "sample_id": "9",
+      "image_id": "image-9",
+      "joint_sample_id": "joint-9",
+      "target_rigidly_fixed": true,
+      "vision_validation": "PASS",
+      "time_alignment_evidence": "synthetic-clock-truth",
+      "T_base_reference": [
+        [
+          0.8919924951341761,
+          -0.09371892448210165,
+          0.44222861940202934,
+          0.32800077642214553
+        ],
+        [
+          0.2356739099526249,
+          0.9312168400870817,
+          -0.27801619540212485,
+          -0.07223011572564966
+        ],
+        [
+          -0.38575535873393757,
+          0.35221010765187954,
+          0.8527255380694908,
+          1.4331667845563898
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "reference_stamp_s": 9.0,
+      "center_camera_m": [
+        -0.012748079469431073,
+        0.1326182481358028,
+        0.6212905344182166
+      ],
+      "center_stamp_s": 9.0,
+      "center_quality": "PASS"
+    }
+  ],
+  "observation_kind": "point_center",
+  "reference_frame": "L5_Link",
+  "attachment_reference_frame": "L5_Link"
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": "c-manual-roi-1",
+  "source": "manual visible face junctions in 8x nearest crop x310:365 y300:355; no dimension fitting",
+  "measured_edge_m": 0.05,
+  "measurement_source": "user ruler measurement; uncertainty unknown",
+  "top_corners_uv": [
+    [
+      325,
+      327
+    ],
+    [
+      337,
+      312
+    ],
+    [
+      353,
+      320
+    ],
+    [
+      342,
+      337
+    ]
+  ],
+  "top_erosion_px": 3,
+  "table_rect_xyxy": [
+    260,
+    285,
+    430,
+    385
+  ],
+  "exclude_rect_xyxy": [
+    310,
+    300,
+    370,
+    365
+  ],
+  "normal_hint_camera": [
+    0,
+    0,
+    -1
+  ],
+  "ransac_threshold_m": 0.008
+}

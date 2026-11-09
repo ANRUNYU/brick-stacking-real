@@ -38,3 +38,12 @@ def test_layer_graph_validation():
     with pytest.raises(ValueError):
         build_stacking_slots(edge_m=.05, layers=[4, 2], colors_by_layer=["red", "blue"],
                               center_xy_m=[0, 0], yaw_rad=0, frame_id="table")
+
+def test_optional_gap_preserves_centered_support_geometry():
+    slots=build_stacking_slots(edge_m=.05,gap_m=.002,layers=[4,3,2,1],colors_by_layer=['red','yellow','blue','green'],center_xy_m=[0,0],yaw_rad=0,frame_id='table')
+    assert slots[1].center_m[0]-slots[0].center_m[0]==pytest.approx(.052)
+    assert slots[4].center_m[0]==pytest.approx((slots[0].center_m[0]+slots[1].center_m[0])/2)
+    assert slots[4].supports==('L0_0','L0_1')
+    assert slots[-1].center_m[2]==pytest.approx(.175)
+    for gap in (-.001,.05,float('nan')):
+        with pytest.raises(ValueError):build_stacking_slots(edge_m=.05,gap_m=gap,layers=[2,1],colors_by_layer=['red','yellow'],center_xy_m=[0,0],yaw_rad=0,frame_id='table')

@@ -1,0 +1,36 @@
+{
+  "schema_version": "c-vendor-seams-1",
+  "source_url": "https://raw.githubusercontent.com/linker-bot/linker-sim-assets/main/src/linker_robot_assets/assets/components/arms/p7/variants/left/arm.mjcf",
+  "source_sha256": "7e50f11c0dd488f557e95743163824a821f4522cf8403e99e8da6d284239c2e3",
+  "reviewed_pairs": [
+    [
+      "L1_Link",
+      "L2_Link"
+    ],
+    [
+      "L2_Link",
+      "L3_Link"
+    ],
+    [
+      "L3_Link",
+      "L4_Link"
+    ],
+    [
+      "L4_Link",
+      "L5_Link"
+    ],
+    [
+      "L5_Link",
+      "L6_Link"
+    ],
+    [
+      "L6_Link",
+      "L7_Link"
+    ],
+    [
+      "L7_Link",
+      "L8_Link"
+    ]
+  ],
+  "approved_for_motion": false
+}

@@ -8,7 +8,7 @@ from zipfile import ZipFile, ZIP_DEFLATED
 
 ROOT_FILES = {"README.md", "CHANGELOG.md", "pyproject.toml", ".gitignore",
               "BRICK_STACKING_REAL_ROBOT_DESIGN_v0.2.md", "PROJECT_STRUCTURE_AND_NAMING.md"}
-SOURCE_DIRS = {"src", "tests", "config", "docs", "experiments", "tools", ".github"}
+SOURCE_DIRS = {"src", "tests", "config", "docs", "experiments", "tools", "calibration", ".github"}
 SUFFIXES = {".py", ".md", ".yaml", ".yml", ".json", ".toml"}
 
 
@@ -26,8 +26,13 @@ def package_source(root, output):
         relative = path.relative_to(root)
         if path.is_symlink() or not path.is_file() or "__pycache__" in relative.parts:
             continue
+        if relative.parts[0] == "calibration" and len(relative.parts) > 1 and relative.parts[1] not in {"examples", "measurement_templates", "installation", "README.md"}:
+            continue
+        extra = relative.as_posix() in {"config/planning/requirements-linux-fcl.txt", "docs/team/C/evidence/windows_planning_C17.lock"}
+        extra = extra or (relative.parts[:4]==('tests','fixtures','real','C_20261108_tabletop') and path.suffix=='.npz')
+        extra = extra or relative.as_posix()=='docs/team/C/assets/table_cube_candidate_C33.png'
         if path == output or not (len(relative.parts) == 1 and path.name in ROOT_FILES
-                or relative.parts[0] in SOURCE_DIRS and path.suffix in SUFFIXES):
+                or relative.parts[0] in SOURCE_DIRS and (path.suffix in SUFFIXES or extra)):
             continue
         if path.stat().st_size > 2_000_000:
             raise ValueError(f"oversized source file: {relative}")

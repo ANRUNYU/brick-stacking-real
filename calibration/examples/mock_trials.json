@@ -1,0 +1,67 @@
+[
+  {
+    "run_id": "1",
+    "stage": "M3",
+    "source": "mock",
+    "assisted": false,
+    "hardware_actions": false,
+    "configuration_version": "mock",
+    "calibration_version": "mock",
+    "scene_version": "mock",
+    "clock_domain": "mock",
+    "epoch": "1",
+    "execution_status": "SUCCEEDED",
+    "pick_verdict": "PASS",
+    "placement_verdict": "PASS",
+    "stability_verdict": "PASS",
+    "start_stamp_s": 1,
+    "end_stamp_s": 2,
+    "placement_error_xyz_m": [
+      0.001,
+      0,
+      0
+    ]
+  },
+  {
+    "run_id": "2",
+    "stage": "M3",
+    "source": "mock",
+    "assisted": false,
+    "hardware_actions": false,
+    "configuration_version": "mock",
+    "calibration_version": "mock",
+    "scene_version": "mock",
+    "clock_domain": "mock",
+    "epoch": "1",
+    "execution_status": "SUCCEEDED",
+    "pick_verdict": "PASS",
+    "placement_verdict": "UNKNOWN",
+    "stability_verdict": "PASS",
+    "start_stamp_s": 1,
+    "end_stamp_s": 2,
+    "placement_error_xyz_m": null
+  },
+  {
+    "run_id": "3",
+    "stage": "M3",
+    "source": "mock",
+    "assisted": false,
+    "hardware_actions": false,
+    "configuration_version": "mock",
+    "calibration_version": "mock",
+    "scene_version": "mock",
+    "clock_domain": "mock",
+    "epoch": "1",
+    "execution_status": "FAILED",
+    "pick_verdict": "PASS",
+    "placement_verdict": "PASS",
+    "stability_verdict": "PASS",
+    "start_stamp_s": 1,
+    "end_stamp_s": 2,
+    "placement_error_xyz_m": [
+      0.001,
+      0,
+      0
+    ]
+  }
+]

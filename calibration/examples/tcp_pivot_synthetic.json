@@ -1,0 +1,274 @@
+{
+  "dataset_id": "synthetic",
+  "arm_role": "left",
+  "model_version": "synthetic",
+  "joint_mapping_version": "synthetic",
+  "device_id": "synthetic",
+  "clock_domain": "mock",
+  "epoch": "1",
+  "operator": "test",
+  "source": "synthetic",
+  "units": "m",
+  "base_frame": "base",
+  "flange_frame": "flange",
+  "training": [
+    {
+      "sample_id": "training-0",
+      "clock_domain": "mock",
+      "epoch": "1",
+      "host_stamp_s": 0.0,
+      "T_base_flange": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.29
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.18000000000000002
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.30000000000000004
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "sample_id": "training-1",
+      "clock_domain": "mock",
+      "epoch": "1",
+      "host_stamp_s": 1.0,
+      "T_base_flange": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.29
+        ],
+        [
+          0.0,
+          0.0,
+          -1.0,
+          0.30000000000000004
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.38
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "sample_id": "training-2",
+      "clock_domain": "mock",
+      "epoch": "1",
+      "host_stamp_s": 2.0,
+      "T_base_flange": [
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.19999999999999998
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.18000000000000002
+        ],
+        [
+          -1.0,
+          0.0,
+          0.0,
+          0.41000000000000003
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "sample_id": "training-3",
+      "clock_domain": "mock",
+      "epoch": "1",
+      "host_stamp_s": 3.0,
+      "T_base_flange": [
+        [
+          -1.0,
+          0.0,
+          0.0,
+          0.31
+        ],
+        [
+          0.0,
+          -1.0,
+          0.0,
+          0.22
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.30000000000000004
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "validation": [
+    {
+      "sample_id": "validation-0",
+      "clock_domain": "mock",
+      "epoch": "1",
+      "host_stamp_s": 0.0,
+      "T_base_flange": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.29
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.18000000000000002
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.30000000000000004
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "sample_id": "validation-1",
+      "clock_domain": "mock",
+      "epoch": "1",
+      "host_stamp_s": 1.0,
+      "T_base_flange": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.29
+        ],
+        [
+          0.0,
+          0.0,
+          -1.0,
+          0.30000000000000004
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.38
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "sample_id": "validation-2",
+      "clock_domain": "mock",
+      "epoch": "1",
+      "host_stamp_s": 2.0,
+      "T_base_flange": [
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.19999999999999998
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.18000000000000002
+        ],
+        [
+          -1.0,
+          0.0,
+          0.0,
+          0.41000000000000003
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "sample_id": "validation-3",
+      "clock_domain": "mock",
+      "epoch": "1",
+      "host_stamp_s": 3.0,
+      "T_base_flange": [
+        [
+          -1.0,
+          0.0,
+          0.0,
+          0.31
+        ],
+        [
+          0.0,
+          -1.0,
+          0.0,
+          0.22
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.30000000000000004
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  ]
+}

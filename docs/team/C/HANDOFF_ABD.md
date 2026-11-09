@@ -1,0 +1,194 @@
+# C31 当前交接补充（2026-11-08）
+
+**C35/C36最新：** 用户接受10mm拟合门槛，6组max6.724mm满足；独立验证按用户要求未做。相机→左基座参数在calibration/candidates，临时标定块偏移不是实际TCP。当前实拍两块基座坐标、抓取几何/10槽位见[C36_SCENE_GEOMETRY.md](C36_SCENE_GEOMETRY.md)。C→A41点Mock样例/3反馈场景已跑通，未合并A源码。304软件回归后按用户要求不扩大测试。真实动作仍需A七轴状态、D稳定预设/持物TF及完整场景。
+
+**C35当前采集：** [C35_FIELD_SESSION.md](C35_FIELD_SESSION.md)记录实际固定块多姿态、具名五轴曝光FK和三面中心候选；当前3训练候选、时间PROVISIONAL，无有效外参/TCP。新增prepare_fixed_camera_point_sample.py及297回归。A1-04/D1-02接口已审阅，C与A的连续插值语义仍需显式适配，不能将Mock反馈当真实能力；未改其他成员源码。
+
+**C34发布交接：** 本次用户授权将当前成果上传GitHub任务分支，统一从[README.md](README.md)进入。新增裁剪真实RGB-D/原始五轴/ROI/时钟最小样例，供A/B/D离线复算；290回归通过，未合并main。历史“未推送”描述对应当时，不代表当前授权范围。
+
+**C33最新补充：** 已用实拍RGB-D建立局部桌面坐标与50mm红块中心候选/实拍叠图，沿用CameraFrame/BlockDetection/BlockPose/RigidTransform。新入口[OBSERVED_TABLE_COORDINATES.md](OBSERVED_TABLE_COORDINATES.md)含调用/帧SHA/几何假设与误差。相机内建系不等于左基座外参，T_base_camera/T_base_table仍null；几何检查FAIL原样保留，不是执行目标。289回归通过，无新增硬件动作。
+
+**C32最新补充：** 用户无法脱手支撑，改为检查曝光附近读数并按SDK global曝光映射插值。tools/c_head_camera_probe.py新增可选--record-clock-metadata；tools/associate_camera_joint_samples.py输出五轴命名rad、原始帧/设备/主机时间、boot epoch及插值括号，始终PROVISIONAL。真实相机已证实global非零、SDK时钟REALTIME；不能直接拿device/arrival替代曝光，CLOCK_MONOTONIC_RAW也不能当Python monotonic。B仍需给时间误差界与曝光参考；A保留原始读数，未提供七轴执行替代；D确认安装未改变。命令、283回归与真实证据见STATUS.md C32/evidence/camera_clock_association_C32.json。未验收标定、无运动目标。
+
+最新采集/求解入口 [FIXED_CAMERA_CALIBRATION.md](FIXED_CAMERA_CALIBRATION.md)。无标记50mm方块固定在L5候选段，用61–65读取和厂家FK，联合估计固定相机外参及未知中心偏移；不要求已知笔尖TCP，不使用未核验腕量化。模型/安装/图像/epoch明确，几何单位m。工具及267回归通过，真实多姿态仍未完成；不要使用尚不存在的外参执行。B的设备—主机延迟映射仍UNKNOWN；静止接收时间覆盖不是时钟标定。A/B/D最小接口和M1/M2a/M3交接见该文档；本批只有头部开流/五轴位置READ，无运动目标。
+
+# C → A/B/D 滚动交接文档
+
+**当前更正（2026-11-08）：本机灵心巧手O6无触觉，现场用户确认。禁止用触觉API/全零矩阵推断接触；已撤销轻触请求，能力守卫拒绝本机触觉查询。电机电流可用（用户确认），实际协议/单位/换算待核验，未知项null，不把SDK百分比torque当作Nm/电流实测。当前C主线为C1-03真实坐标链、C1-04路径及C1-05/M3闭环，尚未完成真机抓放。最新任务表TASK_STATUS.md优先于下方历史批次。**
+
+更新：2026-11-08；任务分支 codex/c-calibration-planning。维护约定：每个可合并任务同时更新本页和 STATUS.md，并将新证据加入 evidence/。当前GitHub交付从README.md进入；未合并main，未通过邮件/聊天主动发送给其他成员。本文是滚动交接，不是全部任务完成声明。
+
+## 当前统一事实
+
+主臂左臂，由用户现场指定；左臂固定在整机，交付时已安装，没有安装记录。用户现场确认J6/J7及停止已验收，但A的量化日志尚未接入。左臂61–67的顺序有现场SDK源码支持，物理正方向/零位待核验。can0/can1只是当次接口名，不能固定绑定左右手；A/D须按SN/唯一身份和物理路径解析当次总线。
+
+头部Gemini335L/CP2L863000KL，左腕Gemini2/AY6M8630086，右腕Gemini2/AY6M86300GH。腕相机角色源于交付审计，本批没有对腕机开流。头部使用1280×800 RGB/Y16@15候选配置，真实有界采集成功。普通qwer USB访问失败，临时sudo才成功；未修改udev/用户组/SDK，生产权限问题未解决。
+
+积木50×50×50mm为用户尺量，测量不确定度未知；桌面约100×40cm，不是精确外参约束。所有几何m、角度rad、四元数xyzw，T_A_B将B映射至A。设备时钟/host_monotonic分开记录，epoch按会话变化，没有设备到主机/ROS时间映射。当前无已批准外参、TCP或真实动作计划。
+
+## A：机械臂/执行交接（M0/M1/M2a/M3/M5/M6）
+
+现场源码p7.py声明：左motor_ids61..67顺序L1..L7；前5轴A7Motor、后2轴MotorV2。P7构造器含模式/Flash相关调用，不得为了read_state实例化。详见STATUS第十批与 remote_sdk_coordinate_audit_C10.json 中源码哈希。
+
+ArmKinetix有urdf/maestro两种约定；maestro除位置原点/旋转外还有输出姿态右乘，不能当单一项目world变换。默认tcp_offset=0是源码缺省，不是TCP标定。get_angles为缓存字段，不证明新鲜。必须提供带sample_id、关节名、q_rad、host_receive_stamp、device_stamp或null、clock_domain、epoch、有效性、模型/映射/限位版本的反馈。
+
+现场p7__left.urdf的SHA256为233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce；主机Pinocchio三组数学输入与C解析FK最大矩阵差0，见remote_left_p7_fk_C10.json。无collision元素，无手/相机/整机模型，不能用来宣称全机避碰。实际安装/零位/正方向仍未知。
+
+C输出c-trajectory-1：joint_names、expected_start_rad、segments(start_rad/end_rad/start_s/duration_s)、五次插值、模型/场景/标定版本、clock_domain/epoch及state_stamp。插值在每路点速度/加速度归零，A不可替换成另一插值后沿用限制检查。样例：`PYTHONPATH=src python tools/c_motion_sample.py <新输出.json>`；全部SYNTHETIC。接收方需验证许可、设备身份、新鲜起点、实测限位/速率/停止能力。当前motion_enabled始终false。M3/M5/M6真实联调尚未进行。
+
+## B：相机/标定交接（M0/M1/M2a/M3/M4/M6）
+
+真实C08/C09核验对齐帧profile：RGB与depth的K一致，但RGB畸变非零、aligned depth畸变全零。原工具两流共用RGB remap不符合帧声明；C03–C08保留诊断，禁止批准标定。v4按各自D处理到共同K，对齐帧K/尺寸不符则拒绝。C09是修复后记录；SDK执行D2C不等于空间配准精度验收。
+
+tools/c_head_camera_probe.py为独立副本，未改原SDK；真实使用v4部署哈希见STATUS第九批。20帧/最长20秒，明确SN和profile，不自动降级；RAM有界缓冲，停流后压缩保存，不是长时录包器。缓存映射/后移写盘后C07/C09保存约14.98fps，之前C06仅6.78fps。短采样连续不证明长期性能。
+
+高分模式K约fx609.669/fy609.770，不用旧640×480的368px K。report含profile/K/D、时间域、SN、深度scale；NPZ含rgb/depth_m/k/metadata。B需继续提供原始depth尺度、空间处理依据、时间映射与延迟、profile版本、图像索引；不要把device stamp作为host stamp。
+
+修复后C09局部高度中位50.324mm、短时std0.168mm，手选角点边长45.920–47.229mm，仍与尺量50mm不符。只作诊断，不反向调scale/K以对齐真值。tools/analyze_cube_capture.py记录ROI、平面/角点假设和敏感性；独立顶面拟合也不能替代外部标定板/量测。外参点对求解见tools/solve_calibration.py和calibration/examples/synthetic_pairs.json，训练与验证ID分离，输出永远未批准。
+
+## D：任务/手/场景交接（M0/M1/M3/M4/M5/M6）
+
+D拥有block/slot及支撑唯一状态。C复用scene.build_stacking_slots与Slot，不重建场景或调度器。真实尺寸输入edge_m=.05仍须带来源；table到world必须明确，近似桌面尺寸不用于标定。
+
+新增slot_release_geometry：Slot、T_world_table、T_tcp_block、yaw_rad、clearance_m、scene_version → world_block及approach/release/retreat TCP变换。撤退方向沿table +Z，不假定world +Z；版本/坐标不符拒绝。样例与10块四层测试见tests/unit/planning/test_slot_release.py；支撑DAG仍由既有生成器维护，不额外创建并发/双臂功能。
+
+新增evaluate_candidates：注入solve_ik(candidate)和check_collision(trajectory)，各候选分别报告IK/trajectory_limits/collision/full_collision。回调IK None视为无解；碰撞未知/失败、版本不符、过期状态或越限拒绝选择；只在所提供模型内通过者按总时长排序。输出schema c-candidates-1，包含候选原因、分段轨迹、模型/场景/标定版本。full_collision仍UNKNOWN、motion_enabled=false。测试中的IK/碰撞回调是SYNTHETIC，不是已经实现真实IK/碰撞规划器。
+
+D需提供手角色/SN/预设/版本/单位、实测手与相机/持物包络、场景版本、允许接触模型、目标block/slot及支撑状态。手预设不能默认映射到已知TCP。AABB-only通过不得生成真实permit。当前没有真实执行结果，不得由规划通过提交PLACED_VERIFIED。
+
+## 所有成员共同的未完成依赖
+
+|依赖|提供方|最小证据/单位|完成前行为|
+|---|---|---|---|
+|关节零位/正方向/限制/停止|A|七轴映射、rad/rad_s/rad_s2、时间/epoch、验收run_id|不生成真实轨迹许可|
+|头部/桌面/左臂base约束|C+现场/厂家|基座物理原点/轴，安装图或独立量测点，m、来源/时间；分离验证点|外参未知|
+|TCP/工具/持物偏移|C+D+A|刚性工具几何、多姿态采样、独立接触验证；TCP方向另测|不以零偏移默认通过|
+|RGB-D绝对精度/配准|B+C|标定板或可测参考，跨位置/高度，K/D/profile、原图和时间域|尺寸验收INCONCLUSIVE|
+|全机碰撞|A/C/D|臂/手/相机/机身/桌面/另一臂停放几何、验证方法与缺失|full_collision UNKNOWN|
+|真实阶段一与多层验收|全员|M3固定点→视觉；M5两层→十块；M6多轮与人工介入记录|不宣称阶段完成|
+
+## 证据与复验入口
+
+STATUS.md保存每批任务ID、文件原因、输入版本、测试、现场动作边界和依赖。evidence/保存哈希/报告/ROI；原始RGB-D在主机/home/qwer/c_calibration_runs和本地artifacts/c_real_calibration，不纳入Git。数学参考不标real joint feedback。工具/夹持/相机安装改变后标定需失效重验；原报告不可静默覆盖。
+
+本批最新全套：`python -m pytest -q --basetemp=.test-tmp-c11-final`，91 passed。只证明对应软件/Mock用例；真实验收见逐批记录。所有C任务尚未全部完成，本页将随进展更新，最终交付时再冻结版本。
+
+## 最新补充：厂家资产与IK（第十二批）
+
+厂家P7组件可提供机身/肩部候选基准：base_link到左肩mount的声明平移(0,.164,0)m，L8_Link为tool0；源称A7V2_50_4.27。torso_root离地1.2m是仿真设置，不是实测。厂家腕部335L/顶部ZED装配与现场头335L/腕Gemini2不同，禁止套用其相机安装外参。来源链接、未锁定commit及读取网络失败均记录在STATUS第十二批。
+
+新增solve_pose_ik为C1-04/C2-03的数值后端：显式求解参数，返回c-ik-1，局部失败不宣称全局不可达，collision UNKNOWN、trajectory NOT_GENERATED。用户明确批准单文件上传后，已在主机Pinocchio完成两组数学验证，见remote_pinocchio_ik_C12.json；不调用P7、不访问CAN，数值残差不是实机精度。最近全套95 passed。
+
+用户具备毫米刻度直尺/卷尺，外廓复量仍50mm；顶面平整区域/倒角/重复测量未给，保持未知。installation_survey.json已准备，记录物理基准、操作者/时间和量具分辨率；未知外参/TCP为null。A/B/D后续统一从此页及STATUS读取最新证据，旧采样不能绕过逐流畸变修复限制。尚未向成员发送，最终交付前冻结。
+
+## 最新补充：持物偏移与版本失效（第十三批，116 passed）
+
+C2-02/M4-M5：`estimate_held_offset(training, validation, candidate_id=..., grasp_version=..., max_translation_residual_m=..., max_rotation_residual_rad=...)`，每行(sample_id,T_world_tcp,T_world_block)，各至少3样本，ID不重用，位姿在同一capture时刻/同一epoch时钟域。返回未批准RigidTransform和fit/validation一致性报告；不丢异常点，不自动修正。B方向未知时拒绝构造假姿态；A需提供图像时刻插值后的FK（插值误差另报告）。样例/验证：tests/unit/localization/test_held_offset.py。真实采样仍缺，尚无持物误差改善结论。
+
+C2-04/M3-M6：`validate_plan_context(planned,current,created_stamp_s=...,expires_stamp_s=...,now_s=...)`。CONTEXT_KEYS列出13项设备/标定/工具/场景/时钟依赖；任何缺失或变化使计划失效，时间需同域。A/D需要在执行前调用并拒绝FAIL；它不代替实物身份、新鲜反馈、停止和全机碰撞校验，不生成permit。样例tests/unit/planning/test_context_validation.py。真实重装/夹持变更后仍须独立测点复验。
+
+九项C任务最新完成度见TASK_STATUS.md；本批未连接设备，未有真实运动。最终交付仍需实际标定、M3/M5/M6证据，不能冻结为全部完成。
+
+现场最新确认：机械臂已确认P7，不再重复索取型号；左肩第一轴旋转中心可见、无外壳遮挡，可开始物理安装尺寸核对。零位/轴正方向及相机安装仍独立未知。首先采肩部中心间距三次原始读数，名义约328mm只作厂家模型一致性检查，不作为已批准外参。
+
+## 最新补充：用户实测安装确认、平台差异与路径串接（第十四批）
+
+用户明确所有机械安装数值已实测与厂商一致，不再重复请求这些尺寸。记录calibration/installation/user_confirmed_vendor_geometry_20261107.json，清楚区分用户实测确认、厂商模型及未提供矩阵的相机/TCP关系。Rabokit五章已审阅，见RABOKIT_REVIEW.md：base_link位姿、冗余IK选解差异、理想仿真传感器时钟、整机/独立O6反馈通道不可混用。未启动平台或设备驱动。
+
+C→A/D新增plan_pose_path：顺序TCP目标通过局部IK后生成从当前起点开始的明确关节轨迹，任一失败不提供部分可执行路径。A应保留插值/关节解，不能转位姿move_to后让控制器重新选肘部姿态却沿用碰撞报告。full_collision UNKNOWN、motion_enabled=false。最新全套119 passed；尚无真实完整碰撞/执行闭环验收。
+
+## 最新补充：碰撞采样与轴向模型转换（第十五批）
+
+A/C必读：厂家P7碰撞URDF与现场SDK的七轴axis全反，J2限位反号换序。不是尺寸不符；用户实测安装一致的记录不变。`q_vendor=-q_sdk`三组FK及全部限位变换吻合，但这仅是模型约定转换，不是重新电机校准。使用config/planning/p7_sdk_to_vendor_collision_candidate.json和JointConventionMap时严格核对两侧哈希，不可静默混用角度。当前现场SDK哈希已再次SSH核对。
+
+C→D：sampled_capsule_check实现明确半径胶囊对平面/球/自碰撞的轨迹中间姿态检查；每个self排除需名称和原因，缺几何/半径/版本拒绝。碰撞FAIL，采样点无接触则完整status UNKNOWN，不能申请permit；输出覆盖、缺失、采样间隔与首个接触。它可作为evaluate_candidates的碰撞回调，UNKNOWN将拒绝选择。没有加载厂家网格、没有全机或连续认证。
+
+厂家8个mesh引用及轴向差异证据见vendor_p7_collision_audit_C15.json和vendor_sdk_axis_mapping_C15.json。最新全套126 passed，现场只有源码/哈希读取，无设备动作。后续仍需解析mesh、工具/相机/持物/环境及接触约定。
+
+## 最新补充：8份厂家STL的锁定和FK放置（第十六批）
+
+已下载/解析P7左臂8份真实STL，URDF哈希固定，STL的Git LFS SHA256及长度全部校验；锁清单p7_collision_asset_lock_C16.json。git commit API证书失败未绕过验证，当前以内容hash锁版本。原文件在artifacts，不放入源码/SDK。
+
+mesh_envelopes对每link全部三角顶点生成保守胶囊，urdf_capsules使用明确SDK→vendor角度映射把它们置于L_arm_root。实际网格接入synthetic短轨迹后首帧包络重叠FAIL；这不是实物碰撞结论，不能通过扩大安装排除来掩盖。padding0仅资产诊断，没有真实安全余量。模型范围仍缺手/相机/机身/持物/环境与连续检查。
+
+复现：`python tools/fetch_p7_collision_assets.py <新资产目录>`，需网络；读取函数load_p7_capsule_envelopes(dir,padding_m=...)和MappedUrdfCapsules(...).at_source_q(q)。API用例tests/unit/planning/test_mesh_envelopes.py、test_urdf_capsules.py。C15显式映射配置必须匹配两侧hash。采样无接触status仍UNKNOWN，不允许申请真实permit。
+
+第十六批最新全套131 passed；本批不需现场协助。后续自主继续几何后端改进，当前不申请真实执行。
+
+## 最新补充：FCL已配置（第十七批）
+
+主机/home/qwer/c_planning_venv已安装python-fcl0.7.0.11/numpy2.2.6/Cython3.3.1，主机基本sphere/triangle-mesh相交与距离assert、pip check通过；原控制/相机环境没改。Windows独立项目测试环境全套134 passed。重建见FCL_SETUP.md和requirements-linux-fcl.txt，依赖可选extra planning。
+
+C→A/D：新增FclMeshChecker，真实厂家8mesh BVH的两个模型姿态均发现6pair表面相交（未排除安装接缝），报告p7_fcl_mesh_audit_C17.json。不是实物碰撞结论，也不是避碰通过；无接触仍UNKNOWN，需补体积包含、连续关节路径、手/相机/机身/持物/环境。默认模型符号映射与所有hash约束仍必须保留，不允许因FCL已安装放开动作。
+
+## 最新补充：厂家接缝与连续表面判据（第十八批，138 passed）
+
+7个相邻link接缝排除有厂家arm.mjcf原文依据及SHA256锁定，不是从碰撞结果猜测。配置p7_vendor_installation_seams.json，load_vendor_exclusions会拒绝来源变化/未审pair/重复。两个静态姿态在此模型规则下无非排除三角相交。
+
+check_trajectory已接quintic关节路径→具名link变换→FCL，能检出中间姿态接触。50ms/58sample合成路径最小距离13.046mm，但连续速度界推算下界为负，仍UNKNOWN。细化20ms结果和条件式连续表面证据见p7_fcl_certificate_fine_C18.json。速度/间隙界方法见FCL_SETUP.md，不把FCL首尾刚体CCD当真实关节轨迹。full_collision UNKNOWN、motion_enabled=false不变；未覆盖手/相机/机身/持物/环境、体积包含和标定误差。
+
+第十八批细化证据：142sample、最大gap19.967ms，固定基座/刚性臂mesh/明确接缝/所声明quintic下，连续表面距离下界约6.402mm，条件式continuous_surface PASS。它不覆盖完整实体/环境，不能等同full_collision PASS。复现沿用tools/audit_p7_fcl.py，追加`--vendor-exclusions <arm.mjcf> --exclusions-sha256 <配置锁定hash> --path --sample-dt-s .02`，报告必须新路径。fetch_p7_collision_assets已同时锁定该MJCF。
+
+## 最新补充：O6独立模型覆盖（第十九批，144 passed）
+
+D/C：新增具名rad主动关节→mimic展开→全部指节FK→FCL12mesh检查。5组URDF mimic与厂家XML equality系数匹配；默认URDF FK仍拒绝未解析mimic。12个具名安装接触排除有固定XML哈希来源，非任意去掉碰撞。两组SYNTHETIC弧度手势无非排除表面相交，status/full_collision仍UNKNOWN。
+
+来源/关节模型范围见vendor_o6_audit_C19.json，资产锁o6_asset_lock_C19.json，FCL结果o6_fcl_C19.json。源为厂家候选，不是已读实际手关节，不把全0叫open。D仍需给实际preset版本、单位和显式6通道到模型rad映射，以及安装/适用对象信息。不能从URDF上下限猜raw归一化。
+
+工具fetch_o6_collision_assets下载并hash锁定12OBJ及URDF/XML，audit_o6_fcl复现手内模型验证。尚未组合到P7臂路径，尚无手/相机/积木相互碰撞结论。本批SSH仅查资料文件，无设备访问。最新144 passed。
+
+## 最新补充：组合模型和可审阅软件交付（第二十批，154 passed）
+
+厂家正确配方p7_i1_o6_bimanual已找到，并锁commit d0224b8da58802fe7cb2e35dcc9771693c4543b6。现有臂/手URDF哈希与该提交一致。p7_o6_left_mount_candidate.json只记录左L8→掌根机械关系及来源，不是TCP。20mesh组合的两个固定synthetic手势与quintic臂路径已做FCL采样，无非排除相交；full_collision仍UNKNOWN，缺机身/相机/持物/环境。C18连续表面判据没有自动扩展到组合模型。
+
+新增接近候选生成、兼容gap_m的十块槽位、TCP枢轴独立验证CLI和按来源/版本/人工分组的试验报告器。样例和运行入口见SOFTWARE_REVIEW.md；所有SYNTHETIC输入禁止转作真实配置。计数/误差工具不把Mock/ACK/人工计作自主真机成功。
+
+下一现场采样要求见NEXT_FIELD_SESSION.md；不重复量安装尺寸。需要A提供无P7构造副作用的新鲜状态/时刻FK，B提供同步相机点，D提供实际预设映射；用户现场配合刚性指针/固定参考点（未安装未运动）。C所有候选仍不自动批准，任务未全验收。文档将随实际数据持续更新。
+
+## 现场采样补充（第二十一批）
+
+用户已确认指针固定且接触凹点，现有控制进程是右手，不使用/干预该进程。只被动监听左臂ID61…67约3秒，0接收、0发送，未改变接口/设备状态。证据left_passive_capture_C21.json，NO_FEEDBACK只描述窗口，不是故障判断。有效TCP样本0，不能凭接触条件生成标定。A需要提供新鲜左臂七轴状态出口；未启动P7对象，未发送任何控制帧。
+
+## 状态入口核验（第二十二批，M2a）
+
+用户提供两份历史运动脚本，SSH逐行审查及hash见LEFT_STATE_ACQUISITION.md。V1脚本实际漏左J1且包含右臂；V2脚本read_initial_state会发Rest，后续使能/5度运动/解除使能，未直接执行或import。不要让D调度器或B采集进程调用这些脚本作为无副作用状态API。
+
+2026-11-08纠正：C的SocketCAN工具误用了含CAN_ERR_FLAG的接收掩码，原无反馈窗口是工具问题，不能作为电机无应答证据或A必须新建状态程序的依据。已以同请求双socket并行实测定位并修正为0xC00007FF。J1…J5位置已实读；J6/J7模式READ均返回2，七个电机通信均确认。没有发送使能、Rest或目标，也未干预右手。具体原因、方法、当前工具及163项回归见LEFT_STATE_ACQUISITION.md。
+
+A→C仍须保留原始角度到模型符号/零位版本与时间语义，但不再因本工具错误阻塞在“电机无反馈”。J6/J7现有SDK通过Rest触发运行反馈；下一次在腕部可靠支撑且得到具体现场授权后可采其原始角度反馈，不直接运行5度测试脚本。C→B/D仍无完整真实TCP或光学外参，不把模式读/五轴角度当完整标定。公共接口不变。
+
+## 左七轴首次完整原始采集（2026-11-08，C1-02/C1-03，M2a）
+
+已获用户对可靠支撑下左66/67各一次Rest的明确授权，C执行两轴模式READ→各一次Rest→61…65角度READ，七轴原始反馈齐全，腕部status0/fault0，host_monotonic接收跨度4.456ms。之后61…65使能位READ均false。左腕仍Rest，无自动恢复；A/D接管前必须重新确认实际状态，不假定holding或已使能，不直接启动旧运动脚本。
+
+最小采集工具c_left_wrist_rest_capture.py及调用/限制见LEFT_STATE_ACQUISITION.md，171项回归通过。该工具有状态转换，不是ArmAdapter.get_joint_state替代接口。摘要evidence/left_supported_rest_20261108.json含原始帧/时刻/授权/动作计数/主机文件SHA；真实成功采集与有效标定分开：固定点接触确认待用户答复，V2 Theta量化范围尚未读回，TCP矩阵仍未知。B/D不应使用本次数据生成已批准世界目标或执行规划。
+
+## 固定点候选与兼容转换入口（2026-11-08，M2a）
+
+首组接触由用户确认，raw candidate 1已关联原始hash；左腕可在支撑下轻松手动调整。C提供prepare_tcp_pivot_sample.py复用锁定SDK URDF/FK生成现有pivot行格式，无公共模型改动；严格要求已核验每腕Theta范围/证据，原始角度一致性、完整七轴、接触/时钟/时差。调用见NEXT_FIELD_SESSION。A/厂家仍需66/67本机Theta MIN/MAX参数来源（rad、设备/版本、确认时间/方法），禁止用默认值自证。B/D尚无新的有效TCP矩阵。
+
+采集工具未来用Linux boot epoch+独立capture_id，避免一组一个epoch阻断多姿态整合；首组旧UUID未伪装成host boot ID。180软件回归通过；本轮没有新增硬件操作。下一阶段由现场保持同一点接触，逐组改变朝向采raw；不自动使能/运动，不把重复静止样本充作不同姿态。
+
+## 当前方向：实际抓取坐标链（2026-11-08，C1-03/C1-04/C2-02）
+
+用户同意暂停笔尖TCP采集，不继续要求笔尖多姿态；首两组raw归档，第2组编码器姿态无明显改变，不能算独立方向。当前入口ACTUAL_GRASP_CALIBRATION.md。左腕仍Rest；本轮无CAN命令，已关闭残留SSH会话。不要让A/D把暂停理解为已恢复保持或已验证抓握。
+
+新增solve_grasp_offset.py复用held_offset与RigidTransform，直接估计T_flange_block，输出具名法兰/积木系，无零TCP假设。样例grasp_offset_synthetic.json已跑CLI，训练/验证各3，报告始终未批准；实际所需A/B/D输入、单位、时间、版本和M2a/M3/M4/M5交接在新文档表格。已询问现场是否存在稳定整手抓握预设，尚不执行抓握。真实头部外参、V2范围和物体6D朝向仍缺，不以软件PASS替代。全套188 passed。
+
+## 无预设时的C抓取候选（2026-11-08，C1-04/C2-03，M1/M3）
+
+现场无整手预设，C先生成抓取接触几何/期望朝向，不要求用户摆路线、不等待D才开工。block_grasps.py与plan_block_grasp.py复用RigidTransform，50mm立方体的两组相对侧面接触/所需开口/显式接近方向已输出synthetic样例；逻辑grasp系不是默认TCP。当前不映射到实际手指命令、无flange目标/IK/轨迹/完整碰撞通过。调用、接口和依赖见GRASP_CANDIDATES.md。
+
+本轮SSH只读核验：左手当次can1/0x28、SN LHO6-04-322-L-Z-1-D、固件3.0.4、六fault0；硬件raw[253,175,253,253,254,254]，SDK顺序thumb_flex/thumb_abd/index/middle/ring/pinky，百分比非rad。o6:left:can1标准raw→硬件raw identity，仍不是物理URDF rad映射；按SN重新绑定总线。摘要和配置hash见evidence/left_o6_candidate_inputs_20261108.json，未发右手请求/运动、速度写、使能/Rest/Flash写。全套192 passed。C下一步协助手指方向/抓握实测，现场条件已询问，未执行。
+
+## 一次空载左食指试动准备（2026-11-08，C1-04/C1-05，M1/M2a）
+
+新增独立tools/c_o6_index_probe.py及14项回归，默认read-only；真实主机只读预览成功。当前提案raw食指253→245、速度10%归一化，其他目标取执行前读数；不回位、不恢复速度。SDK close/stop_polling仅停止通信，不是电机停止，不能用于硬件stop接口验收。执行须另有当次空手/支撑/夹碰空间/能停左O6的物理停止确认与具体授权；目前只有可清空的条件答复，未执行任何控制帧。
+
+O6_INDEX_FIELD_TRIAL.md给出精确命令、现场责任、原始预览hash和失败退出行为；evidence/left_index_readonly_preview_20261108.json是成功READ_ONLY_PREVIEW，六位置[253,175,253,253,254,254]、速度读回0、fault0。速度0不是已确认停止；新鲜SN/起点每次重读，起点偏离拒绝。接口c-o6-index-trial-1不替代ArmAdapter/HandAdapter生产执行方法；试动反馈达标也不构成物理运动或稳定抓取验收。全套206 passed，本轮无运动/速度写/使能/Rest/Flash写。
+
+## 复用已部署SDK测试，不重复证明手指运动（2026-11-08，M1/M2a/M3）
+
+用户已确认手指可动，SSH读取O6测试/fixture/已有报告：单指交互7/7记通过（报告未绑定SN），速度报告备注混有shell文本，不能直接验收速度或当机械故障。取消上轮单指8raw方案作为下一动作；未执行。config/planning/o6_sdk_pose_references_candidate.json保存可追溯开/半闭/全闭百分比参考，非rad、非开口mm、非50mm已验收抓握。不要把test_all_closed直接用于抓块。
+
+o6_hand fixture先100%速度/加速度全开，即便选读取测试也有动作，C没有运行该pytest命令。O6_SIDE只选ID，仍须按SN发现总线。新c_o6_tactile_probe.py绕过fixture完成两轮五指只读矩阵采集：10组完整10×4、全0，raw未标定，无接触响应验收。证据/源码hash/历史报告和主动读取报告见O6_SDK_TEST_REVIEW.md、evidence/o6_sdk_test_audit_20261108.json及left_o6_tactile_summary_20261108.json。全套209 passed，真实控制写入0。下一现场可只轻触食指触觉区域读变化，无需再动手指或让用户设计路线。

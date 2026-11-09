@@ -1,0 +1,259 @@
+{
+  "schema_version": "c-observed-table-cube-1",
+  "source": "real_measured",
+  "frame_sha256": "69a43bfc875ce69f757442f5d05bbaf136394fec06e56fc32c45fc0d4190c72b",
+  "camera_serial": "CP2L863000KL",
+  "stamp_s": 162087.25729,
+  "clock_domain": "orbbec_CP2L863000KL_b01bc74c32ff4ee097f420175eb80117",
+  "config": {
+    "camera_serial": "CP2L863000KL",
+    "edge_m": 0.05,
+    "edge_source": "user ruler measured regular cube 50x50x50 mm",
+    "roi_source": "C36 first recorded frame: isolated right red cube top and clear white tabletop",
+    "rests_on_table": true,
+    "table_polygon_xy": [
+      [
+        760,
+        560
+      ],
+      [
+        850,
+        540
+      ],
+      [
+        880,
+        590
+      ],
+      [
+        785,
+        620
+      ]
+    ],
+    "top_corners_xy": [
+      [
+        684,
+        476
+      ],
+      [
+        705,
+        493
+      ],
+      [
+        683,
+        511
+      ],
+      [
+        663,
+        492
+      ]
+    ],
+    "table_origin_xy": [
+      830,
+      515
+    ],
+    "top_erosion_px": 3,
+    "plane_threshold_m": 0.003,
+    "max_holdout_m": 0.003,
+    "max_edge_error_m": 0.004,
+    "max_adjacent_edge_abs_cos": 0.15,
+    "table_frame": "table_observed_C36",
+    "candidate_id": "red_right_frame_local_C36",
+    "version": "observed_table_cube_C36_v1",
+    "color": "red"
+  },
+  "table_plane": {
+    "normal": [
+      -0.008300842135589133,
+      -0.7186574873846174,
+      -0.6953146854812349
+    ],
+    "offset_m": 0.769861348028406,
+    "inlier_ratio": 0.9946091644204852,
+    "rms_m": 0.001126750239626897
+  },
+  "T_camera_table": [
+    [
+      0.9999655474164297,
+      8.673617379884035e-19,
+      -0.008300842135589133,
+      0.2785375627967975
+    ],
+    [
+      -0.005965667885010208,
+      -0.6953386416938975,
+      -0.7186574873846174,
+      0.18049691802518966
+    ],
+    [
+      -0.005771896295476019,
+      0.7186822478448217,
+      -0.6953146854812349,
+      0.9173311069371363
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "T_table_camera": [
+    [
+      0.9999655474164297,
+      -0.005965667885010208,
+      -0.005771896295476019,
+      -0.27215644177307624
+    ],
+    [
+      8.673617379884035e-19,
+      -0.6953386416938975,
+      0.7186822478448217,
+      -0.5337631001419895
+    ],
+    [
+      -0.008300842135589133,
+      -0.7186574873846174,
+      -0.6953146854812349,
+      0.769861348028406
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "table_frame_convention": "origin: selected ray on table; +Z: outward normal; +X: projected camera optical X; +Y: Z cross X",
+  "T_camera_cube_representative": [
+    [
+      0.6580918310393782,
+      0.7528919165053365,
+      -0.008300842135589133,
+      0.05678656020587905
+    ],
+    [
+      0.5196067870595715,
+      -0.46210410371220206,
+      -0.7186574873846174,
+      0.16025878843091507
+    ],
+    [
+      -0.5449072662030371,
+      0.4686294478511395,
+      -0.6953146854812349,
+      0.9049410384539199
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "T_table_cube_representative": [
+    [
+      0.6581145047843531,
+      0.752917856470708,
+      1.1168865735128321e-18,
+      -0.22155111454581772
+    ],
+    [
+      -0.7529178564707081,
+      0.6581145047843531,
+      4.737872759951224e-17,
+      0.005167831274038748
+    ],
+    [
+      -2.5572602697281924e-17,
+      8.815090723220995e-18,
+      1.0000000000000002,
+      0.025000000000000022
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "block_pose": {
+    "candidate_id": "red_right_frame_local_C36",
+    "frame_id": "table_observed_C36",
+    "stamp_s": 162087.25729,
+    "center_m": [
+      -0.22155111454581772,
+      0.005167831274038748,
+      0.025000000000000043
+    ],
+    "orientation_xyzw": null,
+    "calibration_id": "observed_table_cube_C36_v1",
+    "source": "derived_top_face_hypothesis",
+    "control_ready": false
+  },
+  "geometry": {
+    "top_center_camera_m": [
+      0.056579039152489324,
+      0.14229235124629963,
+      0.8875581713168891
+    ],
+    "top_vertices_camera_m": [
+      [
+        0.05837298122154676,
+        0.12081674628030781,
+        0.9097333294100008
+      ],
+      [
+        0.08746247777359639,
+        0.14251938895677807,
+        0.8869548173134257
+      ],
+      [
+        0.05406340181555731,
+        0.1644635585617993,
+        0.8646726741952183
+      ],
+      [
+        0.02641729579925683,
+        0.1413697111863134,
+        0.8888718643489114
+      ]
+    ],
+    "observed_corner_edges_m": [
+      0.04284931880588155,
+      0.04575520469241811,
+      0.04339624141053417,
+      0.04334502187946045
+    ],
+    "edge_errors_m": [
+      -0.0071506811941184495,
+      -0.004244795307581893,
+      -0.0066037585894658316,
+      -0.0066549781205395495
+    ],
+    "adjacent_edge_abs_cos": 0.061759914288351064,
+    "orientation_semantics": "one geometric representative; unmarked resting cube yaw is equivalent modulo pi/2",
+    "assumptions": [
+      "cube rests flat on fitted table",
+      "edge is measured",
+      "manual RGB corners identify top boundary"
+    ],
+    "base_transform": null,
+    "approved": false,
+    "motion_enabled": false
+  },
+  "checks": {
+    "consistency": "FAIL",
+    "table_validation_n": 372,
+    "table_max_abs_m": 0.0033659533507448547,
+    "table_p95_abs_m": 0.0022077716695757194,
+    "top_depth_n": 375,
+    "top_height_median_m": 0.05008559495627174,
+    "top_max_height_error_m": 0.0033153322791267953,
+    "top_p95_height_error_m": 0.0022337697530910587
+  },
+  "T_base_camera": null,
+  "T_base_table": null,
+  "approved": false,
+  "motion_enabled": false,
+  "scope": "observed table/cube geometry with explicit resting-cube model; no arm calibration or executable target"
+}

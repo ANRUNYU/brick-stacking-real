@@ -1,0 +1,161 @@
+{
+  "schema_version": "c-o6-tactile-read-1",
+  "source": "real",
+  "serial_number": "LHO6-04-322-L-Z-1-D",
+  "interface": "can1",
+  "clock_domain": "host_monotonic",
+  "epoch": "linux_boot:f9016d4a-56d7-4a83-a8c2-3fa6d11f8153",
+  "units": "uncalibrated_raw_u8",
+  "contact_condition": "not independently established",
+  "commands": "SN C0 READ then each B1..B5 A4 READ twice",
+  "control_writes": 0,
+  "notice": "complete matrices establish response only, not force calibration/contact discrimination",
+  "remote_path": "/home/qwer/c_calibration_runs/left_o6_tactile_read_6a65d7ca-59b4-45bb-8004-d423958bdf86.json",
+  "raw_sha256": "7c2ed452fdafc25f68a490a6c02ef9a53d4e6d38528fb974cb0b4cf8cf2fb7d9",
+  "rows": [
+    {
+      "repeat": 0,
+      "finger": "thumb",
+      "complete": true,
+      "shape": [
+        10,
+        4
+      ],
+      "min_raw": 0,
+      "max_raw": 0,
+      "nonzero_count": 0,
+      "host_receive_monotonic_s": 270336.474345339,
+      "error": null
+    },
+    {
+      "repeat": 0,
+      "finger": "index",
+      "complete": true,
+      "shape": [
+        10,
+        4
+      ],
+      "min_raw": 0,
+      "max_raw": 0,
+      "nonzero_count": 0,
+      "host_receive_monotonic_s": 270336.476223078,
+      "error": null
+    },
+    {
+      "repeat": 0,
+      "finger": "middle",
+      "complete": true,
+      "shape": [
+        10,
+        4
+      ],
+      "min_raw": 0,
+      "max_raw": 0,
+      "nonzero_count": 0,
+      "host_receive_monotonic_s": 270336.478071908,
+      "error": null
+    },
+    {
+      "repeat": 0,
+      "finger": "ring",
+      "complete": true,
+      "shape": [
+        10,
+        4
+      ],
+      "min_raw": 0,
+      "max_raw": 0,
+      "nonzero_count": 0,
+      "host_receive_monotonic_s": 270336.480191426,
+      "error": null
+    },
+    {
+      "repeat": 0,
+      "finger": "pinky",
+      "complete": true,
+      "shape": [
+        10,
+        4
+      ],
+      "min_raw": 0,
+      "max_raw": 0,
+      "nonzero_count": 0,
+      "host_receive_monotonic_s": 270336.482057169,
+      "error": null
+    },
+    {
+      "repeat": 1,
+      "finger": "thumb",
+      "complete": true,
+      "shape": [
+        10,
+        4
+      ],
+      "min_raw": 0,
+      "max_raw": 0,
+      "nonzero_count": 0,
+      "host_receive_monotonic_s": 270336.684275973,
+      "error": null
+    },
+    {
+      "repeat": 1,
+      "finger": "index",
+      "complete": true,
+      "shape": [
+        10,
+        4
+      ],
+      "min_raw": 0,
+      "max_raw": 0,
+      "nonzero_count": 0,
+      "host_receive_monotonic_s": 270336.686134253,
+      "error": null
+    },
+    {
+      "repeat": 1,
+      "finger": "middle",
+      "complete": true,
+      "shape": [
+        10,
+        4
+      ],
+      "min_raw": 0,
+      "max_raw": 0,
+      "nonzero_count": 0,
+      "host_receive_monotonic_s": 270336.68813501,
+      "error": null
+    },
+    {
+      "repeat": 1,
+      "finger": "ring",
+      "complete": true,
+      "shape": [
+        10,
+        4
+      ],
+      "min_raw": 0,
+      "max_raw": 0,
+      "nonzero_count": 0,
+      "host_receive_monotonic_s": 270336.690045405,
+      "error": null
+    },
+    {
+      "repeat": 1,
+      "finger": "pinky",
+      "complete": true,
+      "shape": [
+        10,
+        4
+      ],
+      "min_raw": 0,
+      "max_raw": 0,
+      "nonzero_count": 0,
+      "host_receive_monotonic_s": 270336.691928742,
+      "error": null
+    }
+  ],
+  "hardware_tactile_present": false,
+  "capability_source": "onsite user confirmation 2026-11-08",
+  "usable_for_contact_detection": false,
+  "interpretation": "raw protocol responses from a hand without tactile hardware; not a sensor baseline or contact evidence"
+}

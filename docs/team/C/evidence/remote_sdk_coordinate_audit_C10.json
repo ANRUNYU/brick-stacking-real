@@ -1,0 +1,58 @@
+{
+  "source": "remote_pinocchio_declared_model_only",
+  "urdf_sha256": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+  "joint_names": [
+    "universe",
+    "L1_Joint",
+    "L2_Joint",
+    "L3_Joint",
+    "L4_Joint",
+    "L5_Joint",
+    "L6_Joint",
+    "L7_Joint"
+  ],
+  "nq": 7,
+  "base_frame": "L_arm_root",
+  "tip_frame": "L8_Link",
+  "q_rad": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "T_base_tip": [
+    [
+      1,
+      0,
+      0,
+      -0.0000015819999999999994
+    ],
+    [
+      0,
+      1,
+      0,
+      0.058
+    ],
+    [
+      0,
+      0,
+      1,
+      -0.6082
+    ],
+    [
+      0,
+      0,
+      0,
+      1
+    ]
+  ],
+  "hardware_match_verified": false,
+  "motion_enabled": false,
+  "source_hashes": {
+    "src/linkerbot/arm/p7/p7.py": "ea31068fcee5fd663b1e26563a6863b159fd9ce772b1bd77748023a15f90c5ec",
+    "src/linkerbot/arm/kinetix/kinetix.py": "9115e43999a234dcd70de5ecaa42c0fe1ce813876caa4be25cf13f14ca7c379b"
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "sample_id": "synthetic-sample_id",
+  "image_id": "synthetic-image_id",
+  "image_sha256": "synthetic-image_sha256",
+  "camera_serial": "synthetic-camera_serial",
+  "camera_profile_version": "synthetic-camera_profile_version",
+  "target_geometry_version": "synthetic-target_geometry_version",
+  "annotation_evidence": "synthetic-annotation_evidence",
+  "clock_domain": "synthetic-clock_domain",
+  "epoch": "synthetic-epoch",
+  "source": "synthetic",
+  "camera_frame": "synthetic_camera",
+  "target_frame": "synthetic_target",
+  "units": "m",
+  "landmark_identity_confirmed": true,
+  "K": [
+    [
+      610.0,
+      0.0,
+      640.0
+    ],
+    [
+      0.0,
+      610.0,
+      400.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "distortion": [
+    0.01,
+    -0.005,
+    0.001,
+    0.002,
+    0.0
+  ],
+  "image_size_px": [
+    1280,
+    800
+  ],
+  "pixel_space": "raw_color",
+  "host_stamp_s": 1.0,
+  "max_reprojection_error_px": 1.0,
+  "training": [
+    {
+      "landmark_id": "synthetic-0",
+      "xyz_m": [
+        -0.025,
+        -0.025,
+        -0.025
+      ],
+      "pixel_xy": [
+        709.0792690225694,
+        423.3000622378281
+      ]
+    },
+    {
+      "landmark_id": "synthetic-1",
+      "xyz_m": [
+        -0.025,
+        -0.025,
+        0.025
+      ],
+      "pixel_xy": [
+        694.4271362128578,
+        414.04358955316536
+      ]
+    },
+    {
+      "landmark_id": "synthetic-2",
+      "xyz_m": [
+        -0.025,
+        0.025,
+        -0.025
+      ],
+      "pixel_xy": [
+        703.2670190399961,
+        461.5219517154321
+      ]
+    },
+    {
+      "landmark_id": "synthetic-3",
+      "xyz_m": [
+        -0.025,
+        0.025,
+        0.025
+      ],
+      "pixel_xy": [
+        689.1039103344528,
+        450.17747156149835
+      ]
+    },
+    {
+      "landmark_id": "synthetic-4",
+      "xyz_m": [
+        0.025,
+        -0.025,
+        -0.025
+      ],
+      "pixel_xy": [
+        745.0122501189896,
+        425.5315143365782
+      ]
+    },
+    {
+      "landmark_id": "synthetic-5",
+      "xyz_m": [
+        0.025,
+        -0.025,
+        0.025
+      ],
+      "pixel_xy": [
+        728.5759565629861,
+        416.31218299280636
+      ]
+    }
+  ],
+  "validation": [
+    {
+      "landmark_id": "synthetic-6",
+      "xyz_m": [
+        0.025,
+        0.025,
+        -0.025
+      ],
+      "pixel_xy": [
+        738.9014146620605,
+        463.0081674913018
+      ]
+    },
+    {
+      "landmark_id": "synthetic-7",
+      "xyz_m": [
+        0.025,
+        0.025,
+        0.025
+      ],
+      "pixel_xy": [
+        722.981287033424,
+        451.778623995533
+      ]
+    }
+  ]
+}

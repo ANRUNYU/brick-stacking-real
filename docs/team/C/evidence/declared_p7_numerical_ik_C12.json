@@ -1,0 +1,86 @@
+{
+  "source": "local_math_using_host_hashed_urdf_not_real_execution",
+  "results": [
+    {
+      "schema_version": "c-ik-1",
+      "ik": "PASS",
+      "reason": "CONVERGED",
+      "joint_names": [
+        "L1_Joint",
+        "L2_Joint",
+        "L3_Joint",
+        "L4_Joint",
+        "L5_Joint",
+        "L6_Joint",
+        "L7_Joint"
+      ],
+      "positions_rad": [
+        0.1994338614523248,
+        0.2894999992290968,
+        0.006184138082873128,
+        0.20027004048312189,
+        -0.00817643967225211,
+        -0.20071460433918978,
+        0.13903768415487322
+      ],
+      "position_error_m": 2.7786399836063365e-06,
+      "rotation_error_rad": 1.6660107840102688e-06,
+      "iterations": 6,
+      "model_version": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+      "trajectory": "NOT_GENERATED",
+      "full_collision": "UNKNOWN",
+      "motion_enabled": false,
+      "scope": "local solve against caller FK only",
+      "target_reference_q_rad": [
+        0.2,
+        0.3,
+        -0.1,
+        0.2,
+        0.1,
+        -0.2,
+        0.15
+      ]
+    },
+    {
+      "schema_version": "c-ik-1",
+      "ik": "PASS",
+      "reason": "CONVERGED",
+      "joint_names": [
+        "L1_Joint",
+        "L2_Joint",
+        "L3_Joint",
+        "L4_Joint",
+        "L5_Joint",
+        "L6_Joint",
+        "L7_Joint"
+      ],
+      "positions_rad": [
+        -0.0991800478680882,
+        0.39634350785211336,
+        0.17456579369741015,
+        -0.2999550330275849,
+        0.17547556338910864,
+        0.09926982688180708,
+        -0.20380928552922584
+      ],
+      "position_error_m": 5.340210235808881e-06,
+      "rotation_error_rad": 3.772818029345581e-06,
+      "iterations": 6,
+      "model_version": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+      "trajectory": "NOT_GENERATED",
+      "full_collision": "UNKNOWN",
+      "motion_enabled": false,
+      "scope": "local solve against caller FK only",
+      "target_reference_q_rad": [
+        -0.1,
+        0.4,
+        0.2,
+        -0.3,
+        0.15,
+        0.1,
+        -0.2
+      ]
+    }
+  ],
+  "motion_enabled": false
+}

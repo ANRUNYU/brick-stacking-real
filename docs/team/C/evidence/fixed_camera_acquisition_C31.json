@@ -1,0 +1,367 @@
+{
+  "schema_version": "c31-field-evidence-1",
+  "source": "real",
+  "date_local": "2026-11-08",
+  "captures": [
+    {
+      "capture_id": "c31_static_pose01_retry",
+      "remote_directory": "/home/qwer/c_calibration_runs/c31_static_pose01_retry",
+      "manifest": {
+        "schema_version": "c-static-calibration-record-1",
+        "attachment_id": "left_L5_cube_mount_candidate_20261108_v1",
+        "pose_id": "calibration_pose01",
+        "reference_frame": "L5_Link",
+        "camera_serial": "CP2L863000KL",
+        "camera_exit": 0,
+        "joint_read_only_ids": [
+          61,
+          62,
+          63,
+          64,
+          65
+        ],
+        "joint_requests_per_cycle": 5,
+        "target_writes": 0,
+        "enable_rest_zero_flash_commands": 0,
+        "quality": {
+          "schema_version": "c-static-acquisition-quality-1",
+          "stationary_capture_quality": "PASS",
+          "complete_joint_cycles": 98,
+          "incomplete_joint_cycles": 0,
+          "joint_span_rad": [
+            0.00016777962446212769,
+            0.00019174721091985703,
+            7.462501525878906e-05,
+            0.00010652095079421997,
+            0.00010633468627929688
+          ],
+          "max_state_gap_s": 0.05155141599243507,
+          "camera_host_window_covered": true,
+          "clock_epoch": "linux_boot:f9016d4a-56d7-4a83-a8c2-3fa6d11f8153",
+          "max_joint_span_rad_threshold": 0.001,
+          "max_state_gap_s_threshold": 0.2,
+          "time_association": "static-pose assumption using host arrival times; device timestamps retained separately",
+          "device_host_latency_mapping": "UNKNOWN",
+          "calibration_sample_valid": false,
+          "approved": false,
+          "motion_enabled": false
+        },
+        "errors": [],
+        "sampler": "isolated_readonly_process",
+        "notice": "only raw static recording; attachment identity/center visibility/FK and independent physical calibration still require checks",
+        "source_locks": {
+          "camera_sha256": "60e3b1b0210d41a84529f404ec2ae4500beb42766f8b6aca55f8760d021d2ce9",
+          "joint_sha256": "e5e67311b1d4738301683b75de02f8361a9f92b7aeb6d684a36ae020af79b787",
+          "recorder_sha256": "741e957049b3b0b13fb9c6c52d34f204af9b4a6e22130c80d8be0a9bff49e925"
+        }
+      },
+      "visual_review": "NO_ATTACHED_TARGET_IN_VIEW",
+      "usable_extrinsic_sample": false,
+      "file_sha256": {
+        "joint_cycles.json": "06423d026a670962b9e417a1d9cd032a50d991427e9f7a8f4d147d1a1d8faae9",
+        "joint_worker.json": "fe2bdc8cff6bcfea5d943671fd5db1ff4c22087749b493b8b9d2a2cd14074299",
+        "joint_worker.stop": "6c45cb72a36e63d522aa54ed8adbd7a29a989474f2f77e0458af8800564ef3cb",
+        "record_manifest.json": "c97d031dda90b16b23ea7b6e614a2d46d387fed65220655c06e5099a90b6c2f2",
+        "camera/camera_report.json": "8b12e6c6a04d03a9e4b886d4ce994833fc8c496644040e95c29c2943d8c73a78",
+        "camera/color_raw.png": "9f25e47aabaf4944cef3712a6e804a43914743938833b9bde8fe55a117019f56",
+        "camera/color_rectified.png": "650762cb3e0f57adeaf595a4cf317b7f425895e63610213a0b5ecebf9c1f0517",
+        "camera/frame_000.npz": "a136c811b87f1583cc5671f97d42edade1f50e793f0d73e6c3239e8076508902",
+        "camera/frame_001.npz": "59fd3669e379f78fe0ef6408cc4d0bc6cfde1ddc03a9c2589e70603b8ec02bdd",
+        "camera/frame_002.npz": "cdbc1c9560f2fc0a470ce83b19e13d8f1b7d4abde01eafca4b7df2a4dd3aaf70"
+      }
+    },
+    {
+      "capture_id": "c31_static_pose01_visible",
+      "remote_directory": "/home/qwer/c_calibration_runs/c31_static_pose01_visible",
+      "manifest": {
+        "schema_version": "c-static-calibration-record-1",
+        "attachment_id": "left_L5_cube_mount_candidate_20261108_v1",
+        "pose_id": "calibration_pose01",
+        "reference_frame": "L5_Link",
+        "camera_serial": "CP2L863000KL",
+        "camera_exit": 0,
+        "joint_read_only_ids": [
+          61,
+          62,
+          63,
+          64,
+          65
+        ],
+        "joint_requests_per_cycle": 5,
+        "target_writes": 0,
+        "enable_rest_zero_flash_commands": 0,
+        "quality": {
+          "schema_version": "c-static-acquisition-quality-1",
+          "stationary_capture_quality": "FAIL",
+          "complete_joint_cycles": 98,
+          "incomplete_joint_cycles": 0,
+          "joint_span_rad": [
+            0.3334970027208328,
+            0.4079190716147423,
+            0.35149502754211426,
+            0.9379014074802399,
+            0.0001068115234375
+          ],
+          "max_state_gap_s": 0.05158640997251496,
+          "camera_host_window_covered": true,
+          "clock_epoch": "linux_boot:f9016d4a-56d7-4a83-a8c2-3fa6d11f8153",
+          "max_joint_span_rad_threshold": 0.001,
+          "max_state_gap_s_threshold": 0.2,
+          "time_association": "static-pose assumption using host arrival times; device timestamps retained separately",
+          "device_host_latency_mapping": "UNKNOWN",
+          "calibration_sample_valid": false,
+          "approved": false,
+          "motion_enabled": false
+        },
+        "errors": [],
+        "sampler": "isolated_readonly_process",
+        "notice": "only raw static recording; attachment identity/center visibility/FK and independent physical calibration still require checks",
+        "source_locks": {
+          "camera_sha256": "60e3b1b0210d41a84529f404ec2ae4500beb42766f8b6aca55f8760d021d2ce9",
+          "joint_sha256": "e5e67311b1d4738301683b75de02f8361a9f92b7aeb6d684a36ae020af79b787",
+          "recorder_sha256": "741e957049b3b0b13fb9c6c52d34f204af9b4a6e22130c80d8be0a9bff49e925"
+        }
+      },
+      "visual_review": "NO_ATTACHED_TARGET_IN_VIEW",
+      "usable_extrinsic_sample": false,
+      "file_sha256": {
+        "joint_cycles.json": "4848ceba0892ef7b6b6579a7fda002f255efb7b02b4365071cd0d9b2fe3439f2",
+        "joint_worker.json": "b591ecb05c6c2e2510de9f7c7137b9e88920b76d1bee273af19f9ed73cd48abb",
+        "joint_worker.stop": "6c45cb72a36e63d522aa54ed8adbd7a29a989474f2f77e0458af8800564ef3cb",
+        "record_manifest.json": "cb77f2814aa41cf98fd10bec5a9ea0e078af130c0f164730bb5ab9ed4dfbbad2",
+        "camera/camera_report.json": "c29ef3bb6b6031135fceeff05abdf571d682664d92cab87c487dbf72ff04020a",
+        "camera/color_raw.png": "c2d5b75e84bc936179f9771a04f6e27467ab640df047423252957e7b38cb052e",
+        "camera/color_rectified.png": "4885be2a9e5ca48409c352cd2b5c260a7ad6e7539dd00c1de168f82f7041c94a",
+        "camera/frame_000.npz": "48b5fc293bcd4fbe18d4f672e358384ce0a81bb5417200f78bf0ebc36fbb37b2",
+        "camera/frame_001.npz": "c37d3c28ca07e34d35a7522e3a08d77d8b4d9bdf30086c238c9b3c1f064cab92",
+        "camera/frame_002.npz": "83954a1fdd94831a9cf33121da6a92e456af3088cd6dcd9cad63479f7aecc7a8"
+      }
+    },
+    {
+      "capture_id": "c31_static_pose01_settled",
+      "remote_directory": "/home/qwer/c_calibration_runs/c31_static_pose01_settled",
+      "manifest": {
+        "schema_version": "c-static-calibration-record-1",
+        "attachment_id": "left_L5_cube_mount_candidate_20261108_v1",
+        "pose_id": "calibration_pose01",
+        "reference_frame": "L5_Link",
+        "camera_serial": "CP2L863000KL",
+        "camera_exit": 0,
+        "joint_read_only_ids": [
+          61,
+          62,
+          63,
+          64,
+          65
+        ],
+        "joint_requests_per_cycle": 5,
+        "target_writes": 0,
+        "enable_rest_zero_flash_commands": 0,
+        "quality": {
+          "schema_version": "c-static-acquisition-quality-1",
+          "stationary_capture_quality": "FAIL",
+          "complete_joint_cycles": 98,
+          "incomplete_joint_cycles": 0,
+          "joint_span_rad": [
+            0.002804308198392391,
+            0.004865594208240509,
+            8.511543273925781e-05,
+            0.00014913082122802734,
+            8.535385131835938e-05
+          ],
+          "max_state_gap_s": 0.051617354969494045,
+          "camera_host_window_covered": true,
+          "clock_epoch": "linux_boot:f9016d4a-56d7-4a83-a8c2-3fa6d11f8153",
+          "max_joint_span_rad_threshold": 0.001,
+          "max_state_gap_s_threshold": 0.2,
+          "time_association": "static-pose assumption using host arrival times; device timestamps retained separately",
+          "device_host_latency_mapping": "UNKNOWN",
+          "calibration_sample_valid": false,
+          "approved": false,
+          "motion_enabled": false
+        },
+        "errors": [],
+        "sampler": "isolated_readonly_process",
+        "notice": "only raw static recording; attachment identity/center visibility/FK and independent physical calibration still require checks",
+        "source_locks": {
+          "camera_sha256": "60e3b1b0210d41a84529f404ec2ae4500beb42766f8b6aca55f8760d021d2ce9",
+          "joint_sha256": "e5e67311b1d4738301683b75de02f8361a9f92b7aeb6d684a36ae020af79b787",
+          "recorder_sha256": "741e957049b3b0b13fb9c6c52d34f204af9b4a6e22130c80d8be0a9bff49e925"
+        }
+      },
+      "visual_review": "NO_ATTACHED_TARGET_IN_VIEW",
+      "usable_extrinsic_sample": false,
+      "file_sha256": {
+        "joint_cycles.json": "9861863b276d1d63f3a554eb0ada1670c429f0bd19d37a48dd1067761d59c9da",
+        "joint_worker.json": "ad69427383890dd0bd09dd159d869fcb154195969cefad2561fbb4d550e63e95",
+        "joint_worker.stop": "6c45cb72a36e63d522aa54ed8adbd7a29a989474f2f77e0458af8800564ef3cb",
+        "record_manifest.json": "4c77f11b5f985afa57bdc043ed77b8334c99bd33cb1d42fbbdf63f8aa8b8cf9e",
+        "camera/camera_report.json": "36135fa6dbffbc089726fae7618a7704236eb203977169ac8f16f5a792dab2c7",
+        "camera/color_raw.png": "c7988eb589e4b10232f766db74b8775878cec6a8b259a5644f13acec8e470070",
+        "camera/color_rectified.png": "de5078356946e8d3495a1c4579300c13795bbe89714a6fed01d1c260cf355703",
+        "camera/frame_000.npz": "3c7b4414458e1b06859fb110ce5b1dafa9f9867e07c6fddb91837fd8a4dcd79f",
+        "camera/frame_001.npz": "41ac9dfb1f1025731ee58002d991cfae2437b166af91ff4a056c0691aa145f74",
+        "camera/frame_002.npz": "5dc3a8ae2121b448328de3a74fbe23c009a9212514b96de067fbbd22e765333d"
+      }
+    },
+    {
+      "capture_id": "c31_static_pose01_review",
+      "remote_directory": "/home/qwer/c_calibration_runs/c31_static_pose01_review",
+      "manifest": {
+        "schema_version": "c-static-calibration-record-1",
+        "attachment_id": "left_L5_cube_mount_candidate_20261108_v1",
+        "pose_id": "calibration_pose01",
+        "reference_frame": "L5_Link",
+        "camera_serial": "CP2L863000KL",
+        "camera_exit": 0,
+        "joint_read_only_ids": [
+          61,
+          62,
+          63,
+          64,
+          65
+        ],
+        "joint_requests_per_cycle": 5,
+        "target_writes": 0,
+        "enable_rest_zero_flash_commands": 0,
+        "quality": {
+          "schema_version": "c-static-acquisition-quality-1",
+          "stationary_capture_quality": "FAIL",
+          "complete_joint_cycles": 98,
+          "incomplete_joint_cycles": 0,
+          "joint_span_rad": [
+            0.038852810859680176,
+            0.00019174069166183472,
+            0.00011706352233886719,
+            0.008394300937652588,
+            0.02789926528930664
+          ],
+          "max_state_gap_s": 0.05210711999097839,
+          "camera_host_window_covered": true,
+          "clock_epoch": "linux_boot:f9016d4a-56d7-4a83-a8c2-3fa6d11f8153",
+          "max_joint_span_rad_threshold": 0.001,
+          "max_state_gap_s_threshold": 0.2,
+          "time_association": "static-pose assumption using host arrival times; device timestamps retained separately",
+          "device_host_latency_mapping": "UNKNOWN",
+          "calibration_sample_valid": false,
+          "approved": false,
+          "motion_enabled": false
+        },
+        "errors": [],
+        "sampler": "isolated_readonly_process",
+        "notice": "only raw static recording; attachment identity/center visibility/FK and independent physical calibration still require checks",
+        "source_locks": {
+          "camera_sha256": "60e3b1b0210d41a84529f404ec2ae4500beb42766f8b6aca55f8760d021d2ce9",
+          "joint_sha256": "e5e67311b1d4738301683b75de02f8361a9f92b7aeb6d684a36ae020af79b787",
+          "recorder_sha256": "741e957049b3b0b13fb9c6c52d34f204af9b4a6e22130c80d8be0a9bff49e925"
+        }
+      },
+      "visual_review": "ATTACHED_RED_CUBE_VISIBLE_ON_FOREARM_FRAME",
+      "usable_extrinsic_sample": false,
+      "file_sha256": {
+        "joint_cycles.json": "11857aa3ad9cdb85610f4b479dd2a3660b4ee24913437163ed3245246f51fa66",
+        "joint_worker.json": "591ee93a403c1c763e97c74559f29bd156e419c651c1888b7c37ec42eb5d0af4",
+        "joint_worker.stop": "6c45cb72a36e63d522aa54ed8adbd7a29a989474f2f77e0458af8800564ef3cb",
+        "record_manifest.json": "14ed5cb0c887734f30ffffd6c30851fdab7bb361511c6bb4bfa63f3ae0f8aad6",
+        "camera/camera_report.json": "7fa51d075c90efe286f47c2909678c497b45745dae01771df772c6def8649571",
+        "camera/color_raw.png": "a86e5be612b053dc2724d8385bd10ff78e2ea565d7cb6579b6af728eeee31b57",
+        "camera/color_rectified.png": "7163f9c0d32a3eae2ca6f865045f36d88b50ed7c1c9c79777aa3ab4d9ebcb7c1",
+        "camera/frame_000.npz": "e7e4426d03295bc5343dbfc4d6c43ff6e453b6957f6e60c2d60f30baca027f7d",
+        "camera/frame_001.npz": "a3bcc9269bfbfdca2705fa9eb8f211c81f33eb82ce1740af254e8dc967dc745e",
+        "camera/frame_002.npz": "d47f3b41a91e8ebd09ecb33fa262c657e7601262d6a307ffda9411b7ab2cd570"
+      }
+    },
+    {
+      "capture_id": "c31_static_pose01_threeface",
+      "remote_directory": "/home/qwer/c_calibration_runs/c31_static_pose01_threeface",
+      "manifest": {
+        "schema_version": "c-static-calibration-record-1",
+        "attachment_id": "left_L5_cube_mount_candidate_20261108_v1",
+        "pose_id": "calibration_pose01",
+        "reference_frame": "L5_Link",
+        "camera_serial": "CP2L863000KL",
+        "camera_exit": 0,
+        "joint_read_only_ids": [
+          61,
+          62,
+          63,
+          64,
+          65
+        ],
+        "joint_requests_per_cycle": 5,
+        "target_writes": 0,
+        "enable_rest_zero_flash_commands": 0,
+        "quality": {
+          "schema_version": "c-static-acquisition-quality-1",
+          "stationary_capture_quality": "FAIL",
+          "complete_joint_cycles": 98,
+          "incomplete_joint_cycles": 0,
+          "joint_span_rad": [
+            0.021116197109222412,
+            0.00019174069166183472,
+            0.00011682510375976562,
+            0.014572829008102417,
+            0.001459360122680664
+          ],
+          "max_state_gap_s": 0.051703451958019286,
+          "camera_host_window_covered": true,
+          "clock_epoch": "linux_boot:f9016d4a-56d7-4a83-a8c2-3fa6d11f8153",
+          "max_joint_span_rad_threshold": 0.001,
+          "max_state_gap_s_threshold": 0.2,
+          "time_association": "static-pose assumption using host arrival times; device timestamps retained separately",
+          "device_host_latency_mapping": "UNKNOWN",
+          "calibration_sample_valid": false,
+          "approved": false,
+          "motion_enabled": false
+        },
+        "errors": [],
+        "sampler": "isolated_readonly_process",
+        "notice": "only raw static recording; attachment identity/center visibility/FK and independent physical calibration still require checks",
+        "source_locks": {
+          "camera_sha256": "60e3b1b0210d41a84529f404ec2ae4500beb42766f8b6aca55f8760d021d2ce9",
+          "joint_sha256": "e5e67311b1d4738301683b75de02f8361a9f92b7aeb6d684a36ae020af79b787",
+          "recorder_sha256": "741e957049b3b0b13fb9c6c52d34f204af9b4a6e22130c80d8be0a9bff49e925"
+        }
+      },
+      "visual_review": "ATTACHED_RED_CUBE_VISIBLE_ON_FOREARM_FRAME",
+      "usable_extrinsic_sample": false,
+      "file_sha256": {
+        "joint_cycles.json": "3482276ae31490dae66ebdf20b9f207171518c761a3ffb30653cb4ed4e48abd6",
+        "joint_worker.json": "0f1721d41176789d56bfc5e9e406dcb9d6d116cfdad5c7d896f40b4a7b9e0829",
+        "joint_worker.stop": "6c45cb72a36e63d522aa54ed8adbd7a29a989474f2f77e0458af8800564ef3cb",
+        "record_manifest.json": "2946472c41b1af62220f2a34aa1609e52571313ad1d7fd3cbc89eb7f2f8d0dc2",
+        "camera/camera_report.json": "c0e4e92cd0b5ce55354e856711c170b289de50c8f277217878e40fc78ceded31",
+        "camera/color_raw.png": "61e19ba92ea0b347f9bf0635e7777be5dd8561d40a78cef08ecc80751a03c599",
+        "camera/color_rectified.png": "e8e68cea4c6c3dd345bec05101aa332904f95e5caa3bf23115e3500f7f94c77f",
+        "camera/frame_000.npz": "1344391395b18b71cdbaed64a787083dc14ba9c2f5f66260a2aea07567a03b83",
+        "camera/frame_001.npz": "c31a42381ea4598862499ba6ea3773585123d067a89bcd67587766edfcb916d1",
+        "camera/frame_002.npz": "07f7dfdc6a41d16c7b5a7044198791d73ead947e0688ffcfd55ebe938e2d91e2"
+      }
+    }
+  ],
+  "review": "Earlier images had no attached target. Final review/threeface show attached red cube, but both fail predeclared stationary span threshold. Target side face remains grazing. No valid extrinsic sample.",
+  "valid_calibration_pose_count": 0,
+  "T_base_camera": null,
+  "approved": false,
+  "motion_enabled": false,
+  "hardware_operations": "head RGB-D capture and can2 IDs61..65 position READ06 only; no actuation",
+  "software_tests": {
+    "command": "artifacts/planning_venv/Scripts/python.exe -m pytest -q --basetemp=.test-tmp-c31-record-final",
+    "result": "267 passed"
+  },
+  "mounted_center_diagnostic": {
+    "sha256": "ee28c6dcc5a179d5f23410f23b01ad29c9602ae5397810e1d884220e251949b0",
+    "consistency": [
+      "FAIL",
+      "FAIL",
+      "FAIL"
+    ],
+    "max_holdout_m": [
+      0.004259740166008576,
+      0.003059862961246416,
+      0.005021785248332564
+    ],
+    "threshold_m": 0.003,
+    "used_as_calibration_sample": false
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": "c-joint-convention-candidate-1",
+  "source": "comparison_of_deployed_SDK_and_vendor_collision_URDF",
+  "source_model_sha256": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+  "target_model_sha256": "b898b9597d7d075cc5e7114d76a90d0ec514c387a5fd59411555455a6d722daa",
+  "joint_names": ["L1_Joint","L2_Joint","L3_Joint","L4_Joint","L5_Joint","L6_Joint","L7_Joint"],
+  "signs": [-1,-1,-1,-1,-1,-1,-1],
+  "offsets_rad": [0,0,0,0,0,0,0],
+  "verification": "three model FK cases and transformed position bounds; NOT physical motor calibration",
+  "approved_for_motion": false,
+  "motion_enabled": false
+}

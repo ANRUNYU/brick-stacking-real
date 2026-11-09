@@ -1,0 +1,19 @@
+{
+  "source": "real_passive_CAN_receive_only",
+  "arm_role": "left",
+  "expected_motor_ids": [61,62,63,64,65,66,67],
+  "result": "NO_FEEDBACK",
+  "duration_requested_s": 3,
+  "received_frame_count": 0,
+  "transmitted_frames": 0,
+  "robot_motion_commanded": false,
+  "right_hand_process_accessed_or_modified": false,
+  "operator_confirmed_pointer_fixed_and_contact": true,
+  "valid_pivot_samples": 0,
+  "remote_evidence": "/home/qwer/c_calibration_runs/left_passive_probe_1b03710c37634b1f8b3df054705d0a14.json",
+  "clock_domain": "host_monotonic",
+  "epoch": "1b03710c37634b1f8b3df054705d0a14",
+  "interpretation": "No observed left-arm feedback stream in this window; not a device fault diagnosis",
+  "calibration_status": "WAITING_FOR_FRESH_LEFT_ARM_STATE",
+  "approved": false
+}

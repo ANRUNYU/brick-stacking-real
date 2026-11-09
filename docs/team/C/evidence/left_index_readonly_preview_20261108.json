@@ -1,0 +1,85 @@
+{
+  "plan": {
+    "schema_version": "c-o6-index-trial-1",
+    "serial_number": "LHO6-04-322-L-Z-1-D",
+    "interface": "can1",
+    "start_raw": [
+      253,
+      175,
+      253,
+      253,
+      254,
+      254
+    ],
+    "target_raw": [
+      253,
+      175,
+      245,
+      253,
+      254,
+      254
+    ],
+    "initial_speeds_raw": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "trial_speeds_raw": [
+      0,
+      0,
+      26,
+      0,
+      0,
+      0
+    ],
+    "index_delta_raw": -8,
+    "speed_percent": 10,
+    "units": "hardware_raw_u8; speed normalized percent, not rad/s",
+    "motion_enabled": false,
+    "physical_motion_verified": false,
+    "automatic_return": false,
+    "automatic_speed_restore": false,
+    "warning": "all six targets are transmitted; five keep measured start values; process exit does not stop the hand",
+    "scope": "empty-hand direction/response trial only; not a grasp preset or safety/force acceptance"
+  },
+  "snapshot": {
+    "interface": "can1",
+    "serial_number": "LHO6-04-322-L-Z-1-D",
+    "angles_raw": [
+      253,
+      175,
+      253,
+      253,
+      254,
+      254
+    ],
+    "speeds_raw": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "faults_raw": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "host_receive_monotonic_s": 261198.49421573,
+    "clock_domain": "host_monotonic",
+    "epoch": "linux_boot:f9016d4a-56d7-4a83-a8c2-3fa6d11f8153"
+  },
+  "writes": [],
+  "observations": [],
+  "status": "READ_ONLY_PREVIEW",
+  "stop_confirmed": null,
+  "execution_requested": false,
+  "angle_command_attempts": 0
+}

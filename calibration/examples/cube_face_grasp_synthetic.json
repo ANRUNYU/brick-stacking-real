@@ -1,0 +1,14 @@
+{
+  "source": "synthetic",
+  "units": "m",
+  "world_frame": "synthetic_world",
+  "block_frame": "synthetic_block",
+  "geometry_version": "synthetic-50mm-cube",
+  "edge_source": "synthetic example matching nominal 0.05m, not a new physical measurement",
+  "pose_source": "synthetic; not camera/base calibration",
+  "edge_m": 0.05,
+  "finger_side_clearance_m": 0.005,
+  "pregrasp_distance_m": 0.08,
+  "approach_world": [0, 0, 1],
+  "T_world_block": [[1,0,0,0.3],[0,1,0,0.2],[0,0,1,0.1],[0,0,0,1]]
+}

@@ -1,0 +1,175 @@
+{
+  "started_at": "2026-11-07T07:26:02.538539+00:00",
+  "scope": "camera_only",
+  "robot_motion_accessed": false,
+  "can_accessed": false,
+  "devices": [
+    {
+      "serial": "CP2L863000KL",
+      "name": "Orbbec Gemini 335L",
+      "uid": "2-3.4.3-61"
+    },
+    {
+      "serial": "AY6M86300GH",
+      "name": "Orbbec Gemini2",
+      "uid": "2-3.4.4-62"
+    },
+    {
+      "serial": "AY6M8630086",
+      "name": "Orbbec Gemini2",
+      "uid": "2-3.4.2-60"
+    }
+  ],
+  "frames": [
+    {
+      "file": "frame_000.npz",
+      "rgb_stamp_s": 63914.982922,
+      "depth_stamp_s": 63914.982941,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9157779947916667,
+      "median_depth_m": 2.0139999389648438
+    },
+    {
+      "file": "frame_001.npz",
+      "rgb_stamp_s": 63915.049658,
+      "depth_stamp_s": 63915.049677,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9167838541666666,
+      "median_depth_m": 2.015000104904175
+    },
+    {
+      "file": "frame_002.npz",
+      "rgb_stamp_s": 63915.116394,
+      "depth_stamp_s": 63915.116413,
+      "skew_ms": 0.01900000643217936,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9159407552083333,
+      "median_depth_m": 2.010999917984009
+    },
+    {
+      "file": "frame_003.npz",
+      "rgb_stamp_s": 63915.18313,
+      "depth_stamp_s": 63915.183149,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.914560546875,
+      "median_depth_m": 2.013000011444092
+    },
+    {
+      "file": "frame_004.npz",
+      "rgb_stamp_s": 63915.249866,
+      "depth_stamp_s": 63915.249885,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9153971354166667,
+      "median_depth_m": 2.013000011444092
+    },
+    {
+      "file": "frame_005.npz",
+      "rgb_stamp_s": 63915.316602,
+      "depth_stamp_s": 63915.316621,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9155436197916667,
+      "median_depth_m": 2.007999897003174
+    },
+    {
+      "file": "frame_006.npz",
+      "rgb_stamp_s": 63915.383338,
+      "depth_stamp_s": 63915.383357,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9158658854166667,
+      "median_depth_m": 2.01200008392334
+    },
+    {
+      "file": "frame_007.npz",
+      "rgb_stamp_s": 63915.450074,
+      "depth_stamp_s": 63915.450093,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9154459635416666,
+      "median_depth_m": 2.010999917984009
+    },
+    {
+      "file": "frame_008.npz",
+      "rgb_stamp_s": 63915.51681,
+      "depth_stamp_s": 63915.516829,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9152473958333334,
+      "median_depth_m": 2.010999917984009
+    },
+    {
+      "file": "frame_009.npz",
+      "rgb_stamp_s": 63915.583546,
+      "depth_stamp_s": 63915.583565,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9131998697916667,
+      "median_depth_m": 2.007999897003174
+    }
+  ],
+  "rejected_skew": 0,
+  "errors": [],
+  "cleanup_errors": [],
+  "result": "CAPTURED",
+  "binding_version": "2.1.3",
+  "sdk_version": "2.10.6",
+  "selected": {
+    "serial": "CP2L863000KL",
+    "name": "Orbbec Gemini 335L",
+    "firmware": "1.4.60",
+    "connection": "USB3.2"
+  },
+  "profiles": {
+    "color": {
+      "width": 640,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.RGB"
+    },
+    "depth": {
+      "width": 640,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    }
+  },
+  "calibration": {
+    "K": [
+      [
+        368.1024169921875,
+        0.0,
+        322.947021484375
+      ],
+      [
+        0.0,
+        368.163330078125,
+        237.29510498046875
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "distortion": {
+      "k1": -0.031556159257888794,
+      "k2": 0.036501653492450714,
+      "k3": -0.012785496190190315,
+      "k4": 0.0,
+      "k5": 0.0,
+      "k6": 0.0,
+      "p1": -0.0005816970369778574,
+      "p2": 0.0004935592296533287,
+      "model": "OBCameraDistortionModel.BROWN_CONRADY_K6"
+    },
+    "width": 640,
+    "height": 480,
+    "extrinsics_available": false
+  },
+  "notice": "Capture is not depth accuracy, alignment accuracy or block-detection acceptance. Clock is per-camera; no arm/world transform."
+}

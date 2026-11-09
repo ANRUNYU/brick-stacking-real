@@ -1,0 +1,160 @@
+{
+  "model_sha256": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+  "inspection": {
+    "robot": "lkls73_arm_left",
+    "link_count": 9,
+    "joints": [
+      {
+        "name": "L1_Joint",
+        "type": "revolute",
+        "parent": "L_arm_root",
+        "child": "L1_Link",
+        "declared_limits": {
+          "lower": "-2.91",
+          "upper": "2.91",
+          "effort": "80",
+          "velocity": "10.47"
+        },
+        "mimic": null
+      },
+      {
+        "name": "L2_Joint",
+        "type": "revolute",
+        "parent": "L1_Link",
+        "child": "L2_Link",
+        "declared_limits": {
+          "lower": "-0.07",
+          "upper": "3.2",
+          "effort": "80",
+          "velocity": "10.47"
+        },
+        "mimic": null
+      },
+      {
+        "name": "L3_Joint",
+        "type": "revolute",
+        "parent": "L2_Link",
+        "child": "L3_Link",
+        "declared_limits": {
+          "lower": "-2.69",
+          "upper": "2.69",
+          "effort": "36",
+          "velocity": "9.1"
+        },
+        "mimic": null
+      },
+      {
+        "name": "L4_Joint",
+        "type": "revolute",
+        "parent": "L3_Link",
+        "child": "L4_Link",
+        "declared_limits": {
+          "lower": "-2.05",
+          "upper": "2.05",
+          "effort": "36",
+          "velocity": "9.1"
+        },
+        "mimic": null
+      },
+      {
+        "name": "L5_Joint",
+        "type": "revolute",
+        "parent": "L4_Link",
+        "child": "L5_Link",
+        "declared_limits": {
+          "lower": "-2.69",
+          "upper": "2.69",
+          "effort": "36",
+          "velocity": "9.1"
+        },
+        "mimic": null
+      },
+      {
+        "name": "L6_Joint",
+        "type": "revolute",
+        "parent": "L5_Link",
+        "child": "L6_Link",
+        "declared_limits": {
+          "lower": "-1.59",
+          "upper": "1.59",
+          "effort": "18",
+          "velocity": "7.33"
+        },
+        "mimic": null
+      },
+      {
+        "name": "L7_Joint",
+        "type": "revolute",
+        "parent": "L6_Link",
+        "child": "L7_Link",
+        "declared_limits": {
+          "lower": "-1.59",
+          "upper": "1.59",
+          "effort": "18",
+          "velocity": "7.33"
+        },
+        "mimic": null
+      },
+      {
+        "name": "L8_Joint",
+        "type": "fixed",
+        "parent": "L7_Link",
+        "child": "L8_Link",
+        "declared_limits": null,
+        "mimic": null
+      }
+    ],
+    "hardware_match_verified": false,
+    "notice": "Declared model geometry is not measured installation or certified hardware limits."
+  },
+  "base_frame": "L_arm_root",
+  "tip_frame": "L8_Link",
+  "joint_names": [
+    "L1_Joint",
+    "L2_Joint",
+    "L3_Joint",
+    "L4_Joint",
+    "L5_Joint",
+    "L6_Joint",
+    "L7_Joint"
+  ],
+  "hardware_match_verified": false,
+  "collision_geometry_count": 0,
+  "motion_enabled": false,
+  "source": "host_sdk_urdf_not_hardware_measurement",
+  "zero_configuration_matrix": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      -1.5819999999999994e-06
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.058
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      -0.6082
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "positions_rad": {
+    "L1_Joint": 0.0,
+    "L2_Joint": 0.0,
+    "L3_Joint": 0.0,
+    "L4_Joint": 0.0,
+    "L5_Joint": 0.0,
+    "L6_Joint": 0.0,
+    "L7_Joint": 0.0
+  }
+}

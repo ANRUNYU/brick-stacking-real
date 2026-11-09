@@ -1,0 +1,68 @@
+{
+  "source": "remote_pinocchio_model_ik_not_hardware",
+  "results": [
+    {
+      "schema_version": "c-ik-1",
+      "ik": "PASS",
+      "reason": "CONVERGED",
+      "joint_names": [
+        "L1_Joint",
+        "L2_Joint",
+        "L3_Joint",
+        "L4_Joint",
+        "L5_Joint",
+        "L6_Joint",
+        "L7_Joint"
+      ],
+      "positions_rad": [
+        0.19943386144851835,
+        0.28949999924284947,
+        0.006184137944595915,
+        0.20027004049024894,
+        -0.008176439530037502,
+        -0.2007146043430784,
+        0.13903768416939413
+      ],
+      "position_error_m": 0.0000027786401655681468,
+      "rotation_error_rad": 0.0000016660107470377768,
+      "iterations": 6,
+      "model_version": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+      "trajectory": "NOT_GENERATED",
+      "full_collision": "UNKNOWN",
+      "motion_enabled": false,
+      "scope": "local solve against caller FK only"
+    },
+    {
+      "schema_version": "c-ik-1",
+      "ik": "PASS",
+      "reason": "CONVERGED",
+      "joint_names": [
+        "L1_Joint",
+        "L2_Joint",
+        "L3_Joint",
+        "L4_Joint",
+        "L5_Joint",
+        "L6_Joint",
+        "L7_Joint"
+      ],
+      "positions_rad": [
+        -0.09918004789401244,
+        0.3963435079450769,
+        0.1745657943577598,
+        -0.2999550330156209,
+        0.1754755627297934,
+        0.09926982689446937,
+        -0.2038092854288258
+      ],
+      "position_error_m": 0.000005340209638542052,
+      "rotation_error_rad": 0.0000037728180544669483,
+      "iterations": 6,
+      "model_version": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+      "trajectory": "NOT_GENERATED",
+      "full_collision": "UNKNOWN",
+      "motion_enabled": false,
+      "scope": "local solve against caller FK only"
+    }
+  ],
+  "motion_enabled": false
+}

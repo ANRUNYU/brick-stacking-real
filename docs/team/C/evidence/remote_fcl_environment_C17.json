@@ -1,0 +1,14 @@
+{
+  "source": "remote_FCL_synthetic_geometry_not_hardware",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "versions": {
+    "python-fcl": "0.7.0.11",
+    "numpy": "2.2.6",
+    "Cython": "3.3.1"
+  },
+  "sphere_separation_m": 1,
+  "sphere_collision": true,
+  "mesh_separation_m": 1,
+  "mesh_collision": true,
+  "motion_enabled": false
+}
