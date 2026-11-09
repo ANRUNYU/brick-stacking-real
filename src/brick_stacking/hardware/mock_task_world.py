@@ -1,12 +1,24 @@
 """Deterministic scene fixture, NOT a physics engine or vision reconstruction."""
-from dataclasses import replace
+from contextlib import contextmanager
+from dataclasses import dataclass, replace
+from threading import Lock
+from uuid import uuid4
+
 from brick_stacking.models.scene_state import BlockLocation, SceneSnapshot
+
+
+@dataclass(frozen=True)
+class MockCommand:
+    epoch: str
+    sequence: int
+    stage: str
+    block_id: str
+    slot_id: str
 
 
 class MockTaskWorld:
     backend = "mock"
     hardware_enabled = False
-    epoch = "mock_task_epoch_1"
     clock_domain = "synthetic_task_clock"
 
     def __init__(self, blocks, *, tick_s, fail_first_grasps=0, placement_error_m=0.):
@@ -21,6 +33,25 @@ class MockTaskWorld:
         self.hand_clear = True
         self.events = []
         self._counter = 0
+        self.epoch = uuid4().hex
+        self._lock = Lock()
+        self._active = False
+        self._sequence = 0
+
+    @contextmanager
+    def session(self):
+        """Rotate command identity while preserving the simulated physical scene."""
+        with self._lock:
+            if self._active:
+                raise RuntimeError("mock world already has an active run")
+            self.epoch = uuid4().hex
+            self._sequence = 0
+            self._active = True
+        try:
+            yield self.epoch
+        finally:
+            with self._lock:
+                self._active = False
 
     def observe(self):
         self.now_s += self.tick_s
@@ -28,9 +59,22 @@ class MockTaskWorld:
         return SceneSnapshot(f"mock_obs_{self._counter}", self.epoch, self.now_s,
             self.clock_domain, tuple(self.blocks.values()), self.hand_clear, "synthetic")
 
-    def step(self, stage, block_id, slot):
-        self.events.append({"stage": stage, "block_id": block_id, "slot_id": slot.slot_id,
-                            "physical_execution": False})
+    def dispatch(self, command: MockCommand, slot):
+        with self._lock:
+            if not self._active or command.epoch != self.epoch:
+                raise ValueError("mock command belongs to an inactive or old run")
+            if command.sequence != self._sequence + 1 or command.slot_id != slot.slot_id:
+                raise ValueError("mock command is repeated, out of sequence or for a different slot")
+            if command.stage not in {"PRE_GRASP", "GRASP", "TRANSPORT", "PLACE", "RETREAT"}:
+                raise ValueError("unsupported mock action")
+            self._sequence = command.sequence
+            self.events.append({
+                "stage": command.stage, "block_id": command.block_id, "slot_id": command.slot_id,
+                "epoch": command.epoch, "sequence": command.sequence, "physical_execution": False,
+            })
+            return self._apply(command.stage, command.block_id, slot)
+
+    def _apply(self, stage, block_id, slot):
         block = self.blocks[block_id]
         if stage == "GRASP":
             if self.fail_first_grasps:
