@@ -1,8 +1,9 @@
-"""Operator policy attest for elevating host control_ready.
+"""Operator policy attest prerequisite for future host control_ready elevation.
 
-Default is unattested. This module never invents live Permit, never opens CAN,
-and never auto-enables motion. Elevation of control_ready additionally requires
-formal_grasp_entry_allowed and an explicit attested=true record.
+Default is unattested (switch closed). Never invents live Permit, never opens CAN,
+never enables motion, and never auto-opens. Even with attested=true, the host
+readiness reporter keeps control_ready=false (large-motion safety); elevation is
+deferred to a dedicated host path.
 """
 from __future__ import annotations
 
@@ -96,8 +97,9 @@ def build_host_policy_attest(
         "permit": None,
         "usage": [
             "Pass to tools/host_control_readiness.py --operator-policy-attest",
-            "attested=true is required before this reporter may report control_ready=true",
+            "attested=true is a prerequisite only; host_control_readiness still reports control_ready=false",
             "Does not open CAN; does not enable actuators; does not issue live Permit",
             "formal_grasp_entry_allowed remains independently gated (live Permit + live arm)",
+            "Default attested=false — never auto-open before V+M merge / dedicated elevation path",
         ],
     }

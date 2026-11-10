@@ -9,10 +9,10 @@
 | `vision_pre_grasp_ready` | 视觉侧 pre_grasp 证据门禁清 | `pre_grasp_gates.evidence_gates_clear` |
 | `dry_run_grasp_entry_ready` | dry-run / arm-disabled 全链可进入 | vision + diagnostic eligible + PlanBundle hash + ArmState.device_id（recorded/mock OK）+ dry-run 签发字段齐且 gate 接受 draft |
 | `formal_grasp_entry_allowed` | **可进入正式抓取** | dry-run ready + **validated live `contracts.Permit`** + **`counts_as_live_valid`** |
-| `control_ready` | host 控制就绪 | formal allowed + **显式** `operator_policy_attest.attested=true` |
+| `control_ready` | host 控制就绪（真机大幅运动前置） | **本 reporter 恒 false**（大幅运动安全硬持有）。前置可审计：formal + 显式 attest；抬升推迟到专用 host 路径 |
 
-**默认**：`control_ready=false`；operator policy attest 开关**已实现但不自动打开**（`config/observed/host_control_ready_policy_attest_20261110.json` 中 `attested=false`）。  
-**硬约束**：不伪造 live Permit；不开臂；不发运动；`motion_enabled` 仍默认 false。真机只读非必须——本轮以 Mock/recorded 机读路径验收。
+**默认安全**：`control_ready=false`、`motion_enabled=false`；operator policy attest **已实现但不自动打开**（`attested=false`）；即使 attest 打开，本 checklist **仍不抬** `control_ready`。  
+**硬约束**：不伪造 live Permit；不开臂；不发运动；`dry_run_grasp_entry_ready` 可为 true。真机只读非必须——本轮以 Mock/recorded 机读路径验收。
 
 相关实现：
 
@@ -47,7 +47,7 @@ M 侧 Permit 权威见 [M_PERMIT_AUTHORITY_20261110.md](M_PERMIT_AUTHORITY_20261
 | `vision_pre_grasp_ready` | **true** | pre_grasp gaps |
 | `dry_run_grasp_entry_ready` | **true**（探测后） | MockArm dry-run 全链 + shadow PlanBundle + recorded arm id |
 | `formal_grasp_entry_allowed` | **false** | 缺 live Permit + live VALID 臂（recorded ≠ live） |
-| `control_ready` | **false** | formal 未过 + attest 关闭 |
+| `control_ready` | **false**（硬持有） | reporter 永不抬升；attest 默认关；无大幅运动解锁 |
 
 ### 1.2 Dry-run / arm-disabled SafetyGate 签发诊断
 
@@ -73,7 +73,7 @@ python tools/host_control_ready_policy_attest.py \
 # 默认 attested=false。仅在明确决策后加 --attested。
 ```
 
-即使 `attested=true`，若 `formal_grasp_entry_allowed=false`，`control_ready` 仍保持 false。
+即使 `attested=true` 且 formal 条件将来满足，**本 reporter 仍输出 `control_ready=false`**（大幅运动安全）；抬升留给合并 main 后的专用 host 路径。
 
 ## 2. 硬缺口（相对「可进入正式抓取」）
 
@@ -88,7 +88,8 @@ python tools/host_control_ready_policy_attest.py \
 
 - `can_enter_formal_grasp=false`
 - `formal_grasp_entry_missing` ⊇ `live_contracts_Permit_validated`, `live_VALID_ArmState_source_real`
-- `control_ready_missing` ⊇ `formal_grasp_entry_allowed`, `operator_policy_attest_control_ready`
+- `control_ready_missing` ⊇ `formal_grasp_entry_allowed`, `operator_policy_attest_control_ready`, `reporter_hard_hold_no_large_motion_elevation`
+- `reporter_never_raises_control_ready=true` / `reporter_never_raises_motion_enabled=true`
 - `only_operator_enable_remaining=false`
 - `needs_operator_physical_enable_now=false`
 - `needs_operator_physical_enable_before_real_motion=true`
@@ -115,7 +116,7 @@ python tools/host_control_readiness.py \
 | dry-run 入口就绪？ | **是**（`dry_run_grasp_entry_ready=true`） |
 | diagnostic permit | `permit_eligible=true`；`executable=false` |
 | live Permit | **null**（未伪造） |
-| `control_ready` | **false**（formal 未过 + attest 默认关） |
+| `control_ready` | **false**（reporter 硬持有；attest 默认关） |
 | 现在要用户物理开臂？ | **否** |
-| 是否需用户使能？ | **现在不必**开臂；正式抓取前还需 live Permit + live 臂读；抬 `control_ready` 另需显式 `--attested` |
-| 真机运动前要开臂？ | **是** |
+| 是否需用户使能？ | **现在不必**；勿开 `--attested` / `--enable-motion`；正式抓取前还需 live Permit + live VALID 臂 |
+| 真机大幅运动前要开臂？ | **是**（且需专用 elevation 路径；本分支 checklist 不解锁） |

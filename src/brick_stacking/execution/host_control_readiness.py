@@ -855,8 +855,12 @@ def evaluate_host_control_readiness(
     formal_grasp_entry_allowed = bool(
         dry_run_grasp_entry_ready and live_permit_valid and arm_ok_live
     )
-    # control_ready requires formal entry + explicit operator attest (switch closed by default).
-    control_ready = bool(formal_grasp_entry_allowed and attest.attested is True)
+    # Prerequisites for a *future* dedicated host elevation path.
+    # This reporter NEVER sets control_ready=true (large-motion safety).
+    control_ready_prerequisites_met = bool(
+        formal_grasp_entry_allowed and attest.attested is True
+    )
+    control_ready = False
 
     items.append(
         _item(
@@ -886,7 +890,7 @@ def evaluate_host_control_readiness(
                 if formal_grasp_entry_allowed
                 else (
                     "formal entry held: requires dry_run_grasp_entry_ready + validated "
-                    "live Permit + live VALID ArmState (source=real); "
+                    "live Permit + live VALID ArmState (source=real, validity=VALID); "
                     f"dry_run_ready={dry_run_grasp_entry_ready}, "
                     f"live_permit_valid={live_permit_valid}, live_arm={arm_ok_live}"
                 )
@@ -895,21 +899,18 @@ def evaluate_host_control_readiness(
         )
     )
 
-    # --- operator policy attest (default closed) ---
+    # --- operator policy attest (default closed; never auto-opens) ---
     if attest.attested:
         items.append(
             _item(
                 "operator_policy_attest_control_ready",
-                "PASS" if formal_grasp_entry_allowed else "POLICY_HOLD",
-                blocking=not formal_grasp_entry_allowed,
+                "PASS",
+                blocking=False,
                 category="host_policy",
                 detail=(
                     f"operator attest present (operator={attest.operator!r}); "
-                    + (
-                        "formal entry satisfied → control_ready may raise"
-                        if formal_grasp_entry_allowed
-                        else "formal entry not satisfied → control_ready stays false"
-                    )
+                    "prerequisite only — this reporter still holds control_ready=false "
+                    "(large-motion safety; elevation deferred)"
                 ),
                 owner="operator / host_policy_attest",
             )
@@ -923,39 +924,29 @@ def evaluate_host_control_readiness(
                 category="host_policy",
                 detail=(
                     "operator_policy_attest closed (attested=false/missing); "
-                    "control_ready stays false until explicit attest via "
-                    "tools/host_control_ready_policy_attest.py"
+                    "default-safe. Explicit --attested required before any future "
+                    "host path may consider control_ready; this reporter never raises it"
                 ),
                 owner="operator / host_policy_attest",
             )
         )
 
-    if control_ready:
-        items.append(
-            _item(
-                "host_policy_control_ready",
-                "PASS",
-                blocking=False,
-                category="host_policy",
-                detail="control_ready=true under formal entry + operator attest",
-                owner="host/safety (attest-gated)",
-            )
+    items.append(
+        _item(
+            "host_policy_control_ready",
+            "POLICY_HOLD",
+            blocking=True,
+            category="host_policy",
+            detail=(
+                "control_ready held false by reporter hard safety "
+                "(no large-motion unlock). prerequisites_met="
+                f"{control_ready_prerequisites_met} "
+                f"(formal={formal_grasp_entry_allowed}, attest={attest.attested}); "
+                "elevation deferred to dedicated host path after V+M→main"
+            ),
+            owner="host/safety (reporter never raises)",
         )
-    else:
-        items.append(
-            _item(
-                "host_policy_control_ready",
-                "POLICY_HOLD",
-                blocking=True,
-                category="host_policy",
-                detail=(
-                    "control_ready held false; requires formal_grasp_entry_allowed "
-                    f"(={formal_grasp_entry_allowed}) AND operator_policy_attest "
-                    f"(attested={attest.attested})"
-                ),
-                owner="host/safety (attest-gated; default closed)",
-            )
-        )
+    )
 
     items.append(
         _item(
@@ -1008,15 +999,8 @@ def evaluate_host_control_readiness(
         if i.blocking and i.status != "PASS"
     )
 
-    # only_operator_enable_remaining: software+live permit+formal+attest clear;
-    # only physical ENABLE left.
-    only_operator = bool(
-        formal_grasp_entry_allowed
-        and control_ready
-        and motion_process is True
-        and session_open is True
-        and not software_missing
-    )
+    # Reporter never raises control_ready → never "only operator enable remaining".
+    only_operator = False
 
     formal_missing: list[str] = []
     if not dry_run_grasp_entry_ready:
@@ -1031,19 +1015,22 @@ def evaluate_host_control_readiness(
         control_missing.append("formal_grasp_entry_allowed")
     if not attest.attested:
         control_missing.append("operator_policy_attest_control_ready")
+    # Always: this reporter refuses elevation (large-motion safety).
+    control_missing.append("reporter_hard_hold_no_large_motion_elevation")
 
     gate_ladder = {
         "vision_pre_grasp_ready": vision_ready is True,
         "dry_run_grasp_entry_ready": dry_run_grasp_entry_ready,
         "formal_grasp_entry_allowed": formal_grasp_entry_allowed,
-        "control_ready": control_ready,
+        "control_ready": False,
+        "control_ready_prerequisites_met": control_ready_prerequisites_met,
+        "reporter_never_raises_control_ready": True,
+        "reporter_never_raises_motion_enabled": True,
         "definitions": dict(GATE_DEFINITIONS),
         "formal_grasp_entry_missing": formal_missing,
         "control_ready_missing": control_missing,
         "can_enter_formal_grasp": formal_grasp_entry_allowed,
-        "operator_enable_required_now": bool(
-            formal_grasp_entry_allowed and attest.attested and not only_operator
-        ),
+        "operator_enable_required_now": False,
         "live_valid_arm_gap": list(live_arm_software_gap),
         "arm_feedback_source_kind": arm_feedback.get("source_kind"),
         "counts_as_live_valid": arm_ok_live,
@@ -1061,28 +1048,29 @@ def evaluate_host_control_readiness(
 
     notes = (
         "Gate ladder: vision_pre_grasp_ready → dry_run_grasp_entry_ready → "
-        "formal_grasp_entry_allowed → control_ready (attest-gated).",
+        "formal_grasp_entry_allowed → control_ready (attest-gated; reporter hard-hold).",
         "dry_run_grasp_entry_ready may be true without live Permit or control_ready.",
         "formal_grasp_entry_allowed requires validated live Permit + counts_as_live_valid "
         "(source=real AND validity=VALID AND seven finite q_rad).",
         "recorded/mock ArmState.device_id ≠ live VALID; see checklist live_valid_arm_state "
         f"and arm_feedback (source_kind={arm_feedback.get('source_kind')}).",
-        "control_ready requires formal_grasp_entry_allowed + explicit operator_policy_attest; "
-        "attest switch defaults closed and is never auto-opened.",
+        "control_ready ALWAYS false in this reporter (large-motion safety). "
+        "Attest switch defaults closed and is never auto-opened; even attested, elevation deferred.",
+        "motion_enabled ALWAYS false here; never unlocks host_monitor large-motion paths.",
         "Never invents live contracts.Permit or opens CAN.",
         "Dry-run probe uses OfflineSafetyGate + MockArm (hardware_enabled=False).",
         "ArmStateReader readonly path currently cannot satisfy all_seven_q_rad_finite (J6/J7).",
-        "host_monitor motion path (main) is separate: --enable-motion → READY → ENABLE → MOVE.",
-        f"can_enter_formal_grasp={formal_grasp_entry_allowed}.",
+        f"can_enter_formal_grasp={formal_grasp_entry_allowed}; "
+        f"control_ready_prerequisites_met={control_ready_prerequisites_met}.",
         *issuance_notes,
     )
 
     return HostControlReadiness(
         schema_version=SCHEMA,
-        control_ready=control_ready,
+        control_ready=False,
         motion_enabled=False,
         formal_grasp_entry_allowed=formal_grasp_entry_allowed,
-        formal_grasp_ready=formal_grasp_entry_allowed and control_ready,
+        formal_grasp_ready=False,
         dry_run_grasp_entry_ready=dry_run_grasp_entry_ready,
         vision_pre_grasp_ready=vision_ready if isinstance(vision_ready, bool) else None,
         only_operator_enable_remaining=only_operator,
