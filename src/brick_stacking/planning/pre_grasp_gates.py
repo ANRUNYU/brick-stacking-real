@@ -1,7 +1,12 @@
 """Pre-grasp software gates and readiness reporting.
 
-Evidence-only: never invents PASS, never raises control_ready, never emits permits
-or motion commands. Missing evidence stays FAIL/UNKNOWN/BLOCKED with explicit gaps.
+Evidence-only: never invents PASS, never raises control_ready, never emits *live*
+permits or motion commands. Missing evidence stays FAIL/UNKNOWN/BLOCKED with
+explicit gaps.
+
+When evidence gates clear, this module may issue a *diagnostic* permit-eligibility
+record (shadow). That record is NOT a contracts.Permit and must never be passed to
+arm.execute_trajectory / OfflineSafetyGate as a live permit.
 """
 from __future__ import annotations
 
@@ -15,7 +20,18 @@ from brick_stacking.planning.yaw_policy import (
 )
 
 
-SCHEMA = "pre-grasp-readiness-0.1"
+SCHEMA = "pre-grasp-readiness-0.2"
+DIAGNOSTIC_PERMIT_SCHEMA = "m-diagnostic-permit-eligibility-0.1"
+
+# Live Permit fields required by contracts.Permit + OfflineSafetyGate.
+LIVE_PERMIT_REQUIRED_FIELDS = (
+    "device_id",
+    "trajectory_hash",
+    "config_hash",
+    "calibration_hash",
+    "scene_version",
+    "valid_until_host_monotonic_s",
+)
 
 # Gate ids used by docs, CLI, and tests. Status values are never forged to PASS.
 GATE_IDS = (
@@ -57,13 +73,25 @@ class ReadinessReport:
     phase: str
     control_ready: bool
     motion_enabled: bool
+    # Live contracts.Permit only; readiness path always leaves this null.
     permit: Any
     formal_grasp_entry_allowed: bool
     evidence_gates_clear: bool
-    # Vision/pre_grasp evidence only: never implies permit, control_ready, or CAN.
+    # Vision/pre_grasp evidence only: never implies live permit, control_ready, or CAN.
     vision_pre_grasp_ready: bool
+    # True when evidence is enough for M to *assess* live-permit eligibility.
+    # Does NOT mean a live Permit exists or that motion is allowed.
+    permit_eligible: bool
+    # Shadow/diagnostic eligibility artifact; never a live Permit.
+    diagnostic_permit: dict[str, Any] | None
+    # Precise awaiting flags (mutually clarifying; see notes):
+    # - awaiting_m_permit: evidence still incomplete for eligibility assessment
+    # - awaiting_live_permit_host_enable: eligible, but live SafetyGate + host enable missing
+    # - awaiting_actuator_enable: physical arm/CAN enable still required before motion
     awaiting_m_permit: bool
+    awaiting_live_permit_host_enable: bool
     awaiting_actuator_enable: bool
+    permit_hold_reason: str
     gates: tuple[GateResult, ...]
     missing_software: tuple[str, ...]
     missing_field_or_human: tuple[str, ...]
@@ -157,6 +185,170 @@ def _eligible_consumption_counts(
         1 for row in eligible if (row.get("diagnostic") or {}).get("status") == "BLOCKED"
     )
     return ready_n, blocked_n, max(0, len(rows) - len(eligible_indices))
+
+
+def _shadow_context_snapshot(
+    *,
+    request: dict[str, Any],
+    shadow_report: dict[str, Any] | None,
+    preferred_handoff: dict[str, Any],
+) -> dict[str, Any]:
+    """Collect Context/Inspection identity fields present in shadow evidence."""
+    export = (shadow_report or {}).get("export") or {}
+    evidence_rows = list(export.get("verification_evidence") or [])
+    confirmed = [
+        row
+        for row in evidence_rows
+        if (row or {}).get("verdict") == "PASS" and (row or {}).get("validity") == "VALID"
+    ]
+    evidence = confirmed[-1] if confirmed else (evidence_rows[-1] if evidence_rows else {})
+    cal = (
+        preferred_handoff.get("calibration_hash")
+        or export.get("calibration_hash")
+        or request.get("calibration_hash")
+        or evidence.get("calibration_hash")
+    )
+    profile = (
+        preferred_handoff.get("profile_hash")
+        or evidence.get("config_hash")
+        or request.get("profile_hash")
+    )
+    scene = (
+        preferred_handoff.get("epoch")
+        or evidence.get("scene_version")
+        or request.get("scene_version")
+    )
+    return {
+        "target_id": preferred_handoff.get("target_id") or request.get("target_id"),
+        "slot_id": preferred_handoff.get("slot_id") or request.get("slot_id"),
+        "region_id": preferred_handoff.get("region_id") or request.get("region_id"),
+        "reference_id": preferred_handoff.get("reference_id") or request.get("reference_id"),
+        "observation_id": (
+            preferred_handoff.get("observation_id")
+            or (
+                (evidence.get("observation_refs") or [None])[0]
+                if isinstance(evidence.get("observation_refs"), list)
+                else None
+            )
+        ),
+        "frame_id": preferred_handoff.get("frame_id") or evidence.get("frame_id"),
+        "calibration_hash": cal,
+        "config_hash_or_profile_hash": profile,
+        "scene_version": scene,
+        "epoch": preferred_handoff.get("epoch") or evidence.get("epoch"),
+        "clock_domain": preferred_handoff.get("clock_domain") or evidence.get("clock_domain"),
+        "camera_device_id": evidence.get("device_id"),
+        "shadow_inspection_status": None,
+    }
+
+
+def build_diagnostic_permit(
+    *,
+    eligible: bool,
+    request: dict[str, Any],
+    shadow_report: dict[str, Any] | None,
+    preferred_handoff: dict[str, Any],
+    shadow_inspection_ready: bool,
+    evidence_gates_clear: bool,
+    request_path: str | None = None,
+    shadow_path: str | None = None,
+) -> dict[str, Any]:
+    """Build a shadow/diagnostic permit-eligibility record.
+
+    Never invents a live contracts.Permit. executable=false always.
+    Live issuance authority remains D/M SafetyGate at execution time and still
+    requires host enable + PlanBundle trajectory_hash + fresh arm device_id.
+    """
+    ctx = _shadow_context_snapshot(
+        request=request, shadow_report=shadow_report, preferred_handoff=preferred_handoff
+    )
+    # Stamp inspection status from eligible consumption if available.
+    ready_status = "SHADOW_INSPECTION_READY" if shadow_inspection_ready else "NOT_READY"
+    ctx["shadow_inspection_status"] = ready_status
+
+    live_field_status = {
+        "device_id": {
+            "status": "MISSING_LIVE_ARM",
+            "detail": "camera device_id is not arm device_id; live Permit needs ArmState.device_id",
+            "camera_device_id_seen": ctx.get("camera_device_id"),
+        },
+        "trajectory_hash": {
+            "status": "MISSING_PLAN_BUNDLE",
+            "detail": "no executable PlanBundle/trajectory on this path; do not invent hash",
+        },
+        "config_hash": {
+            "status": "PRESENT_FROM_SHADOW" if ctx.get("config_hash_or_profile_hash") else "MISSING",
+            "value": ctx.get("config_hash_or_profile_hash"),
+        },
+        "calibration_hash": {
+            "status": "PRESENT" if ctx.get("calibration_hash") else "MISSING",
+            "value": ctx.get("calibration_hash"),
+        },
+        "scene_version": {
+            "status": "PRESENT" if ctx.get("scene_version") else "MISSING",
+            "value": ctx.get("scene_version"),
+        },
+        "valid_until_host_monotonic_s": {
+            "status": "MISSING_ISSUANCE_CLOCK",
+            "detail": "freshness window is set only by live SafetyGate at issuance",
+        },
+    }
+
+    still_missing = [
+        "live SafetyGate issuance (D/M authority at execution)",
+        "host/safety enable path for control_ready",
+        "actuator / arm power enable (operator)",
+        "PlanBundle trajectory_hash",
+        "fresh ArmState.device_id matching permit.device_id",
+        "valid_until_host_monotonic_s within OfflineSafetyGate freshness window",
+    ]
+
+    proof = (
+        "shadow Inspection + evidence gates clear; only host enable / actuator enable / "
+        "PlanBundle + live SafetyGate remain before a live Permit can exist"
+        if eligible
+        else "evidence gates not clear; diagnostic eligibility withheld"
+    )
+
+    return {
+        "schema_version": DIAGNOSTIC_PERMIT_SCHEMA,
+        "kind": "shadow_diagnostic",
+        "executable": False,
+        "live_permit": None,
+        "permit_eligible": bool(eligible),
+        "evidence_gates_clear": bool(evidence_gates_clear),
+        "vision_pre_grasp_ready": bool(evidence_gates_clear),
+        "formal_grasp_entry_allowed": False,
+        "control_ready": False,
+        "motion_enabled": False,
+        "authority": {
+            "live_issuer": (
+                "D/M SafetyGate at execution "
+                "(contracts.Permit; OfflineSafetyGate.check_step_evidence)"
+            ),
+            "diagnostic_issuer": "pre_grasp_gates (unified V/M readiness on this branch)",
+            "not_authority_for": [
+                "arm.execute_trajectory",
+                "OfflineSafetyGate live step",
+                "control_ready",
+                "CAN / actuator enable",
+            ],
+            "required_live_fields": list(LIVE_PERMIT_REQUIRED_FIELDS),
+        },
+        "context_present": ctx,
+        "live_permit_field_status": live_field_status,
+        "still_missing_for_live_permit": still_missing,
+        "proof": proof,
+        "inputs": {
+            "request_path": request_path,
+            "shadow_path": shadow_path,
+        },
+        "usage": [
+            "Readiness may set permit_eligible=true when evidence_gates_clear.",
+            "Do NOT copy this object into contracts.Permit / StepEvidence.permit.",
+            "Live permit remains null until host/safety + SafetyGate issue one.",
+        ],
+    }
 
 
 def evaluate_pre_grasp_readiness(
@@ -542,21 +734,26 @@ def evaluate_pre_grasp_readiness(
             owner="verify_handoff_consumer",
         )
     )
-    permit = (shadow_report or {}).get("permit")
-    if permit is None and shadow_report:
-        # dig first consumption permit
+    # Live permit must stay null on this path. Detect accidental non-null inputs.
+    live_permit = (shadow_report or {}).get("permit")
+    if live_permit is None and shadow_report:
         for c in shadow_report.get("consumption") or []:
-            permit = (c.get("diagnostic") or {}).get("permit")
-            break
+            live_permit = (c.get("diagnostic") or {}).get("permit")
+            if live_permit is not None:
+                break
+    # Evidence-clear computed after remaining policy gates; provisional for permit detail.
+    # Recompute below once all evidence gates are appended (permit/control_ready excluded).
+    provisional_policy_ids = {"permit", "control_ready_policy"}
+    # Placeholder permit gate; replaced after evidence_clear is known.
     gates.append(
         gate(
             "permit",
-            "POLICY_HOLD" if permit is None else "FAIL",
+            "FAIL" if live_permit is not None else "POLICY_HOLD",
             software=True,
-            field=False,
+            field=True,
             blocking=True,
-            detail="permit must remain null until every blocking gate clears; never forge",
-            owner="M permit authority (not granted here)",
+            detail="pending eligibility assessment",
+            owner="D/M SafetyGate (live); readiness issues diagnostic only",
         )
     )
     # Hard policy: this module never allows control_ready true.
@@ -568,30 +765,84 @@ def evaluate_pre_grasp_readiness(
     else:
         cr_status, cr_detail = (
             "POLICY_HOLD",
-            "control_ready held false by policy until all blocking gates PASS",
+            "control_ready held false by policy; host/safety path only (never raised here)",
         )
     gates.append(
         gate(
             "control_ready_policy",
             cr_status,
             software=True,
-            field=False,
+            field=True,
             blocking=True,
             detail=cr_detail,
-            owner="safety policy",
+            owner="host/safety (parallel); not raised by readiness",
         )
     )
 
-    policy_ids = {"permit", "control_ready_policy"}
+    policy_ids = provisional_policy_ids
     evidence_blocking = [
         g for g in gates if g.blocking_for_formal_grasp and g.gate_id not in policy_ids
     ]
     evidence_clear = all(g.status == "PASS" for g in evidence_blocking)
     # Vision-side announce only: evidence clear ⇒ pre_grasp vision ready.
-    # Does NOT equal formal grasp entry, permit, control_ready, or motion enable.
+    # Does NOT equal formal grasp entry, live permit, control_ready, or motion enable.
     vision_ready = evidence_clear
+    permit_eligible = evidence_clear and insp_ok and live_permit is None
     # Hard hold: this reporter never authorizes formal grasp / control_ready / CAN.
     formal_allowed = False
+
+    if live_permit is not None:
+        permit_status = "FAIL"
+        permit_detail = (
+            "non-null permit appeared in shadow inputs; readiness refuses to treat it as live"
+        )
+        permit_hold_reason = "spurious_permit_in_inputs"
+        awaiting_m = True
+        awaiting_host = False
+    elif permit_eligible:
+        permit_status = "POLICY_HOLD"
+        permit_detail = (
+            "live permit=null by design; diagnostic eligibility issued "
+            "(permit_eligible=true). Still missing: host/safety enable, "
+            "actuator enable, PlanBundle trajectory_hash, live SafetyGate issuance."
+        )
+        permit_hold_reason = (
+            "eligible_awaiting_host_enable_and_live_safety_gate"
+        )
+        awaiting_m = False
+        awaiting_host = True
+    else:
+        permit_status = "POLICY_HOLD"
+        permit_detail = (
+            "live permit remains null; evidence gates not clear — "
+            "diagnostic eligibility withheld (awaiting_m_permit)"
+        )
+        permit_hold_reason = "evidence_incomplete_for_eligibility"
+        awaiting_m = True
+        awaiting_host = False
+
+    # Replace placeholder permit gate with precise status/detail.
+    # When eligible, remaining hold is host/SafetyGate (field); else evidence (software).
+    gates[-2] = gate(
+        "permit",
+        permit_status,
+        software=not permit_eligible,
+        field=True,
+        blocking=True,
+        detail=permit_detail,
+        owner="D/M SafetyGate (live); readiness issues diagnostic only",
+    )
+
+    diagnostic = build_diagnostic_permit(
+        eligible=permit_eligible,
+        request=req,
+        shadow_report=shadow_report,
+        preferred_handoff=first,
+        shadow_inspection_ready=insp_ok,
+        evidence_gates_clear=evidence_clear,
+        request_path=request_path,
+        shadow_path=shadow_path,
+    )
 
     missing_software = tuple(
         g.gate_id
@@ -605,14 +856,16 @@ def evaluate_pre_grasp_readiness(
     )
 
     notes = (
-        "Readiness reports gaps only; does not grant permit or raise control_ready.",
+        "Readiness reports gaps; may issue diagnostic permit eligibility; never live Permit.",
         "Association CLI flag without durable operator record stays UNKNOWN.",
         "Calibration binding and BundleBinding/clock are parallel dependencies.",
         "hand_clear/support/stable/neighbors are never inferred from scene_consistent.",
         "yaw_policy=symmetric_90_unbounded accepts UNKNOWN yaw for grasp-approach; never forges MEASURED.",
         "vision_pre_grasp_ready mirrors evidence_gates_clear; it is NOT formal_grasp_entry_allowed.",
-        "formal_grasp_entry_allowed / control_ready / permit / motion_enabled stay false here by design.",
-        "Remaining formal-entry hard holds: M permit authority + host/safety control_ready + actuator enable.",
+        "formal_grasp_entry_allowed / control_ready / permit / motion_enabled stay false/null here by design.",
+        "permit_eligible=true means shadow Inspection evidence is enough to assess live issuance; not a Permit.",
+        "awaiting_m_permit=true only while evidence incomplete; when eligible → awaiting_live_permit_host_enable.",
+        "Remaining formal-entry hard holds: live SafetyGate Permit + host/safety control_ready + actuator enable.",
         "Readiness adopts only scene_consistent frames; WARMING_UP SCENE_OR_RGBD_NOT_CONFIRMED is skipped, not forged.",
     )
     return ReadinessReport(
@@ -624,8 +877,12 @@ def evaluate_pre_grasp_readiness(
         formal_grasp_entry_allowed=formal_allowed,
         evidence_gates_clear=evidence_clear,
         vision_pre_grasp_ready=vision_ready,
-        awaiting_m_permit=True,
+        permit_eligible=permit_eligible,
+        diagnostic_permit=diagnostic,
+        awaiting_m_permit=awaiting_m,
+        awaiting_live_permit_host_enable=awaiting_host,
         awaiting_actuator_enable=True,
+        permit_hold_reason=permit_hold_reason,
         gates=tuple(gates),
         missing_software=missing_software,
         missing_field_or_human=missing_field,
@@ -696,14 +953,18 @@ def evidence_gap_report(readiness: ReadinessReport) -> dict[str, Any]:
             }
         )
     return {
-        "schema_version": "pre-grasp-evidence-gaps-0.1",
+        "schema_version": "pre-grasp-evidence-gaps-0.2",
         "formal_grasp_entry_allowed": False,
         "control_ready": False,
         "motion_enabled": False,
         "permit": None,
+        "permit_eligible": readiness.permit_eligible,
+        "diagnostic_permit": readiness.diagnostic_permit,
+        "permit_hold_reason": readiness.permit_hold_reason,
         "evidence_gates_clear": readiness.evidence_gates_clear,
         "vision_pre_grasp_ready": readiness.vision_pre_grasp_ready,
         "awaiting_m_permit": readiness.awaiting_m_permit,
+        "awaiting_live_permit_host_enable": readiness.awaiting_live_permit_host_enable,
         "awaiting_actuator_enable": readiness.awaiting_actuator_enable,
         "blocking_gaps": [g for g in gaps if g["blocking"]],
         "nonblocking_gaps": [g for g in gaps if not g["blocking"]],

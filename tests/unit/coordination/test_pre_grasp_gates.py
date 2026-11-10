@@ -71,8 +71,15 @@ def test_field_shadow_readiness_blocks_and_never_grants_entry():
     assert report.formal_grasp_entry_allowed is False
     assert report.evidence_gates_clear is False
     assert report.vision_pre_grasp_ready is False
+    assert report.permit_eligible is False
     assert report.awaiting_m_permit is True
+    assert report.awaiting_live_permit_host_enable is False
     assert report.awaiting_actuator_enable is True
+    assert report.permit_hold_reason == "evidence_incomplete_for_eligibility"
+    assert report.diagnostic_permit is not None
+    assert report.diagnostic_permit["executable"] is False
+    assert report.diagnostic_permit["live_permit"] is None
+    assert report.diagnostic_permit["permit_eligible"] is False
     by_id = {g.gate_id: g for g in report.gates}
     assert by_id["expected_pose_adopted"].status == "PASS"
     assert by_id["reference_id"].status == "PASS"
@@ -91,6 +98,8 @@ def test_field_shadow_readiness_blocks_and_never_grants_entry():
     gaps = evidence_gap_report(report)
     assert gaps["formal_grasp_entry_allowed"] is False
     assert gaps["control_ready"] is False
+    assert gaps["permit_eligible"] is False
+    assert gaps["awaiting_m_permit"] is True
     assert "ERROR_BOUND_UNKNOWN:yaw_rad" in report.consumer_reason_union
     assert "HAND_CLEAR_EVIDENCE_MISSING" in report.consumer_reason_union
     assert "CALIBRATION_BINDING_MISSING" not in report.consumer_reason_union
@@ -127,8 +136,22 @@ def test_overlay_yaw_policy_clears_yaw_gate_without_forging_measured():
     assert report.control_ready is False
     assert report.evidence_gates_clear is True
     assert report.vision_pre_grasp_ready is True
-    assert report.awaiting_m_permit is True
+    assert report.permit_eligible is True
+    assert report.awaiting_m_permit is False
+    assert report.awaiting_live_permit_host_enable is True
     assert report.awaiting_actuator_enable is True
+    assert report.permit_hold_reason == "eligible_awaiting_host_enable_and_live_safety_gate"
+    assert report.permit is None
+    assert report.diagnostic_permit is not None
+    assert report.diagnostic_permit["permit_eligible"] is True
+    assert report.diagnostic_permit["executable"] is False
+    assert report.diagnostic_permit["live_permit"] is None
+    assert "MISSING_PLAN_BUNDLE" in (
+        report.diagnostic_permit["live_permit_field_status"]["trajectory_hash"]["status"]
+    )
+    assert "MISSING_LIVE_ARM" in (
+        report.diagnostic_permit["live_permit_field_status"]["device_id"]["status"]
+    )
     # Warmup SCENE_OR_RGBD_NOT_CONFIRMED must not remain a session-level blocker.
     assert "SCENE_OR_RGBD_NOT_CONFIRMED" not in report.consumer_reason_union
 
@@ -167,12 +190,14 @@ def test_readiness_skips_warmup_scene_and_accepts_confirmed_ready():
     assert by_id["shadow_inspection"].status == "PASS"
     assert by_id["yaw_bound"].status == "PASS"
     assert "SCENE_OR_RGBD_NOT_CONFIRMED" not in report.consumer_reason_union
-    # Policy gates still hold; never forge grasp entry / motion.
+    # Policy gates still hold; never forge grasp entry / motion / live permit.
     assert by_id["permit"].status == "POLICY_HOLD"
     assert report.formal_grasp_entry_allowed is False
     assert report.control_ready is False
     assert report.vision_pre_grasp_ready is True
-    assert report.awaiting_m_permit is True
+    assert report.permit_eligible is True
+    assert report.awaiting_m_permit is False
+    assert report.awaiting_live_permit_host_enable is True
     assert report.awaiting_actuator_enable is True
 
 
@@ -256,7 +281,9 @@ def test_cli_readiness_and_association_tools(tmp_path):
     assert ready["control_ready"] is False
     assert ready["evidence_gates_clear"] is False
     assert ready["vision_pre_grasp_ready"] is False
+    assert ready["permit_eligible"] is False
     assert ready["awaiting_m_permit"] is True
+    assert ready["awaiting_live_permit_host_enable"] is False
     assert ready["awaiting_actuator_enable"] is True
 
     ready_mod["main"](
@@ -272,11 +299,13 @@ def test_cli_readiness_and_association_tools(tmp_path):
     )
     gaps = json.loads(gaps_out.read_text(encoding="utf-8"))
     assert gaps["permit"] is None
+    assert gaps["permit_eligible"] is False
     assert gaps["vision_pre_grasp_ready"] is False
     assert gaps["awaiting_m_permit"] is True
     assert any(g["gate_id"] == "hand_clear" for g in gaps["blocking_gaps"])
 
-    # Bound + durable assoc + yaw policy: vision ready, still no formal entry.
+    # Bound + durable assoc + yaw policy: vision ready + permit_eligible; still no formal entry.
+    diag_out = tmp_path / "diagnostic_permit.json"
     ready_mod["main"](
         [
             "--request",
@@ -287,12 +316,27 @@ def test_cli_readiness_and_association_tools(tmp_path):
             str(ASSOC_RECORD),
             "--output",
             str(ready_out),
+            "--diagnostic-permit-output",
+            str(diag_out),
         ]
     )
     ready_bound = json.loads(ready_out.read_text(encoding="utf-8"))
     assert ready_bound["vision_pre_grasp_ready"] is True
     assert ready_bound["evidence_gates_clear"] is True
+    assert ready_bound["permit_eligible"] is True
     assert ready_bound["formal_grasp_entry_allowed"] is False
     assert ready_bound["control_ready"] is False
     assert ready_bound["permit"] is None
     assert ready_bound["motion_enabled"] is False
+    assert ready_bound["awaiting_m_permit"] is False
+    assert ready_bound["awaiting_live_permit_host_enable"] is True
+    assert ready_bound["awaiting_actuator_enable"] is True
+    assert ready_bound["permit_hold_reason"] == (
+        "eligible_awaiting_host_enable_and_live_safety_gate"
+    )
+    diag = json.loads(diag_out.read_text(encoding="utf-8"))
+    assert diag["schema_version"] == "m-diagnostic-permit-eligibility-0.1"
+    assert diag["permit_eligible"] is True
+    assert diag["executable"] is False
+    assert diag["live_permit"] is None
+    assert diag["control_ready"] is False

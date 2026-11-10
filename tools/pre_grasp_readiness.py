@@ -1,6 +1,8 @@
 """Report pre_grasp gate gaps and grasp-entry readiness.
 
-Never raises control_ready, never emits permit/motion/CAN. Outputs what is missing.
+Never raises control_ready, never emits *live* permit/motion/CAN.
+When evidence gates clear, may set permit_eligible=true and write a diagnostic
+(shadow) eligibility record — not a contracts.Permit.
 """
 from __future__ import annotations
 
@@ -44,6 +46,12 @@ def main(argv=None):
         action="store_true",
         help="write compact evidence-gap report instead of full readiness",
     )
+    p.add_argument(
+        "--diagnostic-permit-output",
+        type=Path,
+        default=None,
+        help="optional path to write diagnostic (shadow) permit-eligibility JSON alone",
+    )
     args = p.parse_args(argv)
 
     request = load_json(args.request)
@@ -60,18 +68,29 @@ def main(argv=None):
         ),
     )
     payload = evidence_gap_report(report) if args.gaps_only else report.to_dict()
-    # Hard invariants for any output shape: never forge formal entry / motion.
+    # Hard invariants for any output shape: never forge formal entry / motion / live permit.
     payload["control_ready"] = False
     payload["motion_enabled"] = False
     payload["permit"] = None
     payload["formal_grasp_entry_allowed"] = False
     payload["vision_pre_grasp_ready"] = bool(report.vision_pre_grasp_ready)
     payload["evidence_gates_clear"] = bool(report.evidence_gates_clear)
-    payload["awaiting_m_permit"] = True
-    payload["awaiting_actuator_enable"] = True
+    payload["permit_eligible"] = bool(report.permit_eligible)
+    payload["diagnostic_permit"] = report.diagnostic_permit
+    payload["permit_hold_reason"] = report.permit_hold_reason
+    payload["awaiting_m_permit"] = bool(report.awaiting_m_permit)
+    payload["awaiting_live_permit_host_enable"] = bool(report.awaiting_live_permit_host_enable)
+    payload["awaiting_actuator_enable"] = bool(report.awaiting_actuator_enable)
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+
+    if args.diagnostic_permit_output is not None and report.diagnostic_permit is not None:
+        args.diagnostic_permit_output.parent.mkdir(parents=True, exist_ok=True)
+        args.diagnostic_permit_output.write_text(
+            json.dumps(report.diagnostic_permit, indent=2) + "\n",
+            encoding="utf-8",
+        )
 
     blocking = []
     if args.gaps_only:
@@ -89,10 +108,21 @@ def main(argv=None):
                 "formal_grasp_entry_allowed": False,
                 "vision_pre_grasp_ready": payload.get("vision_pre_grasp_ready"),
                 "evidence_gates_clear": payload.get("evidence_gates_clear"),
-                "awaiting_m_permit": True,
-                "awaiting_actuator_enable": True,
+                "permit_eligible": payload.get("permit_eligible"),
+                "permit": None,
+                "permit_hold_reason": payload.get("permit_hold_reason"),
+                "awaiting_m_permit": payload.get("awaiting_m_permit"),
+                "awaiting_live_permit_host_enable": payload.get(
+                    "awaiting_live_permit_host_enable"
+                ),
+                "awaiting_actuator_enable": payload.get("awaiting_actuator_enable"),
                 "blocking_gates": blocking,
                 "control_ready": False,
+                "diagnostic_permit_output": (
+                    str(args.diagnostic_permit_output).replace("\\", "/")
+                    if args.diagnostic_permit_output
+                    else None
+                ),
             },
             indent=2,
         )

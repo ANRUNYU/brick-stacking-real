@@ -23,16 +23,19 @@
 15. **M Context 影子接入**：overlay + ACTIVE binding 下 `--build-m-context`；消费不再报 `CALIBRATION_BINDING_MISSING` / `M_CONTEXT_MISSING` / `HAND_CLEAR_EVIDENCE_MISSING`。
 16. 最新 bound 影子：`slot_contrast_red_s140_shadow_assoc_bound_20261110_214801.json`；readiness：`pre_grasp_readiness_20261110.json` / `pre_grasp_gaps_20261110.json`。
 17. **yaw_policy=symmetric_90_unbounded**：方块 90° 对称保持 `yaw_rad=UNKNOWN`（**未伪造 MEASURED**）；consumer 在显式策略下构造 `Inspection.yaw_rad=None`，不再报 `ERROR_BOUND_UNKNOWN:yaw_rad`。confirmed 帧 → `SHADOW_INSPECTION_READY`；`evidence_gates_clear=true`。
-18. **vision_pre_grasp_ready 接通（A）**：证据门禁已清时宣布「视觉侧 pre_grasp 就绪，等待 M permit / 执行器使能」；**仍不**签发影子 permit、**不**抬 `control_ready`、**不**开臂/CAN。`formal_grasp_entry_allowed` 恒 false。
+18. **vision_pre_grasp_ready 接通（A）**：证据门禁已清时宣布「视觉侧 pre_grasp 就绪」；**不**抬 `control_ready`、**不**开臂/CAN。`formal_grasp_entry_allowed` 恒 false。
+19. **diagnostic permit 资格（本轮）**：证据齐 → `permit_eligible=true` + `m-diagnostic-permit-eligibility-0.1`（`executable=false`，`live_permit=null`）。权威说明见 [M_PERMIT_AUTHORITY_20261110.md](M_PERMIT_AUTHORITY_20261110.md)。`awaiting_m_permit=false` → `awaiting_live_permit_host_enable=true`（精确状态）。**未伪造** live `contracts.Permit`。
 
 ## 物理阻塞
 
-无臂/CAN 执行。本轮**不再**需要用户做标定/association/hand_clear/yaw 确认（对称策略已代裁决）。**仅当要真正动臂时**才需要操作员开臂/使能；软件宣布视觉就绪本身不要求开臂。
+无臂/CAN 执行。本轮**不再**需要用户做标定/association/hand_clear/yaw 确认（对称策略已代裁决）。**仅当要真正动臂时**才需要操作员开臂/使能；软件宣布视觉就绪 / diagnostic 资格本身不要求开臂。
 
 ## 仍不抬 control_ready 的原因（真实剩余阻塞）
 
-- `permit` / `control_ready` / `motion_enabled` 策略性保持 null/false（本 readiness 永不签发；owner=M permit + host/safety）。
+- live `permit=null`（仅 D/M SafetyGate 可签发；本路径只发 diagnostic 资格）。
+- `control_ready` / `motion_enabled` 策略性保持 false（host/safety；本 readiness 永不抬升）。
 - `formal_grasp_entry_allowed=false`（设计硬持有；视觉就绪 ≠ 正式抓取入口）。
+- 仍差：host enable + PlanBundle `trajectory_hash` + 新鲜臂 `device_id` + 开臂（物理动作前）。
 - post_place 缺动作完成/释放/稳定窗口证据（本轮非抓取入口硬阻塞，但列出）。
 
 ## SCENE 说明（已解除会话级误报）
@@ -44,5 +47,7 @@ readiness 现只采纳 `scene_consistent` 帧：warmup 上的 `SCENE_OR_RGBD_NOT
 ## 能否进入正式抓取
 
 **否。**  
-- 视觉侧：`vision_pre_grasp_ready=true` / `evidence_gates_clear=true`（**(A)** 已宣布）。  
-- 正式抓取入口：仍被 `permit`/`control_ready`/`motion_enabled`/`formal_grasp_entry_allowed` 策略门禁挡住；未开臂、未发 CAN。
+- 视觉侧：`vision_pre_grasp_ready=true` / `evidence_gates_clear=true` / `permit_eligible=true`（diagnostic 已写；**(A)**）。  
+- live `permit=null`；`awaiting_m_permit=false`，`awaiting_live_permit_host_enable=true`，`awaiting_actuator_enable=true`。  
+- 正式抓取入口：仍被 live permit / `control_ready` / `motion_enabled` / `formal_grasp_entry_allowed` 挡住；未开臂、未发 CAN。  
+- **是否需用户开臂**：现在不必；仅 host/safety 准备真运动前才需要。

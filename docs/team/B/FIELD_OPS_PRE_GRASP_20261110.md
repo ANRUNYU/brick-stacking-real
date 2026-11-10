@@ -36,9 +36,11 @@
 7. **post_place（非本轮抓取入口，但勿忽略）**  
    释放、动作完成时间、稳定窗口、support/neighbors：仍待执行侧联调；不是再采静态对照能替代的。
 
-8. **开臂 / 执行器使能（仅真实运动前）** — **本轮不要求**  
-   软件已可宣布 `vision_pre_grasp_ready`；**不要**为宣布视觉就绪而开臂。  
-   仅当 M 签发合法 `Permit` 且 host/safety 路径准备抬 `control_ready` 并真正发运动时，才需要操作员开臂/使能。当前 `awaiting_actuator_enable=true`、`awaiting_m_permit=true`。
+8. **开臂 / 执行器使能（仅真实运动前）** — **本轮不要求开臂**  
+   软件已可宣布 `vision_pre_grasp_ready` + `permit_eligible`（diagnostic）；**不要**为宣布视觉就绪而开臂。  
+   仅当 D/M SafetyGate 准备签发 **live** `Permit` 且 host/safety 准备抬 `control_ready` 并真正发运动时，才需要操作员开臂/使能。  
+   当前：`awaiting_m_permit=false`、`awaiting_live_permit_host_enable=true`、`awaiting_actuator_enable=true`。  
+   影子 Inspection 证明：**仅差** host enable + live SafetyGate + PlanBundle + 开臂，不差视觉证据。
 
 ## 软件已覆盖、现场不必重复
 
@@ -47,12 +49,13 @@
 - 红块居中对照（S140）xy/height MEASURED、color MATCH
 - readiness / 缺口报告器、association 开关、shadow pipeline（含 binding stamp + M Context）
 - ACTIVE calibration hash 身份绑定 + hand_clear(arm_idle) + association durable
-- `vision_pre_grasp_ready` 布尔（证据门禁清 → true；正式入口仍 false）
+- `vision_pre_grasp_ready` / `permit_eligible`（证据门禁清 → true；正式入口仍 false；live permit 仍 null）
+- diagnostic permit 资格记录（见 `diagnostic_permit_eligibility_20261110.json` / [M_PERMIT_AUTHORITY](M_PERMIT_AUTHORITY_20261110.md)）
 
 ## 禁止
 
-- 抬 `control_ready=true`（门禁未全过 / 本路径永不签发）
+- 抬 `control_ready=true`（本路径永不签发）
 - 发臂/手/CAN
-- 伪造影子 permit 或把 `vision_pre_grasp_ready` 当成 `formal_grasp_entry_allowed`
+- 把 diagnostic / `permit_eligible` / `vision_pre_grasp_ready` 当成 live `Permit` 或 `formal_grasp_entry_allowed`
 - 用观测点当自身期望、用候选 sha 冒充当前标定、用 scene_consistent 冒充 support/stable/hand_clear
 - 伪造 yaw MEASURED PASS
