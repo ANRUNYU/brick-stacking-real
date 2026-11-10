@@ -1,6 +1,7 @@
 {
   "schema_version": "j6j7-external-protocol-search-0.1",
-  "searched_at_local": "2026-11-11T00:14:00+08:00",
+  "searched_at_local": "2026-11-11T00:23:00+08:00",
+  "prior_searched_at_local": "2026-11-11T00:14:00+08:00",
   "goal": "unblock_j6_j7_readonly_via_external_protocol_evidence",
   "goal_complete": false,
   "pending_protocol_audit_payload_found": false,
@@ -8,6 +9,45 @@
   "enable_pending_protocol_audit_remains_default_false": true,
   "counts_as_live_valid_reachable_via_readonly": false,
   "formal_grasp_entry_allowed": false,
+  "round_20261111_0023": {
+    "web_search_queries_added": [
+      "Motorevo motor_v2 CAN Flash Theta index",
+      "site:github.com motor_v2.py Flash Motorevo OR LinkerBot",
+      "LinkerBot arm SDK motor_v2 Flash READ COM Theta",
+      "Motorevo-Studio CAN protocol Flash Theta OR 通信协议 OR 参数索引",
+      "site:github.com/linker-bot motor_v2.py _read_flash_param OR CONTROL_MODE OR COM_THETA",
+      "\"motor_v2.py\" Motorevo OR \"0x0B\" OR \"COM Theta\" OR \"_read_flash_param\" filetype:py",
+      "泉智博 Motorevo CAN 协议手册 PDF Flash 参数",
+      "site:github.com/linker-bot/linkerbot-python-sdk motor_v2 FlashParam OR \"0x0B\" OR save_to_flash"
+    ],
+    "x_search": "unavailable_for_account",
+    "web_fetch_urls_added": [
+      "https://github.com/SupremeLyy/Motorevo-Studio",
+      "https://api.github.com/repos/SupremeLyy/Motorevo-Studio/contents/",
+      "https://api.github.com/repos/SupremeLyy/Motorevo-Studio/releases?per_page=5",
+      "https://raw.githubusercontent.com/linker-bot/linkerbot-python-sdk/main/src/linkerbot/arm/p7/motor_v2.py",
+      "https://api.github.com/repos/linker-bot/linkerbot-python-sdk/contents/src/linkerbot/arm/p7",
+      "http://www.motorevo.cn/product/rr/rr-ha-70.html"
+    ],
+    "near_misses_added": [
+      {
+        "source": "SupremeLyy/Motorevo-Studio@V2.1.4",
+        "why_rejected": "repo is MotorevoStudio v2.1.4.exe only (60.8MB); no protocol PDF / Flash index map / query bytes"
+      },
+      {
+        "source": "VSMD / RobStride MotorStudio / Damiao / M5Stack Unit-RollerCAN / UUMOTOR MX_CAN manuals",
+        "why_rejected": "wrong vendor stacks; not Motorevo 0x600+id Flash 0x67..0x76 P-T-M"
+      },
+      {
+        "source": "docs.linkerhub.work A7/A7lite get_angles (reconfirmed)",
+        "why_rejected": "requires arm.enable(); violates no-enable-motion; not byte protocol"
+      }
+    ],
+    "public_motor_v2_main_sha256_now": "6f45000ba0f7f049e0a23b7ddceb318154b9672a5181472ea899099ea3127aba",
+    "public_motor_v2_now_matches_host_pin": true,
+    "flash_indices_still_only": ["0x00 SAVE", "0x0B CONTROL_MODE"],
+    "one_line_conclusion": "本轮无新协议命中：Motorevo-Studio 仅 EXE、公开 motor_v2 已与主机 SHA 对齐但仍只有 SAVE/CONTROL_MODE，无纯查询字节或 COM Theta 索引可接入 pending_protocol_audit。"
+  },
   "constraints_honored": [
     "no_large_arm_motion",
     "no_rest",
@@ -39,14 +79,15 @@
   ],
   "public_motor_v2_main": {
     "url": "https://raw.githubusercontent.com/linker-bot/linkerbot-python-sdk/main/src/linkerbot/arm/p7/motor_v2.py",
-    "sha256_fetched_bytes": "7da2f75d2cda2f27d25ca866d4487f4910c7c9c5f8f394af887c128be94518ee",
+    "sha256_fetched_bytes": "6f45000ba0f7f049e0a23b7ddceb318154b9672a5181472ea899099ea3127aba",
     "host_pinned_sha256": "6f45000ba0f7f049e0a23b7ddceb318154b9672a5181472ea899099ea3127aba",
-    "sha256_match_host_pin": false,
+    "sha256_match_host_pin": true,
+    "prior_sha256_fetched_bytes_20261111_0014": "7da2f75d2cda2f27d25ca866d4487f4910c7c9c5f8f394af887c128be94518ee",
     "flash_indices_defined": ["0x00 SAVE", "0x0B CONTROL_MODE"],
     "com_theta_min_max_indices": null,
     "pure_position_query_bytes": null,
     "notes": [
-      "Public main still only defines Flash SAVE/CONTROL_MODE indices.",
+      "Public main now matches host pin SHA; Flash indices still only SAVE/CONTROL_MODE.",
       "Angle path remains Rest (FF×7+FD) or enabled P-T-M feedback with factory ±12.5 defaults.",
       "Cites Motorevo §6.3.2 for P-T-M packing only — section not published on motorevo.cn."
     ]
@@ -111,7 +152,7 @@
       "why_rejected": "Dexterous hand protocol; not P7 J6/J7 MotorV2"
     }
   ],
-  "negative_conclusion": "No Motorevo/LinkerBot MotorV2 pure position/status query bytes and no Flash COM Theta MIN/MAX index map found outside the repo under the searched web + local roots. ENABLE_PENDING_PROTOCOL_AUDIT stays false with empty payload. Goal not complete under current constraints.",
+  "negative_conclusion": "本轮无新协议命中；pending_protocol_audit 仍空/默认关。",
   "external_dependency_remaining": [
     "Vendor Motorevo CAN protocol manual (exact pure query request/reply if any) OR written confirmation none exists",
     "Vendor Flash parameter index map for CAN COM Theta MIN/MAX (and any live-position index)",

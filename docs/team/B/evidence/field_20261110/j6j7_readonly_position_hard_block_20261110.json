@@ -41,7 +41,7 @@
     "flash_theta_index_map_found": false,
     "pure_position_query_bytes_found": false,
     "pending_protocol_audit_payload_landed": false,
-    "public_motor_v2_main_sha256": "7da2f75d2cda2f27d25ca866d4487f4910c7c9c5f8f394af887c128be94518ee"
+    "public_motor_v2_main_sha256": "6f45000ba0f7f049e0a23b7ddceb318154b9672a5181472ea899099ea3127aba"
   },
   "external_next_steps": [
     "Obtain Motorevo CAN protocol manual (SDK cites §6.3.2) with pure position/status query bytes OR written confirmation none exists",

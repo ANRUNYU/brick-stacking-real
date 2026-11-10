@@ -23,6 +23,11 @@ from brick_stacking.arm.arm_state_validity import (
     classify_arm_state,
     unwrap_arm_state,
 )
+from brick_stacking.arm.rest_state_capture import (
+    is_rest_state_capture_draft,
+    is_rest_state_capture_enabled,
+    rest_state_capture_gate_report,
+)
 from brick_stacking.arm.v2_wrist_readonly import HARD_BLOCK_ID as J6J7_HARD_BLOCK_ID
 from brick_stacking.execution.host_policy_attest import (
     SCHEMA as ATTEST_SCHEMA,
@@ -493,6 +498,7 @@ def evaluate_host_control_readiness(
     operator_policy_attest: HostPolicyAttest | dict[str, Any] | str | Path | None = None,
     config_path: str | Path | None = None,
     probe_dry_run: bool = False,
+    rest_state_capture: bool | None = None,
 ) -> HostControlReadiness:
     """Build a machine-readable host/safety checklist against current evidence."""
     gaps = pre_grasp_gaps or {}
@@ -505,6 +511,12 @@ def evaluate_host_control_readiness(
         permit_eligible = diag.get("permit_eligible")
 
     cfg = config_path or "config/offline_task.yaml"
+    rest_gate_enabled = (
+        bool(rest_state_capture)
+        if rest_state_capture is not None
+        else is_rest_state_capture_enabled()
+    )
+    rest_gate = rest_state_capture_gate_report(enabled=rest_gate_enabled)
 
     if isinstance(operator_policy_attest, HostPolicyAttest):
         attest = operator_policy_attest
@@ -649,7 +661,11 @@ def evaluate_host_control_readiness(
         arm_device and arm_source in {"mock", "real", "recorded"}
     )
     # Live formal path: source=real AND validity=VALID AND seven finite joints.
-    arm_ok_live = arm_feedback.get("counts_as_live_valid") is True
+    # Rest drafts may be structurally counts_as_live_valid when the research gate
+    # is open, but Rest ≠ audited J6/J7 readonly — never auto-count as formal live.
+    rest_draft = is_rest_state_capture_draft(arm_state)
+    arm_structurally_live_valid = arm_feedback.get("counts_as_live_valid") is True
+    arm_ok_live = arm_structurally_live_valid and not rest_draft
     if arm_ok_dry:
         items.append(
             _item(
@@ -697,7 +713,16 @@ def evaluate_host_control_readiness(
     else:
         source_kind = arm_feedback.get("source_kind") or "missing"
         blockers = list(arm_feedback.get("blockers") or [])
-        if source_kind == "recorded":
+        if rest_draft:
+            live_status = "POLICY_HOLD"
+            live_detail = (
+                "Rest-state-capture draft is structurally live VALID research-only; "
+                "does not count as audited J6/J7 readonly for formal grasp "
+                f"(hard_block=j6_j7_no_audited_readonly_position_query; "
+                f"rest_state_capture_enabled={rest_gate_enabled}; "
+                f"structural_counts_as_live_valid={arm_structurally_live_valid})"
+            )
+        elif source_kind == "recorded":
             live_status = "MISSING"
             live_detail = (
                 "recorded ArmState/device_id binding present but does not count as "
@@ -737,6 +762,25 @@ def evaluate_host_control_readiness(
                 owner="A / ArmStateReader",
             )
         )
+
+    items.append(
+        _item(
+            "rest_state_capture_gate",
+            "PASS" if rest_gate_enabled else "POLICY_HOLD",
+            blocking=False,
+            category="host_policy",
+            detail=(
+                "rest_state_capture research gate "
+                f"available={rest_gate['rest_state_capture_available']} "
+                f"enabled={rest_gate_enabled} "
+                f"blocked_unless_rest_attested="
+                f"{rest_gate['blocked_unless_rest_attested']}; "
+                "default false; CI never auto Rest; loss-of-hold ≠ trajectory; "
+                "does not raise formal_grasp_entry_allowed / control_ready"
+            ),
+            owner="A / rest_state_capture",
+        )
+    )
 
     # --- live Permit (never forge; validate if provided) ---
     live_permit_valid = False
@@ -1164,6 +1208,11 @@ def evaluate_host_control_readiness(
         "live_valid_arm_gap": list(live_arm_software_gap),
         "arm_feedback_source_kind": arm_feedback.get("source_kind"),
         "counts_as_live_valid": arm_ok_live,
+        "structural_counts_as_live_valid": arm_structurally_live_valid,
+        "rest_state_capture_draft": rest_draft,
+        "rest_state_capture_available": True,
+        "rest_state_capture_enabled": rest_gate_enabled,
+        "blocked_unless_rest_attested": rest_gate["blocked_unless_rest_attested"],
         "j6j7_readonly_position_hard_block": True,
         "j6j7_readonly_hard_block_id": J6J7_HARD_BLOCK_ID,
         "live_permit_path_status": live_permit_path.get("status"),
@@ -1197,7 +1246,11 @@ def evaluate_host_control_readiness(
         "ArmStateReader readonly path currently cannot satisfy all_seven_q_rad_finite (J6/J7).",
         f"hard_block={J6J7_HARD_BLOCK_ID} "
         "(docs/team/B/J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md); "
-        "no Rest/enable-motion fallback.",
+        "no enable-motion / trajectory fallback; Rest research gate default-off.",
+        f"rest_state_capture_available={rest_gate['rest_state_capture_available']}; "
+        f"rest_state_capture_enabled={rest_gate_enabled}; "
+        f"blocked_unless_rest_attested={rest_gate['blocked_unless_rest_attested']}; "
+        "Rest draft never auto-raises formal_grasp_entry_allowed / control_ready.",
         f"formal_grasp_blocked_by={list(formal_grasp_blocked_by)}.",
         f"live_permit_path.status={live_permit_path.get('status')}.",
         f"can_enter_formal_grasp={formal_grasp_entry_allowed}; "
@@ -1234,6 +1287,7 @@ def evaluate_host_control_readiness(
             "formal_grasp_entry_allowed": list(FORMAL_GRASP_ENTRY_CONDITIONS),
             "control_ready": list(CONTROL_READY_ELEVATION_CONDITIONS),
             "motion_enabled": list(MOTION_ENABLED_ELEVATION_CONDITIONS),
+            "rest_state_capture": rest_gate,
             "code_refs": {
                 "OfflineSafetyGate": "src/brick_stacking/execution/safety_gate.py",
                 "OfflineSafetyGate.issue_dry_run_diagnostic": (
@@ -1245,6 +1299,7 @@ def evaluate_host_control_readiness(
                 "ArmStateReader": "src/brick_stacking/arm/state.py",
                 "arm_state_validity": "src/brick_stacking/arm/arm_state_validity.py",
                 "v2_wrist_readonly_hard_block": "src/brick_stacking/arm/v2_wrist_readonly.py",
+                "rest_state_capture": "src/brick_stacking/arm/rest_state_capture.py",
                 "config_loader_offline_only": "src/brick_stacking/runtime/config_loader.py",
                 "ObservationBundle.control_ready": "Literal[False] in contracts",
                 "host_monitor_motion": "tools/host_monitor on main (--enable-motion)",

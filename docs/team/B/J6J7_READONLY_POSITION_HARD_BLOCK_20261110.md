@@ -5,7 +5,7 @@
 **不存在**已审计的 MotorV2（J6/J7）**只读位置**查询。  
 2026-11-11 全库 + 主机 pinned SDK（`motor_v2.py` SHA256 `6f45000ba0f7f049e0a23b7ddceb318154b9672a5181472ea899099ea3127aba`）穷尽检索后：**仍无**可进入 `pending_protocol_audit` 的位置读角载荷（`ENABLE_PENDING_PROTOCOL_AUDIT` 默认 **false**，且 payload 为空）。
 
-**同日仓库外检索（Web + 本机只读路径）亦否定**：未找到 Motorevo CAN 协议手册、Flash COM Theta 索引图、或纯位置/状态查询字节。公开 `linkerbot-python-sdk` `main` 的 `motor_v2.py`（fetch SHA256 `7da2f75d…`）与主机 pin 内容在关键路径上一致——Flash 仍仅 `0x00`/`0x0B`，取角仍依赖 Rest 或使能反馈。机读证据：[`evidence/field_20261110/j6j7_external_protocol_search_20261111.json`](evidence/field_20261110/j6j7_external_protocol_search_20261111.json)。
+**同日仓库外检索（Web + 本机只读路径）亦否定**：未找到 Motorevo CAN 协议手册、Flash COM Theta 索引图、或纯位置/状态查询字节。公开 `linkerbot-python-sdk` `main` 的 `motor_v2.py`（fetch SHA256 `6f45000b…`，已与主机 pin 对齐）Flash 仍仅 `0x00`/`0x0B`；Motorevo-Studio 仓仅 EXE。机读证据：[`evidence/field_20261110/j6j7_external_protocol_search_20261111.json`](evidence/field_20261110/j6j7_external_protocol_search_20261111.json)。
 
 因此 `ArmStateReader` 不能产出七轴有限 `q_rad`，`counts_as_live_valid=false`，`live_valid_arm_state` 保持硬阻塞，**正式抓取入口仍否**。  
 **Goal 不得标 complete**——现约束下（禁 Rest / 禁 `--enable-motion` / 禁伪造 live VALID）**无法仅靠软件解除** `j6_j7_readonly`；**外部依赖仍是厂商手册/索引（或书面确认无纯查询）**。
@@ -33,6 +33,7 @@
 | Enter Motor `FF×7+FC` / P-T-M 控制帧 | 使能或施 PD 目标 | **否** | **否** |
 | host_monitor J6/J7 `_read_angle_locked` | 调用 Rest | **否** | **否** |
 | `c_left_wrist_rest_capture` | 显式 Rest（需支撑+授权） | **否** | **否**（现场授权采样，非正式只读 API） |
+| `rest_state_capture` 门控（默认关） | 离线把已有 Rest 结果编成 live VALID *草案* | **否**（不发送；真机 Rest 另授权） | **否**（研究草案；**不**抬 formal / control_ready；≠ 已审计只读） |
 | 使能后 V2 打包反馈 U16 | 运行反馈 | 需使能/心跳 | **否**（量化/COM Theta 未审计） |
 | 被动 CAN 监听（C21） | 无发送 | 是 | **否**（空闲窗口 0 帧） |
 | SDK 默认 ±12.5 rad 反量化 | 注释出厂量程 | N/A | **否**（未现场读回；`left_wrist_theta_ranges.json` 仍 null） |
@@ -56,10 +57,15 @@
 
 ## 安全默认（本轮强制）
 
-- **禁止** enable-motion / Rest / 大幅关节运动 / Flash 写入 / 构造会写模式的 P7 初始化路径。
+- **禁止** `--enable-motion` / 大幅关节轨迹 / Flash 写入 / 构造会写模式的 P7 初始化路径。
+- **Rest 研究门控** `rest_state_capture`（CLI `--rest-state-capture` / env `BRICK_STACKING_REST_STATE_CAPTURE`）：**默认 false**。  
+  - 失持 Rest ≠ 大幅轨迹；门控打开后**仅**允许离线从已有 Rest 捕获构造 live VALID *草案*（需 verified range profile）。  
+  - **CI / 默认路径绝不自动 Rest 真机**；本模块不发 CAN Rest。  
+  - Rest 草案**不**自动抬 `formal_grasp_entry_allowed` / `control_ready`（仍 `j6_j7_readonly`）。  
+  - readiness：`rest_state_capture_available=true`；默认 `blocked_unless_rest_attested=true`。
 - **禁止** 对 Flash index 做盲扫以“碰运气”找 Theta。
 - `ArmStateReader` 继续：J1–J5 位置 READ + J6/J7 **仅** mode READ；J6/J7 `q_rad=None` → `validity=INVALID`。
-- 真机 `live-readonly` 仅允许上述已审计只读；失败软跳过；**不得**回退到 Rest 补角。
+- 真机 `live-readonly` 仅允许上述已审计只读；失败软跳过；**不得**在默认路径回退到 Rest 补角。
 - Mock / recorded / fixture **不等于** live VALID。
 
 ## 解除条件（需外部输入；软件 alone 不够）
@@ -84,6 +90,7 @@
 | --- | --- |
 | live VALID 是否可达？ | **否**（只读路径下） |
 | 正式抓取是否仍否？ | **是（仍否）** |
-| 现需用户开臂/Rest/大幅运动？ | **否**（软件硬阻塞；勿为补角动腕） |
-| 仅靠软件能否推进 Goal 到 complete？ | **否**——缺厂商纯查询或等价协议证据 |
-| 用户可做的后续？ | 提供 Motorevo/LinkerBot 协议手册或 Flash 索引图；或单独授权支撑 Rest 采样（仍不算正式只读 API）+ 量化交叉验证 |
+| 现需用户开臂/`--enable-motion`/大幅轨迹？ | **否**（软件硬阻塞） |
+| 是否需用户打开 `rest_state_capture`？ | **仅研究 Rest→草案时**；正式抓取仍否；默认关，CI 不开 |
+| 仅靠软件能否推进 Goal 到 complete？ | **否**——缺厂商纯查询或等价协议证据；Rest 草案不解 formal |
+| 用户可做的后续？ | 提供 Motorevo/LinkerBot 协议手册或 Flash 索引图；或单独授权支撑 Rest 采样 + 打开门控做草案研究（仍不算正式只读 API） |

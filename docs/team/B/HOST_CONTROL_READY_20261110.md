@@ -37,6 +37,19 @@
 **硬阻塞文档**：[J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md](J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md)（`hard_block=j6_j7_no_audited_readonly_position_query`；骨架 `v2_wrist_readonly.py`；禁止 Rest 回退）。  
 CLI：`python tools/arm_state_live_or_recorded.py --mode recorded|fixture-valid|live-readonly --output …`（`live-readonly` 软失败可跳过；不 enable-motion / 不 Rest）。
 
+### 0.2 Rest 研究门控（`rest_state_capture`，默认关）
+
+| 字段 | 默认 | 含义 |
+| --- | --- | --- |
+| `rest_state_capture_available` | **true** | 软件门控已接线（可研究） |
+| `rest_state_capture_enabled` | **false** | CLI `--rest-state-capture` 或 env `BRICK_STACKING_REST_STATE_CAPTURE=1` |
+| `blocked_unless_rest_attested` | **true**（门控关时） | 默认路径不把 Rest 当真机 live VALID 解法 |
+
+- **失持 ≠ 大幅轨迹**：Rest 会丢腕持力，但不是 `--enable-motion` / 轨迹；Goal「不开臂/CAN」按禁止轨迹解释，允许显式授权研究 Rest 取角。
+- **CI / 默认路径绝不自动 Rest 真机**；`rest-draft` 模式只离线消费已有捕获 JSON。
+- 打开门控后可构造结构上 `counts_as_live_valid` 的 *草案*；**不**自动抬 `formal_grasp_entry_allowed` / `control_ready`（Rest ≠ 已审计只读）。
+- 实现：`src/brick_stacking/arm/rest_state_capture.py`。
+
 M 侧 Permit 权威见 [M_PERMIT_AUTHORITY_20261110.md](M_PERMIT_AUTHORITY_20261110.md)。
 
 ## 1. 代码中的抬起条件

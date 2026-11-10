@@ -84,6 +84,14 @@ def main(argv=None) -> int:
         help="probe Offline dry-run / MockArm path (hardware_enabled=False; no CAN)",
     )
     p.add_argument(
+        "--rest-state-capture",
+        action="store_true",
+        help=(
+            "open default-off Rest research gate for readiness reporting only "
+            "(loss-of-hold ≠ trajectory; does not send Rest / raise formal grasp)"
+        ),
+    )
+    p.add_argument(
         "--config",
         type=Path,
         default=ROOT / "config" / "offline_task.yaml",
@@ -107,6 +115,7 @@ def main(argv=None) -> int:
         operator_policy_attest=args.operator_policy_attest,
         config_path=args.config,
         probe_dry_run=bool(args.probe_dry_run_arm_disabled),
+        rest_state_capture=bool(args.rest_state_capture) or None,
     )
     payload = report.to_dict()
     # Hard safety: never unlock large-motion paths from this CLI.
@@ -135,6 +144,9 @@ def main(argv=None) -> int:
             "formal_grasp_entry_missing": list(ladder.get("formal_grasp_entry_missing") or []),
             "formal_grasp_blocked_by": list(ladder.get("formal_grasp_blocked_by") or []),
             "live_permit_path_status": ladder.get("live_permit_path_status"),
+            "rest_state_capture_available": ladder.get("rest_state_capture_available"),
+            "rest_state_capture_enabled": ladder.get("rest_state_capture_enabled"),
+            "blocked_unless_rest_attested": ladder.get("blocked_unless_rest_attested"),
             "control_ready_missing": list(ladder.get("control_ready_missing") or []),
         },
         "dry_run_grasp_entry_ready": payload.get("dry_run_grasp_entry_ready"),

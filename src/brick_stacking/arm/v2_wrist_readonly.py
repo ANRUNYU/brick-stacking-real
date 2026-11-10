@@ -183,7 +183,7 @@ EXTERNAL_NEXT_STEPS: tuple[str, ...] = (
 # 2026-11-11 out-of-repo search (Web + local readonly). Negative: no payload.
 EXTERNAL_PROTOCOL_SEARCH: dict[str, Any] = {
     "schema_version": "j6j7-external-protocol-search-0.1",
-    "searched_at_local": "2026-11-11T00:14:00+08:00",
+    "searched_at_local": "2026-11-11T00:23:00+08:00",
     "evidence_json": (
         "docs/team/B/evidence/field_20261110/"
         "j6j7_external_protocol_search_20261111.json"
@@ -194,12 +194,12 @@ EXTERNAL_PROTOCOL_SEARCH: dict[str, Any] = {
     "pending_protocol_audit_payload_landed": False,
     "goal_complete": False,
     "public_motor_v2_main_sha256": (
-        "7da2f75d2cda2f27d25ca866d4487f4910c7c9c5f8f394af887c128be94518ee"
+        "6f45000ba0f7f049e0a23b7ddceb318154b9672a5181472ea899099ea3127aba"
     ),
     "negative_conclusion": (
-        "Web + local Desktop/Downloads/Documents/OneDrive Desktop search found "
-        "no Motorevo MotorV2 pure position query bytes and no Flash COM Theta "
-        "index map; pending_protocol_audit stays empty/default-off."
+        "Round 00:23: Motorevo-Studio EXE-only; public motor_v2 SHA now matches "
+        "host pin but Flash still SAVE/CONTROL_MODE only — no pure query / Theta "
+        "index; pending_protocol_audit stays empty/default-off."
     ),
 }
 
