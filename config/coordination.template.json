@@ -1,0 +1,14 @@
+{
+  "schema_version": "coordination-template-1",
+  "mode": "offline",
+  "motion_enabled": false,
+  "selected_donor": null,
+  "selected_receiver": null,
+  "frame_id": null,
+  "context": {"model_hash": null, "calibration_hash": null, "tcp_hash": null, "scene_version": null, "other_arm_state_hash": null},
+  "zones": [],
+  "pose_samples": [],
+  "lease_ttl_s": null,
+  "max_evidence_age_s": null,
+  "notice": "Template only. Real geometry, evidence and limits must be provided and reviewed; no executable real-motion entry."
+}
