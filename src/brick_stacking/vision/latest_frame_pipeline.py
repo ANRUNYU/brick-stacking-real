@@ -144,11 +144,21 @@ class LatestFramePipeline:
                 if not self._fresh(context, output):
                     self._counts["expired_before_output"] += 1
                     return None
+                exposure_host = bundle["timing"].get("exposure_host_stamp_s")
+                # Only same-domain live clocks yield exposure→output; remapped replay stays null.
+                same_domain = (
+                    exposure_host is not None
+                    and context.host_receive_s is not None
+                    and float(exposure_host) <= context.host_receive_s <= output
+                    and (context.host_receive_s - float(exposure_host)) < 1.0
+                )
                 bundle["timing"].update(
                     pair_ready_monotonic_s=paired, detection_started_monotonic_s=started,
                     detection_finished_monotonic_s=detected, output_monotonic_s=output,
                     receive_to_output_s=output - context.host_receive_s,
-                    exposure_to_output_s=None,
+                    exposure_to_output_s=(
+                        output - float(exposure_host) if same_domain else None
+                    ),
                 )
                 self._latest = (context, bundle)
                 self._measurements.append((output - context.host_receive_s, detected - started))

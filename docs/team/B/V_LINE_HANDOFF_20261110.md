@@ -5,7 +5,7 @@
 | 顺序 | 本次交付 | 现场或跨线待验收 |
 | --- | --- | --- |
 | #16 / #8 | [H0 草案](evidence/first_grasp_h0_draft.json) **V+M 已 ACK 预算**（`control_ready` 仍 false）。Fixture 索引、三帧 C 录包样例、四类状态与契约门面 `vision.service`。 | 时钟误差界与标定 hash 仍缺；C/D 审查字段及样例 |
-| #7 / #17 | 读取 C 录包设备/SDK/主机时间；`CaptureContext` 边界单测（逆序、schema、缺域、无误差界）。 | 统一曝光参考、boot/进程时钟映射与误差界；C/M 完成独立对尺 |
+| #7 / #17 | 读取 C 录包设备/SDK/主机时间；有 global 时导出曝光候选 `exposure_host_stamp_s`；分析工具与单红草稿界（~1.3 ms，未验收）。 | 专用 ≥60 s + 重连联采后写入可引用误差界；M 完成独立对尺 |
 | #9 / #20 | 最新完整帧对队列、连续录包回放、[延迟诊断](evidence/c_recording_replay_latency_v0.1.json)、同 SN 有限重连。2026-11-10 现场单红块：12/12 有效红候选；接收→输出 max≈1.28s，诊断 freshness 门 2.56s。 | 曝光到输出延迟与时钟误差界仍未验收 |
 | #10 | pre_grasp / post_grasp / post_place 证据、`service.verify` 门面、Mock golden 与 D FSM 兼容回归。 | 实景关联、持握、撤离后释放和稳定证据 |
 | #18 / #19 | 提供观测与复检接口供 M 线接入。 | 由 M 按 H5、H6 和 T1–T5 逐级验收 |

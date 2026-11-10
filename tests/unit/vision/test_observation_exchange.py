@@ -72,7 +72,11 @@ def test_recorded_c_sdk_clock_is_only_provisional(index):
         assert bundle["timing"][field] == saved["timing"][field]
     assert bundle["timing"]["sdk_clock_observation"]["frames"]["depth"]["global_timestamp_us"] > 0
     assert bundle["timing"]["clock_error_bound_s"] is None
-    assert bundle["timing"]["exposure_host_stamp_s"] is None
+    assert bundle["timing"]["exposure_host_stamp_s"] is not None
+    assert bundle["timing"]["exposure_reference"] == (
+        "orbbec_color_global_timestamp_mapped_to_process_monotonic"
+    )
+    assert bundle["timing"]["validity"] == "UNKNOWN"
     assert bundle["control_ready"] is False
     assert bundle["calibration_hash"] is None
     assert len(bundle["blocks"]) == len(saved["blocks"])

@@ -61,7 +61,12 @@ def test_recorded_c_clock_observation_preserved_without_bound():
     bundle = observation_exchange(frame, context, (), nominal_edge_m=.05, recorded=True)
     assert bundle["timing"]["sdk_clock_observation"] is not None
     assert bundle["timing"]["clock_error_bound_s"] is None
-    assert bundle["timing"]["exposure_reference"] is None
+    assert bundle["timing"]["exposure_reference"] == (
+        "orbbec_color_global_timestamp_mapped_to_process_monotonic"
+    )
+    assert bundle["timing"]["exposure_host_stamp_s"] is not None
+    assert bundle["timing"]["validity"] == "UNKNOWN"
+    assert bundle["timing"]["reason"] == "clock_mapping_bound_unvalidated"
 
 
 def test_unsupported_clock_observation_schema_rejected():

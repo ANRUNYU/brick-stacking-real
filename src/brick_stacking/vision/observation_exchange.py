@@ -23,6 +23,22 @@ def _stamp(value):
     return float(value)
 
 
+EXPOSURE_REFERENCE_GLOBAL_MONOTONIC = (
+    "orbbec_color_global_timestamp_mapped_to_process_monotonic"
+)
+
+
+def exposure_host_candidate_s(clock_observation):
+    """Return SDK global→host-monotonic exposure candidate, or None."""
+    if not clock_observation:
+        return None
+    color = clock_observation.get("frames", {}).get("color") or {}
+    value = color.get("global_host_monotonic_candidate_s")
+    if not color.get("global_available") or value is None:
+        return None
+    return float(value)
+
+
 @dataclass(frozen=True)
 class CaptureContext:
     """Acquisition metadata for one immutable CameraFrame, in seconds/metres."""
@@ -40,6 +56,8 @@ class CaptureContext:
     host_boot_epoch: str | None = None
     clock_unavailable_reason: str | None = None
     capture_profile_hash: str | None = None
+    clock_error_bound_s: float | None = None
+    error_bound_evidence_ref: str | None = None
 
     def __post_init__(self):
         if not all((self.image_ref, self.profile, self.profile_hash, self.epoch)):
@@ -123,14 +141,28 @@ def observation_exchange(frame, context, detections, *, nominal_edge_m, recorded
         profile=context.profile, depth_registered_to_rgb=frame.registered,
         rgb_depth_delta_s=context.rgb_depth_delta_s,
     )
+    exposure_host = exposure_host_candidate_s(context.clock_observation)
+    bound = context.clock_error_bound_s
+    evidence_ref = context.error_bound_evidence_ref
+    if bound is not None and (bound < 0 or evidence_ref is None):
+        raise ValueError("clock error bound requires non-negative value and evidence ref")
+    if bound is None:
+        timing_validity, timing_reason = "UNKNOWN", (
+            "clock_mapping_bound_unvalidated" if exposure_host is not None
+            else "exposure_reference_and_clock_mapping_unvalidated"
+        )
+    else:
+        timing_validity, timing_reason = "VALID", None
     timing = dict(
         frame_stamp_s=frame.stamp_s, device_clock_domain=frame.clock_domain,
         color_device_stamp_s=context.color_device_s, depth_device_stamp_s=context.depth_device_s,
         host_receive_stamp_s=context.host_receive_s, host_clock_domain=context.host_clock_domain,
         host_boot_epoch=context.host_boot_epoch, sdk_clock_observation=context.clock_observation,
-        rgb_depth_delta_s=context.rgb_depth_delta_s, exposure_reference=None,
-        exposure_host_stamp_s=None, clock_error_bound_s=None, error_bound_evidence_ref=None,
-        validity="UNKNOWN", reason="exposure_reference_and_clock_mapping_unvalidated",
+        rgb_depth_delta_s=context.rgb_depth_delta_s,
+        exposure_reference=(EXPOSURE_REFERENCE_GLOBAL_MONOTONIC if exposure_host is not None else None),
+        exposure_host_stamp_s=exposure_host, clock_error_bound_s=bound,
+        error_bound_evidence_ref=evidence_ref,
+        validity=timing_validity, reason=timing_reason,
         sdk_clock_unavailable_reason=context.clock_unavailable_reason,
         capture_profile_hash=context.capture_profile_hash,
         original_source=frame.source, valid_depth_ratio=valid_depth_ratio,
