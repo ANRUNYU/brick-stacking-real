@@ -1,0 +1,25 @@
+{
+  "schema_version": "v-verify-wrong-color-0.1",
+  "date": "2026-11-10",
+  "phase": "wrong_color_negative",
+  "expected_color_for_first_grasp": "red",
+  "observed_color": "green",
+  "host_artifact": "artifacts/v_verify_green_20261110",
+  "result": "OBSERVED",
+  "observation_count": 11,
+  "green_valid_frames": 11,
+  "red_valid_frames": 0,
+  "candidate_status": "SINGLE_CUBE_CANDIDATE",
+  "scene_consistency": "CONFIRMED",
+  "fixed_color_exposure": 80,
+  "fixed_color_gain": 16,
+  "warmup_unstable_override": true,
+  "timing_validity": "VALID",
+  "clock_error_bound_s": 0.0016864349552430213,
+  "control_ready": false,
+  "preview": "docs/team/B/evidence/field_20261110/verify_green_preview.jpg",
+  "bundles": "docs/team/B/evidence/field_20261110/verify_green_observation_bundles.jsonl",
+  "notes": [
+    "Single green cube only; useful as color-mismatch FAIL evidence when first-grasp target is red"
+  ]
+}
