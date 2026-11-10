@@ -61,6 +61,10 @@ python -m brick_stacking.app.task_runner
 
 GitHub Actions 已配置 Windows/Ubuntu 的离线测试矩阵，但尚未在远端运行；本轮仅 Windows 本地测试通过，不宣称 Linux 已验证。
 
+## 局域网主机监视（相机 + 关节，只读）
+
+在机器人主机运行 `tools/host_monitor/`，同网段浏览器打开 `http://<主机IP>:8088/`。说明与 systemd 样例见 [tools/host_monitor/README.md](../tools/host_monitor/README.md)。服务占用 Orbbec 预览流；视觉独占采图前须停止该服务。不发运动、不使能。
+
 ## 后续硬件接入边界
 
 1. 先核实 SDK commit、模型、设备身份和已有 ROS 图；P7 构造函数可能写电机模式，不能拿它做普通探测。

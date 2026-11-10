@@ -1,0 +1,18 @@
+[Unit]
+Description=Brick-stacking host monitor (camera + joints, read-only)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=qwer
+WorkingDirectory=/home/qwer/brick-stacking-real
+Environment=PYTHONPATH=/home/qwer/brick-stacking-real/src
+# Prefer the vision venv that already has pyorbbecsdk2; adjust if your path differs.
+ExecStart=/home/qwer/brick_vision_venv/bin/python /home/qwer/brick-stacking-real/tools/host_monitor/server.py --bind 0.0.0.0 --port 8088 --serial CP2L863000KL --arms left
+Restart=on-failure
+RestartSec=3
+# Read-only monitor: never grant motion. Stop this unit before exclusive vision capture.
+
+[Install]
+WantedBy=multi-user.target
