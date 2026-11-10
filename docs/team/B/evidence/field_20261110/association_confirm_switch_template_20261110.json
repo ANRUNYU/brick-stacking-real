@@ -1,0 +1,22 @@
+{
+  "schema_version": "association-confirm-switch-0.1",
+  "target_association_confirmed": false,
+  "operator_confirmed": false,
+  "target_id": "m-first-red-01",
+  "slot_id": "m-first-placement-slot-01",
+  "region_id": "m-first-placement-region-01",
+  "reference_id": "table_black_cross_20mm",
+  "operator": "pending-field-operator",
+  "evidence_ref": "docs/team/B/evidence/field_20261110/slot_contrast_20261110_214801.zip",
+  "notes": "TEMPLATE ONLY: operator must re-run after visual confirm; not a live confirmation",
+  "control_ready": false,
+  "motion_enabled": false,
+  "permit": null,
+  "usage": [
+    "Pass to tools/pre_grasp_readiness.py --association-record",
+    "For shadow export only: tools/slot_shadow_pipeline.py --association-confirmed",
+    "Does not mutate adopted request; does not raise control_ready"
+  ],
+  "source_request": "E:/OneDrive/Desktop/brick-stacking-real/brick-stacking-real/config/planning/first_placement_review_request.adopted.json",
+  "source_request_status": "SHADOW_ADOPTED_CAMERA_EXPECTATIONS_UNBOUND_CALIBRATION"
+}
