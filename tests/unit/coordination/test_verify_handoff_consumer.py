@@ -27,6 +27,7 @@ def test_actual_sidecars_all_block_without_reference_and_association():
     for s in report['sessions'].values():
         assert s['status_counts']=={'BLOCKED':s['frames']}
         assert s['reason_counts']['TARGET_ASSOCIATION_UNCONFIRMED']==s['frames']
+        assert 'HANDOFF_SCHEMA_MISMATCH' not in s['reason_counts']
     assert not report['control_ready'] and report['commands_sent']==0
 
 
@@ -51,7 +52,7 @@ def test_complete_shadow_input_preserves_unknown_support_and_never_grants_pass()
     assert result['formal_placement_verdict']=='UNKNOWN' and result['permit'] is None
 
 
-@pytest.mark.parametrize('fault',['sample','calibration','metric','clock','color','point','target','hand','schema'])
+@pytest.mark.parametrize('fault',['sample','calibration','metric','clock','color','point','target','hand','schema','formal_point'])
 def test_sidecar_tampering_or_missing_evidence_is_rejected(fault):
     b,bind,row,ctx=complete()
     if fault=='sample':row['sample_id']='other'
@@ -63,6 +64,7 @@ def test_sidecar_tampering_or_missing_evidence_is_rejected(fault):
     if fault=='target':row['target_id']='other'
     if fault=='hand':row['hand_clear']=None
     if fault=='schema':row['schema_version']='unknown'
+    if fault=='formal_point':row['formal_verify_point_kind']='visible_top_center'
     inspection,result=consume_handoff(row,b,bind,context=ctx,
                               now_s=b['timing']['output_monotonic_s'],expected_color='red')
     assert inspection is None and result['status']=='BLOCKED'

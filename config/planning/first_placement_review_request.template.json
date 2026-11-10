@@ -48,6 +48,7 @@
     "Logical identifiers are a proposed naming contract, not association confirmation.",
     "No real slot/reference pose has been supplied; never use observed pose as its own target.",
     "Candidate file hash identifies bytes only; it does not approve calibration or fill historical bundles.",
-    "Top surface center and model center are different points; bind the chosen semantics explicitly."
+    "Top surface center and model center are different points; bind the chosen semantics explicitly.",
+    "V mirrors this M draft for local export wiring; authoritative updates remain on the M line."
   ]
 }

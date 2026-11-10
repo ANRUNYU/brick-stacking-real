@@ -28,7 +28,7 @@ def consume(root):
                     color_counts=dict(Counter(x['color_diagnostic'] for x in results)),
                     reason_counts=dict(Counter(reason for x in results for reason in x['reasons'])),rows=results)
         for path in (bp,hp):hashes[path.relative_to(root).as_posix()]=hashlib.sha256(path.read_bytes()).hexdigest()
-    return dict(schema_version='m-v-handoff-consumption-1',v_commit='aed8a0b',sessions=reports,
+    return dict(schema_version='m-v-handoff-consumption-1',v_commit='517ebf8',sessions=reports,
                 input_sha256=hashes,age_checked_at='recorded output only',live_tested=False,
                 control_ready=False,motion_enabled=False,commands_sent=0)
 

@@ -8,8 +8,11 @@ def consume_handoff(row,bundle,binding,*,context,now_s,expected_color):
     """Return (Inspection|None, diagnostic). No defaults for unknown measurements."""
     audit=audit_bundle(bundle,binding,now_s=now_s,expected_color=expected_color)
     reasons=list(audit['problems']);timing=bundle.get('timing',{})
-    if row.get('schema_version')!='v-verify-field-handoff-0.1':
+    if row.get('schema_version') not in ('v-verify-field-handoff-0.1','v-verify-field-handoff-0.2'):
         reasons.append('HANDOFF_SCHEMA_MISMATCH')
+    if (row.get('schema_version')=='v-verify-field-handoff-0.2' and
+            row.get('formal_verify_point_kind')!='model_center'):
+        reasons.append('FORMAL_MODEL_CENTER_SEMANTICS_REQUIRED')
     expected=dict(sample_id=bundle['rgbd']['sample_id'],
                   observation_id=audit['selected_observation_id'],
                   frame_id=bundle['rgbd']['frame_id'],profile_hash=bundle.get('profile_hash'),
