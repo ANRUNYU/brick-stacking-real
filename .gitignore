@@ -13,3 +13,8 @@ ros2_ws/build/
 ros2_ws/install/
 ros2_ws/log/
 .env
+
+# Local merge/field junk — do not force-add into V/M → main
+.test-tmp*/
+docs/team/B/evidence/**/fail*
+docs/team/B/evidence/**/*_212542*
