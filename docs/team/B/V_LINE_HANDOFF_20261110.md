@@ -7,7 +7,7 @@
 | #16 / #8 | [H0 草案](evidence/first_grasp_h0_draft.json) **V+M 已 ACK 预算**（`control_ready` 仍 false）。Fixture 索引、三帧 C 录包样例、四类状态与契约门面 `vision.service`。 | 时钟误差界与标定 hash 仍缺；C/D 审查字段及样例 |
 | #7 / #17 | 两会话联采后 [时钟研究](evidence/field_20261110/clock_error_bound_study_v0.1.json) **≈1.69 ms** 已写入在线观测；短采冒烟 16/16 `timing.validity=VALID`（见 [live smoke](evidence/field_20261110/clock_bound_live_smoke_20261110.json)）。`control_ready` 仍 false。 | M 完成独立对尺；标定 hash 仍缺 |
 | #9 / #20 | **exposure→output** p50≈0.69 s / max≈1.33 s；诊断 freshness 门建议 **2.656 s**（max×2）。在线 freshness 在有 bound 时按曝光候选计龄。 | H0 正式冻结 freshness；M 路径模板 #20 |
-| #10 | pre_grasp / post_grasp / post_place 证据、`service.verify` 门面、Mock golden 与 D FSM 兼容回归。 | 实景关联、持握、撤离后释放和稳定证据 |
+| #10 | Mock golden + 现场三组导出；[`verify_handoff_index_v0.1.json`](evidence/field_20261110/verify_handoff_index_v0.1.json) 提供 LocalizedReview 侧车与复现命令；`frame_id` 说明见 [FRAME_ID_HEAD_VS_C35.md](FRAME_ID_HEAD_VS_C35.md)。 | M 提供 target/slot 期望位姿与 calibration_hash 后才能出正式 PASS/FAIL；真持握/撤手仍待联调 |
 | #18 / #19 | 提供观测与复检接口供 M 线接入。 | 由 M 按 H5、H6 和 T1–T5 逐级验收 |
 | #11 | 三帧既有开发录包已登记 SHA-256 与原始出处。 | 独立布局、物理参考及逐条件报告，首抓后验收 |
 

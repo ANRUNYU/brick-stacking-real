@@ -1,0 +1,1059 @@
+{
+  "schema_version": "v-verify-field-handoff-0.1",
+  "source_bundles": "docs/team/B/evidence/field_20261110/verify_empty_observation_bundles.jsonl",
+  "phase": "pre_grasp",
+  "expected_color": "red",
+  "region_id": "supply",
+  "target_id": null,
+  "target_association_confirmed": false,
+  "n_frames": 12,
+  "color_check_counts": {
+    "UNKNOWN": 12
+  },
+  "verification_verdict_counts": {
+    "UNKNOWN": 12
+  },
+  "control_ready": false,
+  "notes": [
+    "observation_id is session-local; not a persistent block_id",
+    "single VALID candidate does not confirm target/slot association",
+    "support/stable/hand_clear/neighbors left UNKNOWN without explicit evidence",
+    "formal placement PASS requires M-provided expected pose + association + calibration_hash"
+  ],
+  "localized_review_handoffs": [
+    {
+      "schema_version": "v-verify-field-handoff-0.1",
+      "target_id": null,
+      "region_id": "supply",
+      "scope": "block",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326993.273698",
+      "observation_id": null,
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "point_kind": null,
+      "target_association_confirmed": false,
+      "reference_id": null,
+      "xy_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "height_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "yaw_rad": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "support_ok": null,
+      "stable": null,
+      "hand_clear": null,
+      "neighbors_unchanged": null,
+      "color": null,
+      "expected_color": "red",
+      "color_check": "UNKNOWN",
+      "scene_consistent": false,
+      "profile_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": null,
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "clock_domain": "process_monotonic",
+      "exposure_host_stamp_s": 450521.53182832024,
+      "clock_error_bound_s": 0.0016864349552430213,
+      "error_bound_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+      "unknown_reasons": [
+        "target_association_unconfirmed",
+        "calibration_hash_null",
+        "xy_error_unknown",
+        "height_error_unknown",
+        "yaw_error_unknown_90deg_symmetry",
+        "support_evidence_missing",
+        "stability_evidence_missing",
+        "hand_clear_evidence_missing",
+        "neighbor_disturbance_unknown",
+        "no_single_valid_block"
+      ],
+      "control_ready": false,
+      "notes": [
+        "frame_id matches C35 color optical frame naming"
+      ]
+    },
+    {
+      "schema_version": "v-verify-field-handoff-0.1",
+      "target_id": null,
+      "region_id": "supply",
+      "scope": "block",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326993.874322",
+      "observation_id": null,
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "point_kind": null,
+      "target_association_confirmed": false,
+      "reference_id": null,
+      "xy_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "height_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "yaw_rad": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "support_ok": null,
+      "stable": null,
+      "hand_clear": null,
+      "neighbors_unchanged": null,
+      "color": null,
+      "expected_color": "red",
+      "color_check": "UNKNOWN",
+      "scene_consistent": false,
+      "profile_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": null,
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "clock_domain": "process_monotonic",
+      "exposure_host_stamp_s": 450522.13252021925,
+      "clock_error_bound_s": 0.0016864349552430213,
+      "error_bound_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+      "unknown_reasons": [
+        "target_association_unconfirmed",
+        "calibration_hash_null",
+        "xy_error_unknown",
+        "height_error_unknown",
+        "yaw_error_unknown_90deg_symmetry",
+        "support_evidence_missing",
+        "stability_evidence_missing",
+        "hand_clear_evidence_missing",
+        "neighbor_disturbance_unknown",
+        "no_single_valid_block"
+      ],
+      "control_ready": false,
+      "notes": [
+        "frame_id matches C35 color optical frame naming"
+      ]
+    },
+    {
+      "schema_version": "v-verify-field-handoff-0.1",
+      "target_id": null,
+      "region_id": "supply",
+      "scope": "block",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326994.40821",
+      "observation_id": null,
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "point_kind": null,
+      "target_association_confirmed": false,
+      "reference_id": null,
+      "xy_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "height_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "yaw_rad": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "support_ok": null,
+      "stable": null,
+      "hand_clear": null,
+      "neighbors_unchanged": null,
+      "color": null,
+      "expected_color": "red",
+      "color_check": "UNKNOWN",
+      "scene_consistent": false,
+      "profile_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": null,
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "clock_domain": "process_monotonic",
+      "exposure_host_stamp_s": 450522.66652314493,
+      "clock_error_bound_s": 0.0016864349552430213,
+      "error_bound_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+      "unknown_reasons": [
+        "target_association_unconfirmed",
+        "calibration_hash_null",
+        "xy_error_unknown",
+        "height_error_unknown",
+        "yaw_error_unknown_90deg_symmetry",
+        "support_evidence_missing",
+        "stability_evidence_missing",
+        "hand_clear_evidence_missing",
+        "neighbor_disturbance_unknown",
+        "no_single_valid_block"
+      ],
+      "control_ready": false,
+      "notes": [
+        "frame_id matches C35 color optical frame naming"
+      ]
+    },
+    {
+      "schema_version": "v-verify-field-handoff-0.1",
+      "target_id": null,
+      "region_id": "supply",
+      "scope": "block",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326995.008834",
+      "observation_id": null,
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "point_kind": null,
+      "target_association_confirmed": false,
+      "reference_id": null,
+      "xy_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "height_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "yaw_rad": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "support_ok": null,
+      "stable": null,
+      "hand_clear": null,
+      "neighbors_unchanged": null,
+      "color": null,
+      "expected_color": "red",
+      "color_check": "UNKNOWN",
+      "scene_consistent": false,
+      "profile_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": null,
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "clock_domain": "process_monotonic",
+      "exposure_host_stamp_s": 450523.2672722944,
+      "clock_error_bound_s": 0.0016864349552430213,
+      "error_bound_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+      "unknown_reasons": [
+        "target_association_unconfirmed",
+        "calibration_hash_null",
+        "xy_error_unknown",
+        "height_error_unknown",
+        "yaw_error_unknown_90deg_symmetry",
+        "support_evidence_missing",
+        "stability_evidence_missing",
+        "hand_clear_evidence_missing",
+        "neighbor_disturbance_unknown",
+        "no_single_valid_block"
+      ],
+      "control_ready": false,
+      "notes": [
+        "frame_id matches C35 color optical frame naming"
+      ]
+    },
+    {
+      "schema_version": "v-verify-field-handoff-0.1",
+      "target_id": null,
+      "region_id": "supply",
+      "scope": "block",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326995.542722",
+      "observation_id": null,
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "point_kind": null,
+      "target_association_confirmed": false,
+      "reference_id": null,
+      "xy_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "height_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "yaw_rad": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "support_ok": null,
+      "stable": null,
+      "hand_clear": null,
+      "neighbors_unchanged": null,
+      "color": null,
+      "expected_color": "red",
+      "color_check": "UNKNOWN",
+      "scene_consistent": false,
+      "profile_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": null,
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "clock_domain": "process_monotonic",
+      "exposure_host_stamp_s": 450523.8009899112,
+      "clock_error_bound_s": 0.0016864349552430213,
+      "error_bound_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+      "unknown_reasons": [
+        "target_association_unconfirmed",
+        "calibration_hash_null",
+        "xy_error_unknown",
+        "height_error_unknown",
+        "yaw_error_unknown_90deg_symmetry",
+        "support_evidence_missing",
+        "stability_evidence_missing",
+        "hand_clear_evidence_missing",
+        "neighbor_disturbance_unknown",
+        "no_single_valid_block"
+      ],
+      "control_ready": false,
+      "notes": [
+        "frame_id matches C35 color optical frame naming"
+      ]
+    },
+    {
+      "schema_version": "v-verify-field-handoff-0.1",
+      "target_id": null,
+      "region_id": "supply",
+      "scope": "block",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326996.143346",
+      "observation_id": null,
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "point_kind": null,
+      "target_association_confirmed": false,
+      "reference_id": null,
+      "xy_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "height_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "yaw_rad": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "support_ok": null,
+      "stable": null,
+      "hand_clear": null,
+      "neighbors_unchanged": null,
+      "color": null,
+      "expected_color": "red",
+      "color_check": "UNKNOWN",
+      "scene_consistent": false,
+      "profile_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": null,
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "clock_domain": "process_monotonic",
+      "exposure_host_stamp_s": 450524.4015616873,
+      "clock_error_bound_s": 0.0016864349552430213,
+      "error_bound_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+      "unknown_reasons": [
+        "target_association_unconfirmed",
+        "calibration_hash_null",
+        "xy_error_unknown",
+        "height_error_unknown",
+        "yaw_error_unknown_90deg_symmetry",
+        "support_evidence_missing",
+        "stability_evidence_missing",
+        "hand_clear_evidence_missing",
+        "neighbor_disturbance_unknown",
+        "no_single_valid_block"
+      ],
+      "control_ready": false,
+      "notes": [
+        "frame_id matches C35 color optical frame naming"
+      ]
+    },
+    {
+      "schema_version": "v-verify-field-handoff-0.1",
+      "target_id": null,
+      "region_id": "supply",
+      "scope": "block",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326996.677234",
+      "observation_id": null,
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "point_kind": null,
+      "target_association_confirmed": false,
+      "reference_id": null,
+      "xy_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "height_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "yaw_rad": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "support_ok": null,
+      "stable": null,
+      "hand_clear": null,
+      "neighbors_unchanged": null,
+      "color": null,
+      "expected_color": "red",
+      "color_check": "UNKNOWN",
+      "scene_consistent": false,
+      "profile_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": null,
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "clock_domain": "process_monotonic",
+      "exposure_host_stamp_s": 450524.935675988,
+      "clock_error_bound_s": 0.0016864349552430213,
+      "error_bound_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+      "unknown_reasons": [
+        "target_association_unconfirmed",
+        "calibration_hash_null",
+        "xy_error_unknown",
+        "height_error_unknown",
+        "yaw_error_unknown_90deg_symmetry",
+        "support_evidence_missing",
+        "stability_evidence_missing",
+        "hand_clear_evidence_missing",
+        "neighbor_disturbance_unknown",
+        "no_single_valid_block"
+      ],
+      "control_ready": false,
+      "notes": [
+        "frame_id matches C35 color optical frame naming"
+      ]
+    },
+    {
+      "schema_version": "v-verify-field-handoff-0.1",
+      "target_id": null,
+      "region_id": "supply",
+      "scope": "block",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326997.277858",
+      "observation_id": null,
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "point_kind": null,
+      "target_association_confirmed": false,
+      "reference_id": null,
+      "xy_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "height_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "yaw_rad": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "support_ok": null,
+      "stable": null,
+      "hand_clear": null,
+      "neighbors_unchanged": null,
+      "color": null,
+      "expected_color": "red",
+      "color_check": "UNKNOWN",
+      "scene_consistent": false,
+      "profile_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": null,
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "clock_domain": "process_monotonic",
+      "exposure_host_stamp_s": 450525.5363043492,
+      "clock_error_bound_s": 0.0016864349552430213,
+      "error_bound_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+      "unknown_reasons": [
+        "target_association_unconfirmed",
+        "calibration_hash_null",
+        "xy_error_unknown",
+        "height_error_unknown",
+        "yaw_error_unknown_90deg_symmetry",
+        "support_evidence_missing",
+        "stability_evidence_missing",
+        "hand_clear_evidence_missing",
+        "neighbor_disturbance_unknown",
+        "no_single_valid_block"
+      ],
+      "control_ready": false,
+      "notes": [
+        "frame_id matches C35 color optical frame naming"
+      ]
+    },
+    {
+      "schema_version": "v-verify-field-handoff-0.1",
+      "target_id": null,
+      "region_id": "supply",
+      "scope": "block",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326997.878482",
+      "observation_id": null,
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "point_kind": null,
+      "target_association_confirmed": false,
+      "reference_id": null,
+      "xy_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "height_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "yaw_rad": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "support_ok": null,
+      "stable": null,
+      "hand_clear": null,
+      "neighbors_unchanged": null,
+      "color": null,
+      "expected_color": "red",
+      "color_check": "UNKNOWN",
+      "scene_consistent": false,
+      "profile_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": null,
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "clock_domain": "process_monotonic",
+      "exposure_host_stamp_s": 450526.13682311465,
+      "clock_error_bound_s": 0.0016864349552430213,
+      "error_bound_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+      "unknown_reasons": [
+        "target_association_unconfirmed",
+        "calibration_hash_null",
+        "xy_error_unknown",
+        "height_error_unknown",
+        "yaw_error_unknown_90deg_symmetry",
+        "support_evidence_missing",
+        "stability_evidence_missing",
+        "hand_clear_evidence_missing",
+        "neighbor_disturbance_unknown",
+        "no_single_valid_block"
+      ],
+      "control_ready": false,
+      "notes": [
+        "frame_id matches C35 color optical frame naming"
+      ]
+    },
+    {
+      "schema_version": "v-verify-field-handoff-0.1",
+      "target_id": null,
+      "region_id": "supply",
+      "scope": "block",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326998.41237",
+      "observation_id": null,
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "point_kind": null,
+      "target_association_confirmed": false,
+      "reference_id": null,
+      "xy_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "height_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "yaw_rad": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "support_ok": null,
+      "stable": null,
+      "hand_clear": null,
+      "neighbors_unchanged": null,
+      "color": null,
+      "expected_color": "red",
+      "color_check": "UNKNOWN",
+      "scene_consistent": false,
+      "profile_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": null,
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "clock_domain": "process_monotonic",
+      "exposure_host_stamp_s": 450526.6705359549,
+      "clock_error_bound_s": 0.0016864349552430213,
+      "error_bound_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+      "unknown_reasons": [
+        "target_association_unconfirmed",
+        "calibration_hash_null",
+        "xy_error_unknown",
+        "height_error_unknown",
+        "yaw_error_unknown_90deg_symmetry",
+        "support_evidence_missing",
+        "stability_evidence_missing",
+        "hand_clear_evidence_missing",
+        "neighbor_disturbance_unknown",
+        "no_single_valid_block"
+      ],
+      "control_ready": false,
+      "notes": [
+        "frame_id matches C35 color optical frame naming"
+      ]
+    },
+    {
+      "schema_version": "v-verify-field-handoff-0.1",
+      "target_id": null,
+      "region_id": "supply",
+      "scope": "block",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326999.012994",
+      "observation_id": null,
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "point_kind": null,
+      "target_association_confirmed": false,
+      "reference_id": null,
+      "xy_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "height_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "yaw_rad": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "support_ok": null,
+      "stable": null,
+      "hand_clear": null,
+      "neighbors_unchanged": null,
+      "color": null,
+      "expected_color": "red",
+      "color_check": "UNKNOWN",
+      "scene_consistent": false,
+      "profile_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": null,
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "clock_domain": "process_monotonic",
+      "exposure_host_stamp_s": 450527.2709685358,
+      "clock_error_bound_s": 0.0016864349552430213,
+      "error_bound_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+      "unknown_reasons": [
+        "target_association_unconfirmed",
+        "calibration_hash_null",
+        "xy_error_unknown",
+        "height_error_unknown",
+        "yaw_error_unknown_90deg_symmetry",
+        "support_evidence_missing",
+        "stability_evidence_missing",
+        "hand_clear_evidence_missing",
+        "neighbor_disturbance_unknown",
+        "no_single_valid_block"
+      ],
+      "control_ready": false,
+      "notes": [
+        "frame_id matches C35 color optical frame naming"
+      ]
+    },
+    {
+      "schema_version": "v-verify-field-handoff-0.1",
+      "target_id": null,
+      "region_id": "supply",
+      "scope": "block",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326999.213202",
+      "observation_id": null,
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "point_kind": null,
+      "target_association_confirmed": false,
+      "reference_id": null,
+      "xy_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "height_m": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "yaw_rad": {
+        "value": null,
+        "bound": null,
+        "status": "UNKNOWN"
+      },
+      "support_ok": null,
+      "stable": null,
+      "hand_clear": null,
+      "neighbors_unchanged": null,
+      "color": null,
+      "expected_color": "red",
+      "color_check": "UNKNOWN",
+      "scene_consistent": false,
+      "profile_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": null,
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "clock_domain": "process_monotonic",
+      "exposure_host_stamp_s": 450527.47120096546,
+      "clock_error_bound_s": 0.0016864349552430213,
+      "error_bound_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+      "unknown_reasons": [
+        "target_association_unconfirmed",
+        "calibration_hash_null",
+        "xy_error_unknown",
+        "height_error_unknown",
+        "yaw_error_unknown_90deg_symmetry",
+        "support_evidence_missing",
+        "stability_evidence_missing",
+        "hand_clear_evidence_missing",
+        "neighbor_disturbance_unknown",
+        "no_single_valid_block"
+      ],
+      "control_ready": false,
+      "notes": [
+        "frame_id matches C35 color optical frame naming"
+      ]
+    }
+  ],
+  "verification_evidence": [
+    {
+      "schema_version": "0.1",
+      "sample_id": "e00785ffdd3f4294b21f5dacf39002c4",
+      "source": "real",
+      "device_id": "CP2L863000KL",
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "device_stamp": null,
+      "host_receive_stamp": 450521.53182832024,
+      "clock_domain": "process_monotonic",
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "validity": "UNKNOWN",
+      "reason": "camera_or_table_reference_unconfirmed",
+      "object_id": "unassociated_candidate",
+      "phase": "pre_grasp",
+      "verdict": "UNKNOWN",
+      "error_m": null,
+      "image_refs": [
+        "observed_00_326993.273698.npz#rgb"
+      ],
+      "observation_refs": [
+        "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326993.273698/empty"
+      ],
+      "region_id": "supply",
+      "scene_version": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "config_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": "calibration_hash_unavailable",
+      "supporting_observation_refs": []
+    },
+    {
+      "schema_version": "0.1",
+      "sample_id": "eed623fad3e2410784e1392edcc402b2",
+      "source": "real",
+      "device_id": "CP2L863000KL",
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "device_stamp": null,
+      "host_receive_stamp": 450522.13252021925,
+      "clock_domain": "process_monotonic",
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "validity": "UNKNOWN",
+      "reason": "camera_or_table_reference_unconfirmed",
+      "object_id": "unassociated_candidate",
+      "phase": "pre_grasp",
+      "verdict": "UNKNOWN",
+      "error_m": null,
+      "image_refs": [
+        "observed_00_326993.874322.npz#rgb"
+      ],
+      "observation_refs": [
+        "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326993.874322/empty"
+      ],
+      "region_id": "supply",
+      "scene_version": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "config_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": "calibration_hash_unavailable",
+      "supporting_observation_refs": []
+    },
+    {
+      "schema_version": "0.1",
+      "sample_id": "c92dfa6164b4465c9cdd4e767daf5431",
+      "source": "real",
+      "device_id": "CP2L863000KL",
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "device_stamp": null,
+      "host_receive_stamp": 450522.66652314493,
+      "clock_domain": "process_monotonic",
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "validity": "UNKNOWN",
+      "reason": "camera_or_table_reference_unconfirmed",
+      "object_id": "unassociated_candidate",
+      "phase": "pre_grasp",
+      "verdict": "UNKNOWN",
+      "error_m": null,
+      "image_refs": [
+        "observed_00_326994.408210.npz#rgb"
+      ],
+      "observation_refs": [
+        "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326994.40821/empty"
+      ],
+      "region_id": "supply",
+      "scene_version": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "config_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": "calibration_hash_unavailable",
+      "supporting_observation_refs": []
+    },
+    {
+      "schema_version": "0.1",
+      "sample_id": "5047b7af9bcc479c92ca9f708d1987d6",
+      "source": "real",
+      "device_id": "CP2L863000KL",
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "device_stamp": null,
+      "host_receive_stamp": 450523.2672722944,
+      "clock_domain": "process_monotonic",
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "validity": "UNKNOWN",
+      "reason": "camera_or_table_reference_unconfirmed",
+      "object_id": "unassociated_candidate",
+      "phase": "pre_grasp",
+      "verdict": "UNKNOWN",
+      "error_m": null,
+      "image_refs": [
+        "observed_00_326995.008834.npz#rgb"
+      ],
+      "observation_refs": [
+        "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326995.008834/empty"
+      ],
+      "region_id": "supply",
+      "scene_version": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "config_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": "calibration_hash_unavailable",
+      "supporting_observation_refs": []
+    },
+    {
+      "schema_version": "0.1",
+      "sample_id": "dcd35f65fcad4910bf72d5b8dd7c49bf",
+      "source": "real",
+      "device_id": "CP2L863000KL",
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "device_stamp": null,
+      "host_receive_stamp": 450523.8009899112,
+      "clock_domain": "process_monotonic",
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "validity": "UNKNOWN",
+      "reason": "camera_or_table_reference_unconfirmed",
+      "object_id": "unassociated_candidate",
+      "phase": "pre_grasp",
+      "verdict": "UNKNOWN",
+      "error_m": null,
+      "image_refs": [
+        "observed_00_326995.542722.npz#rgb"
+      ],
+      "observation_refs": [
+        "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326995.542722/empty"
+      ],
+      "region_id": "supply",
+      "scene_version": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "config_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": "calibration_hash_unavailable",
+      "supporting_observation_refs": []
+    },
+    {
+      "schema_version": "0.1",
+      "sample_id": "d9a5a6ab18824ba29ead76b0fbb4126c",
+      "source": "real",
+      "device_id": "CP2L863000KL",
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "device_stamp": null,
+      "host_receive_stamp": 450524.4015616873,
+      "clock_domain": "process_monotonic",
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "validity": "UNKNOWN",
+      "reason": "camera_or_table_reference_unconfirmed",
+      "object_id": "unassociated_candidate",
+      "phase": "pre_grasp",
+      "verdict": "UNKNOWN",
+      "error_m": null,
+      "image_refs": [
+        "observed_00_326996.143346.npz#rgb"
+      ],
+      "observation_refs": [
+        "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326996.143346/empty"
+      ],
+      "region_id": "supply",
+      "scene_version": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "config_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": "calibration_hash_unavailable",
+      "supporting_observation_refs": []
+    },
+    {
+      "schema_version": "0.1",
+      "sample_id": "7db343bb8b52439fbf889cd4c00b20c8",
+      "source": "real",
+      "device_id": "CP2L863000KL",
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "device_stamp": null,
+      "host_receive_stamp": 450524.935675988,
+      "clock_domain": "process_monotonic",
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "validity": "UNKNOWN",
+      "reason": "camera_or_table_reference_unconfirmed",
+      "object_id": "unassociated_candidate",
+      "phase": "pre_grasp",
+      "verdict": "UNKNOWN",
+      "error_m": null,
+      "image_refs": [
+        "observed_00_326996.677234.npz#rgb"
+      ],
+      "observation_refs": [
+        "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326996.677234/empty"
+      ],
+      "region_id": "supply",
+      "scene_version": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "config_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": "calibration_hash_unavailable",
+      "supporting_observation_refs": []
+    },
+    {
+      "schema_version": "0.1",
+      "sample_id": "4849ec3d54184f90abc5611a44736f14",
+      "source": "real",
+      "device_id": "CP2L863000KL",
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "device_stamp": null,
+      "host_receive_stamp": 450525.5363043492,
+      "clock_domain": "process_monotonic",
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "validity": "UNKNOWN",
+      "reason": "camera_or_table_reference_unconfirmed",
+      "object_id": "unassociated_candidate",
+      "phase": "pre_grasp",
+      "verdict": "UNKNOWN",
+      "error_m": null,
+      "image_refs": [
+        "observed_00_326997.277858.npz#rgb"
+      ],
+      "observation_refs": [
+        "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326997.277858/empty"
+      ],
+      "region_id": "supply",
+      "scene_version": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "config_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": "calibration_hash_unavailable",
+      "supporting_observation_refs": []
+    },
+    {
+      "schema_version": "0.1",
+      "sample_id": "fde6f35a5909449abf0e8a8b861598c4",
+      "source": "real",
+      "device_id": "CP2L863000KL",
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "device_stamp": null,
+      "host_receive_stamp": 450526.13682311465,
+      "clock_domain": "process_monotonic",
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "validity": "UNKNOWN",
+      "reason": "camera_or_table_reference_unconfirmed",
+      "object_id": "unassociated_candidate",
+      "phase": "pre_grasp",
+      "verdict": "UNKNOWN",
+      "error_m": null,
+      "image_refs": [
+        "observed_00_326997.878482.npz#rgb"
+      ],
+      "observation_refs": [
+        "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326997.878482/empty"
+      ],
+      "region_id": "supply",
+      "scene_version": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "config_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": "calibration_hash_unavailable",
+      "supporting_observation_refs": []
+    },
+    {
+      "schema_version": "0.1",
+      "sample_id": "3ce2da4402114d1984069a84e20b1c7c",
+      "source": "real",
+      "device_id": "CP2L863000KL",
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "device_stamp": null,
+      "host_receive_stamp": 450526.6705359549,
+      "clock_domain": "process_monotonic",
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "validity": "UNKNOWN",
+      "reason": "camera_or_table_reference_unconfirmed",
+      "object_id": "unassociated_candidate",
+      "phase": "pre_grasp",
+      "verdict": "UNKNOWN",
+      "error_m": null,
+      "image_refs": [
+        "observed_00_326998.412370.npz#rgb"
+      ],
+      "observation_refs": [
+        "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326998.41237/empty"
+      ],
+      "region_id": "supply",
+      "scene_version": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "config_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": "calibration_hash_unavailable",
+      "supporting_observation_refs": []
+    },
+    {
+      "schema_version": "0.1",
+      "sample_id": "8db0aed70e954098b14dae13333318f3",
+      "source": "real",
+      "device_id": "CP2L863000KL",
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "device_stamp": null,
+      "host_receive_stamp": 450527.2709685358,
+      "clock_domain": "process_monotonic",
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "validity": "UNKNOWN",
+      "reason": "camera_or_table_reference_unconfirmed",
+      "object_id": "unassociated_candidate",
+      "phase": "pre_grasp",
+      "verdict": "UNKNOWN",
+      "error_m": null,
+      "image_refs": [
+        "observed_00_326999.012994.npz#rgb"
+      ],
+      "observation_refs": [
+        "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326999.012994/empty"
+      ],
+      "region_id": "supply",
+      "scene_version": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "config_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": "calibration_hash_unavailable",
+      "supporting_observation_refs": []
+    },
+    {
+      "schema_version": "0.1",
+      "sample_id": "3dfff6397b644dafa15744c76e6717bf",
+      "source": "real",
+      "device_id": "CP2L863000KL",
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "device_stamp": null,
+      "host_receive_stamp": 450527.47120096546,
+      "clock_domain": "process_monotonic",
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "validity": "UNKNOWN",
+      "reason": "camera_or_table_reference_unconfirmed",
+      "object_id": "unassociated_candidate",
+      "phase": "pre_grasp",
+      "verdict": "UNKNOWN",
+      "error_m": null,
+      "image_refs": [
+        "observed_00_326999.213202.npz#rgb"
+      ],
+      "observation_refs": [
+        "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326999.213202/empty"
+      ],
+      "region_id": "supply",
+      "scene_version": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "config_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "calibration_hash": "calibration_hash_unavailable",
+      "supporting_observation_refs": []
+    }
+  ]
+}
