@@ -23,6 +23,12 @@ LIVE_PERMIT_REQUIRED_FIELDS = (
     "scene_version",
     "valid_until_host_monotonic_s",
 )
+# Root-cause blockers for live formal Permit (no-motion software ceiling).
+# j6_j7_readonly → no counts_as_live_valid ArmState → cannot issue/validate live Permit.
+FORMAL_PERMIT_BLOCKED_BY_LIVE_ARM = (
+    "j6_j7_readonly",
+    "awaiting_live_arm",
+)
 # Explicitly labeled probe-only hash; never a formal PlanBundle trajectory.
 PROBE_TRAJECTORY_HASH = "dry-run-probe:safety-gate-plumbing-only"
 
@@ -257,8 +263,10 @@ class OfflineSafetyGate:
 
         still_missing_for_formal = list(missing_fields)
         for hold in (
+            "j6_j7_readonly",
+            "awaiting_live_arm",
             "live SafetyGate issuance authority (formal contracts.Permit)",
-            "fresh VALID live ArmState.device_id (recorded/mock do not count as live)",
+            "fresh VALID live ArmState (source=real + validity=VALID + seven finite q_rad; recorded/mock ≠ live)",
             "host/safety policy raise of control_ready",
             "actuator / arm power enable before real motion",
         ):
@@ -266,6 +274,17 @@ class OfflineSafetyGate:
                 still_missing_for_formal.append(hold)
 
         only_hw_policy = fields_complete and gate_accepts_draft is True
+        # When Mock dry-run fields are complete, remaining formal blockers are
+        # rooted in live arm (J6/J7 has no audited readonly position query).
+        if only_hw_policy:
+            blocked_by = list(FORMAL_PERMIT_BLOCKED_BY_LIVE_ARM)
+            live_path_status = "software_exhausted_awaiting_live_arm"
+        elif fields_complete:
+            blocked_by = list(FORMAL_PERMIT_BLOCKED_BY_LIVE_ARM) + list(missing_fields)
+            live_path_status = "fields_complete_gate_rejected"
+        else:
+            blocked_by = list(missing_fields) + list(FORMAL_PERMIT_BLOCKED_BY_LIVE_ARM)
+            live_path_status = "fields_incomplete"
 
         return {
             "schema_version": DRY_RUN_ISSUANCE_SCHEMA,
@@ -278,6 +297,8 @@ class OfflineSafetyGate:
             "issuance_attempted": True,
             "issuance_fields_complete": fields_complete,
             "only_hardware_enable_and_policy_remaining": only_hw_policy,
+            "blocked_by": blocked_by,
+            "live_permit_path_status": live_path_status,
             "authority": {
                 "live_issuer": "D/M SafetyGate at execution (contracts.Permit)",
                 "dry_run_diagnostic_issuer": "OfflineSafetyGate.issue_dry_run_diagnostic",
@@ -289,6 +310,12 @@ class OfflineSafetyGate:
                     "arm.execute_trajectory on live hardware",
                 ],
                 "required_live_fields": list(LIVE_PERMIT_REQUIRED_FIELDS),
+                "arm_state_dependency": (
+                    "live Permit.device_id must match counts_as_live_valid ArmState "
+                    "(source=real + validity=VALID + seven finite q_rad); "
+                    "OfflineSafetyGate.check_step_evidence also binds clock/epoch"
+                ),
+                "hard_block_id": "j6_j7_no_audited_readonly_position_query",
             },
             "mock_arm": {
                 "backend": getattr(arm, "backend", None),
@@ -308,6 +335,7 @@ class OfflineSafetyGate:
                 "Dry-run draft is executable=false and must not be copied into live StepEvidence for formal grasp.",
                 "MockArm device_id / issuance clock are dry-run only; live VALID arm feedback still required for formal.",
                 "PlanBundle trajectory_hash must come from planning; this issuer never invents it.",
+                "blocked_by=j6_j7_readonly + awaiting_live_arm when Mock field path is at software ceiling.",
             ],
         }
 

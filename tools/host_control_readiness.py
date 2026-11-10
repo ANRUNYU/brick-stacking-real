@@ -133,10 +133,19 @@ def main(argv=None) -> int:
             ),
             "can_enter_formal_grasp": ladder.get("can_enter_formal_grasp"),
             "formal_grasp_entry_missing": list(ladder.get("formal_grasp_entry_missing") or []),
+            "formal_grasp_blocked_by": list(ladder.get("formal_grasp_blocked_by") or []),
+            "live_permit_path_status": ladder.get("live_permit_path_status"),
             "control_ready_missing": list(ladder.get("control_ready_missing") or []),
         },
         "dry_run_grasp_entry_ready": payload.get("dry_run_grasp_entry_ready"),
         "formal_grasp_entry_allowed": payload.get("formal_grasp_entry_allowed"),
+        "formal_grasp_blocked_by": list(payload.get("formal_grasp_blocked_by") or []),
+        "live_permit_path": {
+            "status": (payload.get("live_permit_path") or {}).get("status"),
+            "executable": False,
+            "live_permit": None,
+            "blocked_by": list((payload.get("live_permit_path") or {}).get("blocked_by") or []),
+        },
         "formal_grasp_ready": payload.get("formal_grasp_ready"),
         "control_ready": payload.get("control_ready"),
         "motion_enabled": False,
@@ -181,6 +190,17 @@ def main(argv=None) -> int:
                 "only_hardware_enable_and_policy_remaining": (
                     ((payload.get("dry_run_arm_disabled") or {}).get("issuance_diagnostic") or {}).get(
                         "only_hardware_enable_and_policy_remaining"
+                    )
+                ),
+                "blocked_by": list(
+                    ((payload.get("dry_run_arm_disabled") or {}).get("issuance_diagnostic") or {}).get(
+                        "blocked_by"
+                    )
+                    or []
+                ),
+                "live_permit_path_status": (
+                    ((payload.get("dry_run_arm_disabled") or {}).get("issuance_diagnostic") or {}).get(
+                        "live_permit_path_status"
                     )
                 ),
                 "plumbing_ok": (

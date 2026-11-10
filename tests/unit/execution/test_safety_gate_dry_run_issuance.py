@@ -40,6 +40,10 @@ def test_issue_dry_run_lists_missing_trajectory_hash(gate_and_arm):
     assert report["issuance_fields_complete"] is False
     assert report["only_hardware_enable_and_policy_remaining"] is False
     assert "trajectory_hash" in report["still_missing_fields"]
+    assert report["blocked_by"][0] == "trajectory_hash"
+    assert "j6_j7_readonly" in report["blocked_by"]
+    assert "awaiting_live_arm" in report["blocked_by"]
+    assert report["live_permit_path_status"] == "fields_incomplete"
     assert report["field_status"]["device_id"]["status"] == "PRESENT_FROM_MOCK_ARM"
     assert report["field_status"]["valid_until_host_monotonic_s"]["status"] == (
         "PRESENT_FROM_ISSUANCE_CLOCK"
@@ -66,6 +70,13 @@ def test_issue_dry_run_complete_fields_gate_accepts(gate_and_arm):
     assert report["gate_accepts_draft"] is True
     assert report["only_hardware_enable_and_policy_remaining"] is True
     assert report["still_missing_fields"] == []
+    assert report["blocked_by"] == ["j6_j7_readonly", "awaiting_live_arm"]
+    assert report["live_permit_path_status"] == "software_exhausted_awaiting_live_arm"
+    assert "j6_j7_readonly" in report["still_missing_for_formal"]
+    assert "awaiting_live_arm" in report["still_missing_for_formal"]
+    assert report["authority"]["hard_block_id"] == (
+        "j6_j7_no_audited_readonly_position_query"
+    )
     draft = report["draft_permit"]
     assert draft is not None
     assert draft["trajectory_hash"] == "plan-bundle-hash-fixture"

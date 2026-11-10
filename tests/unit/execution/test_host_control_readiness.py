@@ -138,11 +138,22 @@ def test_field_evidence_dry_run_ready_but_not_formal():
     assert ladder["can_enter_formal_grasp"] is False
     assert "live_contracts_Permit_validated" in ladder["formal_grasp_entry_missing"]
     assert "live_VALID_ArmState_source_real" in ladder["formal_grasp_entry_missing"]
+    assert ladder["formal_grasp_blocked_by"] == ["j6_j7_readonly", "awaiting_live_arm"]
+    assert payload["formal_grasp_blocked_by"] == ["j6_j7_readonly", "awaiting_live_arm"]
+    assert payload["live_permit_path"]["status"] == "software_exhausted_awaiting_live_arm"
+    assert payload["live_permit_path"]["executable"] is False
+    assert payload["live_permit_path"]["live_permit"] is None
+    assert payload["live_permit_path"]["blocked_by"] == [
+        "j6_j7_readonly",
+        "awaiting_live_arm",
+    ]
     assert "operator_policy_attest_control_ready" in ladder["control_ready_missing"]
     issuance = payload["dry_run_arm_disabled"]["issuance_diagnostic"]
     assert issuance["issuance_fields_complete"] is True
     assert issuance["only_hardware_enable_and_policy_remaining"] is True
     assert issuance["executable"] is False
+    assert issuance["blocked_by"] == ["j6_j7_readonly", "awaiting_live_arm"]
+    assert issuance["live_permit_path_status"] == "software_exhausted_awaiting_live_arm"
     by_id = {item.id: item for item in report.checklist}
     assert by_id["plan_bundle_trajectory_hash"].status == "PASS"
     assert by_id["arm_state_device_id"].status == "PASS"
@@ -151,6 +162,7 @@ def test_field_evidence_dry_run_ready_but_not_formal():
     assert by_id["dry_run_safety_gate_issuance"].status == "PASS"
     assert by_id["dry_run_grasp_entry_ready"].status == "PASS"
     assert by_id["formal_grasp_entry_gate"].status == "POLICY_HOLD"
+    assert "j6_j7_readonly" in by_id["formal_grasp_entry_gate"].detail
     assert by_id["operator_policy_attest_control_ready"].status == "POLICY_HOLD"
     assert by_id["host_policy_control_ready"].status == "POLICY_HOLD"
 
@@ -237,6 +249,8 @@ def test_cli_writes_report(tmp_path):
     assert payload["motion_enabled"] is False
     assert payload["only_operator_enable_remaining"] is False
     assert payload["gate_ladder"]["can_enter_formal_grasp"] is False
+    assert payload["formal_grasp_blocked_by"] == ["j6_j7_readonly", "awaiting_live_arm"]
+    assert payload["live_permit_path"]["status"] == "software_exhausted_awaiting_live_arm"
     assert payload["dry_run_arm_disabled"]["reachable"] is True
     assert payload["dry_run_arm_disabled"]["issuance_diagnostic"]["executable"] is False
     assert payload["dry_run_arm_disabled"]["issuance_diagnostic"][

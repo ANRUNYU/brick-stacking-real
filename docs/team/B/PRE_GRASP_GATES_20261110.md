@@ -41,6 +41,8 @@ host/safety 抬起条件与 dry-run 探测见 [HOST_CONTROL_READY_20261110.md](H
 | `diagnostic_permit` | 已写 | `m-diagnostic-permit-eligibility-0.1`；`executable=false`；`live_permit=null` |
 | `dry_run_grasp_entry_ready` | **true**（host checklist 探测后） | dry-run 全链就绪；见 host gate ladder（**不是**正式抓取） |
 | `formal_grasp_entry_allowed` | **false** | 正式进入抓取 — 需 live Permit + live VALID 臂（由 host checklist 计算；本模块不伪造） |
+| `formal_grasp_blocked_by` | `["j6_j7_readonly","awaiting_live_arm"]` | dry-run 软件路径已尽时根因列表（host checklist 机读；≠ 伪造 PASS） |
+| `live_permit_path.status` | `software_exhausted_awaiting_live_arm` | Mock 签发字段齐 + gate 接受 draft；仍 `executable=false` / `live_permit=null` |
 | `control_ready` | **false** | 控制就绪 — 需 formal + 显式 operator policy attest（默认关；V/readiness 不自动抬） |
 | `motion_enabled` | **false** | 运动使能 — 永不由本路径打开 |
 | `permit` | **null** | **live** Permit — 仅 D/M SafetyGate 可签发；禁止把 diagnostic 当 live |
@@ -49,7 +51,7 @@ host/safety 抬起条件与 dry-run 探测见 [HOST_CONTROL_READY_20261110.md](H
 | `awaiting_actuator_enable` | **true** | 仍等执行器/开臂使能（物理动作前才需要） |
 | `permit_hold_reason` | `eligible_awaiting_host_enable_and_live_safety_gate` | 精确持有原因 |
 
-**裁决**：**(A)** 视觉就绪 + **diagnostic 资格**已签发；**不允许**伪造 live Permit，**不允许**抬 `control_ready` / 发 CAN。正式抓取仍否。
+**裁决**：**(A)** 视觉就绪 + **diagnostic 资格**已签发；dry-run Permit 软件路径已推到极限（`blocked_by=j6_j7_readonly + awaiting_live_arm`）；**不允许**伪造 live Permit，**不允许**抬 `control_ready` / 发 CAN。正式抓取仍否。
 
 签发点摘要：
 

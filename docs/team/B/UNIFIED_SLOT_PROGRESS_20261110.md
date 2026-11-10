@@ -31,6 +31,7 @@
 23. **门控阶梯（本轮）**：区分 `vision_pre_grasp_ready` → `dry_run_grasp_entry_ready` → `formal_grasp_entry_allowed` → `control_ready`。证据满足 dry-run 全链时 **`dry_run_grasp_entry_ready=true`**；`formal_grasp_entry_allowed` 仅在 live Permit + live VALID 臂满足时为 true；`control_ready` 另需显式 operator policy attest（**默认关**，不自动打开）。见 [HOST_CONTROL_READY_20261110.md](HOST_CONTROL_READY_20261110.md)。
 24. **live-or-recorded→VALID 机读路径（本轮）**：`arm_state_validity` + `tools/arm_state_live_or_recorded.py`；readiness 区分 `arm_state_device_id`（recorded PASS）与 `live_valid_arm_state`（`counts_as_live_valid`）。Mock/recorded/fixture 已测；**未**做真机大幅运动；Windows 上 `live-readonly` 软失败可跳过。ArmStateReader 因 J6/J7 无已审计只读位置查询，live 样本仍 INVALID。
 25b. **J6/J7 只读位置硬阻塞（本轮）**：审计确认无只读位置协议 → 文档化 `j6_j7_no_audited_readonly_position_query` + 拒绝骨架 `v2_wrist_readonly.py`（不 Rest / 不 enable-motion）；`gate_ladder.j6j7_readonly_position_hard_block=true`；**live VALID 不可达**；正式抓取仍否。见 [J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md](J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md)。
+25c. **live Permit 软件路径推到极限（本轮）**：Mock dry-run 签发字段齐 + gate 接受 draft；机读 `live_permit_path.status=software_exhausted_awaiting_live_arm`；`formal_grasp_blocked_by=["j6_j7_readonly","awaiting_live_arm"]`；**仍** `executable=false` / `live_permit=null` / `control_ready=false`。解除需协议审计授权，非 Rest。见 [M_PERMIT_AUTHORITY_20261110.md](M_PERMIT_AUTHORITY_20261110.md)、`formal_grasp_entry_audit_20261110.json`。
 25. **diagnostic 对齐 shadow PlanBundle / recorded 臂（本轮）**：`pre_grasp_readiness --plan-bundle/--arm-state` 将 diagnostic 字段标为 `PRESENT_FROM_SHADOW_PLAN_BUNDLE` / `PRESENT_FROM_RECORDED_OR_MOCK_ARM`；**仍** `live_permit=null`、`formal_grasp_entry_allowed=false`、`control_ready=false`。完成审计见 `docs/team/B/evidence/field_20261110/formal_grasp_entry_audit_20261110.json`。
 
 ## 物理阻塞
@@ -40,11 +41,11 @@
 ## 仍不抬 control_ready 的原因（真实剩余阻塞）
 
 - live `permit=null`（仅 D/M SafetyGate 可签发 live；本路径只发 diagnostic + dry-run 签发诊断）。
-- `formal_grasp_entry_allowed=false`（缺 live Permit + live VALID 臂；recorded ≠ live）。
+- `formal_grasp_entry_allowed=false`；根因机读 **`formal_grasp_blocked_by=["j6_j7_readonly","awaiting_live_arm"]`**（Permit 软件路径已尽）。
 - `control_ready=false`：**reporter 硬持有**（大幅运动安全）；operator policy attest **默认关闭**（开关已实现，未打开；打开也不在本路径抬升）。
 - `motion_enabled` 硬持有 false。
 - dry-run MockArm 路径：`dry_run_grasp_entry_ready=true`；**不等于**正式抓取入口。
-- host checklist 软件两项已关；仍差：live Permit + live VALID 臂读 +（抬 control_ready 时）显式 attest +（真运动前）开臂；H3 生产 PlanBundle 仍待 #20。
+- host checklist 软件两项已关；`live_permit_path=software_exhausted_awaiting_live_arm`；仍差：协议审计后的 live VALID 臂 + live Permit +（抬 control_ready 时）显式 attest +（真运动前）开臂；H3 生产 PlanBundle 仍待 #20。
 - post_place 缺动作完成/释放/稳定窗口证据（本轮非抓取入口硬阻塞，但列出）。
 
 ## SCENE 说明（已解除会话级误报）
@@ -60,4 +61,4 @@ readiness 现只采纳 `scene_consistent` 帧：warmup 上的 `SCENE_OR_RGBD_NOT
 - dry-run：`dry_run_grasp_entry_ready=true`（MockArm 全链）。  
 - live `permit=null`；recorded 臂 ≠ live VALID；`awaiting_live_permit_host_enable=true`。  
 - `control_ready=false`（formal 未过 + attest 默认关）；`motion_enabled=false`；未开臂、未发 CAN。  
-- **是否需用户使能**：现在不必开臂；正式抓取前需 live Permit + live 臂读；抬 `control_ready` 另需显式 `--attested`。
+- **是否需用户使能**：现在不必开臂/Rest/`--enable-motion`；解除正式抓取需 **协议审计授权**（J6/J7 只读位置）；抬 `control_ready` 另需显式 `--attested`。

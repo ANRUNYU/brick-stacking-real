@@ -85,10 +85,12 @@ python tools/host_control_ready_policy_attest.py \
 | operator policy attest（抬 `control_ready`） | host_policy | 是（显式使能；**默认关**） |
 | host_monitor ENABLE | actuator_operator | 仅真机运动前 |
 
-机读（`gate_ladder`）：
+机读（`gate_ladder` / 顶层）：
 
 - `can_enter_formal_grasp=false`
 - `formal_grasp_entry_missing` ⊇ `live_contracts_Permit_validated`, `live_VALID_ArmState_source_real`
+- **`formal_grasp_blocked_by=["j6_j7_readonly","awaiting_live_arm"]`**（dry-run 软件已尽时的根因）
+- **`live_permit_path.status=software_exhausted_awaiting_live_arm`**（`executable=false`；`live_permit=null`；未伪造）
 - `control_ready_missing` ⊇ `formal_grasp_entry_allowed`, `operator_policy_attest_control_ready`, `reporter_hard_hold_no_large_motion_elevation`
 - `reporter_never_raises_control_ready=true` / `reporter_never_raises_motion_enabled=true`
 - `only_operator_enable_remaining=false`
@@ -115,10 +117,11 @@ python tools/host_control_readiness.py \
 | --- | --- |
 | 可进入正式抓取？（`formal_grasp_entry_allowed` / `can_enter_formal_grasp`） | **否** |
 | dry-run 入口就绪？ | **是**（`dry_run_grasp_entry_ready=true`） |
+| Permit 软件路径 | **已尽**：`live_permit_path.status=software_exhausted_awaiting_live_arm`；`blocked_by=j6_j7_readonly + awaiting_live_arm` |
 | diagnostic permit | `permit_eligible=true`；`executable=false`；可选 shadow PlanBundle/recorded 臂 → `PRESENT_FROM_*`（≠ live） |
 | live Permit | **null**（未伪造） |
 | `control_ready` | **false**（reporter 硬持有；attest 默认关） |
 | 现在要用户物理开臂？ | **否** |
-| 是否需用户使能？ | **现在不必**；勿开 `--attested` / `--enable-motion`；正式抓取前还需 live Permit + live VALID 臂 |
+| 是否需用户使能？ | **现在不必**开臂/Rest/`--enable-motion`；解除正式抓取需 **协议审计授权**（V2 只读位置查询）或另轮支撑 Rest 采样（仍非正式只读 API） |
 | 真机大幅运动前要开臂？ | **是**（且需专用 elevation 路径；本分支 checklist 不解锁） |
 | Goal complete？ | **否**（见 `docs/team/B/evidence/field_20261110/formal_grasp_entry_audit_20261110.json`；勿把 dry-run 就绪偷换成 complete） |

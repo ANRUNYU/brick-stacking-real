@@ -44,7 +44,12 @@
 - `scene_version`
 - `valid_until_host_monotonic_s` — 由签发时刻 + 新鲜度窗口决定
 
-`OfflineSafetyGate` 额外要求：标定有效、反馈新鲜、permit 与当前 step context 逐字段匹配、剩余有效期落在 offline freshness 窗口内。
+**对 ArmState 的硬依赖**：
+
+- live 签发/校验要求 `counts_as_live_valid`：`source=real` + `validity=VALID` + 七轴有限 `q_rad`
+- `Permit.device_id` 必须等于该 live `ArmState.device_id`
+- `OfflineSafetyGate.check_step_evidence` 额外绑定 clock/epoch/新鲜度与 config/calib/scene 哈希
+- recorded / mock / fixture **不等于** live；J6/J7 无已审计只读位置 → live VALID 不可达（`hard_block=j6_j7_no_audited_readonly_position_query`）
 
 ## 当前 dry-run 签发结论
 
@@ -52,14 +57,18 @@
 
 - `issuance_fields_complete=true`，`gate_accepts_draft=true`，`executable=false`
 - `only_hardware_enable_and_policy_remaining=true`（**相对 dry-run MockArm 路径**）
+- `live_permit_path_status=software_exhausted_awaiting_live_arm`
+- `blocked_by=["j6_j7_readonly","awaiting_live_arm"]`
 - `live_permit=null` 恒成立；recorded 臂 ID ≠ live VALID `ArmState`
 
-**仍缺（正式 live / 抓取）**：
+**仍缺（正式 live / 抓取）** — 软件路径已尽，根因仅 live 臂：
 
-1. live SafetyGate 正式签发权威产物
-2. 新鲜 **`counts_as_live_valid`** `ArmState`（`source=real` + `validity=VALID` + 七轴有限 `q_rad`；recorded/mock/fixture 不算；见 `arm_state_validity`）
+1. 新鲜 **`counts_as_live_valid`** `ArmState`（被 `j6_j7_readonly` 硬阻塞；勿 Rest / enable-motion 补角）
+2. live SafetyGate 正式签发权威产物（依赖上项；禁止拷贝 dry-run draft）
 3. host/safety：`formal_grasp_entry_allowed` 过后再显式 operator policy attest 抬 `control_ready`（默认关）
 4. 操作员开臂 / 执行器使能（仅真实运动前）
+
+机读：`formal_grasp_blocked_by` / `live_permit_path` 见 host checklist。
 
 ## Shadow vs live
 

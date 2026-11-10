@@ -23,17 +23,27 @@ from brick_stacking.arm.arm_state_validity import (
     classify_arm_state,
     unwrap_arm_state,
 )
+from brick_stacking.arm.v2_wrist_readonly import HARD_BLOCK_ID as J6J7_HARD_BLOCK_ID
 from brick_stacking.execution.host_policy_attest import (
     SCHEMA as ATTEST_SCHEMA,
     HostPolicyAttest,
     empty_attest,
     load_host_policy_attest,
 )
-from brick_stacking.execution.safety_gate import OfflineSafetyGate, StepEvidence
+from brick_stacking.execution.safety_gate import (
+    FORMAL_PERMIT_BLOCKED_BY_LIVE_ARM,
+    LIVE_PERMIT_REQUIRED_FIELDS,
+    OfflineSafetyGate,
+    StepEvidence,
+)
 from brick_stacking.runtime.config_loader import load_config
 
 SCHEMA = "host-control-readiness-0.2"
 DRY_RUN_PROBE_SCHEMA = "host-dry-run-arm-disabled-0.1"
+
+# Machine-readable formal-entry root blockers (no-motion software ceiling).
+FORMAL_BLOCK_J6J7_READONLY = "j6_j7_readonly"
+FORMAL_BLOCK_AWAITING_LIVE_ARM = "awaiting_live_arm"
 
 GATE_DEFINITIONS = {
     "vision_pre_grasp_ready": (
@@ -150,6 +160,8 @@ class HostControlReadiness:
     missing_software: tuple[str, ...]
     missing_field_or_operator: tuple[str, ...]
     hard_blockers: tuple[dict[str, Any], ...]
+    formal_grasp_blocked_by: tuple[str, ...]
+    live_permit_path: dict[str, Any]
     dry_run_arm_disabled: dict[str, Any] | None
     arm_feedback: dict[str, Any] | None
     elevation_conditions: dict[str, Any]
@@ -162,7 +174,96 @@ class HostControlReadiness:
         payload["control_ready"] = False
         payload["motion_enabled"] = False
         payload["live_permit"] = None
+        payload["formal_grasp_blocked_by"] = list(self.formal_grasp_blocked_by)
         return payload
+
+
+def compute_formal_grasp_blocked_by(
+    *,
+    formal_grasp_entry_allowed: bool,
+    dry_run_grasp_entry_ready: bool,
+    arm_ok_live: bool,
+    live_permit_valid: bool,
+    vision_ready: bool | None,
+    permit_eligible: bool | None,
+    traj_ok: bool,
+    arm_ok_dry: bool,
+    dry_reachable: bool,
+    dry_issuance_ok: bool,
+) -> tuple[str, ...]:
+    """Root-cause blockers for formal grasp entry (machine-readable).
+
+    When dry-run software path is exhausted, the remaining blockers collapse to
+    ``j6_j7_readonly`` + ``awaiting_live_arm`` (live Permit cannot exist without
+    counts_as_live_valid ArmState). Never claims Goal complete.
+    """
+    if formal_grasp_entry_allowed:
+        return ()
+    if dry_run_grasp_entry_ready:
+        blocked: list[str] = []
+        if not arm_ok_live:
+            blocked.append(FORMAL_BLOCK_J6J7_READONLY)
+            blocked.append(FORMAL_BLOCK_AWAITING_LIVE_ARM)
+        elif not live_permit_valid:
+            blocked.append("awaiting_live_permit")
+        return tuple(blocked)
+
+    blocked = []
+    if vision_ready is not True:
+        blocked.append("awaiting_vision_pre_grasp_ready")
+    if permit_eligible is not True:
+        blocked.append("awaiting_permit_eligible")
+    if not traj_ok:
+        blocked.append("awaiting_plan_bundle_trajectory_hash")
+    if not arm_ok_dry:
+        blocked.append("awaiting_arm_state_device_id")
+    if not dry_reachable or not dry_issuance_ok:
+        blocked.append("awaiting_dry_run_issuance")
+    # Live arm hard-block still applies even before dry-run is ready.
+    blocked.append(FORMAL_BLOCK_J6J7_READONLY)
+    blocked.append(FORMAL_BLOCK_AWAITING_LIVE_ARM)
+    return tuple(blocked)
+
+
+def build_live_permit_path(
+    *,
+    dry_probe: dict[str, Any] | None,
+    arm_ok_live: bool,
+    live_permit_valid: bool,
+    formal_grasp_blocked_by: tuple[str, ...],
+) -> dict[str, Any]:
+    """Summarize how far the live Permit software path reached (no forge)."""
+    issuance = (dry_probe or {}).get("issuance_diagnostic") or {}
+    fields_complete = issuance.get("issuance_fields_complete") is True
+    gate_ok = issuance.get("gate_accepts_draft") is True
+    if live_permit_valid and arm_ok_live:
+        status = "live_permit_validated"
+    elif fields_complete and gate_ok:
+        status = "software_exhausted_awaiting_live_arm"
+    elif issuance.get("issuance_attempted"):
+        status = str(issuance.get("live_permit_path_status") or "issuance_incomplete")
+    else:
+        status = "not_probed"
+    blocked = list(issuance.get("blocked_by") or formal_grasp_blocked_by)
+    if not blocked and status == "software_exhausted_awaiting_live_arm":
+        blocked = list(FORMAL_PERMIT_BLOCKED_BY_LIVE_ARM)
+    return {
+        "status": status,
+        "executable": False,
+        "live_permit": None,
+        "issuance_fields_complete_under_mock": fields_complete,
+        "gate_accepts_dry_run_draft": gate_ok if issuance else None,
+        "required_fields": list(LIVE_PERMIT_REQUIRED_FIELDS),
+        "arm_state_dependency": (
+            "Permit.device_id must match counts_as_live_valid ArmState "
+            "(source=real + validity=VALID + seven finite q_rad); "
+            "J6/J7 lack audited readonly position query"
+        ),
+        "blocked_by": blocked,
+        "hard_block_id": J6J7_HARD_BLOCK_ID,
+        "never_forges_live_permit": True,
+        "never_raises_control_ready": True,
+    }
 
 
 def _item(
@@ -885,6 +986,19 @@ def evaluate_host_control_readiness(
             owner="host_control_readiness gate ladder",
         )
     )
+    # Preview blocked_by so formal gate detail can cite root causes.
+    formal_grasp_blocked_by_preview = compute_formal_grasp_blocked_by(
+        formal_grasp_entry_allowed=formal_grasp_entry_allowed,
+        dry_run_grasp_entry_ready=dry_run_grasp_entry_ready,
+        arm_ok_live=arm_ok_live,
+        live_permit_valid=live_permit_valid,
+        vision_ready=vision_ready if isinstance(vision_ready, bool) else None,
+        permit_eligible=permit_eligible if isinstance(permit_eligible, bool) else None,
+        traj_ok=traj_ok,
+        arm_ok_dry=arm_ok_dry,
+        dry_reachable=dry_reachable,
+        dry_issuance_ok=dry_issuance_ok,
+    )
     items.append(
         _item(
             "formal_grasp_entry_gate",
@@ -898,7 +1012,8 @@ def evaluate_host_control_readiness(
                     "formal entry held: requires dry_run_grasp_entry_ready + validated "
                     "live Permit + live VALID ArmState (source=real, validity=VALID); "
                     f"dry_run_ready={dry_run_grasp_entry_ready}, "
-                    f"live_permit_valid={live_permit_valid}, live_arm={arm_ok_live}"
+                    f"live_permit_valid={live_permit_valid}, live_arm={arm_ok_live}; "
+                    f"blocked_by={list(formal_grasp_blocked_by_preview)}"
                 )
             ),
             owner="host/safety gate ladder",
@@ -1024,6 +1139,14 @@ def evaluate_host_control_readiness(
     # Always: this reporter refuses elevation (large-motion safety).
     control_missing.append("reporter_hard_hold_no_large_motion_elevation")
 
+    formal_grasp_blocked_by = formal_grasp_blocked_by_preview
+    live_permit_path = build_live_permit_path(
+        dry_probe=dry_probe,
+        arm_ok_live=arm_ok_live,
+        live_permit_valid=live_permit_valid,
+        formal_grasp_blocked_by=formal_grasp_blocked_by,
+    )
+
     gate_ladder = {
         "vision_pre_grasp_ready": vision_ready is True,
         "dry_run_grasp_entry_ready": dry_run_grasp_entry_ready,
@@ -1034,6 +1157,7 @@ def evaluate_host_control_readiness(
         "reporter_never_raises_motion_enabled": True,
         "definitions": dict(GATE_DEFINITIONS),
         "formal_grasp_entry_missing": formal_missing,
+        "formal_grasp_blocked_by": list(formal_grasp_blocked_by),
         "control_ready_missing": control_missing,
         "can_enter_formal_grasp": formal_grasp_entry_allowed,
         "operator_enable_required_now": False,
@@ -1041,7 +1165,8 @@ def evaluate_host_control_readiness(
         "arm_feedback_source_kind": arm_feedback.get("source_kind"),
         "counts_as_live_valid": arm_ok_live,
         "j6j7_readonly_position_hard_block": True,
-        "j6j7_readonly_hard_block_id": "j6_j7_no_audited_readonly_position_query",
+        "j6j7_readonly_hard_block_id": J6J7_HARD_BLOCK_ID,
+        "live_permit_path_status": live_permit_path.get("status"),
     }
 
     issuance_notes: list[str] = []
@@ -1051,7 +1176,9 @@ def evaluate_host_control_readiness(
             "Dry-run SafetyGate issuance diagnostic attempted "
             f"(fields_complete={issuance.get('issuance_fields_complete')}; "
             f"still_missing_fields={list(issuance.get('still_missing_fields') or [])}; "
-            f"only_hw_policy_remaining={issuance.get('only_hardware_enable_and_policy_remaining')})."
+            f"only_hw_policy_remaining={issuance.get('only_hardware_enable_and_policy_remaining')}; "
+            f"blocked_by={list(issuance.get('blocked_by') or [])}; "
+            f"live_permit_path_status={issuance.get('live_permit_path_status')})."
         )
 
     notes = (
@@ -1068,9 +1195,11 @@ def evaluate_host_control_readiness(
         "Never invents live contracts.Permit or opens CAN.",
         "Dry-run probe uses OfflineSafetyGate + MockArm (hardware_enabled=False).",
         "ArmStateReader readonly path currently cannot satisfy all_seven_q_rad_finite (J6/J7).",
-        "hard_block=j6_j7_no_audited_readonly_position_query "
+        f"hard_block={J6J7_HARD_BLOCK_ID} "
         "(docs/team/B/J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md); "
         "no Rest/enable-motion fallback.",
+        f"formal_grasp_blocked_by={list(formal_grasp_blocked_by)}.",
+        f"live_permit_path.status={live_permit_path.get('status')}.",
         f"can_enter_formal_grasp={formal_grasp_entry_allowed}; "
         f"control_ready_prerequisites_met={control_ready_prerequisites_met}.",
         *issuance_notes,
@@ -1095,6 +1224,8 @@ def evaluate_host_control_readiness(
         missing_software=software_missing,
         missing_field_or_operator=field_missing,
         hard_blockers=hard_blockers,
+        formal_grasp_blocked_by=formal_grasp_blocked_by,
+        live_permit_path=live_permit_path,
         dry_run_arm_disabled=dry_probe,
         arm_feedback=arm_feedback,
         elevation_conditions={
