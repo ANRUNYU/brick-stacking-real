@@ -1,8 +1,11 @@
 """Left-arm single-joint control for the host monitor.
 
-Pattern follows host scripts left_robot_motor_menu.py / p7_test_v1_joints.py
-and linkerbot A7Motor / MotorV2 APIs. Does NOT construct the full P7 object
-(P7.__init__ has Flash / mode side effects).
+Aligned with host references (WeChat doc + scripts on robot host):
+- J1–J5 / can2 / IDs 61–65 → ~/p7_test_v1_joints.py (A7Motor PP)
+- J6–J7 / can2 / IDs 66–67 → ~/p7_j67_verified.py (MotorV2 P-T-M)
+- confirm flow from menu / j67: READY → ENABLE → MOVE → RELEASE
+
+Does NOT construct the full P7 object (Flash / mode side effects).
 
 Hard gates:
 - process must be started with --enable-motion
@@ -15,12 +18,13 @@ from __future__ import annotations
 import math
 import threading
 import time
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Any
 
 
 LEFT_IFACE = "can2"
 LEFT_IDS = {1: 61, 2: 62, 3: 63, 4: 64, 5: 65, 6: 66, 7: 67}
+# Same soft limits as p7_test_v1_joints / p7_j67_verified / left URDF.
 URDF_LIMITS = [
     (-2.91, 2.91),
     (-3.20, 0.07),
@@ -30,15 +34,21 @@ URDF_LIMITS = [
     (-1.59, 1.59),
     (-1.59, 1.59),
 ]
-JOINT_MARGIN = math.radians(8)
+# p7_test_v1_joints uses ±0.02 rad; keep that as the primary soft margin.
+V1_LIMIT_MARGIN = 0.02
 V1_SPEED = 0.05
 V1_ACCEL = 1.0
-V1_TIMEOUT_S = 12.0
-V2_RATE_HZ = 50
-V2_DURATION_S = 4.0
+V1_SETTLE_S = 2.5
+V1_JUMP_TOL_RAD = 0.03
+V1_POS_ERR_TOL_RAD = 0.012
+# p7_j67_verified.py defaults
+V2_RATE_HZ = 100
+V2_DURATION_S = 6.0
 V2_KP = 12.0
-DEFAULT_STEP_DEG = {1: 5.0, 2: 5.0, 3: 5.0, 4: 5.0, 5: 5.0, 6: 3.0, 7: 3.0}
-MAX_STEP_DEG = {1: 10.0, 2: 10.0, 3: 10.0, 4: 10.0, 5: 10.0, 6: 5.0, 7: 5.0}
+V2_MAX_FEEDBACK_AGE_S = 0.3
+# V1 script STEP=0.05 rad (~2.86°); V2 script MOVE_DEG=5.
+DEFAULT_STEP_DEG = {1: 2.86, 2: 2.86, 3: 2.86, 4: 2.86, 5: 2.86, 6: 5.0, 7: 5.0}
+MAX_STEP_DEG = {1: 5.0, 2: 5.0, 3: 5.0, 4: 5.0, 5: 5.0, 6: 5.0, 7: 5.0}
 
 
 @dataclass
@@ -306,32 +316,25 @@ class JointController:
         span = high - low
         if span <= 0:
             raise RuntimeError("invalid URDF limits")
-        # Keep a soft margin, but never eat more than 15% of the joint span
-        # (J2 upper limit is only ~4deg — a fixed 8deg margin would zero the window).
-        margin = min(JOINT_MARGIN, 0.15 * span)
+        # Match p7_test_v1_joints (±0.02), but never eat >15% of a tight span (J2).
+        margin = min(V1_LIMIT_MARGIN, 0.15 * span)
         return low + margin, high - margin
 
     def _choose_target(self, start: float, amount: float, low: float, high: float, direction: int) -> float:
         lo, hi = self._usable_window(low, high)
         if not low < start < high:
             raise RuntimeError("current angle outside URDF range")
-        candidates = []
-        if direction >= 0 and lo <= start + amount <= hi:
-            candidates.append(start + amount)
-        if direction <= 0 and lo <= start - amount <= hi:
-            candidates.append(start - amount)
-        if not candidates:
-            # If start itself sits outside the soft window (near a hard stop),
-            # only allow a step that moves back toward the usable center.
-            mid = 0.5 * (lo + hi)
-            toward = mid - start
-            step = math.copysign(amount, toward) if toward != 0 else amount
-            target = start + step
-            if low < target < high and abs(target - mid) < abs(start - mid):
+        # Prefer +direction like p7_test_v1_joints when direction==0.
+        ordered = []
+        if direction >= 0:
+            ordered.append(+1)
+        if direction <= 0:
+            ordered.append(-1)
+        for sign in ordered:
+            target = start + sign * amount
+            if lo <= target <= hi:
                 return target
-            raise RuntimeError("no safe direction with requested step")
-        # Prefer positive when both available and direction==0.
-        return candidates[0]
+        raise RuntimeError("no safe direction with requested step")
 
     def _read_angle_locked(self, joint: int) -> float:
         if self.mock:
@@ -361,24 +364,23 @@ class JointController:
         motor = A7Motor(plan.motor_id, self._bus)
         if not motor.check_alive(timeout_s=1.0):
             raise RuntimeError("motor offline")
-        motor.read_initial_state(timeout_s=1.0)
-        if motor.enabled:
-            raise RuntimeError("motor already enabled; refuse takeover")
         start = float(motor._read_register_float(SensorType.POSITION, timeout_s=1.0))
+        already = bool(motor._read_register(InternalSensorType.ENABLED, timeout_s=1.0)[0])
+        if already:
+            raise RuntimeError("motor already enabled; refuse takeover")
+        # Same prep order as p7_test_v1_joints.py
         motor.set_control_mode(ControlMode.PP)
         motor.set_velocity(V1_SPEED)
         motor.set_acceleration(V1_ACCEL)
         motor.set_deceleration(V1_ACCEL)
         motor.set_angle(start)
+        time.sleep(0.3)
         motor.enable()
-        time.sleep(0.25)
-        if not bool(motor._read_register(InternalSensorType.ENABLED, timeout_s=0.8)[0]):
-            raise RuntimeError("enable not confirmed")
+        time.sleep(0.5)
         after = float(motor._read_register_float(SensorType.POSITION, timeout_s=1.0))
-        if abs(after - start) > math.radians(2):
+        if abs(after - start) > V1_JUMP_TOL_RAD:
             motor.disable()
             raise RuntimeError("position jumped after enable")
-        # Recompute target from post-enable pose with same signed step.
         signed = abs(plan.step_rad) if plan.target_rad >= plan.start_rad else -abs(plan.step_rad)
         low, high = plan.limits
         plan.start_rad = after
@@ -391,17 +393,15 @@ class JointController:
 
         motor = self._motor
         motor.set_angle(plan.target_rad)
-        t0 = time.monotonic()
-        latest = plan.start_rad
-        while time.monotonic() - t0 < V1_TIMEOUT_S:
-            time.sleep(0.2)
-            latest = float(motor._read_register_float(SensorType.POSITION, timeout_s=1.0))
-            if abs(plan.target_rad - latest) < math.radians(1.0):
-                break
-            if not (plan.limits[0] < latest < plan.limits[1]):
-                motor.set_angle(latest)
-                raise RuntimeError("feedback left URDF range")
-        motor.set_angle(latest)
+        time.sleep(V1_SETTLE_S)
+        latest = float(motor._read_register_float(SensorType.POSITION, timeout_s=1.0))
+        if not (plan.limits[0] < latest < plan.limits[1]):
+            motor.set_angle(latest)
+            raise RuntimeError("feedback left URDF range")
+        if abs(latest - plan.target_rad) > V1_POS_ERR_TOL_RAD:
+            raise RuntimeError(
+                f"V1 position error {abs(latest - plan.target_rad):.4f} rad > {V1_POS_ERR_TOL_RAD}"
+            )
         return latest
 
     def _enable_v2_locked(self, plan: JointPlan) -> None:
@@ -426,7 +426,7 @@ class JointController:
         motor.set_angle(motor.angle.angle)
         time.sleep(0.4)
         age = time.time() - motor.angle.timestamp
-        if motor.fault_code or not motor.enabled or age > 0.3:
+        if motor.fault_code or not motor.enabled or age > V2_MAX_FEEDBACK_AGE_S:
             if self._v2_polling:
                 motor.stop_polling()
                 self._v2_polling = False
@@ -440,26 +440,27 @@ class JointController:
         self._motor = motor
 
     def _move_v2_locked(self, plan: JointPlan) -> float:
+        # Trajectory loop mirrors p7_j67_verified.py (smoothstep @ 100Hz / 6s).
         motor = self._motor
         t0 = time.perf_counter()
         previous = plan.start_rad
-        steps = int(V2_DURATION_S * V2_RATE_HZ) + 1
-        for k in range(steps):
+        steps = int(V2_DURATION_S * V2_RATE_HZ)
+        for k in range(steps + 1):
             delay = t0 + k / V2_RATE_HZ - time.perf_counter()
             if delay > 0:
                 time.sleep(delay)
             actual = float(motor.angle.angle)
             age = time.time() - motor.angle.timestamp
-            if age > 0.3 or not motor.enabled or motor.fault_code:
+            if age > V2_MAX_FEEDBACK_AGE_S or not motor.enabled or motor.fault_code:
                 raise RuntimeError("V2 feedback abnormal during move")
             if abs(actual - previous) > math.radians(2):
                 raise RuntimeError("V2 sample jump >2deg")
             previous = actual
-            s = k / max(1, steps - 1)
+            s = k / max(1, steps)
             easing = 3 * s * s - 2 * s * s * s
             target = plan.start_rad + (plan.target_rad - plan.start_rad) * easing
             motor.set_angle(target)
-        time.sleep(0.3)
+        time.sleep(0.7)
         end = float(motor.angle.angle)
         motor.set_angle(end)
         return end

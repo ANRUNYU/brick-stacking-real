@@ -77,8 +77,19 @@ python tools/host_monitor/server.py --mock --enable-motion --bind 127.0.0.1 --po
 | `/api/control/status` | GET 控制快照 |
 | `/stream/head` | MJPEG |
 
+## 与主机测试脚本对齐（参考微信文档）
+
+| 设备 | 接口 / ID | 主机脚本 |
+|------|-----------|----------|
+| 左手 O6 | `can0` · `O6_SIDE=left` | SDK `tests/hand/o6/`（`p7_sdk_venv` + pytest） |
+| 右手 O6 | `can1` · `O6_SIDE=right` | 同上 |
+| 左臂 J1–J5 | `can2` · 61–65 | `~/p7_test_v1_joints.py`（步长 0.05 rad≈2.86°） |
+| 左臂 J6–J7 | `can2` · 66–67 | `~/p7_j67_verified.py 6\|7`（+5° / 6s / 100Hz） |
+
+本监视台**只做左臂单关节**；手部仍用 SDK pytest，不经网页发运动。
+
 ## 安全边界
 
-- 仅左臂 `can2`，ID 61–67；一步默认 ≤5°（腕 ≤3°），硬上限见 `joint_control.py`。  
+- 仅左臂 `can2`，ID 61–67；默认步长对齐上表，硬上限见 `joint_control.py`。  
 - V1=J1–5 PP；V2=J6–7 仅当 Flash 模式已是 P-T-M=2，否则拒绝（不写 Flash）。  
 - 不实例化 `linkerbot.P7`。
