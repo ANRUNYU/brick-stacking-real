@@ -1,0 +1,78 @@
+{
+  "schema_version": "m-placement-target-request-draft-1",
+  "status": "SHADOW_ADOPTED_CAMERA_EXPECTATIONS_UNBOUND_CALIBRATION",
+  "target_id": "m-first-red-01",
+  "slot_id": "m-first-placement-slot-01",
+  "region_id": "m-first-placement-region-01",
+  "expected_color": "red",
+  "target_association_confirmed": false,
+  "association_evidence_ref": null,
+  "reference_id": "table_black_cross_20mm",
+  "camera_id": "CP2L863000KL",
+  "camera_frame": "camera_CP2L863000KL_color_optical_frame",
+  "scene_version": null,
+  "epoch": null,
+  "profile_hash": "28be42d1dee02baad1816f046eda516f444b142e7cccf01af1444826eaa28aa1",
+  "profile_path": "config/vision_profiles/head_replacement_candidate.yaml",
+  "calibration_hash": null,
+  "calibration_candidate": {
+    "path": "calibration/candidates/C35_left_head_fit_only_user10mm_20261108.json",
+    "status": "FIT_ONLY_NOT_AN_APPROVED_CURRENT_BINDING",
+    "file_sha256": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461"
+  },
+  "placement_review_reference": {
+    "point_kind": "visible_top_center",
+    "expected_point_camera_m": [
+      -0.1855067028832577,
+      0.1895536719393091,
+      0.8417672003191844
+    ],
+    "table_normal_camera": [
+      -0.009627741360879422,
+      -0.7109416161657586,
+      -0.7031851285400648
+    ],
+    "point_error_bound_m": 0.006485589830884564
+  },
+  "formal_verify_reference": {
+    "point_kind": "model_center",
+    "expected_center_camera_m": [
+      -0.18526600934923573,
+      0.20732721234345308,
+      0.859346828532686
+    ],
+    "table_normal_camera": [
+      -0.009627741360879422,
+      -0.7109416161657586,
+      -0.7031851285400648
+    ],
+    "geometry_version": "v_slot_cross_nominal50mm_20261110_212838",
+    "point_error_bound_m": 0.006250030036285687
+  },
+  "adoption": {
+    "source_handoff": "docs/team/B/evidence/field_20261110/slot_camera_expectation_handoff_20261110_212838.json",
+    "source_annotation": "docs/team/B/evidence/field_20261110/slot_reference_confirmed_20261110_212838.json",
+    "operator_confirmed_marker": true,
+    "scope": "shadow_offline_and_field_contrast_only",
+    "does_not_approve_c35_accuracy": true
+  },
+  "post_place_evidence": {
+    "action_started_s": null,
+    "action_finished_s": null,
+    "released": null,
+    "min_stable_s": null,
+    "max_stable_shift_m": null,
+    "hand_clear": null,
+    "support_ok": null,
+    "neighbors_unchanged": null
+  },
+  "control_ready": false,
+  "motion_enabled": false,
+  "permit": null,
+  "notes": [
+    "Unified branch adopts V-proposed camera expectations for shadow verify without waiting for a separate M merge.",
+    "calibration_hash remains null; C35 candidate sha is not an approved current binding.",
+    "target_association_confirmed stays false until a red block is explicitly associated.",
+    "control_ready stays false; no arm/CAN actions."
+  ]
+}

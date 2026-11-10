@@ -79,6 +79,48 @@ def _unknown_bound():
     return ErrorBoundDict(None, None, "UNKNOWN")
 
 
+def measure_review_errors(
+    observed_point_camera_m,
+    *,
+    expected_point_camera_m,
+    table_normal_camera,
+    point_error_bound_m: float | None,
+) -> tuple[ErrorBoundDict, ErrorBoundDict, list[str]]:
+    """Planar xy + height errors for LocalizedReview (visible_top_center)."""
+    unknowns: list[str] = []
+    if observed_point_camera_m is None or expected_point_camera_m is None or table_normal_camera is None:
+        return _unknown_bound(), _unknown_bound(), ["review_expected_or_observed_unavailable"]
+    try:
+        import numpy as np
+        p = np.asarray(observed_point_camera_m, dtype=float)
+        e = np.asarray(expected_point_camera_m, dtype=float)
+        n = np.asarray(table_normal_camera, dtype=float)
+        if p.shape != (3,) or e.shape != (3,) or n.shape != (3,):
+            raise ValueError("bad shape")
+        nn = float(np.linalg.norm(n))
+        if not np.isfinite(nn) or nn <= 0:
+            raise ValueError("bad normal")
+        n = n / nn
+        delta = p - e
+        height = float(delta @ n)
+        planar = float(np.linalg.norm(delta - height * n))
+        bound = float(point_error_bound_m) if point_error_bound_m is not None else None
+        if bound is None or not (bound > 0):
+            unknowns.append("review_point_error_bound_missing")
+            return (
+                ErrorBoundDict(planar, None, "UNKNOWN"),
+                ErrorBoundDict(height, None, "UNKNOWN"),
+                unknowns,
+            )
+        return (
+            ErrorBoundDict(planar, bound, "MEASURED"),
+            ErrorBoundDict(abs(height), bound, "MEASURED"),
+            unknowns,
+        )
+    except (TypeError, ValueError):
+        return _unknown_bound(), _unknown_bound(), ["review_error_unparseable"]
+
+
 def load_placement_request(path: Path | None) -> dict[str, Any] | None:
     if path is None:
         return None
@@ -451,7 +493,26 @@ def export_field_session(
     rows = load_jsonl(bundles_path)
     handoffs = []
     evidences = []
+    review_expected = fields["expected_review_point_camera_m"]
+    review_bound = None
+    if placement_request:
+        review_bound = (placement_request.get("placement_review_reference") or {}).get(
+            "point_error_bound_m"
+        )
+    if review_expected is not None:
+        review_expected = tuple(float(x) for x in review_expected)
     for bundle in rows:
+        block = select_single_valid_block(bundle)
+        xy_m = height_m = None
+        if block is not None and review_expected is not None and table_normal is not None:
+            extras = block.get("b_extensions") or {}
+            obs, _ = resolve_camera_point(extras, fields["review_point_kind"])
+            xy_m, height_m, _meas_unknowns = measure_review_errors(
+                obs,
+                expected_point_camera_m=review_expected,
+                table_normal_camera=table_normal,
+                point_error_bound_m=review_bound,
+            )
         handoff = localized_review_handoff(
             bundle,
             expected_color=expected_color,
@@ -462,6 +523,8 @@ def export_field_session(
             reference_id=fields["reference_id"],
             calibration_candidate_sha256=fields["calibration_candidate_sha256"],
             review_point_kind=fields["review_point_kind"],
+            xy_m=xy_m,
+            height_m=height_m,
             support_ok=fields["support_ok"],
             stable=fields["stable"],
             hand_clear=fields["hand_clear"],

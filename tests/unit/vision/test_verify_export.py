@@ -157,3 +157,34 @@ def test_rejects_mismatched_point_kind_in_request():
     }
     with pytest.raises(ValueError, match="model_center"):
         export_field_session(RED, phase="pre_grasp", placement_request=bad)
+
+
+def test_measure_review_errors_planar_and_height():
+    from brick_stacking.vision.verify_export import measure_review_errors
+
+    xy, height, unknowns = measure_review_errors(
+        (0.01, 0.0, 0.05),
+        expected_point_camera_m=(0.0, 0.0, 0.05),
+        table_normal_camera=(0.0, 0.0, 1.0),
+        point_error_bound_m=0.01,
+    )
+    assert unknowns == []
+    assert xy.status == "MEASURED"
+    assert height.status == "MEASURED"
+    assert xy.value == pytest.approx(0.01)
+    assert height.value == pytest.approx(0.0)
+
+
+def test_adopted_request_fills_formal_expectation_without_pass():
+    adopted = ROOT / "config/planning/first_placement_review_request.adopted.json"
+    report = export_field_session(
+        RED, phase="pre_grasp", placement_request_path=adopted,
+    )
+    assert report["expected_center_camera_m"] is not None
+    assert report["formal_verify_point_kind"] == "model_center"
+    assert report["control_ready"] is False
+    # Without association + calibration binding, formal verify must not invent PASS.
+    assert report["verification_verdict_counts"].get("PASS", 0) == 0
+    first = report["localized_review_handoffs"][0]
+    assert first["xy_m"]["status"] == "MEASURED"
+    assert first["height_m"]["status"] == "MEASURED"
