@@ -40,6 +40,8 @@
   "notes": [
     "exposure_host candidate = SDK color global \u2192 process_monotonic sandwich",
     "bound covers bridge, RGB-D pair skew, half exposure, and lag jitter vs host receive",
-    "does not optically prove photon-arrival epoch; control_ready stays false"
-  ]
+    "does not optically prove photon-arrival epoch; control_ready stays false",
+    "DRAFT only: 12-frame single-red session; accept into ObservationBundle timing.validity only after dedicated >=60s capture plus one reconnect"
+  ],
+  "acceptance": "NOT_YET_ACCEPTED_FOR_BUNDLE_TIMING"
 }

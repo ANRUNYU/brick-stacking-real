@@ -46,11 +46,24 @@
     "p50": 0.636,
     "p95": 1.016,
     "max": 1.282,
-    "basis": "host receive to observation output; exposure-to-output still null"
+    "basis": "host receive to observation output; superseded diagnostically by clock mapping study for exposure path"
+  },
+  "field_exposure_to_output_s": {
+    "scene": "clock_mapping_20261110_two_sessions",
+    "p50": 0.688,
+    "max": 1.328,
+    "basis": "SDK color global→process_monotonic candidate to observation output; diagnostic only",
+    "evidence": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json"
   },
   "freshness_gate_s": 2.564,
-  "freshness_gate_status": "diagnostic_receive_based_pending_exposure_clock",
+  "freshness_gate_status": "diagnostic_receive_based_pending_accepted_clock_bound",
   "clock_error_bound_s": null,
+  "clock_error_bound_study_s": {
+    "value": 0.0016864349552430213,
+    "status": "PROVISIONAL_MULTI_SESSION_DIAGNOSTIC",
+    "evidence": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+    "note": "not yet written into ObservationBundle.timing.clock_error_bound_s"
+  },
   "calibration_hash": null,
   "control_ready": false,
   "golden": {

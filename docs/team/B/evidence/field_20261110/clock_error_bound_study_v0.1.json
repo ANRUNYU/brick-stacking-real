@@ -1,0 +1,55 @@
+{
+  "schema_version": "v-clock-error-bound-study-0.1",
+  "status": "PROVISIONAL_MAPPING_BOUND",
+  "source": "field_20261110/clock_mapping_session1+session2",
+  "control_ready": false,
+  "exposure_reference": "orbbec_color_global_timestamp_mapped_to_process_monotonic",
+  "n_rows": 92,
+  "n_usable": 92,
+  "host_boot_epochs": [
+    "f9016d4a-56d7-4a83-a8c2-3fa6d11f8153"
+  ],
+  "sdk_host_clock_types": [
+    "REALTIME"
+  ],
+  "receive_minus_exposure_s": {
+    "p50": 0.030432054394623265,
+    "p95": 0.030818495029234325,
+    "max": 0.03121345635736361,
+    "min": 0.02999337378423661,
+    "max_abs_dev_from_median": 0.0007814019627403468
+  },
+  "sdk_receive_minus_global_s": {
+    "p50": 0.029974,
+    "max": 0.030372,
+    "min": 0.029505
+  },
+  "exposure_candidate_to_output_s": {
+    "p50": 0.6819512490183115,
+    "p95": 0.7321949652017792,
+    "max": 1.3278297601500526
+  },
+  "components_s": {
+    "half_bridge_bracket_s": 2.3155007511377335e-06,
+    "half_rgb_depth_delta_s": 9.500014130026102e-06,
+    "half_fixed_color_exposure_s": 5e-05,
+    "mapping_jitter_vs_host_receive_s": 0.0007814019627403468
+  },
+  "safety_factor": 2.0,
+  "clock_error_bound_s": 0.0016864349552430213,
+  "notes": [
+    "exposure_host candidate = SDK color global \u2192 process_monotonic sandwich",
+    "bound covers bridge, RGB-D pair skew, half exposure, and lag jitter vs host receive",
+    "does not optically prove photon-arrival epoch; control_ready stays false",
+    "two independent capture processes; bound still diagnostic, control_ready stays false"
+  ],
+  "camera_epochs": [
+    "orbbec_CP2L863000KL_854f50a05186485eab737e3e122f595d",
+    "orbbec_CP2L863000KL_edce31428e4c4b788faccefbbf4dd064"
+  ],
+  "session_files": [
+    "docs/team/B/evidence/field_20261110/clock_mapping_observation_bundles.jsonl",
+    "docs/team/B/evidence/field_20261110/clock_mapping_session2_observation_bundles.jsonl"
+  ],
+  "acceptance": "PROVISIONAL_MULTI_SESSION_DIAGNOSTIC"
+}
