@@ -206,6 +206,7 @@ class TabletopDetector:
                 surface = tx*robust_center[0] + ty*robust_center[1] + normal*(top_height-plane.offset_m)
                 center = surface-normal*p["nominal_edge_m"]/2
                 candidate.update(status="SINGLE_CUBE_CANDIDATE",reason="color_height_footprint_supported",
+                                 top_surface_center_camera_m=surface.tolist(),
                                  center_camera_m=center.tolist(),center_estimator='trimmed_top_surface_midrange',
                                  center_trim_quantiles=[.05,.95])
             else:

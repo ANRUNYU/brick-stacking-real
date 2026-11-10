@@ -17,12 +17,21 @@ class RecordedCamera:
         self._paths = iter(paths)
 
     def get_synced_rgbd(self):
-        path = Path(next(self._paths))
+        frame, _ = self.read_recording(next(self._paths))
+        return frame
+
+    @staticmethod
+    def read_recording(path):
+        path = Path(path)
         with np.load(path, allow_pickle=False) as data:
             meta = json.loads(str(data["metadata"].item()))
-            if meta.pop("depth_unit") != "m":
+            if meta["depth_unit"] != "m":
                 raise ValueError("recording must contain depth in metres")
-            return CameraFrame(data["rgb"], data["depth_m"], data["k"], **meta)
+            fields = ("camera_id", "frame_id", "stamp_s", "clock_domain", "source",
+                      "registered", "rectified")
+            frame = CameraFrame(data["rgb"], data["depth_m"], data["k"],
+                                **{field: meta[field] for field in fields})
+            return frame, meta
 
 
 class MockArm:
