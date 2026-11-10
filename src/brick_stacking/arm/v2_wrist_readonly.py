@@ -50,8 +50,9 @@ PENDING_PROTOCOL_AUDIT: dict[str, Any] = {
     "quantization": None,
     "counts_as_live_valid_when_enabled": False,
     "reason_empty": (
-        "host motor_v2.py + in-repo docs/tools expose no pure J6/J7 position "
-        "query; Flash READ index map for live angle does not exist in SDK"
+        "host motor_v2.py + in-repo docs/tools + 2026-11-11 external Web/local "
+        "search expose no pure J6/J7 position query; Flash READ index map for "
+        "live angle / COM Theta does not exist in SDK or public manuals"
     ),
 }
 
@@ -179,12 +180,36 @@ EXTERNAL_NEXT_STEPS: tuple[str, ...] = (
     "matching this Flash/P-T-M stack.",
 )
 
+# 2026-11-11 out-of-repo search (Web + local readonly). Negative: no payload.
+EXTERNAL_PROTOCOL_SEARCH: dict[str, Any] = {
+    "schema_version": "j6j7-external-protocol-search-0.1",
+    "searched_at_local": "2026-11-11T00:14:00+08:00",
+    "evidence_json": (
+        "docs/team/B/evidence/field_20261110/"
+        "j6j7_external_protocol_search_20261111.json"
+    ),
+    "motorevo_protocol_manual_found": False,
+    "flash_theta_index_map_found": False,
+    "pure_position_query_bytes_found": False,
+    "pending_protocol_audit_payload_landed": False,
+    "goal_complete": False,
+    "public_motor_v2_main_sha256": (
+        "7da2f75d2cda2f27d25ca866d4487f4910c7c9c5f8f394af887c128be94518ee"
+    ),
+    "negative_conclusion": (
+        "Web + local Desktop/Downloads/Documents/OneDrive Desktop search found "
+        "no Motorevo MotorV2 pure position query bytes and no Flash COM Theta "
+        "index map; pending_protocol_audit stays empty/default-off."
+    ),
+}
+
 FAILURE_REASON = "J6/J7: no audited read-only position query"
 ARM_STATE_READER_LIVE_HOLD: tuple[str, ...] = (
     "J6/J7: no audited read-only position query (ArmStateReader leaves q_rad None)",
     "validity remains INVALID until seven finite joint angles are available",
     "Rest/raw V2 capture is not an audited read-only path and is not used here",
     "candidate search 2026-11-11: no pending_protocol_audit position payload",
+    "external protocol search 2026-11-11: no Motorevo manual / Theta index",
 )
 
 
@@ -218,12 +243,15 @@ def candidate_search_report() -> dict[str, Any]:
         "pending_protocol_audit": dict(PENDING_PROTOCOL_AUDIT),
         "candidates": [dict(c) for c in POSITION_READONLY_CANDIDATES],
         "external_next_steps": list(EXTERNAL_NEXT_STEPS),
+        "external_protocol_search": dict(EXTERNAL_PROTOCOL_SEARCH),
         "goal_software_only_completable": False,
         "counts_as_live_valid_reachable_via_readonly": False,
         "notes": [
-            "No in-repo / host-SDK pure J6/J7 position query; formal grasp "
-            "remains blocked on j6_j7_readonly until vendor protocol lands.",
+            "No in-repo / host-SDK / external-search pure J6/J7 position query; "
+            "formal grasp remains blocked on j6_j7_readonly until vendor "
+            "protocol lands.",
             "Do not raise control_ready / forge live VALID / enable-motion.",
+            "Do not re-spin the same eight in-repo candidates; need vendor input.",
         ],
     }
 
@@ -250,12 +278,15 @@ def hard_block_report() -> dict[str, Any]:
         "pending_protocol_audit": dict(PENDING_PROTOCOL_AUDIT),
         "position_readonly_candidate_found": False,
         "candidate_search": search,
+        "external_protocol_search": dict(EXTERNAL_PROTOCOL_SEARCH),
+        "goal_complete": False,
         "doc": HARD_BLOCK_DOC,
         "notes": [
             "Do not call MotorV2.read_initial_state from ArmStateReader.",
             "Flash mode READ remains allowed for binding identity only.",
             "Live VALID requires a future audited query; until then formal grasp stays blocked.",
-            "2026-11-11 candidate sweep: zero pending position payloads; need Motorevo manual / capture auth.",
+            "2026-11-11 candidate sweep + external Web/local search: zero pending "
+            "position payloads; need Motorevo manual / Flash Theta index / capture auth.",
         ],
     }
 

@@ -5,10 +5,22 @@
 **不存在**已审计的 MotorV2（J6/J7）**只读位置**查询。  
 2026-11-11 全库 + 主机 pinned SDK（`motor_v2.py` SHA256 `6f45000ba0f7f049e0a23b7ddceb318154b9672a5181472ea899099ea3127aba`）穷尽检索后：**仍无**可进入 `pending_protocol_audit` 的位置读角载荷（`ENABLE_PENDING_PROTOCOL_AUDIT` 默认 **false**，且 payload 为空）。
 
-因此 `ArmStateReader` 不能产出七轴有限 `q_rad`，`counts_as_live_valid=false`，`live_valid_arm_state` 保持硬阻塞，**正式抓取入口仍否**。  
-**Goal 不得标 complete**——现约束下（禁 Rest / 禁 `--enable-motion` / 禁伪造 live VALID）**无法仅靠软件解除** `j6_j7_readonly`。
+**同日仓库外检索（Web + 本机只读路径）亦否定**：未找到 Motorevo CAN 协议手册、Flash COM Theta 索引图、或纯位置/状态查询字节。公开 `linkerbot-python-sdk` `main` 的 `motor_v2.py`（fetch SHA256 `7da2f75d…`）与主机 pin 内容在关键路径上一致——Flash 仍仅 `0x00`/`0x0B`，取角仍依赖 Rest 或使能反馈。机读证据：[`evidence/field_20261110/j6j7_external_protocol_search_20261111.json`](evidence/field_20261110/j6j7_external_protocol_search_20261111.json)。
 
-机读：`src/brick_stacking/arm/v2_wrist_readonly.py`（`HARD_BLOCK_ID=j6_j7_no_audited_readonly_position_query`；`candidate_search_report()`）。
+因此 `ArmStateReader` 不能产出七轴有限 `q_rad`，`counts_as_live_valid=false`，`live_valid_arm_state` 保持硬阻塞，**正式抓取入口仍否**。  
+**Goal 不得标 complete**——现约束下（禁 Rest / 禁 `--enable-motion` / 禁伪造 live VALID）**无法仅靠软件解除** `j6_j7_readonly`；**外部依赖仍是厂商手册/索引（或书面确认无纯查询）**。
+
+机读：`src/brick_stacking/arm/v2_wrist_readonly.py`（`HARD_BLOCK_ID=j6_j7_no_audited_readonly_position_query`；`candidate_search_report()` / `EXTERNAL_PROTOCOL_SEARCH`）。
+
+## 仓库外检索范围与否定结论（2026-11-11）
+
+| 通道 | 范围 | 结果 |
+| --- | --- | --- |
+| WebSearch / WebFetch | Motorevo 官网与产品页、`docs.linkerhub.work` A7/P7 文档、GitHub `linkerbot-python-sdk` `motor_v2.py`、DeepWiki、通用「CAN 协议/Flash Theta」PDF 检索 | **无** Motorevo 协议 PDF；§6.3.2 仅见于 SDK 注释引用；A7 `get_angles` 需 `enable()`（禁） |
+| 本机只读 | Desktop / Downloads / Documents / `E:\OneDrive\Desktop`；模式 `*motor*v2*` / `*Motorevo*` / `*LinkerBot*` / `*protocol*` / 相关 `*.pdf` | 命中均为 **LinkerHand 灵巧手** SDK/报告或 PEAK 驱动安装包；**无** MotorV2 手册或 Theta 索引 |
+| 公开 SDK 交叉 | `raw.githubusercontent.com/.../motor_v2.py` vs 主机 pin `6f45000b…` | Flash 索引仍仅 SAVE/MODE；**无**纯查询字节；**未**接入 `pending_protocol_audit` |
+
+**否定结论**：在现检索范围内，**找不到**可落地的纯位置查询载荷或 Flash Theta 索引；**不要**把 Goal 标 complete；**不要**反复空转相同库内 8 类候选。
 
 ## 已审计 / 未审计对照
 
@@ -58,13 +70,13 @@
 2. U16（或其它）→ rad 的量化与符号/零位版本，有现场交叉验证（优先 Flash 读回本机 COM Theta MIN/MAX，索引须厂商给出）。
 3. 新鲜度与绑定规则写入 `AUDITED_READONLY_POSITION_QUERY_BYTES` 等常量后，再改 `ArmStateReader`。
 
-### 需用户提供 / 授权的下一步
+### 需用户提供 / 授权的下一步（Goal 外部依赖；软件 alone 不够）
 
 1. **Motorevo CAN 协议手册**（SDK 引用 §6.3.2 打包帧）：纯状态/位置查询命令（若有）的精确 8 字节请求与应答；Flash 参数表中 CAN COM Theta MIN/MAX（及任何 live 位置相关）**索引号**。
-2. 公开产品页无协议 PDF；联系厂商或 LinkerBot 索取与本驱动栈匹配的手册（例：`sales@mail.motorevo.cn`）。
+2. 公开产品页与本轮 Web/本机检索均无协议 PDF；联系厂商或 LinkerBot 索取与本驱动栈匹配的手册（例：`sales@mail.motorevo.cn`）。
 3. （可选）在腕部可靠支撑下，授权 **示波器 / candump** 对照一次 Rest 与一次心跳反馈布局——仅交叉验证，**不能**在无手册纯查询时冒充正式只读 API。
 
-在此之前：骨架 `decode_audited_wrist_position_reply` / `try_read_wrist_positions_readonly` **一律拒绝**，保持 `counts_as_live_valid` 不可达；**不要**把 Goal 标 complete。
+在此之前：骨架 `decode_audited_wrist_position_reply` / `try_read_wrist_positions_readonly` **一律拒绝**，`ENABLE_PENDING_PROTOCOL_AUDIT` 保持默认关且 payload 空；保持 `counts_as_live_valid` 不可达；**不要**把 Goal 标 complete。
 
 ## 对正式抓取的影响
 

@@ -8,6 +8,7 @@ from brick_stacking.arm.arm_state_validity import classify_arm_state
 from brick_stacking.arm.v2_wrist_readonly import (
     AUDITED_READONLY_POSITION_QUERY_BYTES,
     ENABLE_PENDING_PROTOCOL_AUDIT,
+    EXTERNAL_PROTOCOL_SEARCH,
     HARD_BLOCK_ID,
     J6J7ReadonlyPositionHardBlock,
     PENDING_PROTOCOL_AUDIT,
@@ -48,6 +49,19 @@ def test_candidate_search_finds_no_pending_payload():
         c["id"] == "flash_generic_read_unknown_theta_indices"
         for c in POSITION_READONLY_CANDIDATES
     )
+
+
+def test_external_protocol_search_negative_no_payload():
+    assert EXTERNAL_PROTOCOL_SEARCH["motorevo_protocol_manual_found"] is False
+    assert EXTERNAL_PROTOCOL_SEARCH["flash_theta_index_map_found"] is False
+    assert EXTERNAL_PROTOCOL_SEARCH["pure_position_query_bytes_found"] is False
+    assert EXTERNAL_PROTOCOL_SEARCH["pending_protocol_audit_payload_landed"] is False
+    assert EXTERNAL_PROTOCOL_SEARCH["goal_complete"] is False
+    report = hard_block_report()
+    assert report["goal_complete"] is False
+    assert report["external_protocol_search"]["pure_position_query_bytes_found"] is False
+    search = candidate_search_report()
+    assert search["external_protocol_search"]["motorevo_protocol_manual_found"] is False
 
 
 def test_try_read_refuses_even_when_bus_handle_passed():

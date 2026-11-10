@@ -20,7 +20,7 @@
     "enabled_by_default": false,
     "position_query_bytes": null,
     "counts_as_live_valid_when_enabled": false,
-    "reason_empty": "host motor_v2.py + in-repo docs/tools expose no pure J6/J7 position query; Flash READ index map for live angle does not exist in SDK"
+    "reason_empty": "host motor_v2.py + in-repo docs/tools + 2026-11-11 external Web/local search expose no pure J6/J7 position query; Flash READ index map for live angle / COM Theta does not exist in SDK or public manuals"
   },
   "vendor_sdk_motor_v2_sha256": "6f45000ba0f7f049e0a23b7ddceb318154b9672a5181472ea899099ea3127aba",
   "vendor_sdk_motor_v2_path": "/home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e/src/linkerbot/arm/p7/motor_v2.py",
@@ -35,6 +35,14 @@
     "sdk_default_pm_12_5_u16_map"
   ],
   "pending_protocol_audit_eligible_ids": [],
+  "external_protocol_search": {
+    "evidence_json": "docs/team/B/evidence/field_20261110/j6j7_external_protocol_search_20261111.json",
+    "motorevo_protocol_manual_found": false,
+    "flash_theta_index_map_found": false,
+    "pure_position_query_bytes_found": false,
+    "pending_protocol_audit_payload_landed": false,
+    "public_motor_v2_main_sha256": "7da2f75d2cda2f27d25ca866d4487f4910c7c9c5f8f394af887c128be94518ee"
+  },
   "external_next_steps": [
     "Obtain Motorevo CAN protocol manual (SDK cites §6.3.2) with pure position/status query bytes OR written confirmation none exists",
     "Vendor Flash index map for CAN COM Theta MIN/MAX — do not brute-force indices",
@@ -49,7 +57,9 @@
     "Rest / MotorV2.read_initial_state / raw U16 feedback are not audited readonly position paths.",
     "ArmStateReader keeps J6/J7 q_rad=None; validity=INVALID; counts_as_live_valid=false.",
     "2026-11-11 exhaustive candidate sweep: zero position-readonly payloads for pending_protocol_audit.",
+    "2026-11-11 external Web + local Desktop/Downloads/Documents search: negative — no Motorevo manual / Theta index / pure query bytes.",
     "Under no-Rest / no-enable-motion constraints, Goal cannot complete via software alone.",
-    "No CAN opened for this evidence artifact; software hard-block + SSH source audit only."
+    "No CAN opened for this evidence artifact; software hard-block + SSH/public source audit only.",
+    "goal_complete=false; do not re-spin the same eight in-repo candidates."
   ]
 }
