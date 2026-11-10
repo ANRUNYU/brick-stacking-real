@@ -1,0 +1,17 @@
+{
+  "schema_version": "host-control-ready-policy-attest-0.1",
+  "attested": false,
+  "operator_attest_control_ready": false,
+  "operator": null,
+  "evidence_ref": null,
+  "notes": "DEFAULT CLOSED. Copy via tools/host_control_ready_policy_attest.py; do not auto-open.",
+  "control_ready": false,
+  "motion_enabled": false,
+  "permit": null,
+  "usage": [
+    "Pass to tools/host_control_readiness.py --operator-policy-attest",
+    "attested=true is required before readiness may report control_ready=true",
+    "Does not open CAN; does not enable actuators; does not issue live Permit",
+    "formal_grasp_entry_allowed remains independently gated (live Permit + live arm)"
+  ]
+}

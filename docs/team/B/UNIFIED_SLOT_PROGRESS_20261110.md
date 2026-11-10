@@ -28,6 +28,8 @@
 20. **host/safety checklist**：机读抬起条件 + dry-run/arm-disabled 探测已接通；见 [HOST_CONTROL_READY_20261110.md](HOST_CONTROL_READY_20261110.md) 与 `host_control_readiness_20261110.json`。`only_operator_enable_remaining=false`；**仍不**抬 `control_ready` / 开臂 / CAN。
 21. **shadow PlanBundle + recorded 臂 ID（本轮）**：`tools/emit_shadow_plan_and_arm_state.py` 产出 `shadow_plan_bundle_20261110.json`（`trajectory_hash` 由 `arm.adapter.trajectory_hash` 计算）与 `recorded_arm_state_left_p7_20261110.json`（`device_id=can2:61,62,63,64,65,66,67`，`source=recorded`）。host checklist **`missing_software=[]`**；**不是** H3 生产 PlanBundle（#20），**不是** live 臂读。
 22. **dry-run SafetyGate 签发诊断（本轮）**：`OfflineSafetyGate.issue_dry_run_diagnostic` 在 MockArm/`hardware_enabled=False` 下走通；消费 shadow PlanBundle 后 `issuance_fields_complete=true`、`gate_accepts_draft=true`、`only_hardware_enable_and_policy_remaining=true`（相对 dry-run）；`executable=false`，`live_permit=null`。见 [M_PERMIT_AUTHORITY_20261110.md](M_PERMIT_AUTHORITY_20261110.md)。
+23. **门控阶梯（本轮）**：区分 `vision_pre_grasp_ready` → `dry_run_grasp_entry_ready` → `formal_grasp_entry_allowed` → `control_ready`。证据满足 dry-run 全链时 **`dry_run_grasp_entry_ready=true`**；`formal_grasp_entry_allowed` 仅在 live Permit + live VALID 臂满足时为 true；`control_ready` 另需显式 operator policy attest（**默认关**，不自动打开）。见 [HOST_CONTROL_READY_20261110.md](HOST_CONTROL_READY_20261110.md)。
+24. **live-or-recorded→VALID 机读路径（本轮）**：`arm_state_validity` + `tools/arm_state_live_or_recorded.py`；readiness 区分 `arm_state_device_id`（recorded PASS）与 `live_valid_arm_state`（`counts_as_live_valid`）。Mock/recorded/fixture 已测；**未**做真机大幅运动；Windows 上 `live-readonly` 软失败可跳过。ArmStateReader 因 J6/J7 无已审计只读位置查询，live 样本仍 INVALID。
 
 ## 物理阻塞
 
@@ -36,10 +38,11 @@
 ## 仍不抬 control_ready 的原因（真实剩余阻塞）
 
 - live `permit=null`（仅 D/M SafetyGate 可签发 live；本路径只发 diagnostic + dry-run 签发诊断）。
-- `control_ready` / `motion_enabled` 策略性保持 false（host/safety；本 readiness 永不抬升）。
-- `formal_grasp_entry_allowed=false`（设计硬持有；视觉就绪 ≠ 正式抓取入口）。
-- dry-run MockArm 路径：字段齐且 gate 接受 draft；**不等于** live Permit。
-- host checklist 软件两项已关；仍差：live Permit + live VALID 臂读 + host 策略抬升 +（真运动前）开臂；H3 生产 PlanBundle 仍待 #20。
+- `formal_grasp_entry_allowed=false`（缺 live Permit + live VALID 臂；recorded ≠ live）。
+- `control_ready=false`：formal 未过 + operator policy attest **默认关闭**（开关已实现，未打开）。
+- `motion_enabled` 仍默认 false。
+- dry-run MockArm 路径：`dry_run_grasp_entry_ready=true`；**不等于**正式抓取入口。
+- host checklist 软件两项已关；仍差：live Permit + live VALID 臂读 +（抬 control_ready 时）显式 attest +（真运动前）开臂；H3 生产 PlanBundle 仍待 #20。
 - post_place 缺动作完成/释放/稳定窗口证据（本轮非抓取入口硬阻塞，但列出）。
 
 ## SCENE 说明（已解除会话级误报）
@@ -50,8 +53,9 @@ readiness 现只采纳 `scene_consistent` 帧：warmup 上的 `SCENE_OR_RGBD_NOT
 
 ## 能否进入正式抓取
 
-**否。**  
+**否**（机读：`gate_ladder.can_enter_formal_grasp=false` / `formal_grasp_entry_allowed=false`）。  
 - 视觉侧：`vision_pre_grasp_ready=true` / `evidence_gates_clear=true` / `permit_eligible=true`（diagnostic 已写；**(A)**）。  
-- live `permit=null`；`awaiting_m_permit=false`，`awaiting_live_permit_host_enable=true`，`awaiting_actuator_enable=true`。  
-- 正式抓取入口：仍被 live permit / `control_ready` / `motion_enabled` / `formal_grasp_entry_allowed` 挡住；未开臂、未发 CAN。  
-- **是否需用户开臂**：现在不必；仅 host/safety 准备真运动前才需要。
+- dry-run：`dry_run_grasp_entry_ready=true`（MockArm 全链）。  
+- live `permit=null`；recorded 臂 ≠ live VALID；`awaiting_live_permit_host_enable=true`。  
+- `control_ready=false`（formal 未过 + attest 默认关）；`motion_enabled=false`；未开臂、未发 CAN。  
+- **是否需用户使能**：现在不必开臂；正式抓取前需 live Permit + live 臂读；抬 `control_ready` 另需显式 `--attested`。

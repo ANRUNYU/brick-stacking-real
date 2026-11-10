@@ -39,8 +39,9 @@ host/safety 抬起条件与 dry-run 探测见 [HOST_CONTROL_READY_20261110.md](H
 | `vision_pre_grasp_ready` | **true** | **(A)** 视觉侧 pre_grasp 就绪；**不等于**正式抓取许可 |
 | `permit_eligible` | **true** | 证据够评估 live 签发资格；**不是** `contracts.Permit` |
 | `diagnostic_permit` | 已写 | `m-diagnostic-permit-eligibility-0.1`；`executable=false`；`live_permit=null` |
-| `formal_grasp_entry_allowed` | **false** | 正式进入抓取（含运动路径）— 本模块恒 false |
-| `control_ready` | **false** | 控制就绪 — 永不由 readiness/V 抬升 |
+| `dry_run_grasp_entry_ready` | **true**（host checklist 探测后） | dry-run 全链就绪；见 host gate ladder（**不是**正式抓取） |
+| `formal_grasp_entry_allowed` | **false** | 正式进入抓取 — 需 live Permit + live VALID 臂（由 host checklist 计算；本模块不伪造） |
+| `control_ready` | **false** | 控制就绪 — 需 formal + 显式 operator policy attest（默认关；V/readiness 不自动抬） |
 | `motion_enabled` | **false** | 运动使能 — 永不由本路径打开 |
 | `permit` | **null** | **live** Permit — 仅 D/M SafetyGate 可签发；禁止把 diagnostic 当 live |
 | `awaiting_m_permit` | **false** | 证据已齐 → 不再笼统「等 M permit」 |

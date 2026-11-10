@@ -104,6 +104,13 @@ class ArmStateReader:
                     failures.append(f"{joint}: {exc}")
             positions.extend((None, None))
             failures.append("J6/J7: no audited read-only position query")
+            # Shared VALID rule: seven finite q_rad required. Until an audited
+            # J6/J7 read-only position query exists, samples stay INVALID.
+            from brick_stacking.arm.arm_state_validity import assign_validity_from_joints
+
+            validity, reason = assign_validity_from_joints(
+                positions=positions, failures=failures
+            )
             return {
                 "sample_id": uuid4().hex,
                 "source": "real",
@@ -113,8 +120,8 @@ class ArmStateReader:
                 "host_receive_stamp": time.monotonic(),
                 "clock_domain": "host_monotonic",
                 "epoch": self._epoch,
-                "validity": "INVALID",
-                "reason": "; ".join(failures),
+                "validity": validity,
+                "reason": reason,
                 "joint_names": JOINTS,
                 "joint_bindings": {
                     joint: {"sdk_index": index, "device_joint_id": str(motor_id)}

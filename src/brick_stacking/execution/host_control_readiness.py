@@ -1,8 +1,16 @@
-"""Host/safety control_ready + motion_enabled checklist (report-only).
+"""Host/safety control_ready + motion_enabled checklist.
 
-Evaluates elevation *conditions* without raising control_ready, without
-enabling actuators, and without sending CAN. Dry-run / arm-disabled probing
-uses OfflineSafetyGate + MockArm only (hardware_enabled=False).
+Gate ladder (machine-auditable):
+  vision_pre_grasp_ready
+    → dry_run_grasp_entry_ready   (MockArm / arm-disabled full chain)
+    → formal_grasp_entry_allowed  (live Permit + live VALID arm)
+    → control_ready               (attest-gated; THIS REPORTER NEVER RAISES)
+
+Hard safety (large-motion): this module always reports control_ready=false and
+motion_enabled=false. dry_run_grasp_entry_ready may be true. Operator policy
+attest switch exists (default closed) and is never auto-opened; even when
+attested, elevation is deferred — do not unlock real large arm motion here.
+Never invents live contracts.Permit, never opens CAN.
 """
 from __future__ import annotations
 
@@ -11,11 +19,45 @@ from pathlib import Path
 from typing import Any
 
 from brick_stacking.arm.adapter import MockArm
+from brick_stacking.arm.arm_state_validity import (
+    classify_arm_state,
+    unwrap_arm_state,
+)
+from brick_stacking.execution.host_policy_attest import (
+    SCHEMA as ATTEST_SCHEMA,
+    HostPolicyAttest,
+    empty_attest,
+    load_host_policy_attest,
+)
 from brick_stacking.execution.safety_gate import OfflineSafetyGate, StepEvidence
 from brick_stacking.runtime.config_loader import load_config
 
-SCHEMA = "host-control-readiness-0.1"
+SCHEMA = "host-control-readiness-0.2"
 DRY_RUN_PROBE_SCHEMA = "host-dry-run-arm-disabled-0.1"
+
+GATE_DEFINITIONS = {
+    "vision_pre_grasp_ready": (
+        "Vision-side pre_grasp evidence gates clear "
+        "(pre_grasp_gates.evidence_gates_clear). Not formal entry."
+    ),
+    "dry_run_grasp_entry_ready": (
+        "vision ready + diagnostic permit_eligible + PlanBundle trajectory_hash "
+        "+ ArmState.device_id (recorded/mock OK) + OfflineSafetyGate dry-run "
+        "issuance fields complete and gate accepts draft under MockArm."
+    ),
+    "formal_grasp_entry_allowed": (
+        "dry_run_grasp_entry_ready + live contracts.Permit validated by "
+        "OfflineSafetyGate against counts_as_live_valid ArmState "
+        "(source=real + validity=VALID + seven finite q_rad). "
+        "Recorded/mock/fixture arm and dry-run drafts do not count."
+    ),
+    "control_ready": (
+        "Prerequisites: formal_grasp_entry_allowed + explicit "
+        "operator_policy_attest (attested=true, default closed). "
+        "THIS REPORTER ALWAYS reports control_ready=false (large-motion "
+        "safety); elevation deferred to a dedicated host path."
+    ),
+}
 
 
 def _context_hashes_from_diagnostic(diagnostic_permit: dict[str, Any] | None) -> dict[str, str | None]:
@@ -43,22 +85,38 @@ def _context_hashes_from_diagnostic(diagnostic_permit: dict[str, Any] | None) ->
 
 
 # Conditions that must hold before host/safety may *consider* raising
-# control_ready. This module never performs the raise.
+# control_ready. Attest is an additional explicit switch.
 CONTROL_READY_ELEVATION_CONDITIONS = (
     "vision_pre_grasp_ready_or_evidence_gates_clear",
     "live_contracts_Permit_from_SafetyGate",
     "PlanBundle_trajectory_hash",
-    "fresh_ArmState_device_id_matching_permit",
+    "fresh_live_VALID_ArmState_device_id_matching_permit",
     "offline_dry_run_config_or_explicit_live_host_policy",
+    "operator_policy_attest_control_ready",
     "host_policy_decision_to_raise_control_ready",
 )
 
-# Conditions for motion_enabled (host_monitor / actuator path).
 MOTION_ENABLED_ELEVATION_CONDITIONS = (
     "process_started_with_enable_motion",  # host_monitor --enable-motion
     "control_session_confirm_READY",
     "joint_confirm_ENABLE",
     "live_permit_and_control_ready_for_trajectory_path",
+)
+
+FORMAL_GRASP_ENTRY_CONDITIONS = (
+    "dry_run_grasp_entry_ready",
+    "live_contracts_Permit_validated_by_OfflineSafetyGate",
+    "live_VALID_ArmState_source_real",
+    "permit_device_id_matches_live_arm",
+)
+
+DRY_RUN_GRASP_ENTRY_CONDITIONS = (
+    "vision_pre_grasp_ready",
+    "permit_eligible_diagnostic",
+    "PlanBundle_trajectory_hash",
+    "ArmState_device_id_recorded_or_live",
+    "OfflineSafetyGate_dry_run_issuance_fields_complete",
+    "OfflineSafetyGate_gate_accepts_dry_run_draft",
 )
 
 
@@ -79,28 +137,30 @@ class HostControlReadiness:
     motion_enabled: bool
     formal_grasp_entry_allowed: bool
     formal_grasp_ready: bool
+    dry_run_grasp_entry_ready: bool
+    vision_pre_grasp_ready: bool | None
     only_operator_enable_remaining: bool
     needs_operator_physical_enable_now: bool
     needs_operator_physical_enable_before_real_motion: bool
-    vision_pre_grasp_ready: bool | None
     permit_eligible: bool | None
     live_permit: Any
+    operator_policy_attest: dict[str, Any]
+    gate_ladder: dict[str, Any]
     checklist: tuple[ChecklistItem, ...]
     missing_software: tuple[str, ...]
     missing_field_or_operator: tuple[str, ...]
     hard_blockers: tuple[dict[str, Any], ...]
     dry_run_arm_disabled: dict[str, Any] | None
+    arm_feedback: dict[str, Any] | None
     elevation_conditions: dict[str, Any]
     notes: tuple[str, ...]
 
     def to_dict(self) -> dict[str, Any]:
         payload = asdict(self)
         payload["checklist"] = [asdict(item) for item in self.checklist]
-        # Hard invariants — never elevate from this reporter.
+        # Hard safety: never unlock large-motion host paths from this reporter.
         payload["control_ready"] = False
         payload["motion_enabled"] = False
-        payload["formal_grasp_entry_allowed"] = False
-        payload["formal_grasp_ready"] = False
         payload["live_permit"] = None
         return payload
 
@@ -122,6 +182,89 @@ def _item(
         detail=detail,
         owner=owner,
     )
+
+
+def _unwrap_arm_state(arm_state: dict[str, Any] | None) -> dict[str, Any] | None:
+    """Accept raw ArmState or recorded / live-or-recorded wrappers."""
+    unwrapped = unwrap_arm_state(arm_state)
+    if unwrapped is not None:
+        return unwrapped  # type: ignore[return-value]
+    if not isinstance(arm_state, dict):
+        return None
+    return arm_state
+
+
+def _validate_live_permit(
+    *,
+    live_permit: dict[str, Any],
+    arm_state: dict[str, Any],
+    plan_bundle: dict[str, Any] | None,
+    diagnostic_permit: dict[str, Any] | None,
+    config_path: str | Path,
+) -> tuple[bool, str]:
+    """Validate a claimed live Permit against OfflineSafetyGate + live arm.
+
+    Returns (ok, detail). Never invents fields; fails closed on mismatch.
+    """
+    arm_class = classify_arm_state(arm_state)
+    if not arm_class.get("counts_as_live_valid"):
+        return False, (
+            "live Permit validation requires counts_as_live_valid "
+            f"(source={arm_state.get('source')!r} validity={arm_state.get('validity')!r} "
+            f"blockers={arm_class.get('blockers')})"
+        )
+    required = (
+        "device_id",
+        "trajectory_hash",
+        "config_hash",
+        "calibration_hash",
+        "scene_version",
+        "valid_until_host_monotonic_s",
+    )
+    missing = [k for k in required if live_permit.get(k) in (None, "")]
+    if missing:
+        return False, f"live Permit missing fields: {missing}"
+
+    traj = None
+    if plan_bundle is not None:
+        traj = plan_bundle.get("trajectory_hash") or (plan_bundle.get("trajectory") or {}).get(
+            "hash"
+        )
+    if traj and str(live_permit.get("trajectory_hash")) != str(traj):
+        return False, "live Permit.trajectory_hash != PlanBundle.trajectory_hash"
+
+    if str(live_permit.get("device_id")) != str(arm_state.get("device_id")):
+        return False, "live Permit.device_id != ArmState.device_id"
+
+    hashes = _context_hashes_from_diagnostic(diagnostic_permit)
+    config_hash = live_permit.get("config_hash") or hashes.get("config_hash")
+    calibration_hash = live_permit.get("calibration_hash") or hashes.get("calibration_hash")
+    scene_version = live_permit.get("scene_version") or hashes.get("scene_version")
+    if not all((config_hash, calibration_hash, scene_version)):
+        return False, "cannot validate live Permit without config/calibration/scene hashes"
+
+    config = load_config(config_path)
+    gate = OfflineSafetyGate(max_age_s=float(config["task"]["max_observation_age_s"]))
+    now_s = float(arm_state.get("host_receive_stamp") or 0.0)
+    try:
+        gate.check_step_evidence(
+            StepEvidence(
+                feedback=arm_state,  # type: ignore[arg-type]
+                calibration_valid=True,
+                trajectory_hash=str(live_permit["trajectory_hash"]),
+                permit=live_permit,  # type: ignore[arg-type]
+            ),
+            now_s=now_s,
+            clock_domain=str(arm_state.get("clock_domain") or ""),
+            epoch=str(arm_state.get("epoch") or ""),
+            device_id=str(arm_state.get("device_id") or ""),
+            config_hash=str(config_hash),
+            calibration_hash=str(calibration_hash),
+            scene_version=str(scene_version),
+        )
+    except (ValueError, TypeError, KeyError) as exc:
+        return False, f"OfflineSafetyGate rejected live Permit: {exc}"
+    return True, "live Permit validated by OfflineSafetyGate against live ArmState"
 
 
 def probe_dry_run_arm_disabled(
@@ -155,7 +298,6 @@ def probe_dry_run_arm_disabled(
     gate_config_ok = False
     gate_config_error: str | None = None
     try:
-        # Scene identity is not exercised here; only the offline dry_run port gate.
         if config["project"] != {"dry_run": True, "environment": "offline"}:
             raise ValueError("offline dry_run configuration required")
         if getattr(port, "backend", None) != "mock" or getattr(port, "hardware_enabled", None) is not False:
@@ -247,6 +389,7 @@ def evaluate_host_control_readiness(
     arm_state: dict[str, Any] | None = None,
     live_permit: dict[str, Any] | None = None,
     host_monitor_snapshot: dict[str, Any] | None = None,
+    operator_policy_attest: HostPolicyAttest | dict[str, Any] | str | Path | None = None,
     config_path: str | Path | None = None,
     probe_dry_run: bool = False,
 ) -> HostControlReadiness:
@@ -259,6 +402,37 @@ def evaluate_host_control_readiness(
     permit_eligible = gaps.get("permit_eligible")
     if permit_eligible is None:
         permit_eligible = diag.get("permit_eligible")
+
+    cfg = config_path or "config/offline_task.yaml"
+
+    if isinstance(operator_policy_attest, HostPolicyAttest):
+        attest = operator_policy_attest
+    elif isinstance(operator_policy_attest, (str, Path)):
+        attest = load_host_policy_attest(operator_policy_attest)
+    elif isinstance(operator_policy_attest, dict):
+        attested = operator_policy_attest.get("attested") is True or (
+            operator_policy_attest.get("operator_attest_control_ready") is True
+        )
+        attest = HostPolicyAttest(
+            schema_version=ATTEST_SCHEMA,
+            attested=bool(attested),
+            operator=(
+                str(operator_policy_attest["operator"])
+                if operator_policy_attest.get("operator")
+                else None
+            ),
+            evidence_ref=(
+                str(operator_policy_attest["evidence_ref"])
+                if operator_policy_attest.get("evidence_ref")
+                else None
+            ),
+            notes=str(operator_policy_attest.get("notes") or ""),
+            control_ready=False,
+            motion_enabled=False,
+            path=None,
+        )
+    else:
+        attest = empty_attest()
 
     items: list[ChecklistItem] = []
 
@@ -331,46 +505,6 @@ def evaluate_host_control_readiness(
             )
         )
 
-    # --- live Permit ---
-    if live_permit is not None:
-        items.append(
-            _item(
-                "live_permit",
-                "FAIL",
-                blocking=True,
-                category="live_permit",
-                detail="non-null live_permit passed into host checklist; refuse elevation",
-                owner="host_control_readiness",
-            )
-        )
-        live_permit_present = True
-    else:
-        live_permit_present = False
-        field_status = (diag.get("live_permit_field_status") or {}) if diag else {}
-        if field_status:
-            hints = ", ".join(
-                f"{key}:{ (value or {}).get('status') }"
-                for key, value in field_status.items()
-            )
-            permit_detail = (
-                "contracts.Permit is null; only D/M SafetyGate may issue at execution. "
-                f"diagnostic field hints={{{hints}}}"
-            )
-        else:
-            permit_detail = (
-                "contracts.Permit is null; only D/M SafetyGate may issue at execution"
-            )
-        items.append(
-            _item(
-                "live_permit",
-                "MISSING",
-                blocking=True,
-                category="live_permit",
-                detail=permit_detail,
-                owner="D/M SafetyGate",
-            )
-        )
-
     # --- PlanBundle / trajectory_hash ---
     traj = None
     if plan_bundle is not None:
@@ -404,30 +538,32 @@ def evaluate_host_control_readiness(
         )
         traj_ok = False
 
-    # --- ArmState.device_id ---
-    # Accept either raw ArmState or recorded-arm-state-0.1 wrapper.
-    if (
-        isinstance(arm_state, dict)
-        and arm_state.get("schema_version") == "recorded-arm-state-0.1"
-        and isinstance(arm_state.get("arm_state"), dict)
-    ):
-        arm_state = arm_state["arm_state"]
-    arm_device = None
-    if arm_state is not None:
-        arm_device = arm_state.get("device_id")
+    # --- ArmState.device_id (recorded OK for dry-run; live VALID required for formal) ---
+    arm_state = _unwrap_arm_state(arm_state)
+    arm_feedback = classify_arm_state(arm_state)
+    arm_device = arm_feedback.get("device_id")
+    arm_source = arm_feedback.get("source")
     diag_arm = ((diag.get("live_permit_field_status") or {}).get("device_id") or {}).get("status")
-    if arm_device and arm_state and arm_state.get("source") in {"mock", "real", "recorded"}:
+    arm_ok_dry = bool(
+        arm_device and arm_source in {"mock", "real", "recorded"}
+    )
+    # Live formal path: source=real AND validity=VALID AND seven finite joints.
+    arm_ok_live = arm_feedback.get("counts_as_live_valid") is True
+    if arm_ok_dry:
         items.append(
             _item(
                 "arm_state_device_id",
                 "PASS",
                 blocking=False,
                 category="software",
-                detail=f"ArmState.device_id={arm_device} source={arm_state.get('source')}",
+                detail=(
+                    f"ArmState.device_id={arm_device} source={arm_source} "
+                    f"validity={arm_feedback.get('validity')} "
+                    f"(recorded/mock ≠ live VALID)"
+                ),
                 owner="A / arm adapter",
             )
         )
-        arm_ok = True
     else:
         items.append(
             _item(
@@ -442,20 +578,131 @@ def evaluate_host_control_readiness(
                 owner="A / arm adapter",
             )
         )
-        arm_ok = False
+
+    if arm_ok_live:
+        items.append(
+            _item(
+                "live_valid_arm_state",
+                "PASS",
+                blocking=False,
+                category="software",
+                detail=(
+                    f"live VALID ArmState.source=real device_id={arm_device} "
+                    f"counts_as_live_valid=true"
+                ),
+                owner="A / ArmStateReader",
+            )
+        )
+    else:
+        source_kind = arm_feedback.get("source_kind") or "missing"
+        blockers = list(arm_feedback.get("blockers") or [])
+        if source_kind == "recorded":
+            live_status = "MISSING"
+            live_detail = (
+                "recorded ArmState/device_id binding present but does not count as "
+                f"live VALID; blockers={blockers}"
+            )
+        elif source_kind == "mock":
+            live_status = "MISSING"
+            live_detail = (
+                f"MockArm VALID is dry-run only; blockers={blockers}"
+            )
+        elif source_kind == "live_real":
+            live_status = "FAIL"
+            live_detail = (
+                "live ArmStateReader sample present but not VALID "
+                f"(typically J6/J7 missing); blockers={blockers}; "
+                f"reason={arm_feedback.get('reason')}"
+            )
+        else:
+            live_status = "MISSING"
+            live_detail = (
+                "fresh VALID live ArmState missing "
+                f"(source_kind={source_kind}; blockers={blockers})"
+            )
+        items.append(
+            _item(
+                "live_valid_arm_state",
+                live_status,
+                blocking=True,
+                category="software",
+                detail=live_detail,
+                owner="A / ArmStateReader",
+            )
+        )
+
+    # --- live Permit (never forge; validate if provided) ---
+    live_permit_valid = False
+    live_permit_detail = (
+        "contracts.Permit is null; only D/M SafetyGate may issue at execution"
+    )
+    live_permit_status = "MISSING"
+    if live_permit is not None:
+        if not isinstance(live_permit, dict):
+            live_permit_status = "FAIL"
+            live_permit_detail = "live_permit input is not a dict; refuse"
+        elif arm_state is None or not arm_ok_live:
+            live_permit_status = "FAIL"
+            live_permit_detail = (
+                "non-null live_permit without live VALID ArmState; refuse elevation "
+                "(do not treat dry-run draft as live)"
+            )
+        else:
+            ok, detail = _validate_live_permit(
+                live_permit=live_permit,
+                arm_state=arm_state,
+                plan_bundle=plan_bundle,
+                diagnostic_permit=diag if isinstance(diag, dict) else None,
+                config_path=cfg,
+            )
+            if ok:
+                live_permit_valid = True
+                live_permit_status = "PASS"
+                live_permit_detail = detail
+            else:
+                live_permit_status = "FAIL"
+                live_permit_detail = detail
+    else:
+        field_status = (diag.get("live_permit_field_status") or {}) if diag else {}
+        if field_status:
+            hints = ", ".join(
+                f"{key}:{(value or {}).get('status')}"
+                for key, value in field_status.items()
+            )
+            live_permit_detail = (
+                "contracts.Permit is null; only D/M SafetyGate may issue at execution. "
+                f"diagnostic field hints={{{hints}}}"
+            )
+    items.append(
+        _item(
+            "live_permit",
+            live_permit_status,
+            blocking=True,
+            category="live_permit",
+            detail=live_permit_detail,
+            owner="D/M SafetyGate",
+        )
+    )
 
     # --- offline dry_run / arm-disabled path + issuance diagnostic ---
     dry_probe: dict[str, Any] | None = None
+    dry_issuance_ok = False
+    dry_reachable = False
     if probe_dry_run:
         dry_probe = probe_dry_run_arm_disabled(
-            config_path=config_path or "config/offline_task.yaml",
+            config_path=cfg,
             diagnostic_permit=diag if isinstance(diag, dict) else None,
             plan_bundle=plan_bundle,
         )
         issuance = dry_probe.get("issuance_diagnostic") or {}
         plumbing = issuance.get("plumbing_self_check") or {}
         missing_fields = list(issuance.get("still_missing_fields") or [])
-        if dry_probe.get("reachable"):
+        dry_reachable = bool(dry_probe.get("reachable"))
+        dry_issuance_ok = bool(
+            issuance.get("issuance_fields_complete")
+            and issuance.get("gate_accepts_draft") is True
+        )
+        if dry_reachable:
             detail = (
                 "OfflineSafetyGate+MockArm reachable; hardware_enabled=false; "
                 f"step_without_permit_rejected={dry_probe.get('step_without_permit_rejected')}; "
@@ -486,14 +733,7 @@ def evaluate_host_control_readiness(
         items.append(
             _item(
                 "dry_run_safety_gate_issuance",
-                (
-                    "PASS"
-                    if issuance.get("issuance_fields_complete")
-                    and issuance.get("gate_accepts_draft") is True
-                    else "PROBED"
-                    if issuance.get("issuance_attempted")
-                    else "FAIL"
-                ),
+                "PASS" if dry_issuance_ok else ("PROBED" if issuance.get("issuance_attempted") else "FAIL"),
                 blocking=False,
                 category="dry_run",
                 detail=(
@@ -603,22 +843,120 @@ def evaluate_host_control_readiness(
             )
         )
 
-    # --- host policy: this module never raises control_ready ---
+    # --- gate ladder computation ---
+    dry_run_grasp_entry_ready = bool(
+        vision_ready is True
+        and permit_eligible is True
+        and traj_ok
+        and arm_ok_dry
+        and dry_reachable
+        and dry_issuance_ok
+    )
+    formal_grasp_entry_allowed = bool(
+        dry_run_grasp_entry_ready and live_permit_valid and arm_ok_live
+    )
+    # control_ready requires formal entry + explicit operator attest (switch closed by default).
+    control_ready = bool(formal_grasp_entry_allowed and attest.attested is True)
+
     items.append(
         _item(
-            "host_policy_control_ready",
-            "POLICY_HOLD",
-            blocking=True,
-            category="host_policy",
+            "dry_run_grasp_entry_ready",
+            "PASS" if dry_run_grasp_entry_ready else ("UNKNOWN" if not probe_dry_run else "FAIL"),
+            blocking=False,
+            category="dry_run",
             detail=(
-                "control_ready held false by host/safety checklist; "
-                "ObservationBundle.control_ready is Literal[False]; "
-                "OfflineExecutionManager refuses hardware adapters; "
-                "no production host path on this branch raises control_ready=true"
+                "dry-run full chain ready"
+                if dry_run_grasp_entry_ready
+                else (
+                    "dry-run chain incomplete; need vision+eligible+traj+arm+issuance "
+                    f"(reachable={dry_reachable}, issuance_ok={dry_issuance_ok}, probed={probe_dry_run})"
+                )
             ),
-            owner="host/safety (this checklist never raises)",
+            owner="host_control_readiness gate ladder",
         )
     )
+    items.append(
+        _item(
+            "formal_grasp_entry_gate",
+            "PASS" if formal_grasp_entry_allowed else "POLICY_HOLD",
+            blocking=True,
+            category="live_permit",
+            detail=(
+                "formal_grasp_entry_allowed=true"
+                if formal_grasp_entry_allowed
+                else (
+                    "formal entry held: requires dry_run_grasp_entry_ready + validated "
+                    "live Permit + live VALID ArmState (source=real); "
+                    f"dry_run_ready={dry_run_grasp_entry_ready}, "
+                    f"live_permit_valid={live_permit_valid}, live_arm={arm_ok_live}"
+                )
+            ),
+            owner="host/safety gate ladder",
+        )
+    )
+
+    # --- operator policy attest (default closed) ---
+    if attest.attested:
+        items.append(
+            _item(
+                "operator_policy_attest_control_ready",
+                "PASS" if formal_grasp_entry_allowed else "POLICY_HOLD",
+                blocking=not formal_grasp_entry_allowed,
+                category="host_policy",
+                detail=(
+                    f"operator attest present (operator={attest.operator!r}); "
+                    + (
+                        "formal entry satisfied → control_ready may raise"
+                        if formal_grasp_entry_allowed
+                        else "formal entry not satisfied → control_ready stays false"
+                    )
+                ),
+                owner="operator / host_policy_attest",
+            )
+        )
+    else:
+        items.append(
+            _item(
+                "operator_policy_attest_control_ready",
+                "POLICY_HOLD",
+                blocking=True,
+                category="host_policy",
+                detail=(
+                    "operator_policy_attest closed (attested=false/missing); "
+                    "control_ready stays false until explicit attest via "
+                    "tools/host_control_ready_policy_attest.py"
+                ),
+                owner="operator / host_policy_attest",
+            )
+        )
+
+    if control_ready:
+        items.append(
+            _item(
+                "host_policy_control_ready",
+                "PASS",
+                blocking=False,
+                category="host_policy",
+                detail="control_ready=true under formal entry + operator attest",
+                owner="host/safety (attest-gated)",
+            )
+        )
+    else:
+        items.append(
+            _item(
+                "host_policy_control_ready",
+                "POLICY_HOLD",
+                blocking=True,
+                category="host_policy",
+                detail=(
+                    "control_ready held false; requires formal_grasp_entry_allowed "
+                    f"(={formal_grasp_entry_allowed}) AND operator_policy_attest "
+                    f"(attested={attest.attested})"
+                ),
+                owner="host/safety (attest-gated; default closed)",
+            )
+        )
+
     items.append(
         _item(
             "host_policy_motion_enabled",
@@ -633,10 +971,23 @@ def evaluate_host_control_readiness(
         )
     )
 
+    # live_valid_arm_state is a formal/live software gap, but recorded device_id
+    # still clears the older arm_state_device_id software checklist item.
     software_missing = tuple(
         i.id
         for i in items
-        if i.blocking and i.category == "software" and i.status in {"FAIL", "MISSING", "UNKNOWN"}
+        if i.blocking
+        and i.category == "software"
+        and i.status in {"FAIL", "MISSING", "UNKNOWN"}
+        and i.id != "live_valid_arm_state"
+    )
+    # Keep live VALID visible as a hard blocker without collapsing recorded PASS.
+    live_arm_software_gap = tuple(
+        i.id
+        for i in items
+        if i.id == "live_valid_arm_state"
+        and i.blocking
+        and i.status in {"FAIL", "MISSING", "UNKNOWN"}
     )
     field_missing = tuple(
         i.id
@@ -657,23 +1008,46 @@ def evaluate_host_control_readiness(
         if i.blocking and i.status != "PASS"
     )
 
-    # only_operator_enable_remaining: ALL software + live permit + host policy
-    # prerequisites satisfied except the physical ENABLE step.
-    # Today host_policy always holds → this stays false by design of this release.
-    software_clear = (
-        vision_ready is True
-        and (permit_eligible is True or permit_eligible is None)
-        and traj_ok
-        and arm_ok
-        and live_permit_present
+    # only_operator_enable_remaining: software+live permit+formal+attest clear;
+    # only physical ENABLE left.
+    only_operator = bool(
+        formal_grasp_entry_allowed
+        and control_ready
+        and motion_process is True
+        and session_open is True
         and not software_missing
     )
-    # Host policy still refuses elevation → never "only operator left" from this tool.
-    only_operator = False
-    if software_clear and motion_process is True and session_open is True:
-        # Even then, this checklist does not claim only-operator: live trajectory
-        # path still needs an explicit host policy raise which we refuse.
-        only_operator = False
+
+    formal_missing: list[str] = []
+    if not dry_run_grasp_entry_ready:
+        formal_missing.append("dry_run_grasp_entry_ready")
+    if not live_permit_valid:
+        formal_missing.append("live_contracts_Permit_validated")
+    if not arm_ok_live:
+        formal_missing.append("live_VALID_ArmState_source_real")
+
+    control_missing: list[str] = []
+    if not formal_grasp_entry_allowed:
+        control_missing.append("formal_grasp_entry_allowed")
+    if not attest.attested:
+        control_missing.append("operator_policy_attest_control_ready")
+
+    gate_ladder = {
+        "vision_pre_grasp_ready": vision_ready is True,
+        "dry_run_grasp_entry_ready": dry_run_grasp_entry_ready,
+        "formal_grasp_entry_allowed": formal_grasp_entry_allowed,
+        "control_ready": control_ready,
+        "definitions": dict(GATE_DEFINITIONS),
+        "formal_grasp_entry_missing": formal_missing,
+        "control_ready_missing": control_missing,
+        "can_enter_formal_grasp": formal_grasp_entry_allowed,
+        "operator_enable_required_now": bool(
+            formal_grasp_entry_allowed and attest.attested and not only_operator
+        ),
+        "live_valid_arm_gap": list(live_arm_software_gap),
+        "arm_feedback_source_kind": arm_feedback.get("source_kind"),
+        "counts_as_live_valid": arm_ok_live,
+    }
 
     issuance_notes: list[str] = []
     if dry_probe and isinstance(dry_probe.get("issuance_diagnostic"), dict):
@@ -686,36 +1060,48 @@ def evaluate_host_control_readiness(
         )
 
     notes = (
-        "This checklist reports host/safety elevation conditions only.",
-        "Never sets control_ready=true or motion_enabled=true.",
-        "Never issues live contracts.Permit or opens CAN.",
+        "Gate ladder: vision_pre_grasp_ready → dry_run_grasp_entry_ready → "
+        "formal_grasp_entry_allowed → control_ready (attest-gated).",
+        "dry_run_grasp_entry_ready may be true without live Permit or control_ready.",
+        "formal_grasp_entry_allowed requires validated live Permit + counts_as_live_valid "
+        "(source=real AND validity=VALID AND seven finite q_rad).",
+        "recorded/mock ArmState.device_id ≠ live VALID; see checklist live_valid_arm_state "
+        f"and arm_feedback (source_kind={arm_feedback.get('source_kind')}).",
+        "control_ready requires formal_grasp_entry_allowed + explicit operator_policy_attest; "
+        "attest switch defaults closed and is never auto-opened.",
+        "Never invents live contracts.Permit or opens CAN.",
         "Dry-run probe uses OfflineSafetyGate + MockArm (hardware_enabled=False).",
-        "Dry-run issuance is executable=false; plumbing self-check uses a labeled probe hash only.",
+        "ArmStateReader readonly path currently cannot satisfy all_seven_q_rad_finite (J6/J7).",
         "host_monitor motion path (main) is separate: --enable-motion → READY → ENABLE → MOVE.",
-        "only_operator_enable_remaining stays false while host_policy holds control_ready down "
-        "or PlanBundle / live Permit / ArmState are missing.",
-        "Formal grasp: NO until live Permit + host policy raise + actuator enable.",
+        f"can_enter_formal_grasp={formal_grasp_entry_allowed}.",
         *issuance_notes,
     )
 
     return HostControlReadiness(
         schema_version=SCHEMA,
-        control_ready=False,
+        control_ready=control_ready,
         motion_enabled=False,
-        formal_grasp_entry_allowed=False,
-        formal_grasp_ready=False,
+        formal_grasp_entry_allowed=formal_grasp_entry_allowed,
+        formal_grasp_ready=formal_grasp_entry_allowed and control_ready,
+        dry_run_grasp_entry_ready=dry_run_grasp_entry_ready,
+        vision_pre_grasp_ready=vision_ready if isinstance(vision_ready, bool) else None,
         only_operator_enable_remaining=only_operator,
         needs_operator_physical_enable_now=False,
         needs_operator_physical_enable_before_real_motion=True,
-        vision_pre_grasp_ready=vision_ready if isinstance(vision_ready, bool) else None,
         permit_eligible=permit_eligible if isinstance(permit_eligible, bool) else None,
-        live_permit=None,
+        live_permit=None,  # never echo claimed live permit into durable readiness
+        operator_policy_attest=attest.to_dict(),
+        gate_ladder=gate_ladder,
         checklist=tuple(items),
         missing_software=software_missing,
         missing_field_or_operator=field_missing,
         hard_blockers=hard_blockers,
         dry_run_arm_disabled=dry_probe,
+        arm_feedback=arm_feedback,
         elevation_conditions={
+            "vision_pre_grasp_ready": ["evidence_gates_clear"],
+            "dry_run_grasp_entry_ready": list(DRY_RUN_GRASP_ENTRY_CONDITIONS),
+            "formal_grasp_entry_allowed": list(FORMAL_GRASP_ENTRY_CONDITIONS),
             "control_ready": list(CONTROL_READY_ELEVATION_CONDITIONS),
             "motion_enabled": list(MOTION_ENABLED_ELEVATION_CONDITIONS),
             "code_refs": {
@@ -723,8 +1109,11 @@ def evaluate_host_control_readiness(
                 "OfflineSafetyGate.issue_dry_run_diagnostic": (
                     "src/brick_stacking/execution/safety_gate.py"
                 ),
+                "host_policy_attest": "src/brick_stacking/execution/host_policy_attest.py",
                 "OfflineExecutionManager": "src/brick_stacking/execution/execution_manager.py",
                 "MockArm.hardware_enabled": "src/brick_stacking/arm/adapter.py",
+                "ArmStateReader": "src/brick_stacking/arm/state.py",
+                "arm_state_validity": "src/brick_stacking/arm/arm_state_validity.py",
                 "config_loader_offline_only": "src/brick_stacking/runtime/config_loader.py",
                 "ObservationBundle.control_ready": "Literal[False] in contracts",
                 "host_monitor_motion": "tools/host_monitor on main (--enable-motion)",

@@ -1,0 +1,60 @@
+{
+  "schema_version": "arm-live-or-recorded-0.1",
+  "kind": "arm_live_or_recorded",
+  "mode": "live-readonly",
+  "arm_state": null,
+  "device_id": null,
+  "source": null,
+  "validity": null,
+  "fresh_live_read": false,
+  "can_opened": false,
+  "motion_enabled": false,
+  "control_ready": false,
+  "classification": {
+    "schema_version": "arm-state-validity-classification-0.1",
+    "present": false,
+    "source": null,
+    "device_id": null,
+    "validity": null,
+    "reason": "arm_state missing",
+    "source_kind": "missing",
+    "device_id_ok": false,
+    "counts_as_recorded_binding": false,
+    "counts_as_mock_valid": false,
+    "counts_as_live_valid": false,
+    "condition_status": {
+      "source_is_real": "MISSING",
+      "validity_field_is_VALID": "MISSING",
+      "device_id_present": "MISSING",
+      "joint_names_j1_through_j7": "MISSING",
+      "all_seven_q_rad_finite": "MISSING",
+      "fault_is_none": "MISSING",
+      "clock_domain_host_monotonic": "MISSING",
+      "epoch_present": "MISSING",
+      "host_receive_stamp_finite": "MISSING"
+    },
+    "blockers": [
+      "arm_state missing"
+    ],
+    "joint_completeness": null,
+    "arm_state_reader_live_hold": [
+      "J6/J7: no audited read-only position query (ArmStateReader leaves q_rad None)",
+      "validity remains INVALID until seven finite joint angles are available",
+      "Rest/raw V2 capture is not an audited read-only path and is not used here"
+    ],
+    "control_ready": false,
+    "motion_enabled": false
+  },
+  "counts_as_live_valid": false,
+  "counts_as_recorded_binding": false,
+  "live_readonly_error": "FileNotFoundError: [WinError 2] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u6587\u4ef6\u3002",
+  "arm_state_reader_live_hold": [
+    "J6/J7: no audited read-only position query (ArmStateReader leaves q_rad None)",
+    "validity remains INVALID until seven finite joint angles are available",
+    "Rest/raw V2 capture is not an audited read-only path and is not used here"
+  ],
+  "notes": [
+    "live-readonly probe failed soft; see live_readonly_error.",
+    "Never raises control_ready; never enables motion."
+  ]
+}

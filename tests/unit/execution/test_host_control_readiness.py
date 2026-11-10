@@ -1,4 +1,4 @@
-"""Host/safety checklist: report gaps; never raise control_ready / enable motion."""
+"""Host/safety gate ladder: dry-run ready vs formal entry vs control_ready."""
 from __future__ import annotations
 
 import json
@@ -9,6 +9,7 @@ from brick_stacking.execution.host_control_readiness import (
     evaluate_host_control_readiness,
     probe_dry_run_arm_disabled,
 )
+from brick_stacking.execution.host_policy_attest import build_host_policy_attest
 
 ROOT = Path(__file__).resolve().parents[3]
 GAPS = (
@@ -26,6 +27,10 @@ PLAN = (
 ARM = (
     ROOT
     / "docs/team/B/evidence/field_20261110/recorded_arm_state_left_p7_20261110.json"
+)
+ATTEST = (
+    ROOT
+    / "config/observed/host_control_ready_policy_attest_20261110.json"
 )
 
 
@@ -83,6 +88,8 @@ def test_field_gaps_without_plan_still_block():
     payload = report.to_dict()
     assert payload["control_ready"] is False
     assert payload["live_permit"] is None
+    assert payload["dry_run_grasp_entry_ready"] is False
+    assert payload["formal_grasp_entry_allowed"] is False
     assert payload["only_operator_enable_remaining"] is False
     assert "plan_bundle_trajectory_hash" in payload["missing_software"]
     assert "arm_state_device_id" in payload["missing_software"]
@@ -91,30 +98,47 @@ def test_field_gaps_without_plan_still_block():
     assert by_id["dry_run_safety_gate_issuance"].status == "PROBED"
 
 
-def test_field_evidence_with_plan_and_arm_still_no_formal():
+def test_field_evidence_dry_run_ready_but_not_formal():
     gaps = json.loads(GAPS.read_text(encoding="utf-8"))
     diag = json.loads(DIAG.read_text(encoding="utf-8"))
     plan = json.loads(PLAN.read_text(encoding="utf-8"))
     arm = json.loads(ARM.read_text(encoding="utf-8"))
+    attest = json.loads(ATTEST.read_text(encoding="utf-8"))
     report = evaluate_host_control_readiness(
         pre_grasp_gaps=gaps,
         diagnostic_permit=diag,
         plan_bundle=plan,
         arm_state=arm,
+        operator_policy_attest=attest,
         probe_dry_run=True,
         config_path=ROOT / "config/offline_task.yaml",
     )
     payload = report.to_dict()
+    assert payload["schema_version"] == "host-control-readiness-0.2"
+    assert payload["vision_pre_grasp_ready"] is True
+    assert payload["dry_run_grasp_entry_ready"] is True
+    assert payload["formal_grasp_entry_allowed"] is False
     assert payload["control_ready"] is False
     assert payload["motion_enabled"] is False
     assert payload["formal_grasp_ready"] is False
     assert payload["live_permit"] is None
+    assert payload["operator_policy_attest"]["attested"] is False
     assert payload["only_operator_enable_remaining"] is False
     assert payload["needs_operator_physical_enable_now"] is False
     assert "plan_bundle_trajectory_hash" not in payload["missing_software"]
     assert "arm_state_device_id" not in payload["missing_software"]
     assert "live_permit" in payload["missing_field_or_operator"]
+    assert "operator_policy_attest_control_ready" in payload["missing_field_or_operator"]
     assert "host_policy_control_ready" in payload["missing_field_or_operator"]
+    ladder = payload["gate_ladder"]
+    assert ladder["vision_pre_grasp_ready"] is True
+    assert ladder["dry_run_grasp_entry_ready"] is True
+    assert ladder["formal_grasp_entry_allowed"] is False
+    assert ladder["control_ready"] is False
+    assert ladder["can_enter_formal_grasp"] is False
+    assert "live_contracts_Permit_validated" in ladder["formal_grasp_entry_missing"]
+    assert "live_VALID_ArmState_source_real" in ladder["formal_grasp_entry_missing"]
+    assert "operator_policy_attest_control_ready" in ladder["control_ready_missing"]
     issuance = payload["dry_run_arm_disabled"]["issuance_diagnostic"]
     assert issuance["issuance_fields_complete"] is True
     assert issuance["only_hardware_enable_and_policy_remaining"] is True
@@ -122,20 +146,55 @@ def test_field_evidence_with_plan_and_arm_still_no_formal():
     by_id = {item.id: item for item in report.checklist}
     assert by_id["plan_bundle_trajectory_hash"].status == "PASS"
     assert by_id["arm_state_device_id"].status == "PASS"
+    assert by_id["live_valid_arm_state"].status == "MISSING"
     assert by_id["live_permit"].status == "MISSING"
     assert by_id["dry_run_safety_gate_issuance"].status == "PASS"
+    assert by_id["dry_run_grasp_entry_ready"].status == "PASS"
+    assert by_id["formal_grasp_entry_gate"].status == "POLICY_HOLD"
+    assert by_id["operator_policy_attest_control_ready"].status == "POLICY_HOLD"
     assert by_id["host_policy_control_ready"].status == "POLICY_HOLD"
 
 
-def test_refuses_spurious_live_permit_input():
+def test_refuses_spurious_live_permit_without_live_arm():
     report = evaluate_host_control_readiness(
         pre_grasp_gaps={"vision_pre_grasp_ready": True, "permit_eligible": True},
         live_permit={"device_id": "should-not-count"},
+        arm_state={"device_id": "mock", "source": "recorded"},
     )
     by_id = {item.id: item for item in report.checklist}
     assert by_id["live_permit"].status == "FAIL"
     assert report.to_dict()["control_ready"] is False
+    assert report.to_dict()["formal_grasp_entry_allowed"] is False
     assert report.to_dict()["live_permit"] is None
+
+
+def test_attest_open_without_formal_still_holds_control_ready():
+    gaps = json.loads(GAPS.read_text(encoding="utf-8"))
+    diag = json.loads(DIAG.read_text(encoding="utf-8"))
+    plan = json.loads(PLAN.read_text(encoding="utf-8"))
+    arm = json.loads(ARM.read_text(encoding="utf-8"))
+    open_attest = build_host_policy_attest(
+        operator="test-op",
+        evidence_ref="tests/unit/execution/test_host_control_readiness.py",
+        attested=True,
+        notes="test only — must not raise without formal entry",
+    )
+    report = evaluate_host_control_readiness(
+        pre_grasp_gaps=gaps,
+        diagnostic_permit=diag,
+        plan_bundle=plan,
+        arm_state=arm,
+        operator_policy_attest=open_attest,
+        probe_dry_run=True,
+        config_path=ROOT / "config/offline_task.yaml",
+    )
+    payload = report.to_dict()
+    assert payload["dry_run_grasp_entry_ready"] is True
+    assert payload["formal_grasp_entry_allowed"] is False
+    assert payload["control_ready"] is False
+    assert payload["operator_policy_attest"]["attested"] is True
+    by_id = {item.id: item for item in report.checklist}
+    assert by_id["operator_policy_attest_control_ready"].status == "POLICY_HOLD"
 
 
 def test_cli_writes_report(tmp_path):
@@ -151,6 +210,8 @@ def test_cli_writes_report(tmp_path):
             str(PLAN),
             "--arm-state",
             str(ARM),
+            "--operator-policy-attest",
+            str(ATTEST),
             "--probe-dry-run-arm-disabled",
             "--config",
             str(ROOT / "config/offline_task.yaml"),
@@ -160,13 +221,37 @@ def test_cli_writes_report(tmp_path):
     )
     assert rc == 0
     payload = json.loads(out.read_text(encoding="utf-8"))
-    assert payload["schema_version"] == "host-control-readiness-0.1"
+    assert payload["schema_version"] == "host-control-readiness-0.2"
+    assert payload["vision_pre_grasp_ready"] is True
+    assert payload["dry_run_grasp_entry_ready"] is True
+    assert payload["formal_grasp_entry_allowed"] is False
     assert payload["control_ready"] is False
     assert payload["motion_enabled"] is False
     assert payload["only_operator_enable_remaining"] is False
+    assert payload["gate_ladder"]["can_enter_formal_grasp"] is False
     assert payload["dry_run_arm_disabled"]["reachable"] is True
     assert payload["dry_run_arm_disabled"]["issuance_diagnostic"]["executable"] is False
     assert payload["dry_run_arm_disabled"]["issuance_diagnostic"][
         "issuance_fields_complete"
     ] is True
     assert payload["formal_grasp_ready"] is False
+
+
+def test_policy_attest_cli_default_closed(tmp_path):
+    out = tmp_path / "attest.json"
+    mod = runpy.run_path(str(ROOT / "tools/host_control_ready_policy_attest.py"))
+    rc = mod["main"](
+        [
+            "--operator",
+            "test",
+            "--evidence-ref",
+            "docs/team/B/HOST_CONTROL_READY_20261110.md",
+            "--output",
+            str(out),
+        ]
+    )
+    assert rc == 0
+    payload = json.loads(out.read_text(encoding="utf-8"))
+    assert payload["attested"] is False
+    assert payload["control_ready"] is False
+    assert payload["motion_enabled"] is False

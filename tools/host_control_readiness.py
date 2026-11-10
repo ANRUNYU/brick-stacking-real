@@ -1,6 +1,11 @@
-"""Report host/safety control_ready / motion_enabled elevation gaps.
+"""Report host/safety gate ladder and control_ready / motion_enabled gaps.
 
-Never raises control_ready, never enables actuators, never sends CAN.
+Gate ladder:
+  vision_pre_grasp_ready → dry_run_grasp_entry_ready →
+  formal_grasp_entry_allowed → control_ready (operator policy attest gated)
+
+Default: control_ready stays false; attest switch is not auto-opened.
+Never invents live Permit, never enables actuators, never sends CAN.
 Optional --probe-dry-run-arm-disabled exercises OfflineSafetyGate + MockArm only.
 """
 from __future__ import annotations
@@ -53,10 +58,25 @@ def main(argv=None) -> int:
         help="optional ArmState JSON (device_id); camera SN is not accepted as arm id",
     )
     p.add_argument(
+        "--live-permit",
+        type=Path,
+        default=None,
+        help="optional live contracts.Permit JSON (validated; never invented here)",
+    )
+    p.add_argument(
         "--host-monitor-snapshot",
         type=Path,
         default=None,
         help="optional host_monitor control snapshot (motion_process_enabled/session_open)",
+    )
+    p.add_argument(
+        "--operator-policy-attest",
+        type=Path,
+        default=None,
+        help=(
+            "optional host-control-ready-policy-attest JSON "
+            "(default closed; do not auto-open)"
+        ),
     )
     p.add_argument(
         "--probe-dry-run-arm-disabled",
@@ -82,26 +102,40 @@ def main(argv=None) -> int:
         diagnostic_permit=load_json(args.diagnostic_permit),
         plan_bundle=load_json(args.plan_bundle),
         arm_state=load_json(args.arm_state),
+        live_permit=load_json(args.live_permit),
         host_monitor_snapshot=load_json(args.host_monitor_snapshot),
+        operator_policy_attest=args.operator_policy_attest,
         config_path=args.config,
         probe_dry_run=bool(args.probe_dry_run_arm_disabled),
     )
     payload = report.to_dict()
-    # Belt-and-suspenders invariants for any consumer.
-    payload["control_ready"] = False
+    # Belt-and-suspenders: motion never enabled; live_permit never echoed.
     payload["motion_enabled"] = False
-    payload["formal_grasp_entry_allowed"] = False
-    payload["formal_grasp_ready"] = False
     payload["live_permit"] = None
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
 
+    ladder = payload.get("gate_ladder") or {}
     summary = {
         "schema_version": payload["schema_version"],
-        "formal_grasp_ready": False,
-        "control_ready": False,
+        "gate_ladder": {
+            "vision_pre_grasp_ready": ladder.get("vision_pre_grasp_ready"),
+            "dry_run_grasp_entry_ready": ladder.get("dry_run_grasp_entry_ready"),
+            "formal_grasp_entry_allowed": ladder.get("formal_grasp_entry_allowed"),
+            "control_ready": ladder.get("control_ready"),
+            "can_enter_formal_grasp": ladder.get("can_enter_formal_grasp"),
+            "formal_grasp_entry_missing": list(ladder.get("formal_grasp_entry_missing") or []),
+            "control_ready_missing": list(ladder.get("control_ready_missing") or []),
+        },
+        "dry_run_grasp_entry_ready": payload.get("dry_run_grasp_entry_ready"),
+        "formal_grasp_entry_allowed": payload.get("formal_grasp_entry_allowed"),
+        "formal_grasp_ready": payload.get("formal_grasp_ready"),
+        "control_ready": payload.get("control_ready"),
         "motion_enabled": False,
+        "operator_policy_attest_attested": (
+            (payload.get("operator_policy_attest") or {}).get("attested")
+        ),
         "only_operator_enable_remaining": payload["only_operator_enable_remaining"],
         "needs_operator_physical_enable_now": payload[
             "needs_operator_physical_enable_now"

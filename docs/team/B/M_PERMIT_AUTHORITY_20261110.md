@@ -9,7 +9,9 @@
 | `contracts.Permit`（**live**） | **D/M SafetyGate**（执行前；`OfflineSafetyGate.check_step_evidence` 校验） | 是（在 A 独立复核后） |
 | `safety-gate-dry-run-issuance-0.1`（**dry-run/arm-disabled 签发诊断**） | `OfflineSafetyGate.issue_dry_run_diagnostic`（仅 `MockArm` + `hardware_enabled=False`） | **否**（`executable=false`；`live_permit=null`） |
 | `m-diagnostic-permit-eligibility-0.1`（**shadow/diagnostic**） | `pre_grasp_gates` / `tools/pre_grasp_readiness.py` | **否**（`executable=false`） |
-| `control_ready` / `motion_enabled` | host/safety 路径（见 [HOST_CONTROL_READY_20261110.md](HOST_CONTROL_READY_20261110.md)） | 本 readiness **永不抬升**；host checklist 亦永不抬升 |
+| `control_ready` / `motion_enabled` | host/safety 路径（见 [HOST_CONTROL_READY_20261110.md](HOST_CONTROL_READY_20261110.md)） | `control_ready` 仅在 `formal_grasp_entry_allowed` + **显式** operator policy attest 后可抬；attest **默认关**；`motion_enabled` 仍默认 false |
+| `dry_run_grasp_entry_ready` | host checklist dry-run 全链 | **是（dry-run only）**；不等于正式抓取 |
+| `formal_grasp_entry_allowed` | host gate ladder（live Permit + live arm） | 当前 **false**（未伪造 live Permit） |
 
 契约依据：`docs/CONTRACTS.md` §4；`docs/THREE_TRACK_GRASP_DEV_PLAN.md` M-10。
 
@@ -55,8 +57,8 @@
 **仍缺（正式 live / 抓取）**：
 
 1. live SafetyGate 正式签发权威产物
-2. 新鲜 **VALID live** `ArmState.device_id`（recorded/mock 不算）
-3. host/safety 策略抬 `control_ready`
+2. 新鲜 **`counts_as_live_valid`** `ArmState`（`source=real` + `validity=VALID` + 七轴有限 `q_rad`；recorded/mock/fixture 不算；见 `arm_state_validity`）
+3. host/safety：`formal_grasp_entry_allowed` 过后再显式 operator policy attest 抬 `control_ready`（默认关）
 4. 操作员开臂 / 执行器使能（仅真实运动前）
 
 ## Shadow vs live
@@ -81,6 +83,7 @@ python tools/host_control_readiness.py \
   --diagnostic-permit docs/team/B/evidence/field_20261110/diagnostic_permit_eligibility_20261110.json \
   --plan-bundle docs/team/B/evidence/field_20261110/shadow_plan_bundle_20261110.json \
   --arm-state docs/team/B/evidence/field_20261110/recorded_arm_state_left_p7_20261110.json \
+  --operator-policy-attest config/observed/host_control_ready_policy_attest_20261110.json \
   --probe-dry-run-arm-disabled \
   --config config/offline_task.yaml \
   --output docs/team/B/evidence/field_20261110/host_control_readiness_20261110.json
