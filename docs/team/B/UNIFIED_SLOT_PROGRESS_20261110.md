@@ -27,6 +27,7 @@
 19. **diagnostic permit 资格（本轮）**：证据齐 → `permit_eligible=true` + `m-diagnostic-permit-eligibility-0.1`（`executable=false`，`live_permit=null`）。权威说明见 [M_PERMIT_AUTHORITY_20261110.md](M_PERMIT_AUTHORITY_20261110.md)。`awaiting_m_permit=false` → `awaiting_live_permit_host_enable=true`（精确状态）。**未伪造** live `contracts.Permit`。
 20. **host/safety checklist**：机读抬起条件 + dry-run/arm-disabled 探测已接通；见 [HOST_CONTROL_READY_20261110.md](HOST_CONTROL_READY_20261110.md) 与 `host_control_readiness_20261110.json`。`only_operator_enable_remaining=false`；**仍不**抬 `control_ready` / 开臂 / CAN。
 21. **shadow PlanBundle + recorded 臂 ID（本轮）**：`tools/emit_shadow_plan_and_arm_state.py` 产出 `shadow_plan_bundle_20261110.json`（`trajectory_hash` 由 `arm.adapter.trajectory_hash` 计算）与 `recorded_arm_state_left_p7_20261110.json`（`device_id=can2:61,62,63,64,65,66,67`，`source=recorded`）。host checklist **`missing_software=[]`**；**不是** H3 生产 PlanBundle（#20），**不是** live 臂读。
+22. **dry-run SafetyGate 签发诊断（本轮）**：`OfflineSafetyGate.issue_dry_run_diagnostic` 在 MockArm/`hardware_enabled=False` 下走通；消费 shadow PlanBundle 后 `issuance_fields_complete=true`、`gate_accepts_draft=true`、`only_hardware_enable_and_policy_remaining=true`（相对 dry-run）；`executable=false`，`live_permit=null`。见 [M_PERMIT_AUTHORITY_20261110.md](M_PERMIT_AUTHORITY_20261110.md)。
 
 ## 物理阻塞
 
@@ -34,10 +35,11 @@
 
 ## 仍不抬 control_ready 的原因（真实剩余阻塞）
 
-- live `permit=null`（仅 D/M SafetyGate 可签发；本路径只发 diagnostic 资格）。
+- live `permit=null`（仅 D/M SafetyGate 可签发 live；本路径只发 diagnostic + dry-run 签发诊断）。
 - `control_ready` / `motion_enabled` 策略性保持 false（host/safety；本 readiness 永不抬升）。
 - `formal_grasp_entry_allowed=false`（设计硬持有；视觉就绪 ≠ 正式抓取入口）。
-- host checklist 软件两项已关；仍差：live Permit + host 策略抬升 +（真运动前）开臂；H3 生产 PlanBundle / live 臂新鲜读仍待后续。
+- dry-run MockArm 路径：字段齐且 gate 接受 draft；**不等于** live Permit。
+- host checklist 软件两项已关；仍差：live Permit + live VALID 臂读 + host 策略抬升 +（真运动前）开臂；H3 生产 PlanBundle 仍待 #20。
 - post_place 缺动作完成/释放/稳定窗口证据（本轮非抓取入口硬阻塞，但列出）。
 
 ## SCENE 说明（已解除会话级误报）

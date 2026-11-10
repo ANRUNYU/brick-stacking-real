@@ -17,6 +17,31 @@ from brick_stacking.runtime.config_loader import load_config
 SCHEMA = "host-control-readiness-0.1"
 DRY_RUN_PROBE_SCHEMA = "host-dry-run-arm-disabled-0.1"
 
+
+def _context_hashes_from_diagnostic(diagnostic_permit: dict[str, Any] | None) -> dict[str, str | None]:
+    """Pull shadow context hashes for dry-run issuance; never invent trajectory_hash."""
+    diag = diagnostic_permit or {}
+    ctx = diag.get("context_present") or {}
+    field = diag.get("live_permit_field_status") or {}
+
+    def _present_value(name: str, *fallback_keys: str) -> str | None:
+        info = field.get(name) or {}
+        if str(info.get("status", "")).startswith("PRESENT") and info.get("value"):
+            return str(info["value"])
+        for key in fallback_keys:
+            value = ctx.get(key)
+            if value:
+                return str(value)
+        return None
+
+    return {
+        "config_hash": _present_value("config_hash", "config_hash_or_profile_hash"),
+        "calibration_hash": _present_value("calibration_hash", "calibration_hash"),
+        "scene_version": _present_value("scene_version", "scene_version"),
+        "trajectory_hash": None,
+    }
+
+
 # Conditions that must hold before host/safety may *consider* raising
 # control_ready. This module never performs the raise.
 CONTROL_READY_ELEVATION_CONDITIONS = (
@@ -102,11 +127,18 @@ def _item(
 def probe_dry_run_arm_disabled(
     *,
     config_path: str | Path = "config/offline_task.yaml",
+    diagnostic_permit: dict[str, Any] | None = None,
+    plan_bundle: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    """Reachability probe for offline dry-run / arm-disabled execution path.
+    """Reachability + issuance diagnostic for dry-run / arm-disabled path.
 
-    Instantiates MockArm + OfflineSafetyGate. Never raises control_ready,
-    never invents a live Permit for execution, never opens CAN.
+    Instantiates MockArm + OfflineSafetyGate. Exercises:
+      1) reject step without permit
+      2) dry-run issuance diagnostic (executable=false)
+      3) plumbing self-check with labeled probe trajectory hash
+
+    Never raises control_ready, never invents a formal PlanBundle hash,
+    never opens CAN.
     """
     config = load_config(config_path)
     project = config.get("project") or {}
@@ -132,20 +164,21 @@ def probe_dry_run_arm_disabled(
     except ValueError as exc:
         gate_config_error = str(exc)
 
+    state = arm.read_state()
     permit_reject_ok = False
     permit_reject_detail: str | None = None
     try:
         gate.check_step_evidence(
             StepEvidence(
-                feedback=arm.read_state(),
+                feedback=state,
                 calibration_valid=True,
                 trajectory_hash="unissued",
                 permit=None,
             ),
-            now_s=arm.read_state()["host_receive_stamp"],
-            clock_domain="host_monotonic",
-            epoch=arm.read_state()["epoch"],
-            device_id=arm.read_state()["device_id"],
+            now_s=state["host_receive_stamp"],
+            clock_domain=state["clock_domain"],
+            epoch=state["epoch"],
+            device_id=state["device_id"],
             config_hash="mock-config",
             calibration_hash="mock-calibration",
             scene_version="mock-scene",
@@ -154,9 +187,32 @@ def probe_dry_run_arm_disabled(
         permit_reject_ok = "permit" in str(exc).lower()
         permit_reject_detail = str(exc)
 
+    hashes = _context_hashes_from_diagnostic(diagnostic_permit)
+    traj = None
+    if plan_bundle is not None:
+        traj = plan_bundle.get("trajectory_hash") or (plan_bundle.get("trajectory") or {}).get("hash")
+    issuance = gate.issue_dry_run_diagnostic(
+        arm=arm,
+        config_hash=hashes.get("config_hash"),
+        calibration_hash=hashes.get("calibration_hash"),
+        scene_version=hashes.get("scene_version"),
+        trajectory_hash=str(traj) if traj else None,
+        run_plumbing_self_check=True,
+    )
+
+    plumbing = issuance.get("plumbing_self_check") or {}
+    reachable = bool(
+        dry_ok
+        and gate_config_ok
+        and arm.hardware_enabled is False
+        and permit_reject_ok
+        and issuance.get("issuance_attempted") is True
+        and plumbing.get("gate_accepts_complete_dry_run_permit") is True
+    )
+
     return {
         "schema_version": DRY_RUN_PROBE_SCHEMA,
-        "reachable": bool(dry_ok and gate_config_ok and arm.hardware_enabled is False),
+        "reachable": reachable,
         "config_path": str(config_path).replace("\\", "/"),
         "project": {"dry_run": project.get("dry_run"), "environment": project.get("environment")},
         "offline_dry_run_config_ok": dry_ok,
@@ -165,17 +221,19 @@ def probe_dry_run_arm_disabled(
         "mock_arm": {
             "backend": arm.backend,
             "hardware_enabled": arm.hardware_enabled,
-            "device_id": arm.read_state()["device_id"],
+            "device_id": state["device_id"],
         },
         "step_without_permit_rejected": permit_reject_ok,
         "step_without_permit_detail": permit_reject_detail,
+        "issuance_diagnostic": issuance,
         "control_ready": False,
         "motion_enabled": False,
         "commands_sent": 0,
         "can_opened": False,
         "usage": [
             "Dry-run / arm-disabled path is OfflineSafetyGate + MockArm only.",
-            "This probe does not raise control_ready or invent a live Permit.",
+            "Issuance diagnostic is executable=false; live_permit stays null.",
+            "This probe does not raise control_ready or invent a PlanBundle trajectory_hash.",
             "host_monitor --enable-motion is a separate live host path (main branch).",
         ],
     }
@@ -347,6 +405,13 @@ def evaluate_host_control_readiness(
         traj_ok = False
 
     # --- ArmState.device_id ---
+    # Accept either raw ArmState or recorded-arm-state-0.1 wrapper.
+    if (
+        isinstance(arm_state, dict)
+        and arm_state.get("schema_version") == "recorded-arm-state-0.1"
+        and isinstance(arm_state.get("arm_state"), dict)
+    ):
+        arm_state = arm_state["arm_state"]
     arm_device = None
     if arm_state is not None:
         arm_device = arm_state.get("device_id")
@@ -379,25 +444,66 @@ def evaluate_host_control_readiness(
         )
         arm_ok = False
 
-    # --- offline dry_run / arm-disabled path ---
+    # --- offline dry_run / arm-disabled path + issuance diagnostic ---
     dry_probe: dict[str, Any] | None = None
     if probe_dry_run:
         dry_probe = probe_dry_run_arm_disabled(
-            config_path=config_path or "config/offline_task.yaml"
+            config_path=config_path or "config/offline_task.yaml",
+            diagnostic_permit=diag if isinstance(diag, dict) else None,
+            plan_bundle=plan_bundle,
         )
+        issuance = dry_probe.get("issuance_diagnostic") or {}
+        plumbing = issuance.get("plumbing_self_check") or {}
+        missing_fields = list(issuance.get("still_missing_fields") or [])
+        if dry_probe.get("reachable"):
+            detail = (
+                "OfflineSafetyGate+MockArm reachable; hardware_enabled=false; "
+                f"step_without_permit_rejected={dry_probe.get('step_without_permit_rejected')}; "
+                f"issuance_fields_complete={issuance.get('issuance_fields_complete')}; "
+                f"plumbing_ok={plumbing.get('gate_accepts_complete_dry_run_permit')}; "
+                f"still_missing_fields={missing_fields}; "
+                f"only_hw_policy_remaining={issuance.get('only_hardware_enable_and_policy_remaining')}"
+            )
+            dry_status = "PROBED"
+        else:
+            fail_reason = (
+                dry_probe.get("offline_gate_port_check_error")
+                or dry_probe.get("step_without_permit_detail")
+                or "unknown"
+            )
+            detail = f"dry-run probe failed: {fail_reason}"
+            dry_status = "FAIL"
         items.append(
             _item(
                 "dry_run_arm_disabled_path",
-                "PROBED" if dry_probe.get("reachable") else "FAIL",
+                dry_status,
+                blocking=False,
+                category="dry_run",
+                detail=detail,
+                owner="execution / OfflineSafetyGate",
+            )
+        )
+        items.append(
+            _item(
+                "dry_run_safety_gate_issuance",
+                (
+                    "PASS"
+                    if issuance.get("issuance_fields_complete")
+                    and issuance.get("gate_accepts_draft") is True
+                    else "PROBED"
+                    if issuance.get("issuance_attempted")
+                    else "FAIL"
+                ),
                 blocking=False,
                 category="dry_run",
                 detail=(
-                    "OfflineSafetyGate+MockArm reachable; hardware_enabled=false; "
-                    f"step_without_permit_rejected={dry_probe.get('step_without_permit_rejected')}"
-                    if dry_probe.get("reachable")
-                    else f"dry-run probe failed: {dry_probe.get('offline_gate_port_check_error')}"
+                    "dry-run issuance diagnostic executable=false; "
+                    f"fields_complete={issuance.get('issuance_fields_complete')}; "
+                    f"gate_accepts_draft={issuance.get('gate_accepts_draft')}; "
+                    f"still_missing={missing_fields}; "
+                    "live_permit remains null"
                 ),
-                owner="execution / OfflineSafetyGate",
+                owner="D/M OfflineSafetyGate.issue_dry_run_diagnostic",
             )
         )
     else:
@@ -409,6 +515,16 @@ def evaluate_host_control_readiness(
                 category="dry_run",
                 detail="not probed; pass --probe-dry-run-arm-disabled",
                 owner="execution / OfflineSafetyGate",
+            )
+        )
+        items.append(
+            _item(
+                "dry_run_safety_gate_issuance",
+                "UNKNOWN",
+                blocking=False,
+                category="dry_run",
+                detail="not probed; pass --probe-dry-run-arm-disabled",
+                owner="D/M OfflineSafetyGate.issue_dry_run_diagnostic",
             )
         )
 
@@ -559,15 +675,27 @@ def evaluate_host_control_readiness(
         # path still needs an explicit host policy raise which we refuse.
         only_operator = False
 
+    issuance_notes: list[str] = []
+    if dry_probe and isinstance(dry_probe.get("issuance_diagnostic"), dict):
+        issuance = dry_probe["issuance_diagnostic"]
+        issuance_notes.append(
+            "Dry-run SafetyGate issuance diagnostic attempted "
+            f"(fields_complete={issuance.get('issuance_fields_complete')}; "
+            f"still_missing_fields={list(issuance.get('still_missing_fields') or [])}; "
+            f"only_hw_policy_remaining={issuance.get('only_hardware_enable_and_policy_remaining')})."
+        )
+
     notes = (
         "This checklist reports host/safety elevation conditions only.",
         "Never sets control_ready=true or motion_enabled=true.",
-        "Never issues contracts.Permit or opens CAN.",
+        "Never issues live contracts.Permit or opens CAN.",
         "Dry-run probe uses OfflineSafetyGate + MockArm (hardware_enabled=False).",
+        "Dry-run issuance is executable=false; plumbing self-check uses a labeled probe hash only.",
         "host_monitor motion path (main) is separate: --enable-motion → READY → ENABLE → MOVE.",
         "only_operator_enable_remaining stays false while host_policy holds control_ready down "
         "or PlanBundle / live Permit / ArmState are missing.",
         "Formal grasp: NO until live Permit + host policy raise + actuator enable.",
+        *issuance_notes,
     )
 
     return HostControlReadiness(
@@ -592,6 +720,9 @@ def evaluate_host_control_readiness(
             "motion_enabled": list(MOTION_ENABLED_ELEVATION_CONDITIONS),
             "code_refs": {
                 "OfflineSafetyGate": "src/brick_stacking/execution/safety_gate.py",
+                "OfflineSafetyGate.issue_dry_run_diagnostic": (
+                    "src/brick_stacking/execution/safety_gate.py"
+                ),
                 "OfflineExecutionManager": "src/brick_stacking/execution/execution_manager.py",
                 "MockArm.hardware_enabled": "src/brick_stacking/arm/adapter.py",
                 "config_loader_offline_only": "src/brick_stacking/runtime/config_loader.py",

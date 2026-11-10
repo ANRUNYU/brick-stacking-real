@@ -5,8 +5,6 @@ import json
 import runpy
 from pathlib import Path
 
-import pytest
-
 from brick_stacking.execution.host_control_readiness import (
     evaluate_host_control_readiness,
     probe_dry_run_arm_disabled,
@@ -21,10 +19,22 @@ DIAG = (
     ROOT
     / "docs/team/B/evidence/field_20261110/diagnostic_permit_eligibility_20261110.json"
 )
+PLAN = (
+    ROOT
+    / "docs/team/B/evidence/field_20261110/shadow_plan_bundle_20261110.json"
+)
+ARM = (
+    ROOT
+    / "docs/team/B/evidence/field_20261110/recorded_arm_state_left_p7_20261110.json"
+)
 
 
 def test_probe_dry_run_arm_disabled_no_can_no_control_ready():
-    probe = probe_dry_run_arm_disabled(config_path=ROOT / "config/offline_task.yaml")
+    diag = json.loads(DIAG.read_text(encoding="utf-8"))
+    probe = probe_dry_run_arm_disabled(
+        config_path=ROOT / "config/offline_task.yaml",
+        diagnostic_permit=diag,
+    )
     assert probe["reachable"] is True
     assert probe["mock_arm"]["hardware_enabled"] is False
     assert probe["mock_arm"]["backend"] == "mock"
@@ -33,9 +43,35 @@ def test_probe_dry_run_arm_disabled_no_can_no_control_ready():
     assert probe["motion_enabled"] is False
     assert probe["commands_sent"] == 0
     assert probe["can_opened"] is False
+    issuance = probe["issuance_diagnostic"]
+    assert issuance["executable"] is False
+    assert issuance["live_permit"] is None
+    assert issuance["issuance_attempted"] is True
+    assert issuance["issuance_fields_complete"] is False
+    assert "trajectory_hash" in issuance["still_missing_fields"]
+    assert issuance["plumbing_self_check"]["gate_accepts_complete_dry_run_permit"] is True
 
 
-def test_field_gaps_show_not_only_operator_enable():
+def test_probe_with_plan_bundle_fields_complete():
+    diag = json.loads(DIAG.read_text(encoding="utf-8"))
+    plan = json.loads(PLAN.read_text(encoding="utf-8"))
+    probe = probe_dry_run_arm_disabled(
+        config_path=ROOT / "config/offline_task.yaml",
+        diagnostic_permit=diag,
+        plan_bundle=plan,
+    )
+    issuance = probe["issuance_diagnostic"]
+    assert probe["reachable"] is True
+    assert issuance["issuance_fields_complete"] is True
+    assert issuance["gate_accepts_draft"] is True
+    assert issuance["executable"] is False
+    assert issuance["live_permit"] is None
+    assert issuance["only_hardware_enable_and_policy_remaining"] is True
+    assert issuance["still_missing_fields"] == []
+    assert issuance["draft_permit"]["trajectory_hash"] == plan["trajectory_hash"]
+
+
+def test_field_gaps_without_plan_still_block():
     gaps = json.loads(GAPS.read_text(encoding="utf-8"))
     diag = json.loads(DIAG.read_text(encoding="utf-8"))
     report = evaluate_host_control_readiness(
@@ -46,25 +82,49 @@ def test_field_gaps_show_not_only_operator_enable():
     )
     payload = report.to_dict()
     assert payload["control_ready"] is False
-    assert payload["motion_enabled"] is False
-    assert payload["formal_grasp_ready"] is False
-    assert payload["formal_grasp_entry_allowed"] is False
     assert payload["live_permit"] is None
-    assert payload["vision_pre_grasp_ready"] is True
-    assert payload["permit_eligible"] is True
     assert payload["only_operator_enable_remaining"] is False
-    assert payload["needs_operator_physical_enable_now"] is False
-    assert payload["needs_operator_physical_enable_before_real_motion"] is True
     assert "plan_bundle_trajectory_hash" in payload["missing_software"]
     assert "arm_state_device_id" in payload["missing_software"]
-    assert "live_permit" in payload["missing_field_or_operator"]
-    assert "host_policy_control_ready" in payload["missing_field_or_operator"]
     assert payload["dry_run_arm_disabled"]["reachable"] is True
     by_id = {item.id: item for item in report.checklist}
-    assert by_id["vision_pre_grasp_ready"].status == "PASS"
+    assert by_id["dry_run_safety_gate_issuance"].status == "PROBED"
+
+
+def test_field_evidence_with_plan_and_arm_still_no_formal():
+    gaps = json.loads(GAPS.read_text(encoding="utf-8"))
+    diag = json.loads(DIAG.read_text(encoding="utf-8"))
+    plan = json.loads(PLAN.read_text(encoding="utf-8"))
+    arm = json.loads(ARM.read_text(encoding="utf-8"))
+    report = evaluate_host_control_readiness(
+        pre_grasp_gaps=gaps,
+        diagnostic_permit=diag,
+        plan_bundle=plan,
+        arm_state=arm,
+        probe_dry_run=True,
+        config_path=ROOT / "config/offline_task.yaml",
+    )
+    payload = report.to_dict()
+    assert payload["control_ready"] is False
+    assert payload["motion_enabled"] is False
+    assert payload["formal_grasp_ready"] is False
+    assert payload["live_permit"] is None
+    assert payload["only_operator_enable_remaining"] is False
+    assert payload["needs_operator_physical_enable_now"] is False
+    assert "plan_bundle_trajectory_hash" not in payload["missing_software"]
+    assert "arm_state_device_id" not in payload["missing_software"]
+    assert "live_permit" in payload["missing_field_or_operator"]
+    assert "host_policy_control_ready" in payload["missing_field_or_operator"]
+    issuance = payload["dry_run_arm_disabled"]["issuance_diagnostic"]
+    assert issuance["issuance_fields_complete"] is True
+    assert issuance["only_hardware_enable_and_policy_remaining"] is True
+    assert issuance["executable"] is False
+    by_id = {item.id: item for item in report.checklist}
+    assert by_id["plan_bundle_trajectory_hash"].status == "PASS"
+    assert by_id["arm_state_device_id"].status == "PASS"
     assert by_id["live_permit"].status == "MISSING"
+    assert by_id["dry_run_safety_gate_issuance"].status == "PASS"
     assert by_id["host_policy_control_ready"].status == "POLICY_HOLD"
-    assert by_id["dry_run_arm_disabled_path"].status == "PROBED"
 
 
 def test_refuses_spurious_live_permit_input():
@@ -87,6 +147,10 @@ def test_cli_writes_report(tmp_path):
             str(GAPS),
             "--diagnostic-permit",
             str(DIAG),
+            "--plan-bundle",
+            str(PLAN),
+            "--arm-state",
+            str(ARM),
             "--probe-dry-run-arm-disabled",
             "--config",
             str(ROOT / "config/offline_task.yaml"),
@@ -101,4 +165,8 @@ def test_cli_writes_report(tmp_path):
     assert payload["motion_enabled"] is False
     assert payload["only_operator_enable_remaining"] is False
     assert payload["dry_run_arm_disabled"]["reachable"] is True
+    assert payload["dry_run_arm_disabled"]["issuance_diagnostic"]["executable"] is False
+    assert payload["dry_run_arm_disabled"]["issuance_diagnostic"][
+        "issuance_fields_complete"
+    ] is True
     assert payload["formal_grasp_ready"] is False

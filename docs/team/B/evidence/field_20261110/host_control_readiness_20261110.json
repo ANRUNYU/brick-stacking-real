@@ -56,8 +56,16 @@
       "status": "PROBED",
       "blocking": false,
       "category": "dry_run",
-      "detail": "OfflineSafetyGate+MockArm reachable; hardware_enabled=false; step_without_permit_rejected=True",
+      "detail": "OfflineSafetyGate+MockArm reachable; hardware_enabled=false; step_without_permit_rejected=True; issuance_fields_complete=True; plumbing_ok=True; still_missing_fields=[]; only_hw_policy_remaining=True",
       "owner": "execution / OfflineSafetyGate"
+    },
+    {
+      "id": "dry_run_safety_gate_issuance",
+      "status": "PASS",
+      "blocking": false,
+      "category": "dry_run",
+      "detail": "dry-run issuance diagnostic executable=false; fields_complete=True; gate_accepts_draft=True; still_missing=[]; live_permit remains null",
+      "owner": "D/M OfflineSafetyGate.issue_dry_run_diagnostic"
     },
     {
       "id": "host_monitor_enable_motion",
@@ -155,13 +163,113 @@
     },
     "step_without_permit_rejected": true,
     "step_without_permit_detail": "execution permit is unknown",
+    "issuance_diagnostic": {
+      "schema_version": "safety-gate-dry-run-issuance-0.1",
+      "kind": "dry_run_arm_disabled",
+      "executable": false,
+      "live_permit": null,
+      "control_ready": false,
+      "motion_enabled": false,
+      "formal_grasp_entry_allowed": false,
+      "issuance_attempted": true,
+      "issuance_fields_complete": true,
+      "only_hardware_enable_and_policy_remaining": true,
+      "authority": {
+        "live_issuer": "D/M SafetyGate at execution (contracts.Permit)",
+        "dry_run_diagnostic_issuer": "OfflineSafetyGate.issue_dry_run_diagnostic",
+        "shadow_eligibility_issuer": "pre_grasp_gates (m-diagnostic-permit-eligibility-0.1)",
+        "not_authority_for": [
+          "formal_grasp_entry",
+          "control_ready",
+          "CAN / actuator enable",
+          "arm.execute_trajectory on live hardware"
+        ],
+        "required_live_fields": [
+          "device_id",
+          "trajectory_hash",
+          "config_hash",
+          "calibration_hash",
+          "scene_version",
+          "valid_until_host_monotonic_s"
+        ]
+      },
+      "mock_arm": {
+        "backend": "mock",
+        "hardware_enabled": false,
+        "device_id": "mock-arm-host-checklist",
+        "clock_domain": "host_monotonic",
+        "epoch": "0e9d6c8b097d4e8ab163fc6640863008"
+      },
+      "field_status": {
+        "device_id": {
+          "status": "PRESENT_FROM_MOCK_ARM",
+          "detail": "MockArm ArmState.device_id (hardware_enabled=False); not live arm",
+          "value": "mock-arm-host-checklist"
+        },
+        "trajectory_hash": {
+          "status": "PRESENT_FROM_PLAN_BUNDLE",
+          "detail": "trajectory_hash supplied to dry-run issuer (not invented)",
+          "value": "c28c3b72fadd2816b9034fa121ef4a875bf7ee1520973f4fe807f92f7f8c1a24"
+        },
+        "config_hash": {
+          "status": "PRESENT",
+          "detail": "config_hash supplied to dry-run issuer",
+          "value": "b70d7556af358429b502143db4fa25af0591da29260c08a3840370139242b728"
+        },
+        "calibration_hash": {
+          "status": "PRESENT",
+          "detail": "calibration_hash supplied to dry-run issuer",
+          "value": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461"
+        },
+        "scene_version": {
+          "status": "PRESENT",
+          "detail": "scene_version supplied to dry-run issuer",
+          "value": "replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af"
+        },
+        "valid_until_host_monotonic_s": {
+          "status": "PRESENT_FROM_ISSUANCE_CLOCK",
+          "detail": "dry-run issuer sets valid_until = now + min(window, max_age_s); live path still requires live SafetyGate issuance clock",
+          "value": 9819.218
+        }
+      },
+      "still_missing_fields": [],
+      "still_missing_for_formal": [
+        "live SafetyGate issuance authority (formal contracts.Permit)",
+        "fresh VALID live ArmState.device_id (recorded/mock do not count as live)",
+        "host/safety policy raise of control_ready",
+        "actuator / arm power enable before real motion"
+      ],
+      "draft_permit": {
+        "device_id": "mock-arm-host-checklist",
+        "trajectory_hash": "c28c3b72fadd2816b9034fa121ef4a875bf7ee1520973f4fe807f92f7f8c1a24",
+        "config_hash": "b70d7556af358429b502143db4fa25af0591da29260c08a3840370139242b728",
+        "calibration_hash": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
+        "scene_version": "replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af",
+        "valid_until_host_monotonic_s": 9819.218
+      },
+      "gate_accepts_draft": true,
+      "gate_accept_error": null,
+      "plumbing_self_check": {
+        "used_probe_trajectory_hash": true,
+        "probe_trajectory_hash": "dry-run-probe:safety-gate-plumbing-only",
+        "gate_accepts_complete_dry_run_permit": true,
+        "error": null,
+        "note": "Proves OfflineSafetyGate issuance\u2192check path under MockArm; probe hash is not a formal PlanBundle trajectory_hash"
+      },
+      "notes": [
+        "Dry-run draft is executable=false and must not be copied into live StepEvidence for formal grasp.",
+        "MockArm device_id / issuance clock are dry-run only; live VALID arm feedback still required for formal.",
+        "PlanBundle trajectory_hash must come from planning; this issuer never invents it."
+      ]
+    },
     "control_ready": false,
     "motion_enabled": false,
     "commands_sent": 0,
     "can_opened": false,
     "usage": [
       "Dry-run / arm-disabled path is OfflineSafetyGate + MockArm only.",
-      "This probe does not raise control_ready or invent a live Permit.",
+      "Issuance diagnostic is executable=false; live_permit stays null.",
+      "This probe does not raise control_ready or invent a PlanBundle trajectory_hash.",
       "host_monitor --enable-motion is a separate live host path (main branch)."
     ]
   },
@@ -182,6 +290,7 @@
     ],
     "code_refs": {
       "OfflineSafetyGate": "src/brick_stacking/execution/safety_gate.py",
+      "OfflineSafetyGate.issue_dry_run_diagnostic": "src/brick_stacking/execution/safety_gate.py",
       "OfflineExecutionManager": "src/brick_stacking/execution/execution_manager.py",
       "MockArm.hardware_enabled": "src/brick_stacking/arm/adapter.py",
       "config_loader_offline_only": "src/brick_stacking/runtime/config_loader.py",
@@ -192,10 +301,12 @@
   "notes": [
     "This checklist reports host/safety elevation conditions only.",
     "Never sets control_ready=true or motion_enabled=true.",
-    "Never issues contracts.Permit or opens CAN.",
+    "Never issues live contracts.Permit or opens CAN.",
     "Dry-run probe uses OfflineSafetyGate + MockArm (hardware_enabled=False).",
+    "Dry-run issuance is executable=false; plumbing self-check uses a labeled probe hash only.",
     "host_monitor motion path (main) is separate: --enable-motion \u2192 READY \u2192 ENABLE \u2192 MOVE.",
     "only_operator_enable_remaining stays false while host_policy holds control_ready down or PlanBundle / live Permit / ArmState are missing.",
-    "Formal grasp: NO until live Permit + host policy raise + actuator enable."
+    "Formal grasp: NO until live Permit + host policy raise + actuator enable.",
+    "Dry-run SafetyGate issuance diagnostic attempted (fields_complete=True; still_missing_fields=[]; only_hw_policy_remaining=True)."
   ]
 }

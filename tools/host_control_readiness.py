@@ -119,6 +119,40 @@ def main(argv=None) -> int:
             if payload.get("dry_run_arm_disabled")
             else None
         ),
+        "dry_run_issuance": (
+            {
+                "executable": (
+                    ((payload.get("dry_run_arm_disabled") or {}).get("issuance_diagnostic") or {}).get(
+                        "executable"
+                    )
+                ),
+                "issuance_fields_complete": (
+                    ((payload.get("dry_run_arm_disabled") or {}).get("issuance_diagnostic") or {}).get(
+                        "issuance_fields_complete"
+                    )
+                ),
+                "still_missing_fields": list(
+                    ((payload.get("dry_run_arm_disabled") or {}).get("issuance_diagnostic") or {}).get(
+                        "still_missing_fields"
+                    )
+                    or []
+                ),
+                "only_hardware_enable_and_policy_remaining": (
+                    ((payload.get("dry_run_arm_disabled") or {}).get("issuance_diagnostic") or {}).get(
+                        "only_hardware_enable_and_policy_remaining"
+                    )
+                ),
+                "plumbing_ok": (
+                    (
+                        ((payload.get("dry_run_arm_disabled") or {}).get("issuance_diagnostic") or {})
+                        .get("plumbing_self_check")
+                        or {}
+                    ).get("gate_accepts_complete_dry_run_permit")
+                ),
+            }
+            if payload.get("dry_run_arm_disabled")
+            else None
+        ),
         "output": str(args.output).replace("\\", "/"),
     }
     print(json.dumps(summary, indent=2))
