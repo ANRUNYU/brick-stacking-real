@@ -30,6 +30,7 @@
 22. **dry-run SafetyGate 签发诊断（本轮）**：`OfflineSafetyGate.issue_dry_run_diagnostic` 在 MockArm/`hardware_enabled=False` 下走通；消费 shadow PlanBundle 后 `issuance_fields_complete=true`、`gate_accepts_draft=true`、`only_hardware_enable_and_policy_remaining=true`（相对 dry-run）；`executable=false`，`live_permit=null`。见 [M_PERMIT_AUTHORITY_20261110.md](M_PERMIT_AUTHORITY_20261110.md)。
 23. **门控阶梯（本轮）**：区分 `vision_pre_grasp_ready` → `dry_run_grasp_entry_ready` → `formal_grasp_entry_allowed` → `control_ready`。证据满足 dry-run 全链时 **`dry_run_grasp_entry_ready=true`**；`formal_grasp_entry_allowed` 仅在 live Permit + live VALID 臂满足时为 true；`control_ready` 另需显式 operator policy attest（**默认关**，不自动打开）。见 [HOST_CONTROL_READY_20261110.md](HOST_CONTROL_READY_20261110.md)。
 24. **live-or-recorded→VALID 机读路径（本轮）**：`arm_state_validity` + `tools/arm_state_live_or_recorded.py`；readiness 区分 `arm_state_device_id`（recorded PASS）与 `live_valid_arm_state`（`counts_as_live_valid`）。Mock/recorded/fixture 已测；**未**做真机大幅运动；Windows 上 `live-readonly` 软失败可跳过。ArmStateReader 因 J6/J7 无已审计只读位置查询，live 样本仍 INVALID。
+25. **diagnostic 对齐 shadow PlanBundle / recorded 臂（本轮）**：`pre_grasp_readiness --plan-bundle/--arm-state` 将 diagnostic 字段标为 `PRESENT_FROM_SHADOW_PLAN_BUNDLE` / `PRESENT_FROM_RECORDED_OR_MOCK_ARM`；**仍** `live_permit=null`、`formal_grasp_entry_allowed=false`、`control_ready=false`。完成审计见 `docs/team/B/evidence/field_20261110/formal_grasp_entry_audit_20261110.json`。
 
 ## 物理阻塞
 

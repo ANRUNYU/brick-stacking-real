@@ -242,6 +242,37 @@ def _shadow_context_snapshot(
     }
 
 
+def _plan_bundle_trajectory_hash(plan_bundle: dict[str, Any] | None) -> str | None:
+    if not isinstance(plan_bundle, dict):
+        return None
+    traj = plan_bundle.get("trajectory_hash") or (plan_bundle.get("trajectory") or {}).get("hash")
+    if traj is None or str(traj).strip() == "":
+        return None
+    return str(traj)
+
+
+def _unwrap_arm_state_for_diagnostic(
+    arm_state_payload: dict[str, Any] | None,
+) -> dict[str, Any] | None:
+    """Accept raw ArmState or recorded wrapper; never invents device_id."""
+    if not isinstance(arm_state_payload, dict):
+        return None
+    try:
+        from brick_stacking.arm.arm_state_validity import unwrap_arm_state
+
+        unwrapped = unwrap_arm_state(arm_state_payload)
+        if isinstance(unwrapped, dict):
+            return unwrapped
+    except Exception:
+        pass
+    nested = arm_state_payload.get("arm_state")
+    if isinstance(nested, dict) and nested.get("device_id"):
+        return nested
+    if arm_state_payload.get("device_id") and arm_state_payload.get("source"):
+        return arm_state_payload
+    return None
+
+
 def build_diagnostic_permit(
     *,
     eligible: bool,
@@ -252,12 +283,17 @@ def build_diagnostic_permit(
     evidence_gates_clear: bool,
     request_path: str | None = None,
     shadow_path: str | None = None,
+    plan_bundle: dict[str, Any] | None = None,
+    arm_state_payload: dict[str, Any] | None = None,
+    plan_bundle_path: str | None = None,
+    arm_state_path: str | None = None,
 ) -> dict[str, Any]:
     """Build a shadow/diagnostic permit-eligibility record.
 
     Never invents a live contracts.Permit. executable=false always.
-    Live issuance authority remains D/M SafetyGate at execution time and still
-    requires host enable + PlanBundle trajectory_hash + fresh arm device_id.
+    Optional shadow PlanBundle / recorded ArmState only update field *status*
+    (PRESENT_FROM_*); they do not satisfy live VALID arm or live Permit.
+    Live issuance authority remains D/M SafetyGate at execution time.
     """
     ctx = _shadow_context_snapshot(
         request=request, shadow_report=shadow_report, preferred_handoff=preferred_handoff
@@ -266,16 +302,71 @@ def build_diagnostic_permit(
     ready_status = "SHADOW_INSPECTION_READY" if shadow_inspection_ready else "NOT_READY"
     ctx["shadow_inspection_status"] = ready_status
 
-    live_field_status = {
-        "device_id": {
+    traj_hash = _plan_bundle_trajectory_hash(plan_bundle)
+    arm = _unwrap_arm_state_for_diagnostic(arm_state_payload)
+    arm_device_id = str(arm.get("device_id") or "") if arm else ""
+    arm_source = str(arm.get("source") or "") if arm else ""
+    arm_validity = str(arm.get("validity") or "") if arm else ""
+    recorded_or_mock_arm = bool(arm_device_id) and arm_source in {"recorded", "mock"}
+    live_valid_arm = (
+        bool(arm_device_id)
+        and arm_source == "real"
+        and arm_validity == "VALID"
+    )
+
+    if live_valid_arm:
+        device_status = {
+            "status": "PRESENT_FROM_LIVE_ARM",
+            "detail": "live ArmState.device_id present; still requires live SafetyGate Permit match",
+            "value": arm_device_id,
+            "source": arm_source,
+            "validity": arm_validity,
+            "camera_device_id_seen": ctx.get("camera_device_id"),
+        }
+    elif recorded_or_mock_arm:
+        device_status = {
+            "status": "PRESENT_FROM_RECORDED_OR_MOCK_ARM",
+            "detail": (
+                f"ArmState.device_id from {arm_source} binding (validity={arm_validity!r}); "
+                "does NOT count as live VALID for formal_grasp_entry_allowed"
+            ),
+            "value": arm_device_id,
+            "source": arm_source,
+            "validity": arm_validity,
+            "camera_device_id_seen": ctx.get("camera_device_id"),
+        }
+    else:
+        device_status = {
             "status": "MISSING_LIVE_ARM",
             "detail": "camera device_id is not arm device_id; live Permit needs ArmState.device_id",
             "camera_device_id_seen": ctx.get("camera_device_id"),
-        },
-        "trajectory_hash": {
+        }
+
+    if traj_hash:
+        h3 = bool(plan_bundle and plan_bundle.get("h3_production_plan") is True)
+        traj_status = {
+            "status": "PRESENT_FROM_SHADOW_PLAN_BUNDLE",
+            "detail": (
+                "shadow PlanBundle trajectory_hash present for dry-run / diagnostic wiring; "
+                + (
+                    "H3 production plan"
+                    if h3
+                    else "not H3 production PlanBundle (#20); still not a live Permit"
+                )
+            ),
+            "value": traj_hash,
+            "executable": bool(plan_bundle and plan_bundle.get("executable") is True),
+            "h3_production_plan": h3,
+        }
+    else:
+        traj_status = {
             "status": "MISSING_PLAN_BUNDLE",
-            "detail": "no executable PlanBundle/trajectory on this path; do not invent hash",
-        },
+            "detail": "no PlanBundle/trajectory_hash on this path; do not invent hash",
+        }
+
+    live_field_status = {
+        "device_id": device_status,
+        "trajectory_hash": traj_status,
         "config_hash": {
             "status": "PRESENT_FROM_SHADOW" if ctx.get("config_hash_or_profile_hash") else "MISSING",
             "value": ctx.get("config_hash_or_profile_hash"),
@@ -298,17 +389,35 @@ def build_diagnostic_permit(
         "live SafetyGate issuance (D/M authority at execution)",
         "host/safety enable path for control_ready",
         "actuator / arm power enable (operator)",
-        "PlanBundle trajectory_hash",
-        "fresh ArmState.device_id matching permit.device_id",
         "valid_until_host_monotonic_s within OfflineSafetyGate freshness window",
     ]
+    if not traj_hash:
+        still_missing.insert(3, "PlanBundle trajectory_hash")
+    if not live_valid_arm:
+        still_missing.insert(
+            3 if traj_hash else 4,
+            "fresh live VALID ArmState.device_id matching permit.device_id "
+            "(recorded/mock ≠ live)",
+        )
 
-    proof = (
-        "shadow Inspection + evidence gates clear; only host enable / actuator enable / "
-        "PlanBundle + live SafetyGate remain before a live Permit can exist"
-        if eligible
-        else "evidence gates not clear; diagnostic eligibility withheld"
-    )
+    if eligible and traj_hash and recorded_or_mock_arm:
+        proof = (
+            "shadow Inspection + evidence gates clear + shadow PlanBundle + recorded/mock "
+            "arm device_id; still missing live VALID arm + live SafetyGate Permit + "
+            "host/actuator enable before a live Permit can exist"
+        )
+    elif eligible and traj_hash:
+        proof = (
+            "shadow Inspection + evidence gates clear + shadow PlanBundle; still missing "
+            "live VALID arm + live SafetyGate Permit + host/actuator enable"
+        )
+    elif eligible:
+        proof = (
+            "shadow Inspection + evidence gates clear; still missing PlanBundle "
+            "trajectory_hash + live VALID arm + live SafetyGate Permit + host/actuator enable"
+        )
+    else:
+        proof = "evidence gates not clear; diagnostic eligibility withheld"
 
     return {
         "schema_version": DIAGNOSTIC_PERMIT_SCHEMA,
@@ -342,10 +451,13 @@ def build_diagnostic_permit(
         "inputs": {
             "request_path": request_path,
             "shadow_path": shadow_path,
+            "plan_bundle_path": plan_bundle_path,
+            "arm_state_path": arm_state_path,
         },
         "usage": [
             "Readiness may set permit_eligible=true when evidence_gates_clear.",
             "Do NOT copy this object into contracts.Permit / StepEvidence.permit.",
+            "Shadow PlanBundle / recorded arm update diagnostic field status only.",
             "Live permit remains null until host/safety + SafetyGate issue one.",
         ],
     }
@@ -359,8 +471,16 @@ def evaluate_pre_grasp_readiness(
     request_path: str | None = None,
     shadow_path: str | None = None,
     association_path: str | None = None,
+    plan_bundle: dict[str, Any] | None = None,
+    arm_state_payload: dict[str, Any] | None = None,
+    plan_bundle_path: str | None = None,
+    arm_state_path: str | None = None,
 ) -> ReadinessReport:
-    """Assemble gate status from adopted request + optional shadow/association artifacts."""
+    """Assemble gate status from adopted request + optional shadow/association artifacts.
+
+    Optional plan_bundle / arm_state_payload feed diagnostic field status only;
+    they never raise formal_grasp_entry_allowed, control_ready, or invent live Permit.
+    """
     req = request or {}
     handoffs = _handoff_rows(shadow_report)
     consistent_idx = _scene_consistent_indices(handoffs)
@@ -801,10 +921,28 @@ def evaluate_pre_grasp_readiness(
         awaiting_host = False
     elif permit_eligible:
         permit_status = "POLICY_HOLD"
+        has_traj = _plan_bundle_trajectory_hash(plan_bundle) is not None
+        arm_diag = _unwrap_arm_state_for_diagnostic(arm_state_payload)
+        has_recorded_arm = bool(
+            arm_diag
+            and arm_diag.get("device_id")
+            and str(arm_diag.get("source") or "") in {"recorded", "mock"}
+        )
+        missing_bits = [
+            "host/safety enable",
+            "actuator enable",
+            "live VALID ArmState",
+            "live SafetyGate issuance",
+        ]
+        if not has_traj:
+            missing_bits.insert(2, "PlanBundle trajectory_hash")
+        elif has_recorded_arm:
+            missing_bits.insert(
+                2, "recorded/mock arm present but ≠ live VALID"
+            )
         permit_detail = (
             "live permit=null by design; diagnostic eligibility issued "
-            "(permit_eligible=true). Still missing: host/safety enable, "
-            "actuator enable, PlanBundle trajectory_hash, live SafetyGate issuance."
+            f"(permit_eligible=true). Still missing: {', '.join(missing_bits)}."
         )
         permit_hold_reason = (
             "eligible_awaiting_host_enable_and_live_safety_gate"
@@ -842,6 +980,10 @@ def evaluate_pre_grasp_readiness(
         evidence_gates_clear=evidence_clear,
         request_path=request_path,
         shadow_path=shadow_path,
+        plan_bundle=plan_bundle,
+        arm_state_payload=arm_state_payload,
+        plan_bundle_path=plan_bundle_path,
+        arm_state_path=arm_state_path,
     )
 
     missing_software = tuple(
@@ -865,8 +1007,9 @@ def evaluate_pre_grasp_readiness(
         "formal_grasp_entry_allowed / control_ready / permit / motion_enabled stay false/null here by design.",
         "permit_eligible=true means shadow Inspection evidence is enough to assess live issuance; not a Permit.",
         "awaiting_m_permit=true only while evidence incomplete; when eligible → awaiting_live_permit_host_enable.",
-        "Remaining formal-entry hard holds: live SafetyGate Permit + host/safety control_ready + actuator enable.",
+        "Remaining formal-entry hard holds: live SafetyGate Permit + live VALID arm + host/safety control_ready + actuator enable.",
         "Readiness adopts only scene_consistent frames; WARMING_UP SCENE_OR_RGBD_NOT_CONFIRMED is skipped, not forged.",
+        "Optional shadow PlanBundle / recorded arm update diagnostic field status only; never live Permit.",
     )
     return ReadinessReport(
         schema_version=SCHEMA,
@@ -893,6 +1036,8 @@ def evaluate_pre_grasp_readiness(
             "request_path": request_path,
             "shadow_path": shadow_path,
             "association_path": association_path,
+            "plan_bundle_path": plan_bundle_path,
+            "arm_state_path": arm_state_path,
             "request_status": req.get("status"),
             "target_id": req.get("target_id"),
             "reference_id": req.get("reference_id"),

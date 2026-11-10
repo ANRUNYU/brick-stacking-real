@@ -81,14 +81,17 @@ python tools/slot_shadow_pipeline.py <bundles.jsonl> \
   --output docs/team/B/evidence/field_20261110/slot_contrast_red_s140_shadow_assoc_bound_….json
 
 # 缺口 / readiness（永不 control_ready=true；可报 vision_pre_grasp_ready + permit_eligible）
+# 可选 --plan-bundle / --arm-state：仅更新 diagnostic 字段状态（PRESENT_FROM_*），≠ live Permit
 python tools/pre_grasp_readiness.py \
   --request docs/team/B/evidence/field_20261110/first_placement_request_assoc_handclear_overlay_20261110.json \
   --shadow docs/team/B/evidence/field_20261110/slot_contrast_red_s140_shadow_assoc_bound_20261110_214801.json \
   --association-record docs/team/B/evidence/field_20261110/association_confirm_switch_20261110.json \
+  --plan-bundle docs/team/B/evidence/field_20261110/shadow_plan_bundle_20261110.json \
+  --arm-state docs/team/B/evidence/field_20261110/recorded_arm_state_left_p7_20261110.json \
   --output docs/team/B/evidence/field_20261110/pre_grasp_readiness_20261110.json \
   --diagnostic-permit-output docs/team/B/evidence/field_20261110/diagnostic_permit_eligibility_20261110.json
 
-python tools/pre_grasp_readiness.py --gaps-only --shadow … --output …/pre_grasp_gaps_20261110.json
+python tools/pre_grasp_readiness.py --gaps-only --shadow … --plan-bundle … --arm-state … --output …/pre_grasp_gaps_20261110.json
 
 # shadow PlanBundle + recorded arm device_id（不开臂/不发 CAN）
 python tools/emit_shadow_plan_and_arm_state.py \

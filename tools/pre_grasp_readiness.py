@@ -52,11 +52,25 @@ def main(argv=None):
         default=None,
         help="optional path to write diagnostic (shadow) permit-eligibility JSON alone",
     )
+    p.add_argument(
+        "--plan-bundle",
+        type=Path,
+        default=None,
+        help="optional shadow PlanBundle JSON (updates diagnostic trajectory_hash status only)",
+    )
+    p.add_argument(
+        "--arm-state",
+        type=Path,
+        default=None,
+        help="optional recorded/mock ArmState JSON (updates diagnostic device_id status; ≠ live VALID)",
+    )
     args = p.parse_args(argv)
 
     request = load_json(args.request)
     shadow = load_json(args.shadow) if args.shadow else None
     association = load_json(args.association_record) if args.association_record else None
+    plan_bundle = load_json(args.plan_bundle) if args.plan_bundle else None
+    arm_state = load_json(args.arm_state) if args.arm_state else None
     report = evaluate_pre_grasp_readiness(
         request=request,
         shadow_report=shadow,
@@ -66,6 +80,12 @@ def main(argv=None):
         association_path=(
             str(args.association_record).replace("\\", "/") if args.association_record else None
         ),
+        plan_bundle=plan_bundle,
+        arm_state_payload=arm_state,
+        plan_bundle_path=(
+            str(args.plan_bundle).replace("\\", "/") if args.plan_bundle else None
+        ),
+        arm_state_path=str(args.arm_state).replace("\\", "/") if args.arm_state else None,
     )
     payload = evidence_gap_report(report) if args.gaps_only else report.to_dict()
     # Hard invariants for any output shape: never forge formal entry / motion / live permit.

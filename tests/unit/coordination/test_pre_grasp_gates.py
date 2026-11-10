@@ -21,6 +21,8 @@ SHADOW_ASSOC = FIELD / "slot_contrast_red_s140_shadow_assoc_20261110_214801.json
 SHADOW_BOUND = FIELD / "slot_contrast_red_s140_shadow_assoc_bound_20261110_214801.json"
 OVERLAY = FIELD / "first_placement_request_assoc_handclear_overlay_20261110.json"
 ASSOC_RECORD = FIELD / "association_confirm_switch_20261110.json"
+SHADOW_PLAN = FIELD / "shadow_plan_bundle_20261110.json"
+RECORDED_ARM = FIELD / "recorded_arm_state_left_p7_20261110.json"
 
 
 def test_gate_catalog_covers_required_ids():
@@ -154,6 +156,51 @@ def test_overlay_yaw_policy_clears_yaw_gate_without_forging_measured():
     )
     # Warmup SCENE_OR_RGBD_NOT_CONFIRMED must not remain a session-level blocker.
     assert "SCENE_OR_RGBD_NOT_CONFIRMED" not in report.consumer_reason_union
+
+
+def test_diagnostic_consumes_shadow_plan_and_recorded_arm_without_live_permit():
+    """Shadow PlanBundle + recorded arm update diagnostic status only; never formal entry."""
+    request = json.loads(OVERLAY.read_text(encoding="utf-8"))
+    shadow = json.loads(SHADOW_BOUND.read_text(encoding="utf-8"))
+    association = json.loads(ASSOC_RECORD.read_text(encoding="utf-8"))
+    plan = json.loads(SHADOW_PLAN.read_text(encoding="utf-8"))
+    arm = json.loads(RECORDED_ARM.read_text(encoding="utf-8"))
+    report = evaluate_pre_grasp_readiness(
+        request=request,
+        shadow_report=shadow,
+        association_record=association,
+        plan_bundle=plan,
+        arm_state_payload=arm,
+        plan_bundle_path=str(SHADOW_PLAN),
+        arm_state_path=str(RECORDED_ARM),
+    )
+    diag = report.diagnostic_permit
+    assert diag is not None
+    assert diag["executable"] is False
+    assert diag["live_permit"] is None
+    assert diag["formal_grasp_entry_allowed"] is False
+    assert diag["control_ready"] is False
+    assert diag["motion_enabled"] is False
+    assert (
+        diag["live_permit_field_status"]["trajectory_hash"]["status"]
+        == "PRESENT_FROM_SHADOW_PLAN_BUNDLE"
+    )
+    assert diag["live_permit_field_status"]["trajectory_hash"]["value"] == plan["trajectory_hash"]
+    assert (
+        diag["live_permit_field_status"]["device_id"]["status"]
+        == "PRESENT_FROM_RECORDED_OR_MOCK_ARM"
+    )
+    assert diag["live_permit_field_status"]["device_id"]["value"] == "can2:61,62,63,64,65,66,67"
+    missing = " ".join(diag["still_missing_for_live_permit"])
+    assert "PlanBundle trajectory_hash" not in missing
+    assert "live VALID ArmState" in missing
+    assert "live SafetyGate" in missing
+    assert report.formal_grasp_entry_allowed is False
+    assert report.control_ready is False
+    assert report.permit is None
+    assert report.vision_pre_grasp_ready is True
+    assert "PlanBundle trajectory_hash" not in report.gates[-2].detail
+    assert "live VALID" in report.gates[-2].detail
 
 
 def test_readiness_skips_warmup_scene_and_accepts_confirmed_ready():
@@ -314,6 +361,10 @@ def test_cli_readiness_and_association_tools(tmp_path):
             str(SHADOW_BOUND),
             "--association-record",
             str(ASSOC_RECORD),
+            "--plan-bundle",
+            str(SHADOW_PLAN),
+            "--arm-state",
+            str(RECORDED_ARM),
             "--output",
             str(ready_out),
             "--diagnostic-permit-output",
@@ -340,3 +391,11 @@ def test_cli_readiness_and_association_tools(tmp_path):
     assert diag["executable"] is False
     assert diag["live_permit"] is None
     assert diag["control_ready"] is False
+    assert (
+        diag["live_permit_field_status"]["trajectory_hash"]["status"]
+        == "PRESENT_FROM_SHADOW_PLAN_BUNDLE"
+    )
+    assert (
+        diag["live_permit_field_status"]["device_id"]["status"]
+        == "PRESENT_FROM_RECORDED_OR_MOCK_ARM"
+    )

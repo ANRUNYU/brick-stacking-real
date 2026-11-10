@@ -1,0 +1,149 @@
+{
+  "schema_version": "formal-grasp-entry-audit-0.1",
+  "audited_at_utc": "2026-11-10T15:50:00Z",
+  "branch": "codex/v-vision-20261110",
+  "goal": "advance_to_formal_grasp_entry_pre_grasp",
+  "goal_complete": false,
+  "definition_of_formal_entry": {
+    "authority": "docs/team/B/HOST_CONTROL_READY_20261110.md gate_ladder",
+    "formal_grasp_entry_allowed_requires": [
+      "dry_run_grasp_entry_ready",
+      "live_contracts_Permit_validated_by_OfflineSafetyGate",
+      "live_VALID_ArmState_source_real",
+      "permit_device_id_matches_live_arm"
+    ],
+    "not_sufficient": [
+      "vision_pre_grasp_ready",
+      "dry_run_grasp_entry_ready",
+      "permit_eligible / diagnostic_permit",
+      "shadow PlanBundle",
+      "recorded/mock ArmState"
+    ]
+  },
+  "deliverable_checklist": {
+    "CURRENT_BINDING_ACTIVE_plus_calibration_hash": {
+      "status": "PASS",
+      "evidence": "config/observed/calibration_current_binding_c35_20261110.json",
+      "value": {
+        "status": "CURRENT_BINDING_ACTIVE",
+        "calibration_hash": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461"
+      },
+      "note": "hash identity only; not accuracy approval; control_ready=false"
+    },
+    "BundleBinding_constructible": {
+      "status": "PASS",
+      "evidence": "docs/team/B/evidence/field_20261110/slot_contrast_red_s140_shadow_assoc_bound_20261110_214801.json",
+      "value": {
+        "binding_present": true,
+        "clock_error_bound_s": 0.0016864349552430213,
+        "frames": "3/3"
+      }
+    },
+    "durable_association_plus_hand_clear": {
+      "status": "PASS",
+      "evidence": [
+        "docs/team/B/evidence/field_20261110/association_confirm_switch_20261110.json",
+        "docs/team/B/evidence/field_20261110/hand_clear_arm_idle_evidence_20261110.json"
+      ],
+      "value": {
+        "target_association_confirmed": true,
+        "hand_clear": true,
+        "hand_clear_basis": "arm_idle_no_motion"
+      }
+    },
+    "S140_shadow_readiness": {
+      "status": "PASS",
+      "evidence": "docs/team/B/evidence/field_20261110/pre_grasp_readiness_20261110.json",
+      "value": {
+        "evidence_gates_clear": true,
+        "shadow_inspection": "PASS",
+        "confirmed_frame_SHADOW_INSPECTION_READY": true,
+        "session_profile": "head_slot_contrast_s140.yaml (diagnostic; not production default)"
+      }
+    },
+    "vision_pre_grasp_ready": {
+      "status": "PASS",
+      "value": true
+    },
+    "dry_run_grasp_entry_ready": {
+      "status": "PASS",
+      "value": true,
+      "evidence": "docs/team/B/evidence/field_20261110/host_control_readiness_20261110.json"
+    },
+    "formal_grasp_entry_allowed": {
+      "status": "FAIL",
+      "value": false,
+      "missing": [
+        "live_contracts_Permit_validated",
+        "live_VALID_ArmState_source_real"
+      ]
+    },
+    "control_ready": {
+      "status": "POLICY_HOLD",
+      "value": false,
+      "note": "reporter hard-hold; attest default closed; never forged PASS"
+    }
+  },
+  "machine_readable_booleans": {
+    "vision_pre_grasp_ready": true,
+    "evidence_gates_clear": true,
+    "permit_eligible": true,
+    "dry_run_grasp_entry_ready": true,
+    "formal_grasp_entry_allowed": false,
+    "can_enter_formal_grasp": false,
+    "control_ready": false,
+    "motion_enabled": false,
+    "live_permit": null,
+    "only_operator_enable_remaining": false,
+    "needs_operator_physical_enable_now": false,
+    "needs_operator_physical_enable_before_real_motion": true
+  },
+  "hard_blockers_for_formal_entry": [
+    {
+      "id": "live_contracts_Permit_validated",
+      "software_solvable_without_motion": false,
+      "detail": "Only D/M SafetyGate may issue live contracts.Permit; dry-run draft / diagnostic must not be copied"
+    },
+    {
+      "id": "live_VALID_ArmState_source_real",
+      "software_solvable_without_motion": false,
+      "detail": "counts_as_live_valid requires source=real + validity=VALID + seven finite q_rad; recorded/mock ≠ live; ArmStateReader currently leaves J6/J7 None (INVALID). Audited J6/J7 readonly would need bus contact — out of scope for no-motion advance"
+    }
+  ],
+  "software_only_remaining_vs_formal": {
+    "none_that_raises_formal_grasp_entry_allowed": true,
+    "completed_this_audit": [
+      "wire diagnostic permit to consume shadow PlanBundle + recorded arm field status (PRESENT_FROM_*; still live_permit=null)"
+    ],
+    "intentionally_not_done": [
+      "raise control_ready",
+      "open --enable-motion / emit trajectory",
+      "forge live Permit",
+      "treat dry_run_grasp_entry_ready as Goal complete"
+    ]
+  },
+  "operator_actions": {
+    "needed_now": false,
+    "needed_before_real_motion": [
+      "live VALID arm feedback path (power/CAN + audited seven-joint read)",
+      "live SafetyGate Permit issuance",
+      "explicit operator_policy_attest --attested (default closed)",
+      "host_monitor --enable-motion + READY/ENABLE (separate path; not this reporter)"
+    ],
+    "physical_placement": "not required for this audit; association/hand_clear/calibration already adjudicated for static pre_grasp contrast"
+  },
+  "evidence_refs": [
+    "docs/team/B/evidence/field_20261110/pre_grasp_readiness_20261110.json",
+    "docs/team/B/evidence/field_20261110/pre_grasp_gaps_20261110.json",
+    "docs/team/B/evidence/field_20261110/host_control_readiness_20261110.json",
+    "docs/team/B/evidence/field_20261110/diagnostic_permit_eligibility_20261110.json",
+    "docs/team/B/PRE_GRASP_GATES_20261110.md",
+    "docs/team/B/HOST_CONTROL_READY_20261110.md",
+    "docs/team/B/FIELD_OPS_PRE_GRASP_20261110.md",
+    "docs/team/B/MERGE_TO_MAIN_CHECKLIST_20261110.md"
+  ],
+  "verdict": {
+    "goal_complete": false,
+    "reason": "dry_run_grasp_entry_ready=true but formal_grasp_entry_allowed/can_enter_formal_grasp=false; live Permit + live VALID arm absent; control_ready hard-false"
+  }
+}

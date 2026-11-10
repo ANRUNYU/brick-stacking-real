@@ -114,9 +114,10 @@ python tools/host_control_readiness.py \
 | --- | --- |
 | 可进入正式抓取？（`formal_grasp_entry_allowed` / `can_enter_formal_grasp`） | **否** |
 | dry-run 入口就绪？ | **是**（`dry_run_grasp_entry_ready=true`） |
-| diagnostic permit | `permit_eligible=true`；`executable=false` |
+| diagnostic permit | `permit_eligible=true`；`executable=false`；可选 shadow PlanBundle/recorded 臂 → `PRESENT_FROM_*`（≠ live） |
 | live Permit | **null**（未伪造） |
 | `control_ready` | **false**（reporter 硬持有；attest 默认关） |
 | 现在要用户物理开臂？ | **否** |
 | 是否需用户使能？ | **现在不必**；勿开 `--attested` / `--enable-motion`；正式抓取前还需 live Permit + live VALID 臂 |
 | 真机大幅运动前要开臂？ | **是**（且需专用 elevation 路径；本分支 checklist 不解锁） |
+| Goal complete？ | **否**（见 `docs/team/B/evidence/field_20261110/formal_grasp_entry_audit_20261110.json`；勿把 dry-run 就绪偷换成 complete） |

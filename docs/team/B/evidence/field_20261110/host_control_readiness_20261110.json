@@ -98,7 +98,7 @@
       "status": "MISSING",
       "blocking": true,
       "category": "live_permit",
-      "detail": "contracts.Permit is null; only D/M SafetyGate may issue at execution. diagnostic field hints={device_id:MISSING_LIVE_ARM, trajectory_hash:MISSING_PLAN_BUNDLE, config_hash:PRESENT_FROM_SHADOW, calibration_hash:PRESENT, scene_version:PRESENT, valid_until_host_monotonic_s:MISSING_ISSUANCE_CLOCK}",
+      "detail": "contracts.Permit is null; only D/M SafetyGate may issue at execution. diagnostic field hints={device_id:PRESENT_FROM_RECORDED_OR_MOCK_ARM, trajectory_hash:PRESENT_FROM_SHADOW_PLAN_BUNDLE, config_hash:PRESENT_FROM_SHADOW, calibration_hash:PRESENT, scene_version:PRESENT, valid_until_host_monotonic_s:MISSING_ISSUANCE_CLOCK}",
       "owner": "D/M SafetyGate"
     },
     {
@@ -196,7 +196,7 @@
       "id": "live_permit",
       "status": "MISSING",
       "category": "live_permit",
-      "detail": "contracts.Permit is null; only D/M SafetyGate may issue at execution. diagnostic field hints={device_id:MISSING_LIVE_ARM, trajectory_hash:MISSING_PLAN_BUNDLE, config_hash:PRESENT_FROM_SHADOW, calibration_hash:PRESENT, scene_version:PRESENT, valid_until_host_monotonic_s:MISSING_ISSUANCE_CLOCK}",
+      "detail": "contracts.Permit is null; only D/M SafetyGate may issue at execution. diagnostic field hints={device_id:PRESENT_FROM_RECORDED_OR_MOCK_ARM, trajectory_hash:PRESENT_FROM_SHADOW_PLAN_BUNDLE, config_hash:PRESENT_FROM_SHADOW, calibration_hash:PRESENT, scene_version:PRESENT, valid_until_host_monotonic_s:MISSING_ISSUANCE_CLOCK}",
       "owner": "D/M SafetyGate"
     },
     {
@@ -295,7 +295,7 @@
         "hardware_enabled": false,
         "device_id": "mock-arm-host-checklist",
         "clock_domain": "host_monotonic",
-        "epoch": "9d4c10ee61494721ad734920b9b0078c"
+        "epoch": "a5a3e8904c0044178083a0876df753cf"
       },
       "field_status": {
         "device_id": {
@@ -326,7 +326,7 @@
         "valid_until_host_monotonic_s": {
           "status": "PRESENT_FROM_ISSUANCE_CLOCK",
           "detail": "dry-run issuer sets valid_until = now + min(window, max_age_s); live path still requires live SafetyGate issuance clock",
-          "value": 10712.265
+          "value": 11483.453
         }
       },
       "still_missing_fields": [],
@@ -342,7 +342,7 @@
         "config_hash": "b70d7556af358429b502143db4fa25af0591da29260c08a3840370139242b728",
         "calibration_hash": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
         "scene_version": "replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af",
-        "valid_until_host_monotonic_s": 10712.265
+        "valid_until_host_monotonic_s": 11483.453
       },
       "gate_accepts_draft": true,
       "gate_accept_error": null,
