@@ -166,7 +166,7 @@ class MockCameraWorker(threading.Thread):
 
 
 class OrbbecCameraWorker(threading.Thread):
-    """Hold one Orbbec device for preview. Stop this service before exclusive vision capture."""
+    """Hold one Orbbec device for preview until stop()/release."""
 
     def __init__(self, hub: MonitorHub, serial: str, camera_id: str = "head",
                  width: int = 640, height: int = 480, fps: int = 15, jpeg_quality: int = 75):
@@ -179,9 +179,13 @@ class OrbbecCameraWorker(threading.Thread):
         self.fps = fps
         self.jpeg_quality = jpeg_quality
         self._stop = threading.Event()
+        self._released = threading.Event()
 
     def stop(self) -> None:
         self._stop.set()
+
+    def wait_released(self, timeout_s: float = 5.0) -> bool:
+        return self._released.wait(timeout_s)
 
     def run(self) -> None:
         pipe = None
@@ -204,6 +208,8 @@ class OrbbecCameraWorker(threading.Thread):
                     "name": info.get_name(),
                     "firmware": info.get_firmware_version(),
                 }
+                self.hub.meta.pop("camera_error", None)
+                self.hub.meta.pop("camera_cleanup_error", None)
             pipe = sdk.Pipeline(device)
             cfg = sdk.Config()
             profile_list = pipe.get_stream_profile_list(sdk.OBSensorType.COLOR_SENSOR)
@@ -212,6 +218,8 @@ class OrbbecCameraWorker(threading.Thread):
             cfg.enable_stream(color)
             pipe.start(cfg)
             started = True
+            with self.hub.lock:
+                self.hub.meta["camera_held"] = True
             while not self._stop.is_set():
                 frames = pipe.wait_for_frames(100)
                 if frames is None:
@@ -236,6 +244,7 @@ class OrbbecCameraWorker(threading.Thread):
             ))
             with self.hub.lock:
                 self.hub.meta["camera_error"] = f"{type(exc).__name__}: {exc}"
+                self.hub.meta["camera_held"] = False
         finally:
             if started and pipe is not None:
                 try:
@@ -243,6 +252,9 @@ class OrbbecCameraWorker(threading.Thread):
                 except Exception as exc:  # noqa: BLE001
                     with self.hub.lock:
                         self.hub.meta["camera_cleanup_error"] = str(exc)
+            with self.hub.lock:
+                self.hub.meta["camera_held"] = False
+            self._released.set()
 
 
 class MockArmWorker(threading.Thread):

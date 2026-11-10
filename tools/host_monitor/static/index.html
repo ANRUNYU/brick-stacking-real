@@ -22,12 +22,19 @@
   <main class="layout">
     <section class="stage">
       <div class="stage-head">
-        <h1>头部相机</h1>
-        <p id="camera-meta">等待首帧</p>
+        <div>
+          <h1>头部相机</h1>
+          <p id="camera-meta">等待首帧</p>
+        </div>
+        <div class="cam-actions">
+          <button type="button" id="btn-release" class="btn danger">释放摄像头</button>
+          <button type="button" id="btn-acquire" class="btn">重新占用</button>
+        </div>
       </div>
       <div class="viewport">
         <img id="head-stream" alt="头部相机实时画面" src="/stream/head" />
         <div class="scanline" aria-hidden="true"></div>
+        <div id="cam-overlay" class="cam-overlay hidden">摄像头已释放 · 可供视觉采集独占</div>
       </div>
     </section>
 
@@ -45,7 +52,7 @@
         <h2>边界</h2>
         <ul>
           <li>只读监视，不发运动 / 使能 / Flash</li>
-          <li>占用 Orbbec 时请停本服务再做视觉独占采集</li>
+          <li>开发采图前点「释放摄像头」，结束后可「重新占用」</li>
           <li>仅建议同局域网访问</li>
         </ul>
       </section>

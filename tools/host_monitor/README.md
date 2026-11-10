@@ -3,7 +3,7 @@
 在 **Ubuntu 机器人主机**上运行：实时预览头部相机画面，并轮询左/右臂只读关节角。同一局域网协作者用浏览器打开即可。
 
 - **只读**：不使能、不发轨迹、不构造 P7 运动 SDK、不写 Flash。  
-- **相机独占**：服务运行期间占用指定 Orbbec；做视觉录包/检测前请先停本服务。  
+- **相机可一键释放**：网页按钮或 `POST /api/camera/release` 释放 Orbbec；`POST /api/camera/acquire` 再占用。关节轮询在释放后仍继续。  
 - **J6/J7**：与现有 `ArmStateReader` 一致，可能无角度（显示为 —）。
 
 权威计划见仓库 `docs/THREE_TRACK_GRASP_DEV_PLAN.md`；本工具仅辅助联调观察，不提升 `control_ready`。
@@ -70,7 +70,9 @@ python tools/host_monitor/server.py --mock --bind 127.0.0.1 --port 8088
 |------|------|
 | `/` | 监视页 |
 | `/api/health` | 存活与只读声明 |
-| `/api/state` | 相机元数据 + 关节 JSON |
+| `/api/state` | 相机元数据 + 关节 JSON（含 `camera_held`） |
+| `/api/camera/release` | **POST** 释放 Orbbec，方便其它视觉工具独占 |
+| `/api/camera/acquire` | **POST** 重新占用预览 |
 | `/stream/head` | 头部 MJPEG |
 
 ## 依赖

@@ -2,6 +2,10 @@ const pill = document.getElementById("link-pill");
 const cameraMeta = document.getElementById("camera-meta");
 const serviceMeta = document.getElementById("service-meta");
 const armsRoot = document.getElementById("arms");
+const overlay = document.getElementById("cam-overlay");
+const btnRelease = document.getElementById("btn-release");
+const btnAcquire = document.getElementById("btn-acquire");
+const headStream = document.getElementById("head-stream");
 
 function fmt(v, digits = 3) {
   if (v === null || v === undefined || Number.isNaN(v)) return "—";
@@ -18,6 +22,7 @@ function renderService(state) {
   const meta = state.meta || {};
   const rows = [
     ["mode", meta.mode || "?"],
+    ["camera", meta.camera_held ? "HELD" : "RELEASED"],
     ["serial", meta.serial || (meta.camera_selected && meta.camera_selected.serial) || "—"],
     ["arms", meta.arms || "—"],
     ["motion", "false"],
@@ -29,7 +34,17 @@ function renderService(state) {
 }
 
 function renderCamera(state) {
+  const meta = state.meta || {};
+  const held = !!meta.camera_held;
+  overlay.classList.toggle("hidden", held);
+  btnRelease.disabled = !held;
+  btnAcquire.disabled = held;
+
   const cam = (state.cameras || {}).head;
+  if (!held) {
+    cameraMeta.textContent = "已释放 · 可供其它视觉进程独占";
+    return;
+  }
   if (!cam) {
     cameraMeta.textContent = "无头部相机状态";
     return;
@@ -78,7 +93,8 @@ async function tick() {
     const res = await fetch("/api/state", { cache: "no-store" });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const state = await res.json();
-    setPill(true, "已连接 · 只读");
+    const held = !!(state.meta && state.meta.camera_held);
+    setPill(true, held ? "已连接 · 相机占用中" : "已连接 · 相机已释放");
     renderService(state);
     renderCamera(state);
     renderArms(state);
@@ -86,6 +102,27 @@ async function tick() {
     setPill(false, `断开 · ${err.message || err}`);
   }
 }
+
+async function cameraAction(path) {
+  btnRelease.disabled = true;
+  btnAcquire.disabled = true;
+  try {
+    const res = await fetch(path, { method: "POST" });
+    const body = await res.json();
+    if (!res.ok || body.ok === false) throw new Error(body.notice || `HTTP ${res.status}`);
+    // Bust MJPEG cache when re-acquiring.
+    if (path.endsWith("/acquire")) {
+      headStream.src = `/stream/head?t=${Date.now()}`;
+    }
+    await tick();
+  } catch (err) {
+    setPill(false, `相机操作失败 · ${err.message || err}`);
+    await tick();
+  }
+}
+
+btnRelease.addEventListener("click", () => cameraAction("/api/camera/release"));
+btnAcquire.addEventListener("click", () => cameraAction("/api/camera/acquire"));
 
 tick();
 setInterval(tick, 250);

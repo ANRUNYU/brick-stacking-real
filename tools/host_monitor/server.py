@@ -3,12 +3,16 @@
 Read-only. No motion enable, trajectory, Flash writes, or P7 SDK construction.
 Bind on the robot host (0.0.0.0) so same-LAN collaborators can open the page.
 
-Usage on robot host (vision/control venv with deps):
+Camera can be released/re-acquired without stopping the whole service:
+  POST /api/camera/release
+  POST /api/camera/acquire
+
+Usage on robot host:
   cd /path/to/brick-stacking-real
   PYTHONPATH=src python tools/host_monitor/server.py --bind 0.0.0.0 --port 8088 \\
       --serial CP2L863000KL --arms left
 
-Local UI smoke (no hardware):
+Local UI smoke:
   PYTHONPATH=src python tools/host_monitor/server.py --mock --bind 127.0.0.1 --port 8088
 """
 from __future__ import annotations
@@ -33,6 +37,7 @@ from sources import (  # noqa: E402
     LEFT_ARM,
     RIGHT_ARM,
     ArmReaderWorker,
+    FramePacket,
     MockArmWorker,
     MockCameraWorker,
     MonitorHub,
@@ -40,21 +45,93 @@ from sources import (  # noqa: E402
 )
 
 
+class CameraController:
+    """Start/stop the preview worker so vision jobs can take the Orbbec exclusively."""
+
+    def __init__(self, hub: MonitorHub, args):
+        self.hub = hub
+        self.args = args
+        self._lock = threading.Lock()
+        self._worker = None
+
+    @property
+    def held(self) -> bool:
+        with self.hub.lock:
+            return bool(self.hub.meta.get("camera_held"))
+
+    def _make_worker(self):
+        if self.args.mock:
+            return MockCameraWorker(self.hub, "head", fps=8)
+        return OrbbecCameraWorker(
+            self.hub,
+            serial=self.args.serial,
+            camera_id="head",
+            width=self.args.width,
+            height=self.args.height,
+            fps=self.args.fps,
+            jpeg_quality=self.args.jpeg_quality,
+        )
+
+    def acquire(self) -> dict:
+        with self._lock:
+            if self._worker is not None and self._worker.is_alive():
+                return {"ok": True, "camera_held": True, "changed": False, "notice": "already holding camera"}
+            self._worker = self._make_worker()
+            with self.hub.lock:
+                self.hub.meta["camera_held"] = False
+                self.hub.meta.pop("camera_error", None)
+                self.hub.meta["notice"] = (
+                    "Orbbec held by monitor preview; use 释放摄像头 before exclusive vision capture"
+                )
+            self._worker.start()
+            return {"ok": True, "camera_held": True, "changed": True, "notice": "camera acquired for preview"}
+
+    def release(self) -> dict:
+        with self._lock:
+            worker = self._worker
+            self._worker = None
+            if worker is None:
+                with self.hub.lock:
+                    self.hub.meta["camera_held"] = False
+                    self.hub.meta["notice"] = "camera already released; safe for exclusive vision capture"
+                self.hub.set_frame(FramePacket(
+                    b"", 0, 0, time.monotonic(), "head", "released", "camera released",
+                ))
+                return {"ok": True, "camera_held": False, "changed": False, "notice": "already released"}
+
+            worker.stop()
+            if hasattr(worker, "wait_released"):
+                worker.wait_released(5.0)
+            else:
+                worker.join(timeout=5.0)
+            # Extra settle time for USB/UVC teardown.
+            time.sleep(0.4)
+            with self.hub.lock:
+                self.hub.meta["camera_held"] = False
+                self.hub.meta.pop("camera_error", None)
+                self.hub.meta["notice"] = "camera released; monitor keeps joints; re-acquire when preview needed"
+            self.hub.set_frame(FramePacket(
+                b"", 0, 0, time.monotonic(), "head", "released", "camera released for other tools",
+            ))
+            return {"ok": True, "camera_held": False, "changed": True, "notice": "camera released"}
+
+
 class MonitorServer(ThreadingHTTPServer):
     daemon_threads = True
     allow_reuse_address = True
 
-    def __init__(self, address, hub: MonitorHub, workers: list):
+    def __init__(self, address, hub: MonitorHub, arm_workers: list, camera: CameraController):
         super().__init__(address, MonitorHandler)
         self.hub = hub
-        self.workers = workers
+        self.arm_workers = arm_workers
+        self.camera = camera
         self.started_at = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
 
 class MonitorHandler(BaseHTTPRequestHandler):
     server: MonitorServer
 
-    def log_message(self, fmt, *args):  # quieter default access log
+    def log_message(self, fmt, *args):
         sys.stderr.write("%s - %s\n" % (self.address_string(), fmt % args))
 
     def _send(self, code: int, body: bytes, content_type: str, extra: dict | None = None):
@@ -81,19 +158,33 @@ class MonitorHandler(BaseHTTPRequestHandler):
             ctype = mimetypes.guess_type(str(target))[0] or "application/octet-stream"
             return self._file(target, ctype)
         if path == "/api/health":
-            payload = {
+            return self._json({
                 "ok": True,
                 "service": "brick-stacking-host-monitor",
                 "started_at": self.server.started_at,
                 "motion_enabled": False,
+                "camera_held": self.server.camera.held,
                 "scope": "read_only_camera_and_joint_monitor",
-            }
-            return self._json(payload)
+            })
         if path == "/api/state":
-            return self._json(self.server.hub.snapshot())
+            snap = self.server.hub.snapshot()
+            snap["meta"]["camera_held"] = self.server.camera.held
+            return self._json(snap)
         if path.startswith("/stream/"):
             cam_id = path.split("/", 2)[-1]
             return self._mjpeg(cam_id)
+        return self._send(404, b"not found", "text/plain; charset=utf-8")
+
+    def do_POST(self):  # noqa: N802
+        path = urlparse(self.path).path
+        # Drain body if any (ignore payload for now).
+        length = int(self.headers.get("Content-Length", "0") or 0)
+        if length:
+            self.rfile.read(length)
+        if path == "/api/camera/release":
+            return self._json(self.server.camera.release())
+        if path == "/api/camera/acquire":
+            return self._json(self.server.camera.acquire())
         return self._send(404, b"not found", "text/plain; charset=utf-8")
 
     def _file(self, path: Path, content_type: str):
@@ -117,7 +208,8 @@ class MonitorHandler(BaseHTTPRequestHandler):
             while True:
                 packet = self.server.hub.get_jpeg(camera_id)
                 if packet is None or not packet.jpeg:
-                    time.sleep(0.05)
+                    # Keep connection alive with a tiny blank wait when released.
+                    time.sleep(0.2)
                     continue
                 self.wfile.write(b"--frame\r\n")
                 self.wfile.write(b"Content-Type: image/jpeg\r\n")
@@ -130,21 +222,16 @@ class MonitorHandler(BaseHTTPRequestHandler):
             return
 
 
-def build_workers(args, hub: MonitorHub) -> list:
+def build_arm_workers(args, hub: MonitorHub) -> list:
     workers = []
     if args.mock:
-        workers.append(MockCameraWorker(hub, "head", fps=8))
         if args.arms in {"left", "both"}:
             workers.append(MockArmWorker(hub, "left"))
         if args.arms in {"right", "both"}:
             workers.append(MockArmWorker(hub, "right"))
-        hub.meta.update(mode="mock", notice="UI smoke only; not robot hardware")
+        hub.meta.update(mode="mock", notice="UI smoke only; not robot hardware", camera_held=False)
         return workers
 
-    workers.append(OrbbecCameraWorker(
-        hub, serial=args.serial, camera_id="head",
-        width=args.width, height=args.height, fps=args.fps, jpeg_quality=args.jpeg_quality,
-    ))
     if args.arms in {"left", "both"}:
         workers.append(ArmReaderWorker(hub, *LEFT_ARM, period_s=args.arm_period))
     if args.arms in {"right", "both"}:
@@ -153,8 +240,9 @@ def build_workers(args, hub: MonitorHub) -> list:
         mode="real",
         serial=args.serial,
         arms=args.arms,
-        notice="Orbbec is exclusively held while this service runs; stop before vision capture jobs",
         motion_enabled=False,
+        camera_held=False,
+        notice="use 释放摄像头 before exclusive vision capture",
     )
     return workers
 
@@ -171,40 +259,47 @@ def main(argv=None):
     parser.add_argument("--fps", type=int, default=15)
     parser.add_argument("--jpeg-quality", type=int, default=75)
     parser.add_argument("--arm-period", type=float, default=0.15)
+    parser.add_argument("--start-released", action="store_true",
+                        help="do not open Orbbec until /api/camera/acquire")
     args = parser.parse_args(argv)
 
     if not 1 <= args.port <= 65535:
         parser.error("invalid port")
     if args.arms != "none" and not args.mock:
-        # Ensure package import path for ArmStateReader.
         repo = ROOT.parents[1]
         src = repo / "src"
         if str(src) not in sys.path:
             sys.path.insert(0, str(src))
 
     hub = MonitorHub()
-    workers = build_workers(args, hub)
-    for worker in workers:
+    arm_workers = build_arm_workers(args, hub)
+    for worker in arm_workers:
         worker.start()
 
-    server = MonitorServer((args.bind, args.port), hub, workers)
+    camera = CameraController(hub, args)
+    if not args.start_released:
+        camera.acquire()
+
+    server = MonitorServer((args.bind, args.port), hub, arm_workers, camera)
     print(json.dumps({
         "service": "brick-stacking-host-monitor",
         "url": f"http://{args.bind}:{args.port}/",
         "mode": "mock" if args.mock else "real",
         "motion_enabled": False,
+        "camera_held": camera.held,
         "cameras": ["head"],
         "arms": args.arms,
+        "camera_api": ["/api/camera/release", "/api/camera/acquire"],
     }, ensure_ascii=False))
     try:
         server.serve_forever(poll_interval=0.5)
     except KeyboardInterrupt:
         print("shutting down", file=sys.stderr)
     finally:
-        for worker in workers:
+        camera.release()
+        for worker in arm_workers:
             worker.stop()
         server.server_close()
-        # Give workers a moment to release Orbbec/CAN.
         time.sleep(0.3)
     return 0
 
