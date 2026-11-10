@@ -2,12 +2,18 @@
 
 Does not invent target association, support/stable/hand-clear evidence, yaw, or
 calibration hashes. Does not raise control_ready.
+
+Point semantics (M ACK be50b37):
+- LocalizedReview / placement_review → visible_top_center
+- Formal VisualSample / verify → model_center
+Never silently fall back between the two.
 """
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 import json
 from pathlib import Path
+from typing import Any
 
 from brick_stacking.verification.visual_transition import (
     VerificationRequest,
@@ -15,9 +21,12 @@ from brick_stacking.verification.visual_transition import (
     verify,
 )
 
-SCHEMA = "v-verify-field-handoff-0.1"
+SCHEMA = "v-verify-field-handoff-0.2"
 OPTICAL_FRAME_PREFIX = "camera_"
 OPTICAL_FRAME_SUFFIX = "_color_optical_frame"
+POINT_KIND_MODEL_CENTER = "model_center"
+POINT_KIND_VISIBLE_TOP_CENTER = "visible_top_center"
+CALIBRATION_SENTINEL = "calibration_hash_unavailable"
 
 
 @dataclass(frozen=True)
@@ -32,12 +41,14 @@ class LocalizedReviewHandoff:
     """V→M side-car aligned with M LocalizedReviewEvidence fields."""
     schema_version: str
     target_id: str | None
+    slot_id: str | None
     region_id: str | None
     scope: str
     sample_id: str
     observation_id: str | None
     frame_id: str
     point_kind: str | None
+    formal_verify_point_kind: str
     target_association_confirmed: bool
     reference_id: str | None
     xy_m: ErrorBoundDict
@@ -53,6 +64,7 @@ class LocalizedReviewHandoff:
     scene_consistent: bool | None
     profile_hash: str | None
     calibration_hash: str | None
+    calibration_candidate_sha256: str | None
     epoch: str | None
     clock_domain: str | None
     exposure_host_stamp_s: float | None
@@ -67,11 +79,34 @@ def _unknown_bound():
     return ErrorBoundDict(None, None, "UNKNOWN")
 
 
+def load_placement_request(path: Path | None) -> dict[str, Any] | None:
+    if path is None:
+        return None
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError("placement request must be a JSON object")
+    return payload
+
+
 def select_single_valid_block(bundle):
     blocks = [b for b in bundle.get("blocks") or [] if b.get("validity") == "VALID"]
     if len(blocks) != 1:
         return None
     return blocks[0]
+
+
+def classify_visibility(bundle) -> tuple[str, dict | None, list[str]]:
+    """Map scene candidates to VisualSample visibility without inventing EMPTY."""
+    blocks = list(bundle.get("blocks") or [])
+    valid = [b for b in blocks if b.get("validity") == "VALID"]
+    if len(valid) == 1:
+        return "VISIBLE", valid[0], []
+    if len(valid) > 1:
+        return "AMBIGUOUS", None, ["multiple_valid_candidates"]
+    if not blocks:
+        return "EMPTY", None, []
+    # Non-VALID detections / rejected candidates are not a clear empty region.
+    return "AMBIGUOUS", None, ["no_single_valid_block"]
 
 
 def optical_frame_for_camera(camera_id: str) -> str:
@@ -93,47 +128,97 @@ def frame_id_notes(frame_id: str, camera_id: str) -> list[str]:
     return notes
 
 
+def resolve_camera_point(
+    extras: dict | None,
+    point_kind: str,
+) -> tuple[tuple[float, float, float] | None, list[str]]:
+    """Resolve one explicit point kind. Never fall back to the other kind."""
+    extras = extras or {}
+    unknowns: list[str] = []
+    if point_kind == POINT_KIND_MODEL_CENTER:
+        raw = extras.get("model_center_camera_m")
+        if raw is None:
+            unknowns.append("model_center_unavailable_no_top_surface_fallback")
+            return None, unknowns
+    elif point_kind == POINT_KIND_VISIBLE_TOP_CENTER:
+        recorded_kind = extras.get("top_surface_point_kind")
+        if recorded_kind not in (None, POINT_KIND_VISIBLE_TOP_CENTER):
+            unknowns.append(f"top_surface_point_kind_mismatch:{recorded_kind}")
+        raw = extras.get("top_surface_point_camera_m")
+        if raw is None:
+            unknowns.append("visible_top_center_unavailable_no_model_center_fallback")
+            return None, unknowns
+        if recorded_kind is None:
+            unknowns.append("top_surface_point_kind_missing")
+    else:
+        unknowns.append(f"unsupported_point_kind:{point_kind}")
+        return None, unknowns
+    try:
+        center = tuple(float(x) for x in raw)
+    except (TypeError, ValueError):
+        unknowns.append(f"point_unparseable:{point_kind}")
+        return None, unknowns
+    if len(center) != 3:
+        unknowns.append(f"point_wrong_dim:{point_kind}")
+        return None, unknowns
+    return center, unknowns
+
+
 def bundle_to_visual_sample(
     bundle,
     *,
     object_id: str,
     region_id: str,
     association_confirmed: bool,
+    point_kind: str = POINT_KIND_MODEL_CENTER,
     held: bool | None = None,
     released: bool | None = None,
     calibration_hash: str | None = None,
     geometry_version: str = "field_geometry_unversioned",
     scene_version: str | None = None,
-) -> VisualSample | None:
-    """Map one bundle to a VisualSample when a single VALID block exists or EMPTY scene."""
+) -> tuple[VisualSample | None, list[str]]:
+    """Map one bundle to a VisualSample for the requested formal point kind.
+
+    Returns (sample, unknown_reasons). Sample is None only when stamps are missing.
+    """
     rgbd = bundle["rgbd"]
     timing = bundle.get("timing") or {}
-    block = select_single_valid_block(bundle)
+    visibility, block, visibility_unknowns = classify_visibility(bundle)
     scene = timing.get("scene_consistency") or {}
+    unknowns = list(visibility_unknowns)
     cal = calibration_hash if calibration_hash is not None else bundle.get("calibration_hash")
-    # Real field bundles currently ship calibration_hash=null; keep explicit sentinel for verify.
-    cal_hash = cal if cal else "calibration_hash_unavailable"
+    # Sentinel lets verify() run schema checks; it is NOT a real binding hash.
+    if cal:
+        cal_hash = cal
+        using_sentinel = False
+    else:
+        cal_hash = CALIBRATION_SENTINEL
+        using_sentinel = True
+        unknowns.append("calibration_hash_sentinel_not_binding")
     stamp = timing.get("exposure_host_stamp_s")
     if stamp is None:
         stamp = rgbd.get("host_receive_stamp")
     if stamp is None:
-        return None
+        return None, unknowns + ["sample_stamp_unavailable"]
+
+    color = None
+    center = None
     if block is None:
-        visibility = "EMPTY"
-        color = None
-        center = None
-        observation_id = f"{rgbd['sample_id']}/empty"
+        observation_id = f"{rgbd['sample_id']}/{visibility.lower()}"
         image_ref = rgbd.get("rgb_ref") or f"{rgbd['sample_id']}#rgb"
     else:
         extras = block.get("b_extensions") or {}
-        visibility = "VISIBLE"
         color = block.get("color")
-        center = extras.get("model_center_camera_m") or extras.get("top_surface_point_camera_m")
-        if center is not None:
-            center = tuple(float(x) for x in center)
+        center, point_unknowns = resolve_camera_point(extras, point_kind)
+        unknowns.extend(point_unknowns)
         observation_id = block["observation_id"]
         image_ref = rgbd.get("rgb_ref") or f"{observation_id}#rgb"
-    return VisualSample(
+        if center is None:
+            # Missing requested point must not invent VISIBLE geometry for gates.
+            if visibility == "VISIBLE":
+                unknowns.append(f"requested_point_missing:{point_kind}")
+
+    sample = VisualSample(
         object_id=object_id,
         observation_id=observation_id,
         image_ref=image_ref,
@@ -155,6 +240,10 @@ def bundle_to_visual_sample(
         held=held,
         released=released,
     )
+    if using_sentinel:
+        # Keep sentinel only inside VisualSample; callers must not treat it as approved.
+        pass
+    return sample, unknowns
 
 
 def localized_review_handoff(
@@ -162,9 +251,12 @@ def localized_review_handoff(
     *,
     expected_color: str,
     target_id: str | None = None,
+    slot_id: str | None = None,
     region_id: str | None = None,
     target_association_confirmed: bool = False,
     reference_id: str | None = None,
+    calibration_candidate_sha256: str | None = None,
+    review_point_kind: str = POINT_KIND_VISIBLE_TOP_CENTER,
     xy_m: ErrorBoundDict | None = None,
     height_m: ErrorBoundDict | None = None,
     yaw_rad: ErrorBoundDict | None = None,
@@ -176,13 +268,20 @@ def localized_review_handoff(
     rgbd = bundle["rgbd"]
     timing = bundle.get("timing") or {}
     scene = timing.get("scene_consistency") or {}
-    block = select_single_valid_block(bundle)
-    unknowns: list[str] = []
+    visibility, block, visibility_unknowns = classify_visibility(bundle)
+    unknowns: list[str] = list(visibility_unknowns)
     notes = frame_id_notes(rgbd.get("frame_id", ""), rgbd.get("device_id", ""))
+    notes.append(
+        f"placement_review uses {review_point_kind}; formal verify uses {POINT_KIND_MODEL_CENTER}"
+    )
     if not target_association_confirmed:
         unknowns.append("target_association_unconfirmed")
     if bundle.get("calibration_hash") in (None, ""):
         unknowns.append("calibration_hash_null")
+    if calibration_candidate_sha256:
+        notes.append(
+            "calibration_candidate_sha256 identifies candidate bytes only; not current binding"
+        )
     if xy_m is None:
         xy_m = _unknown_bound()
         unknowns.append("xy_error_unknown")
@@ -202,33 +301,39 @@ def localized_review_handoff(
         unknowns.append("neighbor_disturbance_unknown")
     if scene.get("scene_consistent") is True:
         notes.append("scene_consistent must not be copied as support/stable/hand_clear")
+
     color = block.get("color") if block else None
+    point_kind = None
+    observation_id = None
     if block is None:
         color_check = "UNKNOWN"
-        unknowns.append("no_single_valid_block")
-        point_kind = None
-        observation_id = None
+        if visibility == "EMPTY":
+            unknowns.append("no_single_valid_block")
+        elif visibility == "AMBIGUOUS":
+            unknowns.append("scene_not_empty_but_no_unique_valid_block")
     else:
         extras = block.get("b_extensions") or {}
-        point_kind = extras.get("top_surface_point_kind")
         observation_id = block.get("observation_id")
+        _point, point_unknowns = resolve_camera_point(extras, review_point_kind)
+        unknowns.extend(point_unknowns)
+        point_kind = review_point_kind if _point is not None else extras.get("top_surface_point_kind")
         if color == expected_color:
             color_check = "MATCH"
         elif color:
             color_check = "MISMATCH"
         else:
             color_check = "UNKNOWN"
-        if point_kind != "visible_top_center":
-            unknowns.append("point_kind_not_visible_top_center")
     return LocalizedReviewHandoff(
         schema_version=SCHEMA,
         target_id=target_id,
+        slot_id=slot_id,
         region_id=region_id,
         scope="block",
         sample_id=rgbd["sample_id"],
         observation_id=observation_id,
         frame_id=rgbd["frame_id"],
         point_kind=point_kind,
+        formal_verify_point_kind=POINT_KIND_MODEL_CENTER,
         target_association_confirmed=bool(target_association_confirmed),
         reference_id=reference_id,
         xy_m=xy_m,
@@ -244,36 +349,105 @@ def localized_review_handoff(
         scene_consistent=scene.get("scene_consistent"),
         profile_hash=bundle.get("profile_hash"),
         calibration_hash=bundle.get("calibration_hash"),
+        calibration_candidate_sha256=calibration_candidate_sha256,
         epoch=rgbd.get("epoch"),
         clock_domain=timing.get("host_clock_domain"),
         exposure_host_stamp_s=timing.get("exposure_host_stamp_s"),
         clock_error_bound_s=timing.get("clock_error_bound_s"),
         error_bound_evidence_ref=timing.get("error_bound_evidence_ref"),
-        unknown_reasons=tuple(unknowns),
+        unknown_reasons=tuple(dict.fromkeys(unknowns)),
         control_ready=False,
         notes=tuple(notes),
     )
 
 
 def handoff_to_dict(row: LocalizedReviewHandoff) -> dict:
-    payload = asdict(row)
-    return payload
+    return asdict(row)
 
 
 def load_jsonl(path: Path):
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
 
 
+def _request_fields(placement_request: dict | None) -> dict[str, Any]:
+    req = placement_request or {}
+    review = req.get("placement_review_reference") or {}
+    formal = req.get("formal_verify_reference") or {}
+    candidate = req.get("calibration_candidate") or {}
+    post = req.get("post_place_evidence") or {}
+    if review.get("point_kind") not in (None, POINT_KIND_VISIBLE_TOP_CENTER):
+        raise ValueError(
+            "placement_review_reference.point_kind must be visible_top_center; "
+            f"got {review.get('point_kind')!r}"
+        )
+    if formal.get("point_kind") not in (None, POINT_KIND_MODEL_CENTER):
+        raise ValueError(
+            "formal_verify_reference.point_kind must be model_center; "
+            f"got {formal.get('point_kind')!r}"
+        )
+    return {
+        "target_id": req.get("target_id"),
+        "slot_id": req.get("slot_id"),
+        "region_id": req.get("region_id"),
+        "expected_color": req.get("expected_color"),
+        "association_confirmed": bool(req.get("target_association_confirmed")),
+        "reference_id": req.get("reference_id"),
+        "calibration_hash": req.get("calibration_hash"),
+        "calibration_candidate_sha256": candidate.get("file_sha256"),
+        "review_point_kind": review.get("point_kind") or POINT_KIND_VISIBLE_TOP_CENTER,
+        "formal_point_kind": formal.get("point_kind") or POINT_KIND_MODEL_CENTER,
+        "expected_center_camera_m": formal.get("expected_center_camera_m"),
+        "table_normal_camera": formal.get("table_normal_camera") or review.get("table_normal_camera"),
+        "geometry_version": formal.get("geometry_version") or "field_geometry_unversioned",
+        "expected_review_point_camera_m": review.get("expected_point_camera_m"),
+        "action_started_s": post.get("action_started_s"),
+        "action_finished_s": post.get("action_finished_s"),
+        "released": post.get("released"),
+        "min_stable_s": post.get("min_stable_s"),
+        "max_stable_shift_m": post.get("max_stable_shift_m"),
+        "support_ok": post.get("support_ok"),
+        "stable": None,  # require explicit stability window evidence, not a lone flag
+        "hand_clear": post.get("hand_clear"),
+        "neighbors_unchanged": post.get("neighbors_unchanged"),
+    }
+
+
 def export_field_session(
     bundles_path: Path,
     *,
-    expected_color: str,
-    region_id: str,
-    target_id: str | None,
+    expected_color: str | None = None,
+    region_id: str | None = None,
+    target_id: str | None = None,
+    slot_id: str | None = None,
     phase: str,
     max_age_s: float = 2.656,
     association_confirmed: bool = False,
+    placement_request: dict | None = None,
+    placement_request_path: Path | None = None,
 ) -> dict:
+    if placement_request is None and placement_request_path is not None:
+        placement_request = load_placement_request(placement_request_path)
+    fields = _request_fields(placement_request)
+    # CLI / explicit args override template logical ids, but never invent association.
+    expected_color = expected_color or fields["expected_color"]
+    if not expected_color:
+        raise ValueError("expected_color required (CLI or placement request)")
+    region_id = region_id or fields["region_id"]
+    if not region_id:
+        raise ValueError("region_id required (CLI or placement request)")
+    target_id = target_id if target_id is not None else fields["target_id"]
+    slot_id = slot_id if slot_id is not None else fields["slot_id"]
+    association_confirmed = bool(association_confirmed or fields["association_confirmed"])
+    if association_confirmed and not target_id:
+        raise ValueError("association_confirmed requires target_id")
+    # Never treat observed pose as its own expected target.
+    expected_center = fields["expected_center_camera_m"]
+    table_normal = fields["table_normal_camera"]
+    if expected_center is not None:
+        expected_center = tuple(float(x) for x in expected_center)
+    if table_normal is not None:
+        table_normal = tuple(float(x) for x in table_normal)
+
     rows = load_jsonl(bundles_path)
     handoffs = []
     evidences = []
@@ -282,15 +456,27 @@ def export_field_session(
             bundle,
             expected_color=expected_color,
             target_id=target_id,
+            slot_id=slot_id,
             region_id=region_id,
             target_association_confirmed=association_confirmed,
+            reference_id=fields["reference_id"],
+            calibration_candidate_sha256=fields["calibration_candidate_sha256"],
+            review_point_kind=fields["review_point_kind"],
+            support_ok=fields["support_ok"],
+            stable=fields["stable"],
+            hand_clear=fields["hand_clear"],
+            neighbors_unchanged=fields["neighbors_unchanged"],
         )
         handoffs.append(handoff_to_dict(handoff))
-        sample = bundle_to_visual_sample(
+        sample, sample_unknowns = bundle_to_visual_sample(
             bundle,
             object_id=target_id or "unassociated_candidate",
             region_id=region_id,
             association_confirmed=association_confirmed,
+            point_kind=fields["formal_point_kind"],
+            released=fields["released"] if phase == "post_place" else None,
+            calibration_hash=fields["calibration_hash"],
+            geometry_version=fields["geometry_version"],
         )
         timing = bundle.get("timing") or {}
         now_s = timing.get("output_monotonic_s")
@@ -299,8 +485,10 @@ def export_field_session(
                 "sample_id": bundle["rgbd"]["sample_id"],
                 "verdict": "UNKNOWN",
                 "reason": "sample_or_output_stamp_unavailable",
+                "unknown_reasons": sample_unknowns,
             })
             continue
+        # Formal verify must compare model_center sample against model_center expectation.
         request = VerificationRequest(
             phase=phase,
             object_id=sample.object_id,
@@ -314,13 +502,19 @@ def export_field_session(
             epoch=sample.epoch,
             max_age_s=max_age_s,
             source="real",
-            expected_center_camera_m=None,
-            table_normal_camera=None,
+            expected_center_camera_m=expected_center,
+            table_normal_camera=table_normal,
+            action_started_s=fields["action_started_s"],
+            action_finished_s=fields["action_finished_s"],
+            min_stable_s=fields["min_stable_s"],
+            max_stable_shift_m=fields["max_stable_shift_m"],
             clock_error_bound_s=timing.get("clock_error_bound_s"),
             clock_evidence_ref=timing.get("error_bound_evidence_ref"),
         )
-        evidence = verify(request, before=None, after=(sample,), now_s=float(now_s))
-        evidences.append(dict(evidence))
+        evidence = dict(verify(request, before=None, after=(sample,), now_s=float(now_s)))
+        if sample_unknowns:
+            evidence["point_semantics_unknown_reasons"] = sample_unknowns
+        evidences.append(evidence)
     color_counts = {}
     for row in handoffs:
         color_counts[row["color_check"]] = color_counts.get(row["color_check"], 0) + 1
@@ -336,7 +530,15 @@ def export_field_session(
         "expected_color": expected_color,
         "region_id": region_id,
         "target_id": target_id,
+        "slot_id": slot_id,
         "target_association_confirmed": association_confirmed,
+        "placement_request_schema": (placement_request or {}).get("schema_version"),
+        "placement_review_point_kind": fields["review_point_kind"],
+        "formal_verify_point_kind": fields["formal_point_kind"],
+        "expected_center_camera_m": expected_center,
+        "table_normal_camera": table_normal,
+        "calibration_hash": fields["calibration_hash"],
+        "calibration_candidate_sha256": fields["calibration_candidate_sha256"],
         "n_frames": len(rows),
         "color_check_counts": color_counts,
         "verification_verdict_counts": verdict_counts,
@@ -346,6 +548,10 @@ def export_field_session(
             "single VALID candidate does not confirm target/slot association",
             "support/stable/hand_clear/neighbors left UNKNOWN without explicit evidence",
             "formal placement PASS requires M-provided expected pose + association + calibration_hash",
+            "formal VisualSample uses model_center; LocalizedReview uses visible_top_center; no silent fallback",
+            "multi-candidate / non-VALID clutter is AMBIGUOUS, not EMPTY",
+            "calibration_hash_unavailable sentinel is not an approved binding",
+            "never use observed pose as its own expected target",
         ],
         "localized_review_handoffs": handoffs,
         "verification_evidence": evidences,
