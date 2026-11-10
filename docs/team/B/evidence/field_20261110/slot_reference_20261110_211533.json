@@ -1,0 +1,65 @@
+{
+  "schema_version": "m-slot-reference-capture-1",
+  "created_utc": "2026-11-10T13:15:35.143418+00:00",
+  "serial": "CP2L863000KL",
+  "execute": true,
+  "commands_sent_to_robot": 0,
+  "control_ready": false,
+  "motion_enabled": false,
+  "permit": null,
+  "expected_reference_frame": "table_black_cross_20mm",
+  "target_definition_only": {
+    "table_center_m": [
+      0,
+      0,
+      0
+    ],
+    "nominal_edge_m": 0.05,
+    "model_center_m": [
+      0,
+      0,
+      0.025
+    ],
+    "top_center_m": [
+      0,
+      0,
+      0.05
+    ]
+  },
+  "camera_expectations": null,
+  "calibration_binding": null,
+  "target_association_confirmed": false,
+  "marker_center_pixel": null,
+  "table_plane": null,
+  "reference_error_bound_m": null,
+  "result": "CAPTURED_REFERENCE_INPUTS_PENDING_ANNOTATION",
+  "errors": [],
+  "next_required": [
+    "cross-center pixel annotation with coordinate convention and uncertainty",
+    "table plane / upward normal and uncertainty",
+    "actual cube edge and measurement uncertainty",
+    "current camera/calibration/scene binding",
+    "construct independent camera-frame goal before contrast capture"
+  ],
+  "input_hashes": {
+    "inventory/camera_report.json": "174df027cc667ddcdd848f70c07f008b536ec960a6cf93b158cd4f2e6c8df6c4",
+    "inventory.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "inventory.stdout.log": "af8589d2f34854c3f09b912ef0e485e63a989857795293d52f3be56fab870c2d",
+    "rgbd/camera_report.json": "90a6205271d3c143c15f2c1148e14cc55dea47a2d8fe37ffd5e0acfee847e475",
+    "rgbd/color_raw.png": "7eb04ecf753ae58dafed78ed67dae79f996b41c54640a00875c2edb775f5231f",
+    "rgbd/color_rectified.png": "8011787d2f31faa1c9cd5f41289996ebfea2d121ecc8dc0218e8fd5b45841927",
+    "rgbd/depth_preview.png": "ecc126b8c4a9efe259af0cf0f996fedcfd5dc2cdb73c7f3d984f83dfac7348b4",
+    "rgbd/frame_000.npz": "cdeb5e4b147c6bfa11d27d8b4c8475cf0657c07667bd3fcd1da80d22a69523aa",
+    "rgbd/frame_001.npz": "f411eb65f13a3d039708c6e5187e67edb3888af7c1522d03a26ee4de330fbab6",
+    "rgbd/frame_002.npz": "b574346443d68f11fdbf52d72fb06f4c3f459ec8e98154c8b9b18592496d7fae",
+    "rgbd/frame_003.npz": "8499b33aabfe05ae9c33b2b83b7f7723bdee2d3571448416d0878be753dfc230",
+    "rgbd/frame_004.npz": "dacda013a32e30680f5e5ae4e48559248fcc874e9e0df78de052a79226f7730b",
+    "rgbd/frame_005.npz": "6c08ad3fd4f14416810901616093bf3cc63073686104e91e3d3a88890bf32204",
+    "rgbd/frame_006.npz": "088ca549fbdd238a3c3c0fd48225cae528b164bc95e5a7f8a8ee8258c6713ba3",
+    "rgbd/frame_007.npz": "3e7a5652b511eb996bd00385bb27bd9394cf05326c260120c58eeae06c523ae0",
+    "rgbd/frame_008.npz": "8129052a9f5a9314f093eecb7856dda16426ea9b78ba61acde503c086ab51b39",
+    "rgbd/frame_009.npz": "5cbf5e82b8c02c9e610abe92f9c6954cfccd9e9ff29ad248ed3ccf8b37631600",
+    "rgbd.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "rgbd.stdout.log": "761bfe1887e9d1a369360368650980ba3eac4a204df974a787ef943518bf7979"
+  }
+}
