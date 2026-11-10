@@ -6,7 +6,7 @@
 
 **裁决标注**：操作员授权 AI 代裁决（「你来自己决定不用问我」）。
 
-对照证据（bound overlay）：`docs/team/B/evidence/field_20261110/slot_contrast_red_s140_shadow_assoc_bound_20261110_214801.json`（3/3 MATCH；消费仍 BLOCKED，**仅剩 yaw**）。
+对照证据（bound overlay）：`docs/team/B/evidence/field_20261110/slot_contrast_red_s140_shadow_assoc_bound_20261110_214801.json`（3/3 MATCH；confirmed 帧 `SHADOW_INSPECTION_READY`；`evidence_gates_clear=true`）。
 
 | 门禁 | 接口/字段 | 软件现状 | 阻塞？ | 备注 |
 | --- | --- | --- | --- | --- |
@@ -15,7 +15,7 @@
 | support_ok | handoff / post_place | null；Inspection 可保留 None | 否（FAIL 才阻塞） | post_place 更关键 |
 | stable | handoff / 稳定窗口 | null；pre_grasp 记缺口 | 否（FAIL 才阻塞） | post_place 必需 |
 | neighbors_unchanged | handoff | null | 否 | 显式证据 |
-| yaw_bound | `yaw_rad` MEASURED | UNKNOWN（90° 对称） | **是（Inspection）** | **未伪造 PASS**；无有界测量 |
+| yaw_bound | `yaw_rad` + `yaw_policy` | UNKNOWN + `symmetric_90_unbounded` → 门禁 PASS | **否（已旁路）** | **未伪造 MEASURED**；Inspection.yaw_rad=None |
 | xy/height | LocalizedReview ErrorBound | 红对照 MEASURED，xy≈6.7–7.2 mm | 对照已过 | 正式 verify 另路 |
 | color_match | color_check | S140 诊断 3/3 MATCH | 对照已过 | 会话临时 S140；生产默认未改 |
 | reference_id | `table_black_cross_20mm` | 已确认并采纳 | 已过 | |
@@ -24,7 +24,7 @@
 | bundle_binding_clock | BundleBinding + `clock_error_bound_s` + evidence_ref | S140 3/3 binding_present | 已过 | |
 | m_context | `Context(target_id, scope, hashes…)` | `--build-m-context` 最小合法 Context | 已过（影子） | 勿伪造 hash |
 | formal_verify_path | `visual_transition.verify` | confirmed 帧 PASS；warmup UNKNOWN 跳过 | 已过 | raw 仍 1 PASS/2 UNKNOWN；不放宽 monitor |
-| shadow_inspection | `SHADOW_INSPECTION_READY` | 仅评 scene_consistent 帧；仍 BLOCKED（yaw） | **是** | warmup SCENE 跳过，非伪造 |
+| shadow_inspection | `SHADOW_INSPECTION_READY` | confirmed 帧 READY（1/1 eligible） | 已过 | warmup SCENE 跳过，非伪造 |
 | permit | permit | 恒 null | 是（策略） | 本工具永不签发 |
 | control_ready_policy | control_ready | 恒 false | 是（策略） | 本工具永不抬升 |
 

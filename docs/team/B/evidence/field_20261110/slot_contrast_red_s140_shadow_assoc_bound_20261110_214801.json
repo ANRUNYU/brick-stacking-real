@@ -1,14 +1,14 @@
 {
   "schema_version": "v-slot-shadow-pipeline-0.1",
   "request": "docs/team/B/evidence/field_20261110/first_placement_request_assoc_handclear_overlay_20261110.json",
-  "request_status": "SHADOW_ASSOC_HANDCLEAR_CURRENT_CALIBRATION_BOUND_YAW_UNKNOWN",
+  "request_status": "SHADOW_ASSOC_HANDCLEAR_CURRENT_CALIBRATION_BOUND_YAW_POLICY_SYMMETRIC_90",
   "control_ready": false,
   "motion_enabled": false,
   "calibration_binding": "config/observed/calibration_current_binding_c35_20261110.json",
   "build_m_context": true,
   "export": {
     "schema_version": "v-verify-field-handoff-0.2",
-    "source_bundles": "docs/team/B/evidence/field_20261110/slot_contrast_red_s140_20261110_214801_observation_bundles_bound.jsonl",
+    "source_bundles": "D:/computer/Hermes/temp/tmpkfhbws7y.jsonl",
     "phase": "pre_grasp",
     "expected_color": "red",
     "region_id": "m-first-placement-region-01",
@@ -104,8 +104,20 @@
         "notes": [
           "frame_id matches C35 color optical frame naming",
           "placement_review uses visible_top_center; formal verify uses model_center",
-          "calibration_candidate_sha256 identifies candidate bytes only; not current binding"
-        ]
+          "calibration_candidate_sha256 identifies candidate bytes only; not current binding",
+          "yaw_policy=symmetric_90_unbounded; yaw_rad stays UNKNOWN (not MEASURED)"
+        ],
+        "yaw_policy": {
+          "id": "symmetric_90_unbounded",
+          "symmetry_period_rad": 1.5707963267948966,
+          "status": "UNKNOWN",
+          "reason": "90deg_cube_symmetry_no_bounded_measurement",
+          "do_not_forge_measured_pass": true,
+          "applies_to": [
+            "pre_grasp_grasp_approach",
+            "shadow_inspection"
+          ]
+        }
       },
       {
         "schema_version": "v-verify-field-handoff-0.2",
@@ -161,8 +173,20 @@
         "notes": [
           "frame_id matches C35 color optical frame naming",
           "placement_review uses visible_top_center; formal verify uses model_center",
-          "calibration_candidate_sha256 identifies candidate bytes only; not current binding"
-        ]
+          "calibration_candidate_sha256 identifies candidate bytes only; not current binding",
+          "yaw_policy=symmetric_90_unbounded; yaw_rad stays UNKNOWN (not MEASURED)"
+        ],
+        "yaw_policy": {
+          "id": "symmetric_90_unbounded",
+          "symmetry_period_rad": 1.5707963267948966,
+          "status": "UNKNOWN",
+          "reason": "90deg_cube_symmetry_no_bounded_measurement",
+          "do_not_forge_measured_pass": true,
+          "applies_to": [
+            "pre_grasp_grasp_approach",
+            "shadow_inspection"
+          ]
+        }
       },
       {
         "schema_version": "v-verify-field-handoff-0.2",
@@ -219,14 +243,26 @@
           "frame_id matches C35 color optical frame naming",
           "placement_review uses visible_top_center; formal verify uses model_center",
           "calibration_candidate_sha256 identifies candidate bytes only; not current binding",
-          "scene_consistent must not be copied as support/stable/hand_clear"
-        ]
+          "scene_consistent must not be copied as support/stable/hand_clear",
+          "yaw_policy=symmetric_90_unbounded; yaw_rad stays UNKNOWN (not MEASURED)"
+        ],
+        "yaw_policy": {
+          "id": "symmetric_90_unbounded",
+          "symmetry_period_rad": 1.5707963267948966,
+          "status": "UNKNOWN",
+          "reason": "90deg_cube_symmetry_no_bounded_measurement",
+          "do_not_forge_measured_pass": true,
+          "applies_to": [
+            "pre_grasp_grasp_approach",
+            "shadow_inspection"
+          ]
+        }
       }
     ],
     "verification_evidence": [
       {
         "schema_version": "0.1",
-        "sample_id": "cfde26a315ad4caebf312b7877d1b7a9",
+        "sample_id": "5e75c6d5e7c6495ebc9fa45f04bc8c37",
         "source": "real",
         "device_id": "CP2L863000KL",
         "frame_id": "camera_CP2L863000KL_color_optical_frame",
@@ -254,7 +290,7 @@
       },
       {
         "schema_version": "0.1",
-        "sample_id": "53fcdc9c83c44240b647c157b97583fc",
+        "sample_id": "eebbfe3ec8ce45af8e44e86d4048619d",
         "source": "real",
         "device_id": "CP2L863000KL",
         "frame_id": "camera_CP2L863000KL_color_optical_frame",
@@ -282,7 +318,7 @@
       },
       {
         "schema_version": "0.1",
-        "sample_id": "d04f7c22a62d40bba3d7f9eb4891e79e",
+        "sample_id": "701043cfd22546f591e4fa5ee4e44f3f",
         "source": "real",
         "device_id": "CP2L863000KL",
         "frame_id": "camera_CP2L863000KL_color_optical_frame",
@@ -313,8 +349,8 @@
   },
   "consumption_summary": {
     "n": 3,
-    "blocked": 3,
-    "shadow_inspection_ready": 0
+    "blocked": 2,
+    "shadow_inspection_ready": 1
   },
   "consumption": [
     {
@@ -322,7 +358,6 @@
       "diagnostic": {
         "status": "BLOCKED",
         "reasons": [
-          "ERROR_BOUND_UNKNOWN:yaw_rad",
           "SCENE_OR_RGBD_NOT_CONFIRMED"
         ],
         "observation_id": "CP2L863000KL/replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af/7391.25724/0",
@@ -330,7 +365,10 @@
         "formal_placement_verdict": "UNKNOWN",
         "control_ready": false,
         "motion_enabled": false,
-        "permit": null
+        "permit": null,
+        "yaw_policy_applied": "symmetric_90_unbounded",
+        "yaw_bound_source": "POLICY_UNBOUNDED_NOT_MEASURED",
+        "yaw_rad_status": "UNKNOWN"
       },
       "binding_present": true,
       "inspection_ready": false,
@@ -342,7 +380,6 @@
       "diagnostic": {
         "status": "BLOCKED",
         "reasons": [
-          "ERROR_BOUND_UNKNOWN:yaw_rad",
           "SCENE_OR_RGBD_NOT_CONFIRMED"
         ],
         "observation_id": "CP2L863000KL/replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af/7391.857864/0",
@@ -350,7 +387,10 @@
         "formal_placement_verdict": "UNKNOWN",
         "control_ready": false,
         "motion_enabled": false,
-        "permit": null
+        "permit": null,
+        "yaw_policy_applied": "symmetric_90_unbounded",
+        "yaw_bound_source": "POLICY_UNBOUNDED_NOT_MEASURED",
+        "yaw_rad_status": "UNKNOWN"
       },
       "binding_present": true,
       "inspection_ready": false,
@@ -360,19 +400,20 @@
     {
       "sample_id": "CP2L863000KL/replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af/7391.991336",
       "diagnostic": {
-        "status": "BLOCKED",
-        "reasons": [
-          "ERROR_BOUND_UNKNOWN:yaw_rad"
-        ],
+        "status": "SHADOW_INSPECTION_READY",
+        "reasons": [],
         "observation_id": "CP2L863000KL/replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af/7391.991336/0",
         "color_diagnostic": "MATCH",
         "formal_placement_verdict": "UNKNOWN",
         "control_ready": false,
         "motion_enabled": false,
-        "permit": null
+        "permit": null,
+        "yaw_policy_applied": "symmetric_90_unbounded",
+        "yaw_bound_source": "POLICY_UNBOUNDED_NOT_MEASURED",
+        "yaw_rad_status": "UNKNOWN"
       },
       "binding_present": true,
-      "inspection_ready": false,
+      "inspection_ready": true,
       "m_context_present": true,
       "calibration_hash": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461"
     }
@@ -381,6 +422,6 @@
     "Unified pipeline on one branch; does not wait for a separate M merge.",
     "Missing calibration_hash / association / M context keep consumer BLOCKED.",
     "Formal verify verdicts remain evidence-only; control_ready stays false.",
-    "yaw remains UNKNOWN under 90deg symmetry unless MEASURED; do not invent yaw PASS."
+    "yaw remains UNKNOWN under 90deg symmetry unless MEASURED; yaw_policy=symmetric_90_unbounded may clear ERROR_BOUND_UNKNOWN without forging PASS."
   ]
 }

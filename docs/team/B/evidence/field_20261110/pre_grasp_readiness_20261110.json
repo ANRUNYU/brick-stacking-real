@@ -5,7 +5,7 @@
   "motion_enabled": false,
   "permit": null,
   "formal_grasp_entry_allowed": false,
-  "evidence_gates_clear": false,
+  "evidence_gates_clear": true,
   "gates": [
     {
       "gate_id": "association",
@@ -62,13 +62,13 @@
     },
     {
       "gate_id": "yaw_bound",
-      "status": "UNKNOWN",
+      "status": "PASS",
       "software_landed": true,
-      "field_or_human_required": true,
-      "blocking_for_formal_grasp": true,
-      "detail": "yaw UNKNOWN (90\u00b0 symmetry); consumer requires MEASURED bound for Inspection",
+      "field_or_human_required": false,
+      "blocking_for_formal_grasp": false,
+      "detail": "yaw UNKNOWN accepted under yaw_policy=symmetric_90_unbounded (90\u00b0 cube; not MEASURED; no forged angle)",
       "evidence_refs": [],
-      "owner_hint": "V measurement policy / operator orientation confirm"
+      "owner_hint": "V measurement policy / yaw_policy / operator orientation confirm"
     },
     {
       "gate_id": "xy_height_measured",
@@ -106,7 +106,7 @@
       "software_landed": true,
       "field_or_human_required": false,
       "blocking_for_formal_grasp": false,
-      "detail": "request.status='SHADOW_ASSOC_HANDCLEAR_CURRENT_CALIBRATION_BOUND_YAW_UNKNOWN'; formal/review expectations present=True",
+      "detail": "request.status='SHADOW_ASSOC_HANDCLEAR_CURRENT_CALIBRATION_BOUND_YAW_POLICY_SYMMETRIC_90'; formal/review expectations present=True",
       "evidence_refs": [],
       "owner_hint": "adopted request shadow"
     },
@@ -152,11 +152,11 @@
     },
     {
       "gate_id": "shadow_inspection",
-      "status": "BLOCKED",
+      "status": "PASS",
       "software_landed": true,
       "field_or_human_required": false,
-      "blocking_for_formal_grasp": true,
-      "detail": "shadow_inspection_ready=0; blocked=1; warmup_or_unconfirmed_skipped=2; scene_consistent_frames=1; reasons=['ERROR_BOUND_UNKNOWN:yaw_rad']",
+      "blocking_for_formal_grasp": false,
+      "detail": "shadow_inspection_ready=1; blocked=0; warmup_or_unconfirmed_skipped=2; scene_consistent_frames=1; reasons=[]",
       "evidence_refs": [],
       "owner_hint": "verify_handoff_consumer"
     },
@@ -182,17 +182,11 @@
     }
   ],
   "missing_software": [
-    "yaw_bound",
-    "shadow_inspection",
     "permit",
     "control_ready_policy"
   ],
-  "missing_field_or_human": [
-    "yaw_bound"
-  ],
-  "consumer_reason_union": [
-    "ERROR_BOUND_UNKNOWN:yaw_rad"
-  ],
+  "missing_field_or_human": [],
+  "consumer_reason_union": [],
   "formal_verdict_counts": {
     "UNKNOWN": 2,
     "PASS": 1
@@ -202,6 +196,7 @@
     "Association CLI flag without durable operator record stays UNKNOWN.",
     "Calibration binding and BundleBinding/clock are parallel dependencies.",
     "hand_clear/support/stable/neighbors are never inferred from scene_consistent.",
+    "yaw_policy=symmetric_90_unbounded accepts UNKNOWN yaw for grasp-approach; never forges MEASURED.",
     "formal_grasp_entry_allowed is always false here; evidence_gates_clear is diagnostic only.",
     "Readiness adopts only scene_consistent frames; WARMING_UP SCENE_OR_RGBD_NOT_CONFIRMED is skipped, not forged."
   ],
@@ -209,7 +204,7 @@
     "request_path": "docs/team/B/evidence/field_20261110/first_placement_request_assoc_handclear_overlay_20261110.json",
     "shadow_path": "docs/team/B/evidence/field_20261110/slot_contrast_red_s140_shadow_assoc_bound_20261110_214801.json",
     "association_path": "docs/team/B/evidence/field_20261110/association_confirm_switch_20261110.json",
-    "request_status": "SHADOW_ASSOC_HANDCLEAR_CURRENT_CALIBRATION_BOUND_YAW_UNKNOWN",
+    "request_status": "SHADOW_ASSOC_HANDCLEAR_CURRENT_CALIBRATION_BOUND_YAW_POLICY_SYMMETRIC_90",
     "target_id": "m-first-red-01",
     "reference_id": "table_black_cross_20mm"
   }

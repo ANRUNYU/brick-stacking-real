@@ -232,7 +232,8 @@ def main(argv=None):
             "Unified pipeline on one branch; does not wait for a separate M merge.",
             "Missing calibration_hash / association / M context keep consumer BLOCKED.",
             "Formal verify verdicts remain evidence-only; control_ready stays false.",
-            "yaw remains UNKNOWN under 90deg symmetry unless MEASURED; do not invent yaw PASS.",
+            "yaw remains UNKNOWN under 90deg symmetry unless MEASURED; "
+            "yaw_policy=symmetric_90_unbounded may clear ERROR_BOUND_UNKNOWN without forging PASS.",
             *context_notes,
         ],
     }

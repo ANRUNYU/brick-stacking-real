@@ -99,7 +99,9 @@ class Inspection:
     stamp_s: float  # same monotonic domain as caller now_s
     xy_m: ErrorBound
     height_m: ErrorBound
-    yaw_rad: ErrorBound
+    # None = orientation not measured; only valid under an explicit unbounded yaw
+    # policy (e.g. unmarked 90° cube). Never invent a MEASURED ErrorBound to fill this.
+    yaw_rad: ErrorBound | None
     color_ok: bool | None
     support_ok: bool | None
     stable: bool | None
@@ -115,6 +117,8 @@ class Inspection:
                 raise ValueError('evidence must be bool or None')
         if type(self.hand_clear) is not bool or type(self.visible) is not bool:
             raise ValueError('visibility and hand clearance must be explicit')
+        if self.yaw_rad is not None and not isinstance(self.yaw_rad, ErrorBound):
+            raise ValueError('yaw_rad must be ErrorBound or None')
 
 
 @dataclass(frozen=True)
@@ -209,8 +213,9 @@ def review(inspection, policy, budget, *, now_s, expected_context,
             any(x is None for x in (inspection.stable, inspection.support_ok,
                                    inspection.color_ok, inspection.neighbors_unchanged))):
         return observe('INCOMPLETE_EVIDENCE')
-    metrics = ((inspection.xy_m, policy.xy_m), (inspection.height_m, policy.height_m),
-               (inspection.yaw_rad, policy.yaw_rad))
+    metrics = [(inspection.xy_m, policy.xy_m), (inspection.height_m, policy.height_m)]
+    if inspection.yaw_rad is not None:
+        metrics.append((inspection.yaw_rad, policy.yaw_rad))
     # A correction session uses the tighter stop band: hysteresis, no zero chasing.
     if inspection.color_ok and all(e.upper <= (b.stop if correcting else b.trigger)
                                    for e, b in metrics):
@@ -219,9 +224,12 @@ def review(inspection, policy, budget, *, now_s, expected_context,
     if not confirmed and not correcting:
         return observe('THRESHOLD_OVERLAPS_MEASUREMENT_BOUND')
     # For now, rotation/height correction and layer-level motion are regrasp-only.
+    # Missing yaw (policy-unbounded symmetry) does not block translation-only push eligibility.
+    yaw_push_ok = (inspection.yaw_rad is None or
+                   inspection.yaw_rad.upper <= policy.yaw_rad.stop)
     push_safe = (inspection.context.scope == 'block' and inspection.color_ok and
                  inspection.height_m.upper <= policy.height_m.stop and
-                 inspection.yaw_rad.upper <= policy.yaw_rad.stop and
+                 yaw_push_ok and
                  inspection.xy_m.lower > policy.xy_m.stop and push is not None and push.eligible)
     choices = []
     if push_safe and budget.allows(budget.push_cycle_s):
@@ -250,8 +258,11 @@ def compare_effect(before, after, *, min_progress_m):
     if not after.visible or not after.hand_clear or any(x is not True for x in (
             after.stable, after.support_ok, after.color_ok, after.neighbors_unchanged)):
         return 'UNSAFE_OR_UNKNOWN'
-    pairs = ((before.xy_m, after.xy_m), (before.height_m, after.height_m),
-             (before.yaw_rad, after.yaw_rad))
-    if any(a.lower > b.upper for b,a in pairs):
+    if (before.yaw_rad is None) ^ (after.yaw_rad is None):
+        return 'UNSAFE_OR_UNKNOWN'
+    pairs = [(before.xy_m, after.xy_m), (before.height_m, after.height_m)]
+    if before.yaw_rad is not None and after.yaw_rad is not None:
+        pairs.append((before.yaw_rad, after.yaw_rad))
+    if any(a.lower > b.upper for b, a in pairs):
         return 'WORSENED'
     return 'IMPROVED' if before.xy_m.lower-after.xy_m.upper >= min_progress_m else 'NO_CLEAR_PROGRESS'

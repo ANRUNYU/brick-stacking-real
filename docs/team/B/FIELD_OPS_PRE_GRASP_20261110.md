@@ -28,9 +28,10 @@
    生产 HSV `S≥160` 对本会话照明漏检；会话 observe profile = `config/vision_profiles/head_slot_contrast_s140.yaml`（diagnostic/session）。  
    生产默认仍为 `head_replacement_candidate.yaml`，除非后续测试与文档支持且判定安全再改。
 
-6. **Yaw / 朝向** — **仍开**  
-   方块 90° 对称 → yaw **保持 UNKNOWN**；**未伪造 MEASURED PASS**。仓库无现成「有界 yaw」策略可接入时，才可推进 Inspection。  
-   当前真实阻塞：`ERROR_BOUND_UNKNOWN:yaw_rad`。
+6. **Yaw / 朝向** — **已代裁决（策略旁路，非 MEASURED）**  
+   方块 90° 对称 → yaw **保持 UNKNOWN**；显式 `yaw_policy=symmetric_90_unbounded`（period=π/2）。  
+   **未伪造 MEASURED PASS**；Inspection 记 `yaw_rad=None` + `yaw_bound_source=POLICY_UNBOUNDED_NOT_MEASURED`。  
+   不再构成 pre_grasp Inspection 阻塞；**无需现场测角**。
 
 7. **post_place（非本轮抓取入口，但勿忽略）**  
    释放、动作完成时间、稳定窗口、support/neighbors：仍待执行侧联调；不是再采静态对照能替代的。

@@ -20,6 +20,7 @@ from brick_stacking.verification.visual_transition import (
     VisualSample,
     verify,
 )
+from brick_stacking.planning.yaw_policy import normalize_yaw_policy
 
 SCHEMA = "v-verify-field-handoff-0.2"
 OPTICAL_FRAME_PREFIX = "camera_"
@@ -451,6 +452,7 @@ def _request_fields(placement_request: dict | None) -> dict[str, Any]:
         "stable": None,  # require explicit stability window evidence, not a lone flag
         "hand_clear": post.get("hand_clear"),
         "neighbors_unchanged": post.get("neighbors_unchanged"),
+        "yaw_policy": normalize_yaw_policy(req.get("yaw_policy")),
     }
 
 
@@ -530,7 +532,16 @@ def export_field_session(
             hand_clear=fields["hand_clear"],
             neighbors_unchanged=fields["neighbors_unchanged"],
         )
-        handoffs.append(handoff_to_dict(handoff))
+        handoff_dict = handoff_to_dict(handoff)
+        # Attach explicit yaw policy without forging MEASURED yaw ErrorBound values.
+        if fields.get("yaw_policy"):
+            handoff_dict["yaw_policy"] = fields["yaw_policy"]
+            notes = list(handoff_dict.get("notes") or [])
+            notes.append(
+                "yaw_policy=symmetric_90_unbounded; yaw_rad stays UNKNOWN (not MEASURED)"
+            )
+            handoff_dict["notes"] = notes
+        handoffs.append(handoff_dict)
         sample, sample_unknowns = bundle_to_visual_sample(
             bundle,
             object_id=target_id or "unassociated_candidate",

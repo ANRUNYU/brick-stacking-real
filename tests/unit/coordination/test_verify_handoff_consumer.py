@@ -52,6 +52,49 @@ def test_complete_shadow_input_preserves_unknown_support_and_never_grants_pass()
     assert result['formal_placement_verdict']=='UNKNOWN' and result['permit'] is None
 
 
+def test_symmetric_90_yaw_policy_allows_unknown_without_forging_measured():
+    b,bind,row,ctx=complete()
+    row['yaw_rad']=dict(value=None,bound=None,status='UNKNOWN')
+    row['yaw_policy']=dict(
+        id='symmetric_90_unbounded',
+        symmetry_period_rad=1.5707963267948966,
+        status='UNKNOWN',
+        do_not_forge_measured_pass=True,
+    )
+    inspection,result=consume_handoff(row,b,bind,context=ctx,
+                              now_s=b['timing']['output_monotonic_s'],expected_color='red')
+    assert result['status']=='SHADOW_INSPECTION_READY'
+    assert inspection is not None and inspection.yaw_rad is None
+    assert result['yaw_policy_applied']=='symmetric_90_unbounded'
+    assert result['yaw_bound_source']=='POLICY_UNBOUNDED_NOT_MEASURED'
+    assert result['yaw_rad_status']=='UNKNOWN'
+    assert 'ERROR_BOUND_UNKNOWN:yaw_rad' not in result['reasons']
+    assert result['control_ready'] is False and result['permit'] is None
+
+
+def test_unknown_yaw_without_policy_still_blocks():
+    b,bind,row,ctx=complete()
+    row['yaw_rad']=dict(value=None,bound=None,status='UNKNOWN')
+    row.pop('yaw_policy',None)
+    inspection,result=consume_handoff(row,b,bind,context=ctx,
+                              now_s=b['timing']['output_monotonic_s'],expected_color='red')
+    assert inspection is None and result['status']=='BLOCKED'
+    assert 'ERROR_BOUND_UNKNOWN:yaw_rad' in result['reasons']
+
+
+def test_yaw_policy_rejects_smuggled_numeric_unknown():
+    b,bind,row,ctx=complete()
+    row['yaw_rad']=dict(value=0.1,bound=0.05,status='UNKNOWN')
+    row['yaw_policy']=dict(
+        id='symmetric_90_unbounded',
+        symmetry_period_rad=1.5707963267948966,
+        do_not_forge_measured_pass=True,
+    )
+    inspection,result=consume_handoff(row,b,bind,context=ctx,
+                              now_s=b['timing']['output_monotonic_s'],expected_color='red')
+    assert inspection is None and 'ERROR_BOUND_UNKNOWN:yaw_rad' in result['reasons']
+
+
 @pytest.mark.parametrize('fault',['sample','calibration','metric','clock','color','point','target','hand','schema','formal_point'])
 def test_sidecar_tampering_or_missing_evidence_is_rejected(fault):
     b,bind,row,ctx=complete()

@@ -72,11 +72,15 @@ class CorrectionSession:
             verdict = 'EXECUTION_OR_RECHECK_FAILED'
         else:
             verdict = compare_effect(before, after, min_progress_m=self.policy.min_progress_m)
-        if (verdict in ('IMPROVED', 'NO_CLEAR_PROGRESS') and
-                all(e.upper <= b.stop for e,b in (
-                    (after.xy_m,self.policy.xy_m), (after.height_m,self.policy.height_m),
-                    (after.yaw_rad,self.policy.yaw_rad)))):
-            verdict = 'TARGET_REACHED'
+        if verdict in ('IMPROVED', 'NO_CLEAR_PROGRESS'):
+            metric_pairs = [
+                (after.xy_m, self.policy.xy_m),
+                (after.height_m, self.policy.height_m),
+            ]
+            if after.yaw_rad is not None:
+                metric_pairs.append((after.yaw_rad, self.policy.yaw_rad))
+            if all(e.upper <= b.stop for e, b in metric_pairs):
+                verdict = 'TARGET_REACHED'
         self.state = ('COMPLETE' if verdict == 'TARGET_REACHED' else
                       'READY' if verdict == 'IMPROVED' else 'HALTED')
         self.events.append(dict(attempt=self.attempts, verdict=verdict,

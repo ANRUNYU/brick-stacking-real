@@ -2,6 +2,8 @@
 from brick_stacking.planning.placement_bridge import (
     LocalizedReviewEvidence, audit_bundle, to_shadow_inspection)
 from brick_stacking.planning.placement_review import ErrorBound
+from brick_stacking.planning.yaw_policy import (
+    normalize_yaw_policy, yaw_unknown_allowed_by_policy)
 
 
 def consume_handoff(row,bundle,binding,*,context,now_s,expected_color):
@@ -38,8 +40,15 @@ def consume_handoff(row,bundle,binding,*,context,now_s,expected_color):
     if row.get('point_kind')!='visible_top_center':reasons.append('TOP_CENTER_SEMANTICS_REQUIRED')
     if row.get('control_ready') is not False:reasons.append('UNEXPECTED_SIDECAR_PROMOTION')
     bounds={}
+    yaw_policy=normalize_yaw_policy(row.get('yaw_policy'))
+    yaw_policy_applied=None
     for name in ('xy_m','height_m','yaw_rad'):
         metric=row.get(name) or {}
+        if name=='yaw_rad' and yaw_unknown_allowed_by_policy(metric,row.get('yaw_policy')):
+            # Keep yaw UNKNOWN; do not invent MEASURED value/bound. Inspection.yaw_rad=None.
+            bounds[name]=None
+            yaw_policy_applied=yaw_policy['id']
+            continue
         if metric.get('status')!='MEASURED':
             reasons.append('ERROR_BOUND_UNKNOWN:'+name);continue
         try:
@@ -63,9 +72,14 @@ def consume_handoff(row,bundle,binding,*,context,now_s,expected_color):
             inspection=to_shadow_inspection(bundle,binding,evidence,now_s=now_s,
                                              expected_color=expected_color)
         except ValueError as error:reasons.append('M_BINDING_REJECTED:'+str(error))
-    return inspection,dict(status='SHADOW_INSPECTION_READY' if inspection else 'BLOCKED',
-                           reasons=sorted(set(reasons)),
-                           observation_id=row.get('observation_id'),
-                           color_diagnostic=audit['observed_candidate_color_check'],
-                           formal_placement_verdict='UNKNOWN',control_ready=False,
-                           motion_enabled=False,permit=None)
+    diagnostic=dict(status='SHADOW_INSPECTION_READY' if inspection else 'BLOCKED',
+                    reasons=sorted(set(reasons)),
+                    observation_id=row.get('observation_id'),
+                    color_diagnostic=audit['observed_candidate_color_check'],
+                    formal_placement_verdict='UNKNOWN',control_ready=False,
+                    motion_enabled=False,permit=None)
+    if yaw_policy_applied:
+        diagnostic['yaw_policy_applied']=yaw_policy_applied
+        diagnostic['yaw_bound_source']='POLICY_UNBOUNDED_NOT_MEASURED'
+        diagnostic['yaw_rad_status']='UNKNOWN'
+    return inspection,diagnostic

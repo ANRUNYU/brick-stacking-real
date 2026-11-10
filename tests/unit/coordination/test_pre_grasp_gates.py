@@ -94,8 +94,9 @@ def test_field_shadow_readiness_blocks_and_never_grants_entry():
     assert "M_CONTEXT_MISSING" not in report.consumer_reason_union
 
 
-def test_overlay_handclear_association_still_blocks_on_yaw():
+def test_overlay_yaw_policy_clears_yaw_gate_without_forging_measured():
     request = json.loads(OVERLAY.read_text(encoding="utf-8"))
+    assert request["yaw_policy"]["id"] == "symmetric_90_unbounded"
     shadow = json.loads(SHADOW_BOUND.read_text(encoding="utf-8"))
     association = json.loads(ASSOC_RECORD.read_text(encoding="utf-8"))
     report = evaluate_pre_grasp_readiness(
@@ -111,14 +112,16 @@ def test_overlay_handclear_association_still_blocks_on_yaw():
     assert by_id["hand_clear"].status == "PASS"
     assert by_id["calibration_binding"].status == "PASS"
     assert by_id["m_context"].status == "PASS"
-    assert by_id["yaw_bound"].status == "UNKNOWN"
-    assert by_id["shadow_inspection"].status != "PASS"
+    assert by_id["yaw_bound"].status == "PASS"
+    assert "not MEASURED" in by_id["yaw_bound"].detail
+    assert by_id["yaw_bound"].blocking_for_formal_grasp is False
     # S140: frames 0-1 WARMING_UP, frame 2 CONFIRMED → formal path adopts confirmed PASS only.
     assert by_id["formal_verify_path"].status == "PASS"
+    assert by_id["shadow_inspection"].status == "PASS"
     assert "warmup_or_unconfirmed_skipped=2" in by_id["shadow_inspection"].detail
+    assert "ERROR_BOUND_UNKNOWN:yaw_rad" not in report.consumer_reason_union
     assert report.formal_grasp_entry_allowed is False
     assert report.control_ready is False
-    assert "ERROR_BOUND_UNKNOWN:yaw_rad" in report.consumer_reason_union
     # Warmup SCENE_OR_RGBD_NOT_CONFIRMED must not remain a session-level blocker.
     assert "SCENE_OR_RGBD_NOT_CONFIRMED" not in report.consumer_reason_union
 

@@ -6,22 +6,6 @@
   "permit": null,
   "blocking_gaps": [
     {
-      "gate_id": "yaw_bound",
-      "status": "UNKNOWN",
-      "blocking": true,
-      "field_or_human_required": true,
-      "detail": "yaw UNKNOWN (90\u00b0 symmetry); consumer requires MEASURED bound for Inspection",
-      "owner_hint": "V measurement policy / operator orientation confirm"
-    },
-    {
-      "gate_id": "shadow_inspection",
-      "status": "BLOCKED",
-      "blocking": true,
-      "field_or_human_required": false,
-      "detail": "shadow_inspection_ready=0; blocked=1; warmup_or_unconfirmed_skipped=2; scene_consistent_frames=1; reasons=['ERROR_BOUND_UNKNOWN:yaw_rad']",
-      "owner_hint": "verify_handoff_consumer"
-    },
-    {
       "gate_id": "permit",
       "status": "POLICY_HOLD",
       "blocking": true,
@@ -64,23 +48,18 @@
       "owner_hint": "field evidence / M context"
     }
   ],
-  "consumer_reason_union": [
-    "ERROR_BOUND_UNKNOWN:yaw_rad"
-  ],
+  "consumer_reason_union": [],
   "missing_software": [
-    "yaw_bound",
-    "shadow_inspection",
     "permit",
     "control_ready_policy"
   ],
-  "missing_field_or_human": [
-    "yaw_bound"
-  ],
+  "missing_field_or_human": [],
   "notes": [
     "Readiness reports gaps only; does not grant permit or raise control_ready.",
     "Association CLI flag without durable operator record stays UNKNOWN.",
     "Calibration binding and BundleBinding/clock are parallel dependencies.",
     "hand_clear/support/stable/neighbors are never inferred from scene_consistent.",
+    "yaw_policy=symmetric_90_unbounded accepts UNKNOWN yaw for grasp-approach; never forges MEASURED.",
     "formal_grasp_entry_allowed is always false here; evidence_gates_clear is diagnostic only.",
     "Readiness adopts only scene_consistent frames; WARMING_UP SCENE_OR_RGBD_NOT_CONFIRMED is skipped, not forged."
   ]

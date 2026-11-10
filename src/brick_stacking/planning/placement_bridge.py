@@ -93,7 +93,8 @@ class LocalizedReviewEvidence:
     target_association_confirmed: bool
     xy_m: ErrorBound
     height_m: ErrorBound
-    yaw_rad: ErrorBound
+    # None when yaw is explicitly policy-unbounded (not a forged MEASURED bound).
+    yaw_rad: ErrorBound | None
     support_ok: bool | None
     stable: bool | None
     hand_clear: bool

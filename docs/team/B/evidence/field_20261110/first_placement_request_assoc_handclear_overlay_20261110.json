@@ -1,6 +1,6 @@
 {
   "schema_version": "m-placement-target-request-draft-1",
-  "status": "SHADOW_ASSOC_HANDCLEAR_CURRENT_CALIBRATION_BOUND_YAW_UNKNOWN",
+  "status": "SHADOW_ASSOC_HANDCLEAR_CURRENT_CALIBRATION_BOUND_YAW_POLICY_SYMMETRIC_90",
   "target_id": "m-first-red-01",
   "slot_id": "m-first-placement-slot-01",
   "region_id": "m-first-placement-region-01",
@@ -80,7 +80,7 @@
     "calibration_hash is the active current-binding identity; not accuracy/motion approval.",
     "Association overlay for shadow readiness only; calibration/clock/permit still open.",
     "AI-authorized proxy adjudication: association + hand_clear(arm_idle/no_motion) recorded; S140 session observe only.",
-    "yaw remains UNKNOWN; control_ready stays false."
+    "yaw remains UNKNOWN under yaw_policy=symmetric_90_unbounded; control_ready stays false."
   ],
   "calibration_binding_path": "config/observed/calibration_current_binding_c35_20261110.json",
   "association_confirm_switch": "docs/team/B/evidence/field_20261110/association_confirm_switch_20261110.json",
@@ -92,8 +92,14 @@
     "production_default_path": "config/vision_profiles/head_replacement_candidate.yaml"
   },
   "yaw_policy": {
+    "id": "symmetric_90_unbounded",
+    "symmetry_period_rad": 1.5707963267948966,
     "status": "UNKNOWN",
     "reason": "90deg_cube_symmetry_no_bounded_measurement",
-    "do_not_forge_measured_pass": true
+    "do_not_forge_measured_pass": true,
+    "applies_to": [
+      "pre_grasp_grasp_approach",
+      "shadow_inspection"
+    ]
   }
 }

@@ -9,6 +9,11 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
 
+from brick_stacking.planning.yaw_policy import (
+    normalize_yaw_policy,
+    yaw_unknown_allowed_by_policy,
+)
+
 
 SCHEMA = "pre-grasp-readiness-0.1"
 
@@ -289,22 +294,36 @@ def evaluate_pre_grasp_readiness(
 
     # --- yaw ---
     yaw = first.get("yaw_rad") or {}
+    yaw_pol = normalize_yaw_policy(req.get("yaw_policy") or first.get("yaw_policy"))
     if yaw.get("status") == "MEASURED" and isinstance(yaw.get("value"), (int, float)):
         yaw_status, yaw_detail = "PASS", "yaw ErrorBound MEASURED"
+        yaw_blocking = True
+        yaw_field = False
+    elif yaw_unknown_allowed_by_policy(yaw, yaw_pol):
+        yaw_status, yaw_detail = (
+            "PASS",
+            "yaw UNKNOWN accepted under yaw_policy=symmetric_90_unbounded "
+            "(90° cube; not MEASURED; no forged angle)",
+        )
+        yaw_blocking = False
+        yaw_field = False
     else:
         yaw_status, yaw_detail = (
             "UNKNOWN",
-            "yaw UNKNOWN (90° symmetry); consumer requires MEASURED bound for Inspection",
+            "yaw UNKNOWN (90° symmetry); declare yaw_policy=symmetric_90_unbounded "
+            "or supply MEASURED bound — do not forge",
         )
+        yaw_blocking = True
+        yaw_field = True
     gates.append(
         gate(
             "yaw_bound",
             yaw_status,
             software=True,
-            field=True,
-            blocking=True,
+            field=yaw_field,
+            blocking=yaw_blocking,
             detail=yaw_detail,
-            owner="V measurement policy / operator orientation confirm",
+            owner="V measurement policy / yaw_policy / operator orientation confirm",
         )
     )
 
@@ -583,6 +602,7 @@ def evaluate_pre_grasp_readiness(
         "Association CLI flag without durable operator record stays UNKNOWN.",
         "Calibration binding and BundleBinding/clock are parallel dependencies.",
         "hand_clear/support/stable/neighbors are never inferred from scene_consistent.",
+        "yaw_policy=symmetric_90_unbounded accepts UNKNOWN yaw for grasp-approach; never forges MEASURED.",
         "formal_grasp_entry_allowed is always false here; evidence_gates_clear is diagnostic only.",
         "Readiness adopts only scene_consistent frames; WARMING_UP SCENE_OR_RGBD_NOT_CONFIRMED is skipped, not forged.",
     )
