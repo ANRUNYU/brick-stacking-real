@@ -1,4 +1,4 @@
-"""Default-off Rest angle capture research gate (loss-of-hold ≠ large trajectory).
+"""Default-off Rest angle capture + dual pregrasp attest gates.
 
 Rest (``FF×7+FD`` via ``MotorV2.read_initial_state`` / ``c_left_wrist_rest_capture``)
 drops wrist holding torque. That is **not** ``--enable-motion`` / large joint
@@ -9,12 +9,17 @@ an already-captured Rest sample into a live VALID *draft*.
 Safety defaults (CI / default path):
 
 * ``rest_state_capture`` defaults **false** (CLI + env).
+* ``attest_rest_for_pregrasp`` defaults **false** (CLI + env) — second gate.
+* Dual gate (both open) + structurally live VALID Rest draft may arm formal
+  ladder via ``live_arm_via=rest_attested`` (≠ audited J6/J7 readonly).
 * This module **never** opens CAN, never sends Rest, never enables motion.
 * CI and default readiness paths must not auto-Rest on hardware.
-* Constructing a Rest draft does **not** raise ``formal_grasp_entry_allowed``
-  or ``control_ready`` (Rest ≠ audited J6/J7 readonly; formal still blocked).
+* Dual gate still never raises ``control_ready`` / never enables motion.
 
-Env: ``BRICK_STACKING_REST_STATE_CAPTURE`` ∈ {1,true,yes,on} (case-insensitive).
+Env:
+
+* ``BRICK_STACKING_REST_STATE_CAPTURE`` ∈ {1,true,yes,on}
+* ``BRICK_STACKING_ATTEST_REST_FOR_PREGRASP`` ∈ {1,true,yes,on}
 """
 from __future__ import annotations
 
@@ -33,10 +38,13 @@ from brick_stacking.arm.state import ENDPOINTS, JOINTS
 from brick_stacking.contracts import ArmState, JointName
 
 ENV_VAR = "BRICK_STACKING_REST_STATE_CAPTURE"
+ATTEST_ENV_VAR = "BRICK_STACKING_ATTEST_REST_FOR_PREGRASP"
 DEFAULT_ENABLED = False
+DEFAULT_ATTEST_ENABLED = False
 PROVENANCE = "rest_ff7_fd_supported_capture"
 DRAFT_SCHEMA = "rest-state-capture-draft-0.1"
 GATE_DOC = "docs/team/B/J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md"
+LIVE_ARM_VIA_REST_ATTESTED = "rest_attested"
 
 
 class RestStateCaptureDisabled(RuntimeError):
@@ -59,10 +67,46 @@ def is_rest_state_capture_enabled(
     return bool(cli_flag) or _env_truthy(env.get(ENV_VAR))
 
 
+def is_attest_rest_for_pregrasp_enabled(
+    *,
+    cli_flag: bool = False,
+    environ: Mapping[str, str] | None = None,
+) -> bool:
+    """Second gate: explicit attest that Rest draft may arm formal pregrasp."""
+    env = environ if environ is not None else os.environ
+    return bool(cli_flag) or _env_truthy(env.get(ATTEST_ENV_VAR))
+
+
+def dual_rest_pregrasp_gates_open(
+    *,
+    rest_state_capture: bool | None = None,
+    attest_rest_for_pregrasp: bool | None = None,
+    rest_cli_flag: bool | None = None,
+    attest_cli_flag: bool | None = None,
+    environ: Mapping[str, str] | None = None,
+) -> bool:
+    """Both gates must be explicitly open; default path is closed."""
+    rest_on = (
+        bool(rest_state_capture)
+        if rest_state_capture is not None
+        else is_rest_state_capture_enabled(cli_flag=bool(rest_cli_flag), environ=environ)
+    )
+    attest_on = (
+        bool(attest_rest_for_pregrasp)
+        if attest_rest_for_pregrasp is not None
+        else is_attest_rest_for_pregrasp_enabled(
+            cli_flag=bool(attest_cli_flag), environ=environ
+        )
+    )
+    return rest_on and attest_on
+
+
 def rest_state_capture_gate_report(
     *,
     enabled: bool | None = None,
     cli_flag: bool | None = None,
+    attest_enabled: bool | None = None,
+    attest_cli_flag: bool | None = None,
     environ: Mapping[str, str] | None = None,
 ) -> dict[str, Any]:
     """Machine-readable gate status for readiness / evidence."""
@@ -71,26 +115,42 @@ def rest_state_capture_gate_report(
         if enabled is not None
         else is_rest_state_capture_enabled(cli_flag=cli_flag, environ=environ)
     )
+    attest_resolved = (
+        bool(attest_enabled)
+        if attest_enabled is not None
+        else is_attest_rest_for_pregrasp_enabled(
+            cli_flag=attest_cli_flag, environ=environ
+        )
+    )
+    dual_open = bool(resolved and attest_resolved)
     return {
-        "schema_version": "rest-state-capture-gate-0.1",
+        "schema_version": "rest-state-capture-gate-0.2",
         "rest_state_capture_available": True,
         "rest_state_capture_enabled": resolved,
-        "blocked_unless_rest_attested": not resolved,
+        "attest_rest_for_pregrasp_enabled": attest_resolved,
+        "dual_gate_open": dual_open,
+        "blocked_unless_rest_attested": not dual_open,
         "default_enabled": DEFAULT_ENABLED,
+        "default_attest_enabled": DEFAULT_ATTEST_ENABLED,
         "env_var": ENV_VAR,
+        "attest_env_var": ATTEST_ENV_VAR,
+        "live_arm_via_when_dual_and_valid_draft": (
+            LIVE_ARM_VIA_REST_ATTESTED if dual_open else None
+        ),
         "ci_never_auto_rest": True,
         "sends_rest_or_opens_can": False,
         "loss_of_hold_not_large_trajectory": True,
         "forbids_enable_motion_trajectory": True,
-        "raises_formal_grasp_entry_allowed": False,
+        "raises_formal_grasp_entry_allowed": dual_open,
         "raises_control_ready": False,
         "counts_as_audited_j6j7_readonly": False,
         "notes": [
             "Rest drops wrist hold; not --enable-motion / large trajectory.",
             "Default false; CI and default paths never auto Rest on hardware.",
-            "Rest draft may be structurally counts_as_live_valid when gate is on; "
-            "it does not count as audited readonly and does not auto-raise formal "
-            "grasp or control_ready.",
+            "Dual gate: --rest-state-capture + --attest-rest-for-pregrasp "
+            "(or matching env). Only then may a structurally live VALID Rest "
+            f"draft arm formal ladder via live_arm_via={LIVE_ARM_VIA_REST_ATTESTED}.",
+            "Rest attested ≠ audited J6/J7 readonly; never raises control_ready.",
             f"See {GATE_DOC}.",
         ],
         "code_refs": {
@@ -218,12 +278,15 @@ def build_live_valid_draft_from_rest(
     role: str = "left",
     device_id: str | None = None,
     authorization_ref: str | None = None,
+    attest_rest_for_pregrasp: bool = False,
 ) -> dict[str, Any]:
     """Build a structurally live VALID ArmState *draft* from Rest results.
 
     Requires ``rest_state_capture=True``. Never opens CAN / sends Rest.
-    Draft may satisfy ``counts_as_live_valid`` structurally; it does **not**
-    count as audited J6/J7 readonly and must not auto-raise formal grasp.
+    With dual gate (``attest_rest_for_pregrasp=True``) a structurally live
+    VALID draft may count for formal arm gate via ``live_arm_via=rest_attested``;
+    it still does **not** count as audited J6/J7 readonly and never raises
+    ``control_ready``.
     """
     if rest_state_capture is not True:
         raise RestStateCaptureDisabled(
@@ -240,6 +303,7 @@ def build_live_valid_draft_from_rest(
     validity, base_reason = assign_validity_from_joints(
         positions=list(q_rad), failures=[]
     )
+    dual_open = bool(attest_rest_for_pregrasp)
     reason = (
         f"rest_state_capture_draft:{PROVENANCE}; "
         f"auth={auth or 'unspecified'}; "
@@ -271,7 +335,9 @@ def build_live_valid_draft_from_rest(
             "schema_version": DRAFT_SCHEMA,
             "provenance": PROVENANCE,
             "gate_enabled": True,
-            "counts_as_formal_live_valid": False,
+            "attest_rest_for_pregrasp": dual_open,
+            "counts_as_formal_live_valid": dual_open,
+            "live_arm_via": LIVE_ARM_VIA_REST_ATTESTED if dual_open else None,
             "counts_as_audited_j6j7_readonly": False,
             "authorization_ref": auth,
             "warning": "Rest removes holding; draft only; no auto re-enable",
@@ -280,22 +346,41 @@ def build_live_valid_draft_from_rest(
     }
 
     classified = classify_arm_state(arm_state)
-    gate = rest_state_capture_gate_report(enabled=True)
+    gate = rest_state_capture_gate_report(
+        enabled=True, attest_enabled=dual_open
+    )
+    notes = [
+        "Rest draft built offline from capture JSON; no CAN / no Rest send.",
+        "Default rest_state_capture gate is false; CI must not open this path.",
+        "attest_rest_for_pregrasp defaults false; dual gate required for "
+        f"formal arm via live_arm_via={LIVE_ARM_VIA_REST_ATTESTED}.",
+        "Never raises control_ready; never audited J6/J7 readonly.",
+    ]
+    if dual_open:
+        notes.insert(
+            1,
+            "Dual gate open: structurally counts_as_live_valid may arm formal "
+            f"ladder via live_arm_via={LIVE_ARM_VIA_REST_ATTESTED}.",
+        )
+    else:
+        notes.insert(
+            1,
+            "Structurally counts_as_live_valid may be true; formal_grasp stays "
+            "blocked without --attest-rest-for-pregrasp.",
+        )
     payload = emit_live_or_recorded_payload(
         mode="rest-state-capture-draft",
         arm_state=arm_state,
         classification=classified,
         can_opened=False,
         fresh_live_read=False,
-        extra_notes=[
-            "Rest draft built offline from capture JSON; no CAN / no Rest send.",
-            "Structurally counts_as_live_valid may be true; formal_grasp stays blocked "
-            "(Rest ≠ audited readonly; reporter never auto-raises).",
-            "Default gate is false; CI must not open this path.",
-        ],
+        extra_notes=notes,
     )
     payload["rest_state_capture"] = gate
     payload["rest_state_capture"]["draft"] = True
-    payload["rest_state_capture"]["counts_as_formal_live_valid"] = False
+    payload["rest_state_capture"]["counts_as_formal_live_valid"] = dual_open
+    payload["rest_state_capture"]["live_arm_via"] = (
+        LIVE_ARM_VIA_REST_ATTESTED if dual_open else None
+    )
     payload["schema_version"] = DRAFT_SCHEMA
     return payload

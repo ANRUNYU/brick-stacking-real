@@ -9,9 +9,13 @@ import pytest
 
 from brick_stacking.arm.arm_state_validity import classify_arm_state
 from brick_stacking.arm.rest_state_capture import (
+    ATTEST_ENV_VAR,
     ENV_VAR,
+    LIVE_ARM_VIA_REST_ATTESTED,
     RestStateCaptureDisabled,
     build_live_valid_draft_from_rest,
+    dual_rest_pregrasp_gates_open,
+    is_attest_rest_for_pregrasp_enabled,
     is_rest_state_capture_draft,
     is_rest_state_capture_enabled,
     rest_state_capture_gate_report,
@@ -90,9 +94,15 @@ def _mock_range_profile() -> dict:
 
 def test_gate_default_closed():
     assert is_rest_state_capture_enabled(cli_flag=False, environ={}) is False
-    report = rest_state_capture_gate_report(enabled=False)
+    assert is_attest_rest_for_pregrasp_enabled(cli_flag=False, environ={}) is False
+    assert dual_rest_pregrasp_gates_open(
+        rest_state_capture=False, attest_rest_for_pregrasp=False
+    ) is False
+    report = rest_state_capture_gate_report(enabled=False, attest_enabled=False)
     assert report["rest_state_capture_available"] is True
     assert report["rest_state_capture_enabled"] is False
+    assert report["attest_rest_for_pregrasp_enabled"] is False
+    assert report["dual_gate_open"] is False
     assert report["blocked_unless_rest_attested"] is True
     assert report["raises_formal_grasp_entry_allowed"] is False
     assert report["raises_control_ready"] is False
@@ -107,6 +117,19 @@ def test_gate_opens_via_cli_or_env():
     assert (
         is_rest_state_capture_enabled(cli_flag=False, environ={ENV_VAR: "yes"}) is True
     )
+    assert is_attest_rest_for_pregrasp_enabled(cli_flag=True, environ={}) is True
+    assert (
+        is_attest_rest_for_pregrasp_enabled(
+            cli_flag=False, environ={ATTEST_ENV_VAR: "1"}
+        )
+        is True
+    )
+    assert dual_rest_pregrasp_gates_open(
+        rest_state_capture=True, attest_rest_for_pregrasp=False
+    ) is False
+    assert dual_rest_pregrasp_gates_open(
+        rest_state_capture=True, attest_rest_for_pregrasp=True
+    ) is True
 
 
 def test_closed_gate_refuses_draft_behavior_unchanged():
@@ -155,21 +178,81 @@ def test_rest_draft_does_not_auto_raise_formal_grasp():
         probe_dry_run=True,
         config_path=ROOT / "config/offline_task.yaml",
         rest_state_capture=True,
+        attest_rest_for_pregrasp=False,
     )
     payload = report.to_dict()
     ladder = payload["gate_ladder"]
     assert ladder["rest_state_capture_available"] is True
     assert ladder["rest_state_capture_enabled"] is True
-    assert ladder["blocked_unless_rest_attested"] is False
+    assert ladder["attest_rest_for_pregrasp_enabled"] is False
+    assert ladder["dual_rest_pregrasp_gates_open"] is False
+    assert ladder["blocked_unless_rest_attested"] is True  # dual gate still closed
     assert ladder["rest_state_capture_draft"] is True
     assert ladder["structural_counts_as_live_valid"] is True
-    assert ladder["counts_as_live_valid"] is False  # Rest ≠ formal audited live
+    assert ladder["counts_as_live_valid"] is False  # single gate ≠ formal live
     assert payload["formal_grasp_entry_allowed"] is False
     assert payload["control_ready"] is False
     assert payload["formal_grasp_blocked_by"] == ["j6_j7_readonly", "awaiting_live_arm"]
     by_id = {item.id: item for item in report.checklist}
     assert by_id["live_valid_arm_state"].status == "POLICY_HOLD"
     assert by_id["rest_state_capture_gate"].status == "PASS"
+    assert by_id["attest_rest_for_pregrasp_gate"].status == "POLICY_HOLD"
+
+
+def test_dual_gate_rest_attested_clears_j6j7_and_may_allow_formal():
+    draft = build_live_valid_draft_from_rest(
+        _mock_rest_capture(),
+        rest_state_capture=True,
+        attest_rest_for_pregrasp=True,
+        range_profile=_mock_range_profile(),
+    )
+    assert draft["rest_state_capture"]["counts_as_formal_live_valid"] is True
+    assert draft["rest_state_capture"]["live_arm_via"] == LIVE_ARM_VIA_REST_ATTESTED
+    gaps = json.loads(GAPS.read_text(encoding="utf-8"))
+    diag = json.loads(DIAG.read_text(encoding="utf-8"))
+    plan = json.loads(PLAN.read_text(encoding="utf-8"))
+    report = evaluate_host_control_readiness(
+        pre_grasp_gaps=gaps,
+        diagnostic_permit=diag,
+        plan_bundle=plan,
+        arm_state=draft["arm_state"],
+        probe_dry_run=True,
+        config_path=ROOT / "config/offline_task.yaml",
+        rest_state_capture=True,
+        attest_rest_for_pregrasp=True,
+    )
+    payload = report.to_dict()
+    ladder = payload["gate_ladder"]
+    assert ladder["dual_rest_pregrasp_gates_open"] is True
+    assert ladder["blocked_unless_rest_attested"] is False
+    assert ladder["rest_state_capture_draft"] is True
+    assert ladder["structural_counts_as_live_valid"] is True
+    assert ladder["counts_as_live_valid"] is True
+    assert ladder["live_arm_via"] == LIVE_ARM_VIA_REST_ATTESTED
+    assert ladder["j6j7_readonly_position_hard_block"] is False
+    assert ladder["counts_as_audited_j6j7_readonly"] is False
+    assert "j6_j7_readonly" not in payload["formal_grasp_blocked_by"]
+    assert payload["control_ready"] is False
+    assert payload["live_permit"] is None
+    assert payload["motion_enabled"] is False
+    # Dual gate + Rest VALID + dry-run ready + rest-attested Permit draft → formal
+    assert payload["dry_run_grasp_entry_ready"] is True
+    assert payload["formal_grasp_entry_allowed"] is True
+    assert payload["formal_grasp_blocked_by"] == []
+    assert ladder["can_enter_formal_grasp"] is True
+    assert payload["live_permit_path"]["status"] == "rest_attested_permit_validated"
+    assert payload["live_permit_path"]["executable"] is False
+    assert payload["live_permit_path"]["live_arm_via"] == LIVE_ARM_VIA_REST_ATTESTED
+    by_id = {item.id: item for item in report.checklist}
+    assert by_id["live_valid_arm_state"].status == "PASS"
+    assert LIVE_ARM_VIA_REST_ATTESTED in by_id["live_valid_arm_state"].detail
+    assert by_id["live_permit"].status == "PASS"
+    assert by_id["formal_grasp_entry_gate"].status == "PASS"
+    assert by_id["attest_rest_for_pregrasp_gate"].status == "PASS"
+    # Remaining elevation gaps (control_ready still hard-held).
+    remaining = set(ladder["control_ready_missing"])
+    assert "reporter_hard_hold_no_large_motion_elevation" in remaining
+    assert "operator_policy_attest_control_ready" in remaining
 
 
 def test_readiness_default_path_blocked_unless_rest_attested():

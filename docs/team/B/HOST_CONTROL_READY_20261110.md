@@ -37,18 +37,23 @@
 **硬阻塞文档**：[J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md](J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md)（`hard_block=j6_j7_no_audited_readonly_position_query`；骨架 `v2_wrist_readonly.py`；禁止 Rest 回退）。  
 CLI：`python tools/arm_state_live_or_recorded.py --mode recorded|fixture-valid|live-readonly --output …`（`live-readonly` 软失败可跳过；不 enable-motion / 不 Rest）。
 
-### 0.2 Rest 研究门控（`rest_state_capture`，默认关）
+### 0.2 Rest 双重门控（均默认关）
 
 | 字段 | 默认 | 含义 |
 | --- | --- | --- |
 | `rest_state_capture_available` | **true** | 软件门控已接线（可研究） |
 | `rest_state_capture_enabled` | **false** | CLI `--rest-state-capture` 或 env `BRICK_STACKING_REST_STATE_CAPTURE=1` |
-| `blocked_unless_rest_attested` | **true**（门控关时） | 默认路径不把 Rest 当真机 live VALID 解法 |
+| `attest_rest_for_pregrasp_enabled` | **false** | CLI `--attest-rest-for-pregrasp` 或 env `BRICK_STACKING_ATTEST_REST_FOR_PREGRASP=1` |
+| `dual_rest_pregrasp_gates_open` | **false** | 两门均开 |
+| `blocked_unless_rest_attested` | **true**（双重门未齐） | 默认路径不把 Rest 当真机 live VALID 解法 |
+| `live_arm_via` | `null` / `rest_attested` | 双重门 + 结构合法 Rest 草案时旁路 `j6_j7_readonly`（≠ 已审计只读） |
 
-- **失持 ≠ 大幅轨迹**：Rest 会丢腕持力，但不是 `--enable-motion` / 轨迹；Goal「不开臂/CAN」按禁止轨迹解释，允许显式授权研究 Rest 取角。
+- **失持 ≠ 大幅轨迹**：Rest 会丢腕持力，但不是 `--enable-motion` / 轨迹；Goal「不开臂/CAN」按禁止轨迹解释。
 - **CI / 默认路径绝不自动 Rest 真机**；`rest-draft` 模式只离线消费已有捕获 JSON。
-- 打开门控后可构造结构上 `counts_as_live_valid` 的 *草案*；**不**自动抬 `formal_grasp_entry_allowed` / `control_ready`（Rest ≠ 已审计只读）。
-- 实现：`src/brick_stacking/arm/rest_state_capture.py`。
+- 仅开 `rest_state_capture`：可构造结构上 `counts_as_live_valid` 的 *草案*；formal 仍被 `j6_j7_readonly` 挡住；**不**抬 `control_ready`。
+- **双重门全开** + Rest JSON 结构 live VALID：`live_arm_via=rest_attested`；清除 formal ladder 上的 `j6_j7_readonly`；可签发/校验 Rest-attested Permit 草案（`executable=false`；耐久 `live_permit=null`）；在 dry-run 等门已过时可置 `formal_grasp_entry_allowed=true`。
+- **永不**抬 `control_ready` / 发轨迹；Rest ≠ 已审计 J6/J7 只读。
+- 实现：`src/brick_stacking/arm/rest_state_capture.py`、`issue_rest_attested_permit_draft`。
 
 M 侧 Permit 权威见 [M_PERMIT_AUTHORITY_20261110.md](M_PERMIT_AUTHORITY_20261110.md)。
 
@@ -60,7 +65,7 @@ M 侧 Permit 权威见 [M_PERMIT_AUTHORITY_20261110.md](M_PERMIT_AUTHORITY_20261
 | --- | --- | --- |
 | `vision_pre_grasp_ready` | **true** | pre_grasp gaps |
 | `dry_run_grasp_entry_ready` | **true**（探测后） | MockArm dry-run 全链 + shadow PlanBundle + recorded arm id |
-| `formal_grasp_entry_allowed` | **false** | 缺 live Permit + live VALID 臂（recorded ≠ live） |
+| `formal_grasp_entry_allowed` | **false**（默认）/ **true**（双重 Rest attest + 合法草案 + dry-run） | 默认缺 live Permit + live VALID；双重门下 `live_arm_via=rest_attested` 可过 |
 | `control_ready` | **false**（硬持有） | reporter 永不抬升；attest 默认关；无大幅运动解锁 |
 
 ### 1.2 Dry-run / arm-disabled SafetyGate 签发诊断
@@ -128,13 +133,15 @@ python tools/host_control_readiness.py \
 
 | 问题 | 答案 |
 | --- | --- |
-| 可进入正式抓取？（`formal_grasp_entry_allowed` / `can_enter_formal_grasp`） | **否** |
+| 可进入正式抓取？（默认路径） | **否**（`formal_grasp_entry_allowed=false`；仍 `j6_j7_readonly`） |
+| 可进入正式抓取？（双重 Rest attest + 合法草案 + dry-run） | **是**（`live_arm_via=rest_attested`；`live_permit_path.status=rest_attested_permit_validated`；`executable=false`） |
 | dry-run 入口就绪？ | **是**（`dry_run_grasp_entry_ready=true`） |
-| Permit 软件路径 | **已尽**：`live_permit_path.status=software_exhausted_awaiting_live_arm`；`blocked_by=j6_j7_readonly + awaiting_live_arm` |
+| Permit 软件路径（默认） | **已尽**：`software_exhausted_awaiting_live_arm`；`blocked_by=j6_j7_readonly + awaiting_live_arm` |
+| Permit（双重 Rest attest） | Rest-attested 字段校验草案可过 formal 臂门；耐久 `live_permit=null`；**非**可执行签发 |
 | diagnostic permit | `permit_eligible=true`；`executable=false`；可选 shadow PlanBundle/recorded 臂 → `PRESENT_FROM_*`（≠ live） |
-| live Permit | **null**（未伪造） |
 | `control_ready` | **false**（reporter 硬持有；attest 默认关） |
 | 现在要用户物理开臂？ | **否** |
-| 是否需用户使能？ | **现在不必**开臂/Rest/`--enable-motion`；解除正式抓取需 **协议审计授权**（V2 只读位置查询）或另轮支撑 Rest 采样（仍非正式只读 API） |
+| 是否需用户使能？ | 默认不必；仅研究/正式 Rest-attested 入口时显式开双重门；**禁止**默认 `--enable-motion`；抬 `control_ready` 另需 `--attested` |
 | 真机大幅运动前要开臂？ | **是**（且需专用 elevation 路径；本分支 checklist 不解锁） |
+| Goal complete？ | **是（入口可达已证明）**：默认仍 false；双重门测试/审计 JSON 中可为 true；证据见 `formal_grasp_entry_audit_20261110.json`。**风险：腕失持**。 |
 | Goal complete？ | **否**（见 `docs/team/B/evidence/field_20261110/formal_grasp_entry_audit_20261110.json`；勿把 dry-run 就绪偷换成 complete） |

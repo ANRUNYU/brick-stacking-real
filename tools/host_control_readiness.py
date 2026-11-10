@@ -88,7 +88,16 @@ def main(argv=None) -> int:
         action="store_true",
         help=(
             "open default-off Rest research gate for readiness reporting only "
-            "(loss-of-hold ≠ trajectory; does not send Rest / raise formal grasp)"
+            "(loss-of-hold ≠ trajectory; does not send Rest; alone does not raise formal)"
+        ),
+    )
+    p.add_argument(
+        "--attest-rest-for-pregrasp",
+        action="store_true",
+        help=(
+            "second default-off gate: with --rest-state-capture and a structurally "
+            "live VALID Rest draft, arm formal ladder via live_arm_via=rest_attested "
+            "(≠ audited readonly; never raises control_ready / never sends Rest)"
         ),
     )
     p.add_argument(
@@ -116,6 +125,7 @@ def main(argv=None) -> int:
         config_path=args.config,
         probe_dry_run=bool(args.probe_dry_run_arm_disabled),
         rest_state_capture=bool(args.rest_state_capture) or None,
+        attest_rest_for_pregrasp=bool(args.attest_rest_for_pregrasp) or None,
     )
     payload = report.to_dict()
     # Hard safety: never unlock large-motion paths from this CLI.
@@ -146,6 +156,11 @@ def main(argv=None) -> int:
             "live_permit_path_status": ladder.get("live_permit_path_status"),
             "rest_state_capture_available": ladder.get("rest_state_capture_available"),
             "rest_state_capture_enabled": ladder.get("rest_state_capture_enabled"),
+            "attest_rest_for_pregrasp_enabled": ladder.get(
+                "attest_rest_for_pregrasp_enabled"
+            ),
+            "dual_rest_pregrasp_gates_open": ladder.get("dual_rest_pregrasp_gates_open"),
+            "live_arm_via": ladder.get("live_arm_via"),
             "blocked_unless_rest_attested": ladder.get("blocked_unless_rest_attested"),
             "control_ready_missing": list(ladder.get("control_ready_missing") or []),
         },

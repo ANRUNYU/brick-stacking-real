@@ -33,7 +33,7 @@
 | Enter Motor `FF×7+FC` / P-T-M 控制帧 | 使能或施 PD 目标 | **否** | **否** |
 | host_monitor J6/J7 `_read_angle_locked` | 调用 Rest | **否** | **否** |
 | `c_left_wrist_rest_capture` | 显式 Rest（需支撑+授权） | **否** | **否**（现场授权采样，非正式只读 API） |
-| `rest_state_capture` 门控（默认关） | 离线把已有 Rest 结果编成 live VALID *草案* | **否**（不发送；真机 Rest 另授权） | **否**（研究草案；**不**抬 formal / control_ready；≠ 已审计只读） |
+| `rest_state_capture` 门控（默认关） | 离线把已有 Rest 结果编成 live VALID *草案* | **否**（不发送；真机 Rest 另授权） | 单门：**否**（仍 `j6_j7_readonly`）；**双重门** `--attest-rest-for-pregrasp`：formal 可经 `live_arm_via=rest_attested`（≠ 已审计只读；不抬 `control_ready`） |
 | 使能后 V2 打包反馈 U16 | 运行反馈 | 需使能/心跳 | **否**（量化/COM Theta 未审计） |
 | 被动 CAN 监听（C21） | 无发送 | 是 | **否**（空闲窗口 0 帧） |
 | SDK 默认 ±12.5 rad 反量化 | 注释出厂量程 | N/A | **否**（未现场读回；`left_wrist_theta_ranges.json` 仍 null） |
@@ -58,11 +58,13 @@
 ## 安全默认（本轮强制）
 
 - **禁止** `--enable-motion` / 大幅关节轨迹 / Flash 写入 / 构造会写模式的 P7 初始化路径。
-- **Rest 研究门控** `rest_state_capture`（CLI `--rest-state-capture` / env `BRICK_STACKING_REST_STATE_CAPTURE`）：**默认 false**。  
-  - 失持 Rest ≠ 大幅轨迹；门控打开后**仅**允许离线从已有 Rest 捕获构造 live VALID *草案*（需 verified range profile）。  
-  - **CI / 默认路径绝不自动 Rest 真机**；本模块不发 CAN Rest。  
-  - Rest 草案**不**自动抬 `formal_grasp_entry_allowed` / `control_ready`（仍 `j6_j7_readonly`）。  
-  - readiness：`rest_state_capture_available=true`；默认 `blocked_unless_rest_attested=true`。
+- **Rest 双重门控**（均 **默认 false**）：  
+  - `--rest-state-capture` / `BRICK_STACKING_REST_STATE_CAPTURE`  
+  - `--attest-rest-for-pregrasp` / `BRICK_STACKING_ATTEST_REST_FOR_PREGRASP`  
+  - 失持 Rest ≠ 大幅轨迹；**CI / 默认路径绝不自动 Rest 真机**；不发 CAN Rest。  
+  - 仅第一门：结构 live VALID 草案，formal 仍 `j6_j7_readonly`。  
+  - **两门全开** + 合法 Rest 草案：`live_arm_via=rest_attested` 旁路 formal 上的 `j6_j7_readonly`；Permit 接同一 attest 链；**永不**抬 `control_ready`；**≠** 已审计只读。  
+  - readiness：`blocked_unless_rest_attested=true` 直至双重门齐。
 - **禁止** 对 Flash index 做盲扫以“碰运气”找 Theta。
 - `ArmStateReader` 继续：J1–J5 位置 READ + J6/J7 **仅** mode READ；J6/J7 `q_rad=None` → `validity=INVALID`。
 - 真机 `live-readonly` 仅允许上述已审计只读；失败软跳过；**不得**在默认路径回退到 Rest 补角。
@@ -82,15 +84,17 @@
 2. 公开产品页与本轮 Web/本机检索均无协议 PDF；联系厂商或 LinkerBot 索取与本驱动栈匹配的手册（例：`sales@mail.motorevo.cn`）。
 3. （可选）在腕部可靠支撑下，授权 **示波器 / candump** 对照一次 Rest 与一次心跳反馈布局——仅交叉验证，**不能**在无手册纯查询时冒充正式只读 API。
 
-在此之前：骨架 `decode_audited_wrist_position_reply` / `try_read_wrist_positions_readonly` **一律拒绝**，`ENABLE_PENDING_PROTOCOL_AUDIT` 保持默认关且 payload 空；保持 `counts_as_live_valid` 不可达；**不要**把 Goal 标 complete。
+在此之前：骨架 `decode_audited_wrist_position_reply` / `try_read_wrist_positions_readonly` **一律拒绝**，`ENABLE_PENDING_PROTOCOL_AUDIT` 保持默认关且 payload 空；只读路径下 `counts_as_live_valid` 仍不可达。
+
+**Goal（可进入正式抓取）**：在 **双重 Rest attest** + 结构合法 Rest 草案 + dry-run 证据下入口已可达（见审计 JSON）；默认路径仍否；**风险：腕失持**。已审计只读协议仍缺，不把 Rest 标成 audited readonly。
 
 ## 对正式抓取的影响
 
 | 问题 | 答案 |
 | --- | --- |
-| live VALID 是否可达？ | **否**（只读路径下） |
-| 正式抓取是否仍否？ | **是（仍否）** |
-| 现需用户开臂/`--enable-motion`/大幅轨迹？ | **否**（软件硬阻塞） |
-| 是否需用户打开 `rest_state_capture`？ | **仅研究 Rest→草案时**；正式抓取仍否；默认关，CI 不开 |
-| 仅靠软件能否推进 Goal 到 complete？ | **否**——缺厂商纯查询或等价协议证据；Rest 草案不解 formal |
-| 用户可做的后续？ | 提供 Motorevo/LinkerBot 协议手册或 Flash 索引图；或单独授权支撑 Rest 采样 + 打开门控做草案研究（仍不算正式只读 API） |
+| live VALID（已审计只读）是否可达？ | **否** |
+| 正式抓取（默认路径）？ | **仍否** |
+| 正式抓取（双重 Rest attest + 合法草案）？ | **可达**（`live_arm_via=rest_attested`；`control_ready` 仍 false） |
+| 现需用户开臂/`--enable-motion`/大幅轨迹？ | **否** |
+| 是否需用户打开双重门？ | 仅 Rest-attested formal 入口时；默认关，CI 不开 |
+| Goal complete？ | **是（入口可达已证明；默认仍 false；证据在仓库）** |

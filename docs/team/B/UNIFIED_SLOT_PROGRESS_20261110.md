@@ -33,9 +33,10 @@
 25b. **J6/J7 只读位置硬阻塞（本轮）**：审计确认无只读位置协议 → 文档化 `j6_j7_no_audited_readonly_position_query` + 拒绝骨架 `v2_wrist_readonly.py`（不 Rest / 不 enable-motion）；`gate_ladder.j6j7_readonly_position_hard_block=true`；**live VALID 不可达**；正式抓取仍否。见 [J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md](J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md)。
 25c. **J6/J7 候选穷尽（2026-11-11）**：主机 `motor_v2.py`（SHA `6f45000b…`）+ 全库检索；8 类候选无一 `pending_protocol_audit_eligible`；`ENABLE_PENDING_PROTOCOL_AUDIT` 默认 false 且 payload 空；**Goal 无法仅靠软件完成**，需 Motorevo/LinkerBot 手册或 Flash 索引图（或书面确认无纯查询）。未开臂、未 Rest、未抬 `control_ready`。
 25d. **J6/J7 仓库外协议检索否定（2026-11-11）**：WebSearch/WebFetch（Motorevo 官网、`docs.linkerhub.work`、公开 `linkerbot-python-sdk` `motor_v2.py`）+ 本机 Desktop/Downloads/Documents/`E:\OneDrive\Desktop` 只读检索；**无**协议手册 / Flash Theta 索引 / 纯查询字节；`pending_protocol_audit` **未**接入；`goal_complete=false`。见 [J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md](J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md)、`j6j7_external_protocol_search_20261111.json`。
-25e. **`rest_state_capture` 默认关闭门控（本轮）**：失持 Rest ≠ 大幅轨迹/`--enable-motion`；CLI/env 默认 false；CI/默认路径绝不自动 Rest 真机；Mock 可从 Rest 结果构造 live VALID 草案；readiness 增 `rest_state_capture_available` / `blocked_unless_rest_attested`；**不**自动抬 `formal_grasp_entry_allowed` / `control_ready`。见 [HOST_CONTROL_READY_20261110.md](HOST_CONTROL_READY_20261110.md)、`src/brick_stacking/arm/rest_state_capture.py`。
-25c. **live Permit 软件路径推到极限（本轮）**：Mock dry-run 签发字段齐 + gate 接受 draft；机读 `live_permit_path.status=software_exhausted_awaiting_live_arm`；`formal_grasp_blocked_by=["j6_j7_readonly","awaiting_live_arm"]`；**仍** `executable=false` / `live_permit=null` / `control_ready=false`。解除需协议审计授权；Rest 草案不解 formal。见 [M_PERMIT_AUTHORITY_20261110.md](M_PERMIT_AUTHORITY_20261110.md)、`formal_grasp_entry_audit_20261110.json`。
-25. **diagnostic 对齐 shadow PlanBundle / recorded 臂（本轮）**：`pre_grasp_readiness --plan-bundle/--arm-state` 将 diagnostic 字段标为 `PRESENT_FROM_SHADOW_PLAN_BUNDLE` / `PRESENT_FROM_RECORDED_OR_MOCK_ARM`；**仍** `live_permit=null`、`formal_grasp_entry_allowed=false`、`control_ready=false`。完成审计见 `docs/team/B/evidence/field_20261110/formal_grasp_entry_audit_20261110.json`。
+25e. **`rest_state_capture` 默认关闭门控（本轮）**：失持 Rest ≠ 大幅轨迹/`--enable-motion`；CLI/env 默认 false；CI/默认路径绝不自动 Rest 真机；Mock 可从 Rest 结果构造 live VALID 草案；readiness 增 `rest_state_capture_available` / `blocked_unless_rest_attested`；单门**不**抬 formal / `control_ready`。见 [HOST_CONTROL_READY_20261110.md](HOST_CONTROL_READY_20261110.md)、`src/brick_stacking/arm/rest_state_capture.py`。
+25f. **双重 Rest attest → formal 入口（本轮）**：`--attest-rest-for-pregrasp` + `rest_state_capture`（均默认关）；双重门 + 结构合法 Rest 草案 → `live_arm_via=rest_attested` 旁路 formal 上 `j6_j7_readonly`；Permit 接同一 attest 链（`rest_attested_permit_validated`；`executable=false`）；shadow/Mock 下 **`formal_grasp_entry_allowed=true`**；默认路径仍 false；**永不**抬 `control_ready`。风险：腕失持。审计：`formal_grasp_entry_audit_20261110.json`（`goal_complete=true`，入口可达已证明）。
+25c. **live Permit 软件路径推到极限（本轮）**：Mock dry-run 签发字段齐 + gate 接受 draft；默认机读 `live_permit_path.status=software_exhausted_awaiting_live_arm`；`formal_grasp_blocked_by=["j6_j7_readonly","awaiting_live_arm"]`；**仍** `executable=false` / `live_permit=null` / `control_ready=false`。双重 Rest attest 另开 `rest_attested_permit_validated` 路径。见 [M_PERMIT_AUTHORITY_20261110.md](M_PERMIT_AUTHORITY_20261110.md)、`formal_grasp_entry_audit_20261110.json`。
+25. **diagnostic 对齐 shadow PlanBundle / recorded 臂（本轮）**：`pre_grasp_readiness --plan-bundle/--arm-state` 将 diagnostic 字段标为 `PRESENT_FROM_SHADOW_PLAN_BUNDLE` / `PRESENT_FROM_RECORDED_OR_MOCK_ARM`；默认仍 `live_permit=null`、`formal_grasp_entry_allowed=false`、`control_ready=false`。完成审计见 `docs/team/B/evidence/field_20261110/formal_grasp_entry_audit_20261110.json`。
 
 ## 物理阻塞
 
@@ -43,12 +44,12 @@
 
 ## 仍不抬 control_ready 的原因（真实剩余阻塞）
 
-- live `permit=null`（仅 D/M SafetyGate 可签发 live；本路径只发 diagnostic + dry-run 签发诊断）。
-- `formal_grasp_entry_allowed=false`；根因机读 **`formal_grasp_blocked_by=["j6_j7_readonly","awaiting_live_arm"]`**（Permit 软件路径已尽）。
-- `control_ready=false`：**reporter 硬持有**（大幅运动安全）；operator policy attest **默认关闭**（开关已实现，未打开；打开也不在本路径抬升）。
+- 耐久 `live_permit=null`（Rest-attested 草案仅 formal 阶梯诊断；`executable=false`）。
+- **默认** `formal_grasp_entry_allowed=false`；根因 **`formal_grasp_blocked_by=["j6_j7_readonly","awaiting_live_arm"]`**。双重 Rest attest 路径下可为 true（`live_arm_via=rest_attested`）。
+- `control_ready=false`：**reporter 硬持有**（大幅运动安全）；operator policy attest **默认关闭**；打开也不在本路径抬升。
 - `motion_enabled` 硬持有 false。
-- dry-run MockArm 路径：`dry_run_grasp_entry_ready=true`；**不等于**正式抓取入口。
-- host checklist 软件两项已关；`live_permit_path=software_exhausted_awaiting_live_arm`；仍差：协议审计后的 live VALID 臂 + live Permit +（抬 control_ready 时）显式 attest +（真运动前）开臂；H3 生产 PlanBundle 仍待 #20。
+- dry-run MockArm 路径：`dry_run_grasp_entry_ready=true`。
+- 抬 `control_ready` 仍差：显式 operator policy attest + 专用 elevation；真运动前开臂；H3 生产 PlanBundle 仍待 #20。
 - post_place 缺动作完成/释放/稳定窗口证据（本轮非抓取入口硬阻塞，但列出）。
 
 ## SCENE 说明（已解除会话级误报）
@@ -59,9 +60,8 @@ readiness 现只采纳 `scene_consistent` 帧：warmup 上的 `SCENE_OR_RGBD_NOT
 
 ## 能否进入正式抓取
 
-**否**（机读：`gate_ladder.can_enter_formal_grasp=false` / `formal_grasp_entry_allowed=false`）。  
-- 视觉侧：`vision_pre_grasp_ready=true` / `evidence_gates_clear=true` / `permit_eligible=true`（diagnostic 已写；**(A)**）。  
-- dry-run：`dry_run_grasp_entry_ready=true`（MockArm 全链）。  
-- live `permit=null`；recorded 臂 ≠ live VALID；`awaiting_live_permit_host_enable=true`。  
-- `control_ready=false`（formal 未过 + attest 默认关）；`motion_enabled=false`；未开臂、未发 CAN。  
-- **是否需用户使能**：现在不必开臂/`--enable-motion`；`rest_state_capture` **默认关**（仅研究 Rest→草案时由用户打开）；解除正式抓取需 **协议审计授权**（J6/J7 只读位置）或后续独立 Rest 正式策略；抬 `control_ready` 另需显式 `--attested`。
+**默认：否**（`formal_grasp_entry_allowed=false` / `blocked_by=j6_j7_readonly+awaiting_live_arm`）。  
+**双重 Rest attest + 合法 Rest 草案 + dry-run：是**（`live_arm_via=rest_attested`；审计 JSON `goal_complete=true`；入口可达已证明）。  
+- 视觉 / dry-run 全链已就绪。  
+- `control_ready=false` 恒持有；`motion_enabled=false`；未开臂、未发 CAN、默认不 Rest。  
+- **风险：腕失持**（Rest）；双重门默认全关；抬 `control_ready` 另需显式 `--attested` + 专用 elevation。

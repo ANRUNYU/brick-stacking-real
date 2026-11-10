@@ -14,6 +14,7 @@ Never invents live contracts.Permit, never opens CAN.
 """
 from __future__ import annotations
 
+import math
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
@@ -24,6 +25,9 @@ from brick_stacking.arm.arm_state_validity import (
     unwrap_arm_state,
 )
 from brick_stacking.arm.rest_state_capture import (
+    LIVE_ARM_VIA_REST_ATTESTED,
+    dual_rest_pregrasp_gates_open,
+    is_attest_rest_for_pregrasp_enabled,
     is_rest_state_capture_draft,
     is_rest_state_capture_enabled,
     rest_state_capture_gate_report,
@@ -64,7 +68,10 @@ GATE_DEFINITIONS = {
         "dry_run_grasp_entry_ready + live contracts.Permit validated by "
         "OfflineSafetyGate against counts_as_live_valid ArmState "
         "(source=real + validity=VALID + seven finite q_rad). "
-        "Recorded/mock/fixture arm and dry-run drafts do not count."
+        "Recorded/mock/fixture arm and dry-run drafts do not count. "
+        "Exception: dual Rest gates (--rest-state-capture + "
+        "--attest-rest-for-pregrasp) + structurally live VALID Rest draft may "
+        f"arm via live_arm_via={LIVE_ARM_VIA_REST_ATTESTED} (≠ audited readonly)."
     ),
     "control_ready": (
         "Prerequisites: formal_grasp_entry_allowed + explicit "
@@ -180,6 +187,12 @@ class HostControlReadiness:
         payload["motion_enabled"] = False
         payload["live_permit"] = None
         payload["formal_grasp_blocked_by"] = list(self.formal_grasp_blocked_by)
+        # Rest-attested draft may exist under dual gate; still non-executable.
+        rest_path = (payload.get("live_permit_path") or {}).get("rest_attested_permit")
+        if isinstance(rest_path, dict):
+            rest_path["executable"] = False
+            rest_path["live_permit"] = None
+            rest_path["control_ready"] = False
         return payload
 
 
@@ -195,19 +208,23 @@ def compute_formal_grasp_blocked_by(
     arm_ok_dry: bool,
     dry_reachable: bool,
     dry_issuance_ok: bool,
+    live_arm_via: str | None = None,
 ) -> tuple[str, ...]:
     """Root-cause blockers for formal grasp entry (machine-readable).
 
-    When dry-run software path is exhausted, the remaining blockers collapse to
-    ``j6_j7_readonly`` + ``awaiting_live_arm`` (live Permit cannot exist without
-    counts_as_live_valid ArmState). Never claims Goal complete.
+    When dry-run software path is exhausted without Rest dual-gate attest, the
+    remaining blockers collapse to ``j6_j7_readonly`` + ``awaiting_live_arm``.
+    With ``live_arm_via=rest_attested``, ``j6_j7_readonly`` is bypassed for the
+    formal ladder (≠ audited readonly). Never claims Goal complete by itself.
     """
+    rest_attested = live_arm_via == LIVE_ARM_VIA_REST_ATTESTED
     if formal_grasp_entry_allowed:
         return ()
     if dry_run_grasp_entry_ready:
         blocked: list[str] = []
         if not arm_ok_live:
-            blocked.append(FORMAL_BLOCK_J6J7_READONLY)
+            if not rest_attested:
+                blocked.append(FORMAL_BLOCK_J6J7_READONLY)
             blocked.append(FORMAL_BLOCK_AWAITING_LIVE_ARM)
         elif not live_permit_valid:
             blocked.append("awaiting_live_permit")
@@ -224,9 +241,12 @@ def compute_formal_grasp_blocked_by(
         blocked.append("awaiting_arm_state_device_id")
     if not dry_reachable or not dry_issuance_ok:
         blocked.append("awaiting_dry_run_issuance")
-    # Live arm hard-block still applies even before dry-run is ready.
-    blocked.append(FORMAL_BLOCK_J6J7_READONLY)
-    blocked.append(FORMAL_BLOCK_AWAITING_LIVE_ARM)
+    if not rest_attested:
+        blocked.append(FORMAL_BLOCK_J6J7_READONLY)
+    if not arm_ok_live:
+        blocked.append(FORMAL_BLOCK_AWAITING_LIVE_ARM)
+    elif not live_permit_valid:
+        blocked.append("awaiting_live_permit")
     return tuple(blocked)
 
 
@@ -236,38 +256,217 @@ def build_live_permit_path(
     arm_ok_live: bool,
     live_permit_valid: bool,
     formal_grasp_blocked_by: tuple[str, ...],
+    live_arm_via: str | None = None,
+    rest_attested_permit: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Summarize how far the live Permit software path reached (no forge)."""
     issuance = (dry_probe or {}).get("issuance_diagnostic") or {}
     fields_complete = issuance.get("issuance_fields_complete") is True
     gate_ok = issuance.get("gate_accepts_draft") is True
+    rest_attested = live_arm_via == LIVE_ARM_VIA_REST_ATTESTED
+    rest_draft_ok = (
+        isinstance(rest_attested_permit, dict)
+        and rest_attested_permit.get("gate_accepts_draft") is True
+    )
     if live_permit_valid and arm_ok_live:
-        status = "live_permit_validated"
+        status = (
+            "rest_attested_permit_validated"
+            if rest_attested
+            else "live_permit_validated"
+        )
+    elif rest_attested and arm_ok_live and fields_complete and not live_permit_valid:
+        status = "rest_attested_arm_ready_awaiting_permit"
+    elif rest_attested and rest_draft_ok and arm_ok_live:
+        status = "rest_attested_permit_draft_ready"
     elif fields_complete and gate_ok:
         status = "software_exhausted_awaiting_live_arm"
     elif issuance.get("issuance_attempted"):
         status = str(issuance.get("live_permit_path_status") or "issuance_incomplete")
     else:
         status = "not_probed"
-    blocked = list(issuance.get("blocked_by") or formal_grasp_blocked_by)
-    if not blocked and status == "software_exhausted_awaiting_live_arm":
-        blocked = list(FORMAL_PERMIT_BLOCKED_BY_LIVE_ARM)
+    if rest_attested and live_permit_valid:
+        blocked: list[str] = []
+    elif rest_attested and arm_ok_live:
+        blocked = ["awaiting_live_permit"] if not live_permit_valid else []
+    else:
+        blocked = list(issuance.get("blocked_by") or formal_grasp_blocked_by)
+        if not blocked and status == "software_exhausted_awaiting_live_arm":
+            blocked = list(FORMAL_PERMIT_BLOCKED_BY_LIVE_ARM)
     return {
         "status": status,
         "executable": False,
         "live_permit": None,
+        "live_arm_via": live_arm_via,
+        "counts_as_audited_j6j7_readonly": False,
         "issuance_fields_complete_under_mock": fields_complete,
         "gate_accepts_dry_run_draft": gate_ok if issuance else None,
+        "rest_attested_permit_draft_accepted": rest_draft_ok if rest_attested else None,
         "required_fields": list(LIVE_PERMIT_REQUIRED_FIELDS),
         "arm_state_dependency": (
             "Permit.device_id must match counts_as_live_valid ArmState "
             "(source=real + validity=VALID + seven finite q_rad); "
-            "J6/J7 lack audited readonly position query"
+            "default path: J6/J7 lack audited readonly position query; "
+            f"dual Rest attest may use live_arm_via={LIVE_ARM_VIA_REST_ATTESTED}"
         ),
         "blocked_by": blocked,
-        "hard_block_id": J6J7_HARD_BLOCK_ID,
+        "hard_block_id": None if rest_attested and arm_ok_live else J6J7_HARD_BLOCK_ID,
+        "rest_attested_permit": (
+            {
+                "issuance_attempted": (rest_attested_permit or {}).get(
+                    "issuance_attempted"
+                ),
+                "gate_accepts_draft": (rest_attested_permit or {}).get(
+                    "gate_accepts_draft"
+                ),
+                "executable": False,
+                "live_permit": None,
+                "blocked_by": list((rest_attested_permit or {}).get("blocked_by") or []),
+            }
+            if rest_attested and rest_attested_permit
+            else None
+        ),
         "never_forges_live_permit": True,
         "never_raises_control_ready": True,
+    }
+
+
+def issue_rest_attested_permit_draft(
+    *,
+    arm_state: dict[str, Any],
+    plan_bundle: dict[str, Any] | None,
+    diagnostic_permit: dict[str, Any] | None,
+    config_path: str | Path,
+    rest_state_capture: bool,
+    attest_rest_for_pregrasp: bool,
+) -> dict[str, Any]:
+    """Issue a non-executable Permit *draft* under Rest dual-gate attest.
+
+    Requires both gates open + Rest draft that is structurally counts_as_live_valid.
+    Validates via OfflineSafetyGate against the Rest arm sample. Never raises
+    control_ready, never opens CAN, never marks executable=true.
+    """
+    refused = {
+        "schema_version": "rest-attested-permit-draft-0.1",
+        "kind": "rest_attested_formal_permit_draft",
+        "executable": False,
+        "live_permit": None,
+        "control_ready": False,
+        "motion_enabled": False,
+        "live_arm_via": LIVE_ARM_VIA_REST_ATTESTED,
+        "counts_as_audited_j6j7_readonly": False,
+        "issuance_attempted": False,
+        "gate_accepts_draft": False,
+        "draft_permit": None,
+        "blocked_by": ["dual_rest_pregrasp_gates_closed"],
+        "notes": [
+            "Requires --rest-state-capture + --attest-rest-for-pregrasp.",
+            "Draft is diagnostic/formal-ladder only; executable=false.",
+        ],
+    }
+    if not dual_rest_pregrasp_gates_open(
+        rest_state_capture=rest_state_capture,
+        attest_rest_for_pregrasp=attest_rest_for_pregrasp,
+    ):
+        return refused
+    if not is_rest_state_capture_draft(arm_state):
+        out = dict(refused)
+        out["blocked_by"] = ["rest_state_capture_draft_required"]
+        return out
+    arm_class = classify_arm_state(arm_state)
+    if arm_class.get("counts_as_live_valid") is not True:
+        out = dict(refused)
+        out["blocked_by"] = ["rest_draft_not_structurally_live_valid"]
+        out["arm_blockers"] = list(arm_class.get("blockers") or [])
+        return out
+
+    hashes = _context_hashes_from_diagnostic(diagnostic_permit)
+    traj = None
+    if plan_bundle is not None:
+        traj = plan_bundle.get("trajectory_hash") or (plan_bundle.get("trajectory") or {}).get(
+            "hash"
+        )
+    config_hash = hashes.get("config_hash")
+    calibration_hash = hashes.get("calibration_hash")
+    scene_version = hashes.get("scene_version")
+    device_id = arm_state.get("device_id")
+    stamp = arm_state.get("host_receive_stamp")
+    missing = [
+        name
+        for name, value in (
+            ("device_id", device_id),
+            ("trajectory_hash", traj),
+            ("config_hash", config_hash),
+            ("calibration_hash", calibration_hash),
+            ("scene_version", scene_version),
+            ("host_receive_stamp", stamp),
+        )
+        if value in (None, "")
+    ]
+    if missing:
+        out = dict(refused)
+        out["issuance_attempted"] = True
+        out["blocked_by"] = [f"missing_{name}" for name in missing]
+        out["still_missing_fields"] = missing
+        return out
+
+    config = load_config(config_path)
+    window = float(config["task"]["max_observation_age_s"])
+    now_s = float(stamp)
+    draft_permit = {
+        "device_id": str(device_id),
+        "trajectory_hash": str(traj),
+        "config_hash": str(config_hash),
+        "calibration_hash": str(calibration_hash),
+        "scene_version": str(scene_version),
+        "valid_until_host_monotonic_s": now_s + window,
+    }
+    # OfflineSafetyGate.check_step_evidence is mock-source-only; Rest drafts are
+    # source=real — validate field/freshness under dual Rest attest instead.
+    gate_ok, gate_detail = _validate_rest_attested_permit_fields(
+        live_permit=draft_permit,
+        arm_state=arm_state,
+        config_hash=str(config_hash),
+        calibration_hash=str(calibration_hash),
+        scene_version=str(scene_version),
+        max_age_s=window,
+    )
+    gate_error = None if gate_ok else gate_detail
+
+    return {
+        "schema_version": "rest-attested-permit-draft-0.1",
+        "kind": "rest_attested_formal_permit_draft",
+        "executable": False,
+        "live_permit": None,
+        "control_ready": False,
+        "motion_enabled": False,
+        "live_arm_via": LIVE_ARM_VIA_REST_ATTESTED,
+        "counts_as_audited_j6j7_readonly": False,
+        "issuance_attempted": True,
+        "issuance_fields_complete": True,
+        "gate_accepts_draft": gate_ok,
+        "gate_accept_error": gate_error,
+        "gate_accept_detail": gate_detail if gate_ok else None,
+        "draft_permit": draft_permit if gate_ok else None,
+        "blocked_by": [] if gate_ok else ["gate_rejected_rest_attested_draft"],
+        "authority": {
+            "issuer": "host_control_readiness.issue_rest_attested_permit_draft",
+            "validator": "host_control_readiness._validate_rest_attested_permit_fields",
+            "not_authority_for": [
+                "control_ready",
+                "CAN / actuator enable",
+                "arm.execute_trajectory on live hardware",
+                "audited J6/J7 readonly protocol",
+            ],
+        },
+        "notes": [
+            "Rest-attested Permit draft is executable=false.",
+            f"live_arm_via={LIVE_ARM_VIA_REST_ATTESTED}; not audited readonly.",
+            "OfflineSafetyGate.check_step_evidence remains mock-only; Rest path "
+            "uses rest-attested field/freshness validator under dual gates.",
+            "Durable readiness still reports live_permit=null; formal ladder may "
+            "count gate-accepted draft under dual Rest attest only.",
+            "Never raises control_ready; never auto-opens Rest / motion.",
+        ],
     }
 
 
@@ -300,6 +499,49 @@ def _unwrap_arm_state(arm_state: dict[str, Any] | None) -> dict[str, Any] | None
     return arm_state
 
 
+def _validate_rest_attested_permit_fields(
+    *,
+    live_permit: dict[str, Any],
+    arm_state: dict[str, Any],
+    config_hash: str,
+    calibration_hash: str,
+    scene_version: str,
+    max_age_s: float,
+) -> tuple[bool, str]:
+    """Field/freshness check for Rest-attested real ArmState (OfflineSafetyGate is mock-only)."""
+    if arm_state.get("validity") != "VALID" or arm_state.get("source") != "real":
+        return False, "rest-attested path requires source=real validity=VALID"
+    if not is_rest_state_capture_draft(arm_state):
+        return False, "rest-attested path requires Rest capture draft ArmState"
+    device_id = str(arm_state.get("device_id") or "")
+    if not device_id or str(live_permit.get("device_id")) != device_id:
+        return False, "live Permit.device_id != Rest ArmState.device_id"
+    expected = {
+        "device_id": device_id,
+        "trajectory_hash": str(live_permit.get("trajectory_hash") or ""),
+        "config_hash": str(config_hash),
+        "calibration_hash": str(calibration_hash),
+        "scene_version": str(scene_version),
+    }
+    if not expected["trajectory_hash"] or any(
+        str(live_permit.get(key)) != value for key, value in expected.items()
+    ):
+        return False, "rest-attested Permit does not match step context hashes"
+    now_s = float(arm_state.get("host_receive_stamp") or 0.0)
+    age = now_s - float(arm_state.get("host_receive_stamp") or 0.0)
+    if not math.isfinite(age) or not 0 <= age <= max_age_s:
+        return False, "stale/future Rest ArmState feedback"
+    remaining = float(live_permit["valid_until_host_monotonic_s"]) - now_s
+    if not math.isfinite(remaining) or remaining <= 0:
+        return False, "rest-attested Permit expired or invalid expiry"
+    if remaining > max_age_s:
+        return False, "rest-attested Permit exceeds offline freshness window"
+    return True, (
+        "rest-attested Permit field/freshness validated against Rest ArmState "
+        f"(live_arm_via={LIVE_ARM_VIA_REST_ATTESTED}; OfflineSafetyGate mock-only bypass)"
+    )
+
+
 def _validate_live_permit(
     *,
     live_permit: dict[str, Any],
@@ -307,8 +549,12 @@ def _validate_live_permit(
     plan_bundle: dict[str, Any] | None,
     diagnostic_permit: dict[str, Any] | None,
     config_path: str | Path,
+    live_arm_via: str | None = None,
 ) -> tuple[bool, str]:
     """Validate a claimed live Permit against OfflineSafetyGate + live arm.
+
+    Rest-attested path (``live_arm_via=rest_attested``) uses field/freshness
+    validation because OfflineSafetyGate.check_step_evidence is mock-source-only.
 
     Returns (ok, detail). Never invents fields; fails closed on mismatch.
     """
@@ -350,7 +596,18 @@ def _validate_live_permit(
         return False, "cannot validate live Permit without config/calibration/scene hashes"
 
     config = load_config(config_path)
-    gate = OfflineSafetyGate(max_age_s=float(config["task"]["max_observation_age_s"]))
+    max_age_s = float(config["task"]["max_observation_age_s"])
+    if live_arm_via == LIVE_ARM_VIA_REST_ATTESTED:
+        return _validate_rest_attested_permit_fields(
+            live_permit=live_permit,
+            arm_state=arm_state,
+            config_hash=str(config_hash),
+            calibration_hash=str(calibration_hash),
+            scene_version=str(scene_version),
+            max_age_s=max_age_s,
+        )
+
+    gate = OfflineSafetyGate(max_age_s=max_age_s)
     now_s = float(arm_state.get("host_receive_stamp") or 0.0)
     try:
         gate.check_step_evidence(
@@ -499,6 +756,7 @@ def evaluate_host_control_readiness(
     config_path: str | Path | None = None,
     probe_dry_run: bool = False,
     rest_state_capture: bool | None = None,
+    attest_rest_for_pregrasp: bool | None = None,
 ) -> HostControlReadiness:
     """Build a machine-readable host/safety checklist against current evidence."""
     gaps = pre_grasp_gaps or {}
@@ -516,7 +774,19 @@ def evaluate_host_control_readiness(
         if rest_state_capture is not None
         else is_rest_state_capture_enabled()
     )
-    rest_gate = rest_state_capture_gate_report(enabled=rest_gate_enabled)
+    attest_rest_enabled = (
+        bool(attest_rest_for_pregrasp)
+        if attest_rest_for_pregrasp is not None
+        else is_attest_rest_for_pregrasp_enabled()
+    )
+    dual_rest_gates = dual_rest_pregrasp_gates_open(
+        rest_state_capture=rest_gate_enabled,
+        attest_rest_for_pregrasp=attest_rest_enabled,
+    )
+    rest_gate = rest_state_capture_gate_report(
+        enabled=rest_gate_enabled,
+        attest_enabled=attest_rest_enabled,
+    )
 
     if isinstance(operator_policy_attest, HostPolicyAttest):
         attest = operator_policy_attest
@@ -661,11 +931,22 @@ def evaluate_host_control_readiness(
         arm_device and arm_source in {"mock", "real", "recorded"}
     )
     # Live formal path: source=real AND validity=VALID AND seven finite joints.
-    # Rest drafts may be structurally counts_as_live_valid when the research gate
-    # is open, but Rest ≠ audited J6/J7 readonly — never auto-count as formal live.
+    # Rest drafts are structurally counts_as_live_valid when the research gate is
+    # open; they count for formal arm only under dual Rest attest
+    # (live_arm_via=rest_attested). Still ≠ audited J6/J7 readonly.
     rest_draft = is_rest_state_capture_draft(arm_state)
     arm_structurally_live_valid = arm_feedback.get("counts_as_live_valid") is True
-    arm_ok_live = arm_structurally_live_valid and not rest_draft
+    rest_attested_live = bool(
+        dual_rest_gates and rest_draft and arm_structurally_live_valid
+    )
+    arm_ok_live = bool(
+        arm_structurally_live_valid and (not rest_draft or rest_attested_live)
+    )
+    live_arm_via: str | None = (
+        LIVE_ARM_VIA_REST_ATTESTED
+        if rest_attested_live
+        else ("audited_or_native_live" if arm_ok_live else None)
+    )
     if arm_ok_dry:
         items.append(
             _item(
@@ -697,6 +978,11 @@ def evaluate_host_control_readiness(
         )
 
     if arm_ok_live:
+        via_note = (
+            f" live_arm_via={live_arm_via} (≠ audited J6/J7 readonly)"
+            if live_arm_via == LIVE_ARM_VIA_REST_ATTESTED
+            else ""
+        )
         items.append(
             _item(
                 "live_valid_arm_state",
@@ -705,22 +991,34 @@ def evaluate_host_control_readiness(
                 category="software",
                 detail=(
                     f"live VALID ArmState.source=real device_id={arm_device} "
-                    f"counts_as_live_valid=true"
+                    f"counts_as_live_valid=true{via_note}"
                 ),
-                owner="A / ArmStateReader",
+                owner=(
+                    "A / rest_state_capture dual attest"
+                    if live_arm_via == LIVE_ARM_VIA_REST_ATTESTED
+                    else "A / ArmStateReader"
+                ),
             )
         )
     else:
         source_kind = arm_feedback.get("source_kind") or "missing"
         blockers = list(arm_feedback.get("blockers") or [])
-        if rest_draft:
+        if rest_draft and arm_structurally_live_valid and not dual_rest_gates:
             live_status = "POLICY_HOLD"
             live_detail = (
-                "Rest-state-capture draft is structurally live VALID research-only; "
-                "does not count as audited J6/J7 readonly for formal grasp "
+                "Rest-state-capture draft is structurally live VALID; formal arm "
+                "requires dual gate (--rest-state-capture + "
+                "--attest-rest-for-pregrasp). Not audited J6/J7 readonly "
                 f"(hard_block=j6_j7_no_audited_readonly_position_query; "
                 f"rest_state_capture_enabled={rest_gate_enabled}; "
+                f"attest_rest_for_pregrasp={attest_rest_enabled}; "
                 f"structural_counts_as_live_valid={arm_structurally_live_valid})"
+            )
+        elif rest_draft:
+            live_status = "POLICY_HOLD"
+            live_detail = (
+                "Rest-state-capture draft present but not structurally live VALID; "
+                f"blockers={blockers}; dual_gate={dual_rest_gates}"
             )
         elif source_kind == "recorded":
             live_status = "MISSING"
@@ -773,21 +1071,40 @@ def evaluate_host_control_readiness(
                 "rest_state_capture research gate "
                 f"available={rest_gate['rest_state_capture_available']} "
                 f"enabled={rest_gate_enabled} "
+                f"attest_rest_for_pregrasp={attest_rest_enabled} "
+                f"dual_gate_open={dual_rest_gates} "
                 f"blocked_unless_rest_attested="
                 f"{rest_gate['blocked_unless_rest_attested']}; "
-                "default false; CI never auto Rest; loss-of-hold ≠ trajectory; "
-                "does not raise formal_grasp_entry_allowed / control_ready"
+                "default both false; CI never auto Rest; loss-of-hold ≠ trajectory; "
+                "never raises control_ready"
             ),
             owner="A / rest_state_capture",
         )
     )
+    items.append(
+        _item(
+            "attest_rest_for_pregrasp_gate",
+            "PASS" if attest_rest_enabled else "POLICY_HOLD",
+            blocking=False,
+            category="host_policy",
+            detail=(
+                "attest_rest_for_pregrasp second gate "
+                f"enabled={attest_rest_enabled}; dual_gate_open={dual_rest_gates}; "
+                f"live_arm_via={LIVE_ARM_VIA_REST_ATTESTED} only when dual open + "
+                "structurally live VALID Rest draft; ≠ audited readonly; "
+                "never raises control_ready"
+            ),
+            owner="A / rest_state_capture dual attest",
+        )
+    )
 
-    # --- live Permit (never forge; validate if provided) ---
+    # --- live Permit (never forge; validate if provided; Rest dual-gate draft) ---
     live_permit_valid = False
     live_permit_detail = (
         "contracts.Permit is null; only D/M SafetyGate may issue at execution"
     )
     live_permit_status = "MISSING"
+    rest_attested_permit: dict[str, Any] | None = None
     if live_permit is not None:
         if not isinstance(live_permit, dict):
             live_permit_status = "FAIL"
@@ -805,14 +1122,60 @@ def evaluate_host_control_readiness(
                 plan_bundle=plan_bundle,
                 diagnostic_permit=diag if isinstance(diag, dict) else None,
                 config_path=cfg,
+                live_arm_via=live_arm_via,
             )
             if ok:
                 live_permit_valid = True
                 live_permit_status = "PASS"
                 live_permit_detail = detail
+                if rest_attested_live:
+                    live_permit_detail = (
+                        f"{detail}; live_arm_via={LIVE_ARM_VIA_REST_ATTESTED}"
+                    )
             else:
                 live_permit_status = "FAIL"
                 live_permit_detail = detail
+    elif rest_attested_live and arm_state is not None:
+        rest_attested_permit = issue_rest_attested_permit_draft(
+            arm_state=arm_state,
+            plan_bundle=plan_bundle,
+            diagnostic_permit=diag if isinstance(diag, dict) else None,
+            config_path=cfg,
+            rest_state_capture=rest_gate_enabled,
+            attest_rest_for_pregrasp=attest_rest_enabled,
+        )
+        if rest_attested_permit.get("gate_accepts_draft") is True and isinstance(
+            rest_attested_permit.get("draft_permit"), dict
+        ):
+            ok, detail = _validate_live_permit(
+                live_permit=rest_attested_permit["draft_permit"],
+                arm_state=arm_state,
+                plan_bundle=plan_bundle,
+                diagnostic_permit=diag if isinstance(diag, dict) else None,
+                config_path=cfg,
+                live_arm_via=LIVE_ARM_VIA_REST_ATTESTED,
+            )
+            if ok:
+                live_permit_valid = True
+                live_permit_status = "PASS"
+                live_permit_detail = (
+                    "rest-attested Permit draft validated by OfflineSafetyGate "
+                    f"(live_arm_via={LIVE_ARM_VIA_REST_ATTESTED}; executable=false; "
+                    "durable live_permit stays null)"
+                )
+            else:
+                live_permit_status = "FAIL"
+                live_permit_detail = (
+                    f"rest-attested draft failed re-validation: {detail}"
+                )
+        else:
+            live_permit_status = "POLICY_HOLD"
+            live_permit_detail = (
+                "rest dual-gate open + live Rest draft arm ready; Permit draft "
+                f"not yet accepted "
+                f"(blocked_by={list(rest_attested_permit.get('blocked_by') or [])}; "
+                f"error={rest_attested_permit.get('gate_accept_error')})"
+            )
     else:
         field_status = (diag.get("live_permit_field_status") or {}) if diag else {}
         if field_status:
@@ -831,7 +1194,11 @@ def evaluate_host_control_readiness(
             blocking=True,
             category="live_permit",
             detail=live_permit_detail,
-            owner="D/M SafetyGate",
+            owner=(
+                "D/M SafetyGate + rest dual attest"
+                if rest_attested_live
+                else "D/M SafetyGate"
+            ),
         )
     )
 
@@ -1042,6 +1409,7 @@ def evaluate_host_control_readiness(
         arm_ok_dry=arm_ok_dry,
         dry_reachable=dry_reachable,
         dry_issuance_ok=dry_issuance_ok,
+        live_arm_via=live_arm_via,
     )
     items.append(
         _item(
@@ -1189,6 +1557,8 @@ def evaluate_host_control_readiness(
         arm_ok_live=arm_ok_live,
         live_permit_valid=live_permit_valid,
         formal_grasp_blocked_by=formal_grasp_blocked_by,
+        live_arm_via=live_arm_via,
+        rest_attested_permit=rest_attested_permit,
     )
 
     gate_ladder = {
@@ -1209,12 +1579,18 @@ def evaluate_host_control_readiness(
         "arm_feedback_source_kind": arm_feedback.get("source_kind"),
         "counts_as_live_valid": arm_ok_live,
         "structural_counts_as_live_valid": arm_structurally_live_valid,
+        "live_arm_via": live_arm_via,
         "rest_state_capture_draft": rest_draft,
         "rest_state_capture_available": True,
         "rest_state_capture_enabled": rest_gate_enabled,
+        "attest_rest_for_pregrasp_enabled": attest_rest_enabled,
+        "dual_rest_pregrasp_gates_open": dual_rest_gates,
         "blocked_unless_rest_attested": rest_gate["blocked_unless_rest_attested"],
-        "j6j7_readonly_position_hard_block": True,
-        "j6j7_readonly_hard_block_id": J6J7_HARD_BLOCK_ID,
+        "counts_as_audited_j6j7_readonly": False,
+        "j6j7_readonly_position_hard_block": not rest_attested_live,
+        "j6j7_readonly_hard_block_id": (
+            None if rest_attested_live else J6J7_HARD_BLOCK_ID
+        ),
         "live_permit_path_status": live_permit_path.get("status"),
     }
 
@@ -1241,16 +1617,20 @@ def evaluate_host_control_readiness(
         "control_ready ALWAYS false in this reporter (large-motion safety). "
         "Attest switch defaults closed and is never auto-opened; even attested, elevation deferred.",
         "motion_enabled ALWAYS false here; never unlocks host_monitor large-motion paths.",
-        "Never invents live contracts.Permit or opens CAN.",
+        "Never invents unattested live contracts.Permit or opens CAN.",
         "Dry-run probe uses OfflineSafetyGate + MockArm (hardware_enabled=False).",
         "ArmStateReader readonly path currently cannot satisfy all_seven_q_rad_finite (J6/J7).",
-        f"hard_block={J6J7_HARD_BLOCK_ID} "
+        f"default hard_block={J6J7_HARD_BLOCK_ID} "
         "(docs/team/B/J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md); "
-        "no enable-motion / trajectory fallback; Rest research gate default-off.",
-        f"rest_state_capture_available={rest_gate['rest_state_capture_available']}; "
+        "no enable-motion / trajectory fallback; Rest dual gates default-off.",
         f"rest_state_capture_enabled={rest_gate_enabled}; "
+        f"attest_rest_for_pregrasp_enabled={attest_rest_enabled}; "
+        f"dual_rest_pregrasp_gates_open={dual_rest_gates}; "
+        f"live_arm_via={live_arm_via}; "
         f"blocked_unless_rest_attested={rest_gate['blocked_unless_rest_attested']}; "
-        "Rest draft never auto-raises formal_grasp_entry_allowed / control_ready.",
+        "dual gate + VALID Rest draft may bypass j6_j7_readonly for formal ladder "
+        f"via live_arm_via={LIVE_ARM_VIA_REST_ATTESTED} (≠ audited readonly); "
+        "never raises control_ready.",
         f"formal_grasp_blocked_by={list(formal_grasp_blocked_by)}.",
         f"live_permit_path.status={live_permit_path.get('status')}.",
         f"can_enter_formal_grasp={formal_grasp_entry_allowed}; "
@@ -1288,10 +1668,14 @@ def evaluate_host_control_readiness(
             "control_ready": list(CONTROL_READY_ELEVATION_CONDITIONS),
             "motion_enabled": list(MOTION_ENABLED_ELEVATION_CONDITIONS),
             "rest_state_capture": rest_gate,
+            "rest_attested_permit": rest_attested_permit,
             "code_refs": {
                 "OfflineSafetyGate": "src/brick_stacking/execution/safety_gate.py",
                 "OfflineSafetyGate.issue_dry_run_diagnostic": (
                     "src/brick_stacking/execution/safety_gate.py"
+                ),
+                "issue_rest_attested_permit_draft": (
+                    "src/brick_stacking/execution/host_control_readiness.py"
                 ),
                 "host_policy_attest": "src/brick_stacking/execution/host_policy_attest.py",
                 "OfflineExecutionManager": "src/brick_stacking/execution/execution_manager.py",

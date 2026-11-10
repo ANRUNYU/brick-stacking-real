@@ -11,7 +11,8 @@
 | `m-diagnostic-permit-eligibility-0.1`（**shadow/diagnostic**） | `pre_grasp_gates` / `tools/pre_grasp_readiness.py` | **否**（`executable=false`） |
 | `control_ready` / `motion_enabled` | host/safety 路径（见 [HOST_CONTROL_READY_20261110.md](HOST_CONTROL_READY_20261110.md)） | `control_ready` 仅在 `formal_grasp_entry_allowed` + **显式** operator policy attest 后可抬；attest **默认关**；`motion_enabled` 仍默认 false |
 | `dry_run_grasp_entry_ready` | host checklist dry-run 全链 | **是（dry-run only）**；不等于正式抓取 |
-| `formal_grasp_entry_allowed` | host gate ladder（live Permit + live arm） | 当前 **false**（未伪造 live Permit） |
+| `formal_grasp_entry_allowed` | host gate ladder（live Permit + live arm；或双重 Rest attest + Rest 草案） | 默认 **false**；双重 Rest attest 下可为 **true**（`live_arm_via=rest_attested`；耐久 `live_permit=null`） |
+| Rest-attested Permit 草案 | `issue_rest_attested_permit_draft`（需双重门） | **否**（`executable=false`；接同一 attest 链） |
 
 契约依据：`docs/CONTRACTS.md` §4；`docs/THREE_TRACK_GRASP_DEV_PLAN.md` M-10。
 
