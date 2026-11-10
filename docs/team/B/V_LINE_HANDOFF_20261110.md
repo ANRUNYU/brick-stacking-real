@@ -42,6 +42,10 @@ python -c "from brick_stacking.vision.replay_pipeline import replay_recordings; 
 
 头相机 `CP2L863000KL`，会话内关自动曝光（exposure=100，gain=16，非持久写入）。桌面仅一块疏排红方块时，在线入口发布 12 帧，每帧 1 个 `VALID` 红候选。相机系顶面点相对中位偏差最大约 1.1 mm，这只说明静态重复性，不是基座系 10 mm 验收。`control_ready` 保持 false；`exposure_to_output_s` 与 `clock_error_bound_s` 保持 null。诊断用接收龄期门建议 2.564 s（实测 max×2），写入 H0 草案时标明尚未替代曝光时钟门。证据见 [field_20261110](evidence/field_20261110/single_red_stability.json)。
 
+### 独立尺量（临时十字原点）
+
+桌面固定 20×20 mm 黑十字为临时原点。红块测量点为**顶面中心在桌面的竖直投影**，另测顶面高 50 mm，得十字系 `[0.172, 0.079, 0.050] m`（±2 mm）。十字相对中心立柱：左 191 mm、前/后 592 mm、水平直线 622 mm（直角闭合）。左肩 J1：到立柱水平 165 mm，到十字斜距约 772 mm，桌面以上约 495 mm；拟合后相对十字约右 26 mm、靠机器人 586 mm。J1 是否等于 `L_arm_root` 待 M 确认。完整数值见 [independent_ruler_reference_v0.1.json](evidence/field_20261110/independent_ruler_reference_v0.1.json)。
+
 ## 在线诊断入口
 
 机器人主机的视觉环境需要已安装仓库及既有 Orbbec SDK。候选 profile 的 SN、分辨率、HSV 和高度带沿用现有配置。采集端独占相机，检测端只保留一对待处理 RGB-D。以下数值用于诊断试跑，曝光有效期仍由 H0 实测冻结：

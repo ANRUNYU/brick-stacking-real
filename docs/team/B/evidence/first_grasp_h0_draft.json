@@ -56,7 +56,8 @@
     "h4_mock": "tests/fixtures/vision_exchange/verification_v0.1.json",
     "fixture_index": "tests/fixtures/vision_exchange/FIXTURE_INDEX.json",
     "replay_latency_diagnostic": "docs/team/B/evidence/c_recording_replay_latency_v0.1.json",
-    "field_single_red": "docs/team/B/evidence/field_20261110/single_red_stability.json"
+    "field_single_red": "docs/team/B/evidence/field_20261110/single_red_stability.json",
+    "field_independent_ruler": "docs/team/B/evidence/field_20261110/independent_ruler_reference_v0.1.json"
   },
   "api": {
     "module": "brick_stacking.vision.service",
