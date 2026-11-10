@@ -1,5 +1,5 @@
 {
-  "status": "V_ACK_PENDING_M_ACK",
+  "status": "BOTH_ACK_BUDGETS_CONTROL_READY_FALSE",
   "schema_version": "0.1",
   "plan_path": "docs/THREE_TRACK_GRASP_DEV_PLAN.md",
   "plan_sha256_utf8_lf": "bc30f3198e5dbaf8beb6cd4b7b4d59d83a5702938ad52cbf5e4fdbe9f562e5ff",
@@ -9,12 +9,15 @@
       "status": "ACK",
       "date": "2026-11-10",
       "note": "Accept §0.2 budgets without relaxation; control_ready stays false until clock bound + calibration hash + H2 rules.",
-      "branch": "codex/v-vision-20261110"
+      "branch": "codex/v-vision-20261110",
+      "tip": "9408685"
     },
     "M": {
-      "status": "PENDING",
-      "date": null,
-      "note": null
+      "status": "ACK",
+      "date": "2026-11-10",
+      "note": "ACK §0.2 and ObservationBundle semantics via PR #21 / issue #16; C35 fit-only offline localize done; independent ruler was missing then, now provided under field_independent_ruler; control_ready stays false.",
+      "branch": "codex/m-h0-c35-20261110",
+      "pr": 21
     }
   },
   "vision_profile": {
