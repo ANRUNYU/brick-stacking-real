@@ -1,0 +1,72 @@
+{
+  "schema_version": "m-slot-reference-capture-1",
+  "created_utc": "2026-11-10T13:28:45.777712+00:00",
+  "serial": "CP2L863000KL",
+  "execute": true,
+  "commands_sent_to_robot": 0,
+  "control_ready": false,
+  "motion_enabled": false,
+  "permit": null,
+  "expected_reference_frame": "table_black_cross_20mm",
+  "target_definition_only": {
+    "table_center_m": [
+      0,
+      0,
+      0
+    ],
+    "nominal_edge_m": 0.05,
+    "model_center_m": [
+      0,
+      0,
+      0.025
+    ],
+    "top_center_m": [
+      0,
+      0,
+      0.05
+    ]
+  },
+  "camera_expectations": null,
+  "calibration_binding": null,
+  "target_association_confirmed": false,
+  "marker_center_pixel": null,
+  "table_plane": null,
+  "reference_error_bound_m": null,
+  "capture_overrides": {
+    "reason": "default M entry blocked by AE flicker (stable_window never true)",
+    "fixed_color_exposure": 100,
+    "fixed_color_gain": 16,
+    "allow_unstable_warmup": true,
+    "note": "session exposure lock; not a persistent device config change"
+  },
+  "result": "CAPTURED_REFERENCE_INPUTS_PENDING_ANNOTATION",
+  "errors": [],
+  "next_required": [
+    "cross-center pixel annotation with coordinate convention and uncertainty",
+    "table plane / upward normal and uncertainty",
+    "actual cube edge and measurement uncertainty",
+    "current camera/calibration/scene binding",
+    "construct independent camera-frame goal before contrast capture"
+  ],
+  "input_hashes": {
+    "inventory/camera_report.json": "0dd8b0e13d3b75cc9466b8b614bce56f5aca41d8ebd9142dbed75a8c0014375d",
+    "inventory.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "inventory.stdout.log": "be3aa429384084a7b3ab9655fcdf1963401e568d496c0306bf7bff6f52d6e805",
+    "rgbd/camera_report.json": "b36068a682d2be9927f81274de5675c426899f9aa91d33ce5797915f23203c22",
+    "rgbd/color_raw.png": "acded36de630f805879b0f7649591f393285407a8917dec4ed6f82cf3ee0072e",
+    "rgbd/color_rectified.png": "6d5446dcac157242cba17bf2ceaa4e1b460ad351d996f7ede685d468d350d586",
+    "rgbd/depth_preview.png": "32f7e4fa21fdf2479849acf9a033c1813294451769ebc6493e8f9375a76fe1c7",
+    "rgbd/frame_000.npz": "76759b408e8d175a986c5914522c9f58142c124467611500a3737adfffcde064",
+    "rgbd/frame_001.npz": "13b166d3e05f119ac4ca87027c0ce2181685472fbf13713f8d57a09c686de1bf",
+    "rgbd/frame_002.npz": "26924f5ffb476ad510560f88828b1684bc58081ca99e130f682defd7fb9c1b30",
+    "rgbd/frame_003.npz": "d1f04fad4356e7f67fbfa388fd78a40fb9a14c833d16ab7a32cf96edfe89e723",
+    "rgbd/frame_004.npz": "f00818c14431c73eb8d9c3fbb8f334a8574623117a618c57c67e7bac82ed6c12",
+    "rgbd/frame_005.npz": "d9b00cf8ba8585eb881577a57eceb3965f0adc6c438d8324cca399207f8fa0d1",
+    "rgbd/frame_006.npz": "27867e8e44e2600801d5dfa67a45659b3eed6180651d31d3011c44e39d79ec16",
+    "rgbd/frame_007.npz": "cb73a8b580965bcf78938eafedaf4ae966bcebd450bbdf4c303402ec77663636",
+    "rgbd/frame_008.npz": "9b9bdd8646bf90c36a50f9a5ed3577fd68c4f469178b46df1a13f0cad36c42a6",
+    "rgbd/frame_009.npz": "74b318fe3a46e6c43b6adf597327280f636a07135d9c9a1ec4d4fc19c8960e00",
+    "rgbd.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "rgbd.stdout.log": "04108439324f05b2d19420c0cd32fc9cf1985f8cc9acc7c1bcef9f9c6c9221be"
+  }
+}
