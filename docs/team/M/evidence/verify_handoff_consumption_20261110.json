@@ -1,0 +1,890 @@
+{
+  "schema_version": "m-v-handoff-consumption-1",
+  "v_commit": "aed8a0b",
+  "sessions": {
+    "pre_grasp_single_red": {
+      "frames": 15,
+      "status_counts": {
+        "BLOCKED": 15
+      },
+      "color_counts": {
+        "MATCH": 15
+      },
+      "reason_counts": {
+        "CALIBRATION_BINDING_MISSING": 15,
+        "ERROR_BOUND_UNKNOWN:height_m": 15,
+        "ERROR_BOUND_UNKNOWN:xy_m": 15,
+        "ERROR_BOUND_UNKNOWN:yaw_rad": 15,
+        "HAND_CLEAR_EVIDENCE_MISSING": 15,
+        "M_CONTEXT_MISSING": 15,
+        "REFERENCE_MISSING": 15,
+        "SCENE_OR_RGBD_NOT_CONFIRMED": 2,
+        "TARGET_ASSOCIATION_UNCONFIRMED": 15,
+        "TARGET_OR_REGION_MISSING": 15
+      },
+      "rows": [
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326709.325321/0",
+          "color_diagnostic": "MATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326709.925945/0",
+          "color_diagnostic": "MATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326710.526569/0",
+          "color_diagnostic": "MATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326711.127193/0",
+          "color_diagnostic": "MATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326711.727817/0",
+          "color_diagnostic": "MATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326712.328441/0",
+          "color_diagnostic": "MATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326712.929065/0",
+          "color_diagnostic": "MATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326713.529689/0",
+          "color_diagnostic": "MATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326714.063577/0",
+          "color_diagnostic": "MATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326714.730937/0",
+          "color_diagnostic": "MATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326715.331561/0",
+          "color_diagnostic": "MATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326715.865449/0",
+          "color_diagnostic": "MATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326716.532809/0",
+          "color_diagnostic": "MATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326717.133433/0",
+          "color_diagnostic": "MATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326717.266905/0",
+          "color_diagnostic": "MATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        }
+      ]
+    },
+    "wrong_color_green": {
+      "frames": 11,
+      "status_counts": {
+        "BLOCKED": 11
+      },
+      "color_counts": {
+        "MISMATCH": 11
+      },
+      "reason_counts": {
+        "CALIBRATION_BINDING_MISSING": 11,
+        "ERROR_BOUND_UNKNOWN:height_m": 11,
+        "ERROR_BOUND_UNKNOWN:xy_m": 11,
+        "ERROR_BOUND_UNKNOWN:yaw_rad": 11,
+        "HAND_CLEAR_EVIDENCE_MISSING": 11,
+        "M_CONTEXT_MISSING": 11,
+        "REFERENCE_MISSING": 11,
+        "SCENE_OR_RGBD_NOT_CONFIRMED": 2,
+        "TARGET_ASSOCIATION_UNCONFIRMED": 11,
+        "TARGET_OR_REGION_MISSING": 11
+      },
+      "rows": [
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327316.930986/0",
+          "color_diagnostic": "MISMATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327317.53161/0",
+          "color_diagnostic": "MISMATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327318.132234/0",
+          "color_diagnostic": "MISMATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327318.732858/0",
+          "color_diagnostic": "MISMATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327319.333482/0",
+          "color_diagnostic": "MISMATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327319.934106/0",
+          "color_diagnostic": "MISMATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327320.53473/0",
+          "color_diagnostic": "MISMATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327321.135354/0",
+          "color_diagnostic": "MISMATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327321.735978/0",
+          "color_diagnostic": "MISMATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327322.336602/0",
+          "color_diagnostic": "MISMATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING"
+          ],
+          "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327322.87049/0",
+          "color_diagnostic": "MISMATCH",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        }
+      ]
+    },
+    "empty_table": {
+      "frames": 12,
+      "status_counts": {
+        "BLOCKED": 12
+      },
+      "color_counts": {
+        "UNKNOWN": 12
+      },
+      "reason_counts": {
+        "CALIBRATION_BINDING_MISSING": 12,
+        "ERROR_BOUND_UNKNOWN:height_m": 12,
+        "ERROR_BOUND_UNKNOWN:xy_m": 12,
+        "ERROR_BOUND_UNKNOWN:yaw_rad": 12,
+        "HAND_CLEAR_EVIDENCE_MISSING": 12,
+        "MISSING_OR_AMBIGUOUS_TARGET": 12,
+        "M_CONTEXT_MISSING": 12,
+        "REFERENCE_MISSING": 12,
+        "SCENE_OR_RGBD_NOT_CONFIRMED": 12,
+        "TARGET_ASSOCIATION_UNCONFIRMED": 12,
+        "TARGET_OR_REGION_MISSING": 12,
+        "TOP_CENTER_SEMANTICS_REQUIRED": 12
+      },
+      "rows": [
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "MISSING_OR_AMBIGUOUS_TARGET",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING",
+            "TOP_CENTER_SEMANTICS_REQUIRED"
+          ],
+          "observation_id": null,
+          "color_diagnostic": "UNKNOWN",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "MISSING_OR_AMBIGUOUS_TARGET",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING",
+            "TOP_CENTER_SEMANTICS_REQUIRED"
+          ],
+          "observation_id": null,
+          "color_diagnostic": "UNKNOWN",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "MISSING_OR_AMBIGUOUS_TARGET",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING",
+            "TOP_CENTER_SEMANTICS_REQUIRED"
+          ],
+          "observation_id": null,
+          "color_diagnostic": "UNKNOWN",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "MISSING_OR_AMBIGUOUS_TARGET",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING",
+            "TOP_CENTER_SEMANTICS_REQUIRED"
+          ],
+          "observation_id": null,
+          "color_diagnostic": "UNKNOWN",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "MISSING_OR_AMBIGUOUS_TARGET",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING",
+            "TOP_CENTER_SEMANTICS_REQUIRED"
+          ],
+          "observation_id": null,
+          "color_diagnostic": "UNKNOWN",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "MISSING_OR_AMBIGUOUS_TARGET",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING",
+            "TOP_CENTER_SEMANTICS_REQUIRED"
+          ],
+          "observation_id": null,
+          "color_diagnostic": "UNKNOWN",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "MISSING_OR_AMBIGUOUS_TARGET",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING",
+            "TOP_CENTER_SEMANTICS_REQUIRED"
+          ],
+          "observation_id": null,
+          "color_diagnostic": "UNKNOWN",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "MISSING_OR_AMBIGUOUS_TARGET",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING",
+            "TOP_CENTER_SEMANTICS_REQUIRED"
+          ],
+          "observation_id": null,
+          "color_diagnostic": "UNKNOWN",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "MISSING_OR_AMBIGUOUS_TARGET",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING",
+            "TOP_CENTER_SEMANTICS_REQUIRED"
+          ],
+          "observation_id": null,
+          "color_diagnostic": "UNKNOWN",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "MISSING_OR_AMBIGUOUS_TARGET",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING",
+            "TOP_CENTER_SEMANTICS_REQUIRED"
+          ],
+          "observation_id": null,
+          "color_diagnostic": "UNKNOWN",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "MISSING_OR_AMBIGUOUS_TARGET",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING",
+            "TOP_CENTER_SEMANTICS_REQUIRED"
+          ],
+          "observation_id": null,
+          "color_diagnostic": "UNKNOWN",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        },
+        {
+          "status": "BLOCKED",
+          "reasons": [
+            "CALIBRATION_BINDING_MISSING",
+            "ERROR_BOUND_UNKNOWN:height_m",
+            "ERROR_BOUND_UNKNOWN:xy_m",
+            "ERROR_BOUND_UNKNOWN:yaw_rad",
+            "HAND_CLEAR_EVIDENCE_MISSING",
+            "MISSING_OR_AMBIGUOUS_TARGET",
+            "M_CONTEXT_MISSING",
+            "REFERENCE_MISSING",
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "TARGET_ASSOCIATION_UNCONFIRMED",
+            "TARGET_OR_REGION_MISSING",
+            "TOP_CENTER_SEMANTICS_REQUIRED"
+          ],
+          "observation_id": null,
+          "color_diagnostic": "UNKNOWN",
+          "formal_placement_verdict": "UNKNOWN",
+          "control_ready": false,
+          "motion_enabled": false,
+          "permit": null
+        }
+      ]
+    }
+  },
+  "input_sha256": {
+    "docs/team/B/evidence/field_20261110/verify_pre_grasp_observation_bundles.jsonl": "7b3102f44711a7e6eccf9701f27ede7702c34c6bfa9c2420720e0c6a049e54d1",
+    "docs/team/B/evidence/field_20261110/verify_pre_grasp_handoff_v0.1.json": "81c3684137a6ced7a9992528e7d7811f71b9878b0e42970113e4d4596c9f1975",
+    "docs/team/B/evidence/field_20261110/verify_green_observation_bundles.jsonl": "82f70899b967d6d2a5eee471dba457f5d5c180fc01e7a440cc1ec38364b07130",
+    "docs/team/B/evidence/field_20261110/verify_green_handoff_v0.1.json": "10c47f03d3b33ebf29a3adcbb7b45e89f9b87b2c1f325e2718cb707e148f001c",
+    "docs/team/B/evidence/field_20261110/verify_empty_observation_bundles.jsonl": "370c084c74e10ca0511d863274755572284a8069b1dd76658bf6a62eae2b2c43",
+    "docs/team/B/evidence/field_20261110/verify_empty_handoff_v0.1.json": "a4824dc58b4dd17001d78be46ea294e7713d1992964e4acf8912ad67098b7236"
+  },
+  "age_checked_at": "recorded output only",
+  "live_tested": false,
+  "control_ready": false,
+  "motion_enabled": false,
+  "commands_sent": 0
+}

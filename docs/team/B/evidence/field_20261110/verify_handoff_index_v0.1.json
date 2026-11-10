@@ -1,0 +1,50 @@
+{
+  "schema_version": "v-verify-handoff-index-0.1",
+  "date": "2026-11-10",
+  "issue": 10,
+  "control_ready": false,
+  "reproduce": [
+    "python tools/v_verify_field_session.py docs/team/B/evidence/field_20261110/verify_pre_grasp_observation_bundles.jsonl --expected-color red --region-id supply --phase pre_grasp --output docs/team/B/evidence/field_20261110/verify_pre_grasp_handoff_v0.1.json",
+    "python tools/v_verify_field_session.py docs/team/B/evidence/field_20261110/verify_green_observation_bundles.jsonl --expected-color red --region-id supply --phase pre_grasp --output docs/team/B/evidence/field_20261110/verify_green_handoff_v0.1.json",
+    "python tools/v_verify_field_session.py docs/team/B/evidence/field_20261110/verify_empty_observation_bundles.jsonl --expected-color red --region-id supply --phase pre_grasp --output docs/team/B/evidence/field_20261110/verify_empty_handoff_v0.1.json"
+  ],
+  "sessions": [
+    {
+      "name": "pre_grasp_single_red",
+      "bundles": "docs/team/B/evidence/field_20261110/verify_pre_grasp_observation_bundles.jsonl",
+      "handoff": "docs/team/B/evidence/field_20261110/verify_pre_grasp_handoff_v0.1.json",
+      "expected_color": "red",
+      "color_check": "MATCH x15",
+      "formal_verify": "UNKNOWN x15 (no target association / expected pose / calibration_hash)",
+      "frame_id": "camera_CP2L863000KL_color_optical_frame"
+    },
+    {
+      "name": "wrong_color_green",
+      "bundles": "docs/team/B/evidence/field_20261110/verify_green_observation_bundles.jsonl",
+      "handoff": "docs/team/B/evidence/field_20261110/verify_green_handoff_v0.1.json",
+      "expected_color": "red",
+      "color_check": "MISMATCH x11",
+      "formal_verify": "UNKNOWN x11 (diagnostic mismatch; not formal post_place FAIL without slot association)",
+      "frame_id": "camera_CP2L863000KL_color_optical_frame"
+    },
+    {
+      "name": "empty_table",
+      "bundles": "docs/team/B/evidence/field_20261110/verify_empty_observation_bundles.jsonl",
+      "handoff": "docs/team/B/evidence/field_20261110/verify_empty_handoff_v0.1.json",
+      "expected_color": "red",
+      "color_check": "UNKNOWN x12",
+      "formal_verify": "UNKNOWN x12 (no VALID block; not proof of successful grasp)",
+      "frame_id": "camera_CP2L863000KL_color_optical_frame"
+    }
+  ],
+  "m_checklist_status": {
+    "target_id_slot_fields": "exported; default unconfirmed",
+    "pose_height_yaw_error_bounds": "explicit UNKNOWN until M provides reference/association",
+    "support_stable_hand_clear_neighbors": "explicit null/UNKNOWN; scene_consistent not copied",
+    "stamps_hashes_epoch_clock": "copied from ObservationBundle timing when present",
+    "negatives": "empty + green present; occlusion/move/reuse covered by mock verification_v0.1.json",
+    "localized_review_adapter": "LocalizedReviewHandoff JSON side-car for M LocalizedReviewEvidence",
+    "remaining": "M must supply target_id/slot expected pose + calibration_hash + association confirmation for formal PASS/FAIL"
+  },
+  "frame_doc": "docs/team/B/FRAME_ID_HEAD_VS_C35.md"
+}
