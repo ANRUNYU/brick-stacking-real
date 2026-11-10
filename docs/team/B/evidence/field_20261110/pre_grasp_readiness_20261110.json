@@ -6,6 +6,9 @@
   "permit": null,
   "formal_grasp_entry_allowed": false,
   "evidence_gates_clear": true,
+  "vision_pre_grasp_ready": true,
+  "awaiting_m_permit": true,
+  "awaiting_actuator_enable": true,
   "gates": [
     {
       "gate_id": "association",
@@ -197,7 +200,9 @@
     "Calibration binding and BundleBinding/clock are parallel dependencies.",
     "hand_clear/support/stable/neighbors are never inferred from scene_consistent.",
     "yaw_policy=symmetric_90_unbounded accepts UNKNOWN yaw for grasp-approach; never forges MEASURED.",
-    "formal_grasp_entry_allowed is always false here; evidence_gates_clear is diagnostic only.",
+    "vision_pre_grasp_ready mirrors evidence_gates_clear; it is NOT formal_grasp_entry_allowed.",
+    "formal_grasp_entry_allowed / control_ready / permit / motion_enabled stay false here by design.",
+    "Remaining formal-entry hard holds: M permit authority + host/safety control_ready + actuator enable.",
     "Readiness adopts only scene_consistent frames; WARMING_UP SCENE_OR_RGBD_NOT_CONFIRMED is skipped, not forged."
   ],
   "inputs": {

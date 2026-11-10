@@ -60,11 +60,15 @@ def main(argv=None):
         ),
     )
     payload = evidence_gap_report(report) if args.gaps_only else report.to_dict()
-    # Hard invariants for any output shape.
+    # Hard invariants for any output shape: never forge formal entry / motion.
     payload["control_ready"] = False
     payload["motion_enabled"] = False
     payload["permit"] = None
     payload["formal_grasp_entry_allowed"] = False
+    payload["vision_pre_grasp_ready"] = bool(report.vision_pre_grasp_ready)
+    payload["evidence_gates_clear"] = bool(report.evidence_gates_clear)
+    payload["awaiting_m_permit"] = True
+    payload["awaiting_actuator_enable"] = True
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
@@ -83,7 +87,10 @@ def main(argv=None):
             {
                 "output": str(args.output).replace("\\", "/"),
                 "formal_grasp_entry_allowed": False,
+                "vision_pre_grasp_ready": payload.get("vision_pre_grasp_ready"),
                 "evidence_gates_clear": payload.get("evidence_gates_clear"),
+                "awaiting_m_permit": True,
+                "awaiting_actuator_enable": True,
                 "blocking_gates": blocking,
                 "control_ready": False,
             },

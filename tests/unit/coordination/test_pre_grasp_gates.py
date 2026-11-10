@@ -70,6 +70,9 @@ def test_field_shadow_readiness_blocks_and_never_grants_entry():
     assert report.permit is None
     assert report.formal_grasp_entry_allowed is False
     assert report.evidence_gates_clear is False
+    assert report.vision_pre_grasp_ready is False
+    assert report.awaiting_m_permit is True
+    assert report.awaiting_actuator_enable is True
     by_id = {g.gate_id: g for g in report.gates}
     assert by_id["expected_pose_adopted"].status == "PASS"
     assert by_id["reference_id"].status == "PASS"
@@ -122,6 +125,10 @@ def test_overlay_yaw_policy_clears_yaw_gate_without_forging_measured():
     assert "ERROR_BOUND_UNKNOWN:yaw_rad" not in report.consumer_reason_union
     assert report.formal_grasp_entry_allowed is False
     assert report.control_ready is False
+    assert report.evidence_gates_clear is True
+    assert report.vision_pre_grasp_ready is True
+    assert report.awaiting_m_permit is True
+    assert report.awaiting_actuator_enable is True
     # Warmup SCENE_OR_RGBD_NOT_CONFIRMED must not remain a session-level blocker.
     assert "SCENE_OR_RGBD_NOT_CONFIRMED" not in report.consumer_reason_union
 
@@ -160,10 +167,13 @@ def test_readiness_skips_warmup_scene_and_accepts_confirmed_ready():
     assert by_id["shadow_inspection"].status == "PASS"
     assert by_id["yaw_bound"].status == "PASS"
     assert "SCENE_OR_RGBD_NOT_CONFIRMED" not in report.consumer_reason_union
-    # Policy gates still hold; never forge grasp entry.
+    # Policy gates still hold; never forge grasp entry / motion.
     assert by_id["permit"].status == "POLICY_HOLD"
     assert report.formal_grasp_entry_allowed is False
     assert report.control_ready is False
+    assert report.vision_pre_grasp_ready is True
+    assert report.awaiting_m_permit is True
+    assert report.awaiting_actuator_enable is True
 
 
 def test_association_record_without_forging_control_ready():
@@ -245,6 +255,9 @@ def test_cli_readiness_and_association_tools(tmp_path):
     assert ready["formal_grasp_entry_allowed"] is False
     assert ready["control_ready"] is False
     assert ready["evidence_gates_clear"] is False
+    assert ready["vision_pre_grasp_ready"] is False
+    assert ready["awaiting_m_permit"] is True
+    assert ready["awaiting_actuator_enable"] is True
 
     ready_mod["main"](
         [
@@ -259,4 +272,27 @@ def test_cli_readiness_and_association_tools(tmp_path):
     )
     gaps = json.loads(gaps_out.read_text(encoding="utf-8"))
     assert gaps["permit"] is None
+    assert gaps["vision_pre_grasp_ready"] is False
+    assert gaps["awaiting_m_permit"] is True
     assert any(g["gate_id"] == "hand_clear" for g in gaps["blocking_gaps"])
+
+    # Bound + durable assoc + yaw policy: vision ready, still no formal entry.
+    ready_mod["main"](
+        [
+            "--request",
+            str(OVERLAY),
+            "--shadow",
+            str(SHADOW_BOUND),
+            "--association-record",
+            str(ASSOC_RECORD),
+            "--output",
+            str(ready_out),
+        ]
+    )
+    ready_bound = json.loads(ready_out.read_text(encoding="utf-8"))
+    assert ready_bound["vision_pre_grasp_ready"] is True
+    assert ready_bound["evidence_gates_clear"] is True
+    assert ready_bound["formal_grasp_entry_allowed"] is False
+    assert ready_bound["control_ready"] is False
+    assert ready_bound["permit"] is None
+    assert ready_bound["motion_enabled"] is False

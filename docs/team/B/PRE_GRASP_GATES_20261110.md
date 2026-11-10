@@ -6,7 +6,7 @@
 
 **裁决标注**：操作员授权 AI 代裁决（「你来自己决定不用问我」）。
 
-对照证据（bound overlay）：`docs/team/B/evidence/field_20261110/slot_contrast_red_s140_shadow_assoc_bound_20261110_214801.json`（3/3 MATCH；confirmed 帧 `SHADOW_INSPECTION_READY`；`evidence_gates_clear=true`）。
+对照证据（bound overlay）：`docs/team/B/evidence/field_20261110/slot_contrast_red_s140_shadow_assoc_bound_20261110_214801.json`（3/3 MATCH；confirmed 帧 `SHADOW_INSPECTION_READY`；`evidence_gates_clear=true`；`vision_pre_grasp_ready=true`）。
 
 | 门禁 | 接口/字段 | 软件现状 | 阻塞？ | 备注 |
 | --- | --- | --- | --- | --- |
@@ -25,8 +25,30 @@
 | m_context | `Context(target_id, scope, hashes…)` | `--build-m-context` 最小合法 Context | 已过（影子） | 勿伪造 hash |
 | formal_verify_path | `visual_transition.verify` | confirmed 帧 PASS；warmup UNKNOWN 跳过 | 已过 | raw 仍 1 PASS/2 UNKNOWN；不放宽 monitor |
 | shadow_inspection | `SHADOW_INSPECTION_READY` | confirmed 帧 READY（1/1 eligible） | 已过 | warmup SCENE 跳过，非伪造 |
-| permit | permit | 恒 null | 是（策略） | 本工具永不签发 |
-| control_ready_policy | control_ready | 恒 false | 是（策略） | 本工具永不抬升 |
+| permit | permit | 恒 null | 是（策略） | 本工具永不签发；owner=M permit authority |
+| control_ready_policy | control_ready | 恒 false | 是（策略） | 本工具永不抬升；host/safety |
+
+## 布尔语义（A/B 区分）
+
+| 字段 | 当前 | 含义 |
+| --- | --- | --- |
+| `evidence_gates_clear` | **true** | 证据类阻塞门禁全 PASS（不含 permit/control_ready 策略门） |
+| `vision_pre_grasp_ready` | **true** | **(A)** 视觉侧 pre_grasp 就绪；等待执行器使能 / M permit；**不等于**正式抓取许可 |
+| `formal_grasp_entry_allowed` | **false** | 正式进入抓取（含运动路径）— 本模块恒 false |
+| `control_ready` | **false** | 控制就绪 — 永不由 readiness/V 抬升 |
+| `motion_enabled` | **false** | 运动使能 — 永不由本路径打开 |
+| `permit` | **null** | 执行 Permit — 仅 M/host/safety 可签发；V 不伪造影子 permit |
+| `awaiting_m_permit` | **true** | 仍等 M permit 权威 |
+| `awaiting_actuator_enable` | **true** | 仍等执行器/开臂使能（物理动作前才需要） |
+
+**裁决**：按仓库设计属于 **(A)** — 可宣布「pre_grasp 视觉侧就绪，等待执行器使能」；**不允许**签发影子 permit，**不允许**抬 `control_ready` / 发 CAN。
+
+签发点摘要：
+
+- V / `verify_export` / `consume_handoff` / `placement_bridge`：恒 `control_ready=false`、`permit=null`、`motion_enabled=false`；成功止于 `SHADOW_INSPECTION_READY`。
+- `pre_grasp_gates`：只报告；`formal_grasp_entry_allowed` 恒 false；可置 `vision_pre_grasp_ready`。
+- `OfflineSafetyGate`：无匹配未过期 `Permit` 则拒步；不由视觉侧签发。
+- 标定绑定 / association 开关：显式拒绝抬 `control_ready` / `motion_enabled`。
 
 ## 工具
 
@@ -50,7 +72,7 @@ python tools/slot_shadow_pipeline.py <bundles.jsonl> \
   --request docs/team/B/evidence/field_20261110/first_placement_request_assoc_handclear_overlay_20261110.json \
   --output docs/team/B/evidence/field_20261110/slot_contrast_red_s140_shadow_assoc_bound_….json
 
-# 缺口 / readiness（永不 control_ready=true）
+# 缺口 / readiness（永不 control_ready=true；可报 vision_pre_grasp_ready）
 python tools/pre_grasp_readiness.py \
   --request docs/team/B/evidence/field_20261110/first_placement_request_assoc_handclear_overlay_20261110.json \
   --shadow docs/team/B/evidence/field_20261110/slot_contrast_red_s140_shadow_assoc_bound_20261110_214801.json \
@@ -64,4 +86,4 @@ python tools/pre_grasp_readiness.py --gaps-only --shadow … --output …/pre_gr
 
 - `consume_handoff` → 仅当无 reasons 时构造 `Inspection`；成功状态为 `SHADOW_INSPECTION_READY`，`formal_placement_verdict` 仍为 `UNKNOWN`，`permit=null`。
 - `to_shadow_inspection` 要求 association、reference、`visible_top_center`、calibration_hash 与 Context 一致。
-- readiness 报告只列缺口；`formal_grasp_entry_allowed` 在本模块恒为 `false`。
+- readiness：`vision_pre_grasp_ready` ≡ `evidence_gates_clear`；`formal_grasp_entry_allowed` 恒 `false`；不签发 permit / 不开臂。

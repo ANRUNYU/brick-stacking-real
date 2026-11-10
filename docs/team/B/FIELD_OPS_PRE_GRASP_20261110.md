@@ -2,7 +2,7 @@
 
 软件门禁工具已可报告缺口；下列项**必须现场摆放或人工确认**，代码不会伪造。
 
-**裁决标注**：操作员授权 AI 代裁决（「你来自己决定不用问我」）。下列 1–5 已由 AI 按授权证据落档；**仍不抬** `control_ready`，不开臂/CAN。
+**裁决标注**：操作员授权 AI 代裁决（「你来自己决定不用问我」）。下列 1–5 已由 AI 按授权证据落档；**仍不抬** `control_ready`，不开臂/CAN。现可报 `vision_pre_grasp_ready=true`（视觉就绪 ≠ 正式抓取）。
 
 ## 必须由用户 / 现场完成
 
@@ -36,6 +36,10 @@
 7. **post_place（非本轮抓取入口，但勿忽略）**  
    释放、动作完成时间、稳定窗口、support/neighbors：仍待执行侧联调；不是再采静态对照能替代的。
 
+8. **开臂 / 执行器使能（仅真实运动前）** — **本轮不要求**  
+   软件已可宣布 `vision_pre_grasp_ready`；**不要**为宣布视觉就绪而开臂。  
+   仅当 M 签发合法 `Permit` 且 host/safety 路径准备抬 `control_ready` 并真正发运动时，才需要操作员开臂/使能。当前 `awaiting_actuator_enable=true`、`awaiting_m_permit=true`。
+
 ## 软件已覆盖、现场不必重复
 
 - 十字 = 槽位中心（已确认）
@@ -43,10 +47,12 @@
 - 红块居中对照（S140）xy/height MEASURED、color MATCH
 - readiness / 缺口报告器、association 开关、shadow pipeline（含 binding stamp + M Context）
 - ACTIVE calibration hash 身份绑定 + hand_clear(arm_idle) + association durable
+- `vision_pre_grasp_ready` 布尔（证据门禁清 → true；正式入口仍 false）
 
 ## 禁止
 
-- 抬 `control_ready=true`（门禁未全过）
+- 抬 `control_ready=true`（门禁未全过 / 本路径永不签发）
 - 发臂/手/CAN
+- 伪造影子 permit 或把 `vision_pre_grasp_ready` 当成 `formal_grasp_entry_allowed`
 - 用观测点当自身期望、用候选 sha 冒充当前标定、用 scene_consistent 冒充 support/stable/hand_clear
 - 伪造 yaw MEASURED PASS

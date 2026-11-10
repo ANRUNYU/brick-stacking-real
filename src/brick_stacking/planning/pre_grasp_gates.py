@@ -60,6 +60,10 @@ class ReadinessReport:
     permit: Any
     formal_grasp_entry_allowed: bool
     evidence_gates_clear: bool
+    # Vision/pre_grasp evidence only: never implies permit, control_ready, or CAN.
+    vision_pre_grasp_ready: bool
+    awaiting_m_permit: bool
+    awaiting_actuator_enable: bool
     gates: tuple[GateResult, ...]
     missing_software: tuple[str, ...]
     missing_field_or_human: tuple[str, ...]
@@ -583,7 +587,10 @@ def evaluate_pre_grasp_readiness(
         g for g in gates if g.blocking_for_formal_grasp and g.gate_id not in policy_ids
     ]
     evidence_clear = all(g.status == "PASS" for g in evidence_blocking)
-    # Hard hold: this reporter never authorizes formal grasp / control_ready.
+    # Vision-side announce only: evidence clear ⇒ pre_grasp vision ready.
+    # Does NOT equal formal grasp entry, permit, control_ready, or motion enable.
+    vision_ready = evidence_clear
+    # Hard hold: this reporter never authorizes formal grasp / control_ready / CAN.
     formal_allowed = False
 
     missing_software = tuple(
@@ -603,7 +610,9 @@ def evaluate_pre_grasp_readiness(
         "Calibration binding and BundleBinding/clock are parallel dependencies.",
         "hand_clear/support/stable/neighbors are never inferred from scene_consistent.",
         "yaw_policy=symmetric_90_unbounded accepts UNKNOWN yaw for grasp-approach; never forges MEASURED.",
-        "formal_grasp_entry_allowed is always false here; evidence_gates_clear is diagnostic only.",
+        "vision_pre_grasp_ready mirrors evidence_gates_clear; it is NOT formal_grasp_entry_allowed.",
+        "formal_grasp_entry_allowed / control_ready / permit / motion_enabled stay false here by design.",
+        "Remaining formal-entry hard holds: M permit authority + host/safety control_ready + actuator enable.",
         "Readiness adopts only scene_consistent frames; WARMING_UP SCENE_OR_RGBD_NOT_CONFIRMED is skipped, not forged.",
     )
     return ReadinessReport(
@@ -614,6 +623,9 @@ def evaluate_pre_grasp_readiness(
         permit=None,
         formal_grasp_entry_allowed=formal_allowed,
         evidence_gates_clear=evidence_clear,
+        vision_pre_grasp_ready=vision_ready,
+        awaiting_m_permit=True,
+        awaiting_actuator_enable=True,
         gates=tuple(gates),
         missing_software=missing_software,
         missing_field_or_human=missing_field,
@@ -689,6 +701,10 @@ def evidence_gap_report(readiness: ReadinessReport) -> dict[str, Any]:
         "control_ready": False,
         "motion_enabled": False,
         "permit": None,
+        "evidence_gates_clear": readiness.evidence_gates_clear,
+        "vision_pre_grasp_ready": readiness.vision_pre_grasp_ready,
+        "awaiting_m_permit": readiness.awaiting_m_permit,
+        "awaiting_actuator_enable": readiness.awaiting_actuator_enable,
         "blocking_gaps": [g for g in gaps if g["blocking"]],
         "nonblocking_gaps": [g for g in gaps if not g["blocking"]],
         "consumer_reason_union": list(readiness.consumer_reason_union),
