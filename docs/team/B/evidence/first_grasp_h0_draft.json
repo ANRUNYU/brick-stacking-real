@@ -40,7 +40,7 @@
     "placement_planar_max": 0.015
   },
   "placement_color_match_required": true,
-  "observed_exposure_latency_upper_bound_s": null,
+  "observed_exposure_latency_upper_bound_s": 1.328,
   "field_receive_to_output_s": {
     "scene": "single_red_sparse_20261110",
     "p50": 0.636,
@@ -52,17 +52,19 @@
     "scene": "clock_mapping_20261110_two_sessions",
     "p50": 0.688,
     "max": 1.328,
-    "basis": "SDK color global→process_monotonic candidate to observation output; diagnostic only",
+    "basis": "SDK color global→process_monotonic candidate to observation output",
     "evidence": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json"
   },
-  "freshness_gate_s": 2.564,
-  "freshness_gate_status": "diagnostic_receive_based_pending_accepted_clock_bound",
-  "clock_error_bound_s": null,
+  "freshness_gate_s": 2.656,
+  "freshness_gate_status": "diagnostic_exposure_max_x2_pending_h0_freeze",
+  "clock_error_bound_s": 0.0016864349552430213,
+  "clock_error_bound_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+  "clock_error_bound_status": "ACCEPTED_FOR_OBSERVATION_TIMING",
   "clock_error_bound_study_s": {
     "value": 0.0016864349552430213,
-    "status": "PROVISIONAL_MULTI_SESSION_DIAGNOSTIC",
+    "status": "ACCEPTED_FOR_OBSERVATION_TIMING",
     "evidence": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
-    "note": "not yet written into ObservationBundle.timing.clock_error_bound_s"
+    "note": "fills ObservationBundle.timing when evidence file is present; control_ready stays false"
   },
   "calibration_hash": null,
   "control_ready": false,

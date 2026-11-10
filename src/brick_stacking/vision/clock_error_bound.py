@@ -9,6 +9,29 @@ from pathlib import Path
 from brick_stacking.vision.observation_exchange import EXPOSURE_REFERENCE_GLOBAL_MONOTONIC
 
 SCHEMA = "v-clock-error-bound-study-0.1"
+ACCEPTED_FOR_OBSERVATION_TIMING = {
+    "ACCEPTED_FOR_OBSERVATION_TIMING",
+    "PROVISIONAL_MULTI_SESSION_DIAGNOSTIC",
+}
+
+
+def load_observation_timing_bound(path: Path | str):
+    """Return (bound_s, evidence_ref) when a study may fill ObservationBundle timing.
+
+    Does not authorize control_ready or motion.
+    """
+    path = Path(path)
+    report = json.loads(path.read_text(encoding="utf-8"))
+    bound = report.get("clock_error_bound_s")
+    acceptance = report.get("acceptance")
+    if bound is None or bound < 0 or acceptance not in ACCEPTED_FOR_OBSERVATION_TIMING:
+        return None
+    ref = path.as_posix()
+    try:
+        ref = path.resolve().relative_to(Path.cwd().resolve()).as_posix()
+    except ValueError:
+        pass
+    return float(bound), ref
 
 
 def _pct(values, q):

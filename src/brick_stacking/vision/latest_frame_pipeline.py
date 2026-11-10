@@ -7,7 +7,10 @@ import time
 
 import numpy as np
 
-from brick_stacking.vision.observation_exchange import observation_exchange
+from brick_stacking.vision.observation_exchange import (
+    exposure_host_candidate_s,
+    observation_exchange,
+)
 
 
 class LatestFramePipeline:
@@ -57,6 +60,11 @@ class LatestFramePipeline:
         self._session = self._pending = self._latest = None
 
     def _fresh(self, context, now):
+        exposure = exposure_host_candidate_s(context.clock_observation)
+        bound = context.clock_error_bound_s
+        if exposure is not None and bound is not None:
+            age = now - float(exposure)
+            return -float(bound) <= age <= self._max_age_s
         stamp = context.host_receive_s
         return stamp is not None and 0 <= now - stamp <= self._max_age_s
 
@@ -161,7 +169,10 @@ class LatestFramePipeline:
                     ),
                 )
                 self._latest = (context, bundle)
-                self._measurements.append((output - context.host_receive_s, detected - started))
+                exposure_latency = bundle["timing"].get("exposure_to_output_s")
+                self._measurements.append(
+                    (output - context.host_receive_s, detected - started, exposure_latency)
+                )
                 self._counts["published"] += 1
                 if reason:
                     self._counts["detection_unavailable"] += 1
@@ -178,9 +189,9 @@ class LatestFramePipeline:
     def metrics(self):
         with self._lock:
             rows, counts = tuple(self._measurements), dict(self._counts)
-        metrics = dict(counts=counts, latency_samples=len(rows), exposure_to_output_s=None)
-        for index, name in enumerate(("receive_to_output_s", "detection_s")):
-            values = [row[index] for row in rows]
+        metrics = dict(counts=counts, latency_samples=len(rows))
+        for index, name in enumerate(("receive_to_output_s", "detection_s", "exposure_to_output_s")):
+            values = [row[index] for row in rows if row[index] is not None]
             metrics[name] = dict(zip(("p50", "p95", "max"),
                                      map(float, np.percentile(values, [50, 95, 100])))) if values else None
         return metrics

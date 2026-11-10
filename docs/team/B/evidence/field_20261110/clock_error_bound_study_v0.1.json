@@ -51,5 +51,6 @@
     "docs/team/B/evidence/field_20261110/clock_mapping_observation_bundles.jsonl",
     "docs/team/B/evidence/field_20261110/clock_mapping_session2_observation_bundles.jsonl"
   ],
-  "acceptance": "PROVISIONAL_MULTI_SESSION_DIAGNOSTIC"
+  "acceptance": "ACCEPTED_FOR_OBSERVATION_TIMING",
+  "acceptance_note": "May fill ObservationBundle.timing.clock_error_bound_s with evidence_ref; does not raise control_ready or authorize motion"
 }

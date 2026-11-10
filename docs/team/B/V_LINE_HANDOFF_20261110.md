@@ -5,8 +5,8 @@
 | 顺序 | 本次交付 | 现场或跨线待验收 |
 | --- | --- | --- |
 | #16 / #8 | [H0 草案](evidence/first_grasp_h0_draft.json) **V+M 已 ACK 预算**（`control_ready` 仍 false）。Fixture 索引、三帧 C 录包样例、四类状态与契约门面 `vision.service`。 | 时钟误差界与标定 hash 仍缺；C/D 审查字段及样例 |
-| #7 / #17 | 导出曝光候选；两会话现场联采 92 帧，[时钟研究](evidence/field_20261110/clock_error_bound_study_v0.1.json)草稿界 ≈1.69 ms（诊断，未写入 bundle VALID）。 | 评审后把 bound + evidence_ref 写入观测；M 完成独立对尺 |
-| #9 / #20 | 在线入口与录包回放仍在。现场时钟联采已测 **exposure→output** p50≈0.69 s / max≈1.33 s（诊断）。 | 用已接受时钟界冻结 freshness；M 路径模板 #20 |
+| #7 / #17 | 两会话联采后 [时钟研究](evidence/field_20261110/clock_error_bound_study_v0.1.json) **≈1.69 ms** 已 `ACCEPTED_FOR_OBSERVATION_TIMING`；在线观测可填 `clock_error_bound_s`（`control_ready` 仍 false）。 | M 完成独立对尺；标定 hash 仍缺 |
+| #9 / #20 | **exposure→output** p50≈0.69 s / max≈1.33 s；诊断 freshness 门建议 **2.656 s**（max×2）。在线 freshness 在有 bound 时按曝光候选计龄。 | H0 正式冻结 freshness；M 路径模板 #20 |
 | #10 | pre_grasp / post_grasp / post_place 证据、`service.verify` 门面、Mock golden 与 D FSM 兼容回归。 | 实景关联、持握、撤离后释放和稳定证据 |
 | #18 / #19 | 提供观测与复检接口供 M 线接入。 | 由 M 按 H5、H6 和 T1–T5 逐级验收 |
 | #11 | 三帧既有开发录包已登记 SHA-256 与原始出处。 | 独立布局、物理参考及逐条件报告，首抓后验收 |
@@ -18,7 +18,7 @@
 - [合成状态样例](../../../tests/fixtures/vision_exchange/synthetic_status_v0.1.json)覆盖正常、歧义、无效深度和过期。合成 RGB-D 可用 `python -m brick_stacking.app.offline_runner --synthetic` 重建，invalid-depth 由同一帧的深度置为 NaN 生成。
 - `rgbd.sample_id` 和 `blocks[].observation_id` 只在当前采集会话内引用图像及检测。持久对象关联由 M 的事务侧维护。
 - `b_extensions.top_surface_point_camera_m` 在桌面检测路径表示可见顶面中心，在单组件路径表示表面采样点。用 `top_surface_point_kind` 区分。桌面路径的 `model_center_camera_m` 由顶面沿桌面法向减去半个标称边长得到。实测顶面跨度、标称三轴尺寸和未知方向/协方差分别保留。长度单位 m，角度单位 rad，坐标系由 `frame_id` 标识。
-- 录包中的原始 C 时钟桥接结果可供追溯。SDK 拟合误差与曝光参考尚未验证，`timing.exposure_host_stamp_s` 和 `timing.clock_error_bound_s` 保持 null。候选几何有效性独立于时钟有效性，`control_ready` 保持 false。
+- 录包中的原始 C 时钟桥接结果可供追溯。现场研究接受后，在线路径可填 `timing.exposure_host_stamp_s` 与 `clock_error_bound_s`（见证据 JSON）；无证据时仍为 null/`UNKNOWN`。候选几何有效性独立于 `control_ready`（仍 false）。
 
 开发机回放入口，从仓库根目录运行：
 

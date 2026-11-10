@@ -6,13 +6,19 @@ from threading import Event, Thread
 import numpy as np
 
 from brick_stacking.models.camera_frame import CameraFrame
+from brick_stacking.vision.clock_error_bound import load_observation_timing_bound
 from brick_stacking.vision.latest_frame_pipeline import LatestFramePipeline
 from brick_stacking.vision.observation_exchange import CaptureContext, profile_hash
 from brick_stacking.vision.scene_consistency import SceneConsistencyMonitor
 from brick_stacking.vision.tabletop_segmentation import TabletopDetector
 
+DEFAULT_CLOCK_BOUND_EVIDENCE = (
+    "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json"
+)
 
-def observe(output, report, config, *, max_age_s, max_skew_s, reconnects, capture_attempt):
+
+def observe(output, report, config, *, max_age_s, max_skew_s, reconnects, capture_attempt,
+            clock_bound_evidence=None):
     profile = config["tabletop"]
     monitor = SceneConsistencyMonitor(**profile["temporal"]) if profile.get("temporal") else None
     pipeline = LatestFramePipeline(
@@ -21,10 +27,20 @@ def observe(output, report, config, *, max_age_s, max_skew_s, reconnects, captur
     )
     boot_path = Path("/proc/sys/kernel/random/boot_id")
     boot_epoch = boot_path.read_text(encoding="ascii").strip() if boot_path.is_file() else None
+    evidence_path = Path(clock_bound_evidence or config.get("clock_error_bound_evidence")
+                         or DEFAULT_CLOCK_BOUND_EVIDENCE)
+    timing_bound = load_observation_timing_bound(evidence_path) if evidence_path.is_file() else None
     report["capture_attempts"] = []
     report["observation_count"] = 0
     report["limits"] = {"max_receive_age_s": max_age_s, "max_pair_skew_s": max_skew_s,
                         "status": "diagnostic_limits_not_validated"}
+    report["clock_error_bound"] = (
+        None if timing_bound is None else {
+            "clock_error_bound_s": timing_bound[0],
+            "error_bound_evidence_ref": timing_bound[1],
+            "control_ready": False,
+        }
+    )
     event_path = output / "observation_bundles.jsonl"
     with event_path.open("w", encoding="utf-8") as events:
         for attempt in range(reconnects + 1):
@@ -85,8 +101,12 @@ def observe(output, report, config, *, max_age_s, max_skew_s, reconnects, captur
                     session["epoch"], session["profile_hash"] = epoch, digest
                 if frame.camera_id != profile["camera_id"] or list(frame.rgb.shape[:2][::-1]) != profile["image_size_wh"]:
                     raise ValueError("camera identity or resolution differs from detection profile")
+                meta_row = dict(meta, host_boot_epoch=boot_epoch)
+                if timing_bound is not None:
+                    meta_row["clock_error_bound_s"] = timing_bound[0]
+                    meta_row["error_bound_evidence_ref"] = timing_bound[1]
                 context = CaptureContext.from_recording(
-                    frame, dict(meta, host_boot_epoch=boot_epoch),
+                    frame, meta_row,
                     image_ref=f"observed_{attempt:02d}_{frame.stamp_s:.6f}.npz", profile=stream,
                     profile_hash=digest, report=capture_report,
                 )
