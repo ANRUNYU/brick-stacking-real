@@ -12,8 +12,27 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / "src"), str(ROOT / "tools")]
 
+from brick_stacking.planning.placement_bridge import BundleBinding  # noqa: E402
 from brick_stacking.planning.verify_handoff_consumer import consume_handoff  # noqa: E402
 from brick_stacking.vision.verify_export import export_field_session  # noqa: E402
+
+
+def _binding_from_bundle(bundle):
+    """Build BundleBinding when clock/profile fields are complete; else None."""
+    rgbd = bundle.get("rgbd") or {}
+    timing = bundle.get("timing") or {}
+    try:
+        return BundleBinding(
+            rgbd["device_id"],
+            rgbd["frame_id"],
+            rgbd["epoch"],
+            timing["host_boot_epoch"],
+            bundle["profile_hash"],
+            timing["error_bound_evidence_ref"],
+            2.656,
+        )
+    except (KeyError, TypeError, ValueError):
+        return None
 
 
 def main(argv=None):
@@ -44,10 +63,11 @@ def main(argv=None):
         now_s = args.now_s
         if now_s is None:
             now_s = timing.get("output_monotonic_s") or timing.get("exposure_host_stamp_s")
+        binding = _binding_from_bundle(bundle)
         try:
-            # Without a complete BundleBinding this raises; treat as blocked diagnostic.
+            # Incomplete binding (null clock evidence) → audit reports BUNDLE_BINDING_MISSING.
             inspection, diagnostic = consume_handoff(
-                handoff, bundle, None,
+                handoff, bundle, binding,
                 context=None,
                 now_s=float(now_s) if now_s is not None else 0.0,
                 expected_color=req.get("expected_color") or "red",
@@ -63,6 +83,7 @@ def main(argv=None):
         consumption.append({
             "sample_id": handoff.get("sample_id"),
             "diagnostic": diagnostic,
+            "binding_present": binding is not None,
             "inspection_ready": inspection is not None,
         })
 

@@ -33,30 +33,37 @@ def audit_bundle(bundle, binding, *, now_s, expected_color):
     def problem(reason):
         if reason not in problems:problems.append(reason)
     if bundle.get('schema_version')!='0.1':problem('SCHEMA_MISMATCH')
-    if (rgbd.get('device_id'),rgbd.get('frame_id'),rgbd.get('epoch'),
-            bundle.get('profile_hash')) != (binding.camera_id,binding.optical_frame,
-                                          binding.camera_epoch,binding.profile_hash):
-        problem('CAMERA_EPOCH_FRAME_OR_PROFILE_MISMATCH')
-    if (timing.get('host_clock_domain')!='process_monotonic' or
-            timing.get('host_boot_epoch')!=binding.host_boot_epoch or
-            timing.get('error_bound_evidence_ref')!=binding.clock_evidence_ref or
-            timing.get('device_clock_domain')!=rgbd.get('clock_domain')):
-        problem('CLOCK_BINDING_MISMATCH')
     bound=timing.get('clock_error_bound_s');stamp=timing.get('exposure_host_stamp_s')
     output=timing.get('output_monotonic_s')
-    timing_ok=(timing.get('validity')=='VALID' and _number(bound) and bound>0 and
-               _number(stamp) and stamp>=0 and _number(output) and output>=stamp and
-               _number(now_s) and now_s>=output and
-               bound <= now_s-stamp <= binding.max_age_s-bound)
+    if binding is None:
+        # Shadow/offline path may lack a complete BundleBinding (e.g. null clock evidence).
+        # Keep color/candidate diagnostics; never invent a binding.
+        problem('BUNDLE_BINDING_MISSING')
+        timing_ok=False
+    else:
+        if (rgbd.get('device_id'),rgbd.get('frame_id'),rgbd.get('epoch'),
+                bundle.get('profile_hash')) != (binding.camera_id,binding.optical_frame,
+                                              binding.camera_epoch,binding.profile_hash):
+            problem('CAMERA_EPOCH_FRAME_OR_PROFILE_MISMATCH')
+        if (timing.get('host_clock_domain')!='process_monotonic' or
+                timing.get('host_boot_epoch')!=binding.host_boot_epoch or
+                timing.get('error_bound_evidence_ref')!=binding.clock_evidence_ref or
+                timing.get('device_clock_domain')!=rgbd.get('clock_domain')):
+            problem('CLOCK_BINDING_MISMATCH')
+        timing_ok=(timing.get('validity')=='VALID' and _number(bound) and bound>0 and
+                   _number(stamp) and stamp>=0 and _number(output) and output>=stamp and
+                   _number(now_s) and now_s>=output and
+                   bound <= now_s-stamp <= binding.max_age_s-bound)
     if not timing_ok:problem('TIMING_UNKNOWN_STALE_OR_FUTURE')
-    scene=timing.get('scene_consistency',{})
+    scene=timing.get('scene_consistency',{}) or {}
     if rgbd.get('validity')!='VALID' or scene.get('scene_consistent') is not True:
         problem('SCENE_OR_RGBD_NOT_CONFIRMED')
     blocks=bundle.get('blocks',[])
     color='UNKNOWN';selected=None
     if len(blocks)==1:
         b=blocks[0]
-        if (b.get('sample_id'),b.get('device_id'),b.get('frame_id'),b.get('epoch')) != (
+        if binding is not None and (
+                b.get('sample_id'),b.get('device_id'),b.get('frame_id'),b.get('epoch')) != (
                 rgbd.get('sample_id'),binding.camera_id,binding.optical_frame,binding.camera_epoch):
             problem('BLOCK_SOURCE_MISMATCH')
         if b.get('validity')=='VALID' and b.get('observation_id'):

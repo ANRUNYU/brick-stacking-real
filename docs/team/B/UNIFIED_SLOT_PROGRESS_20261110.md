@@ -11,13 +11,15 @@
 5. `tools/slot_shadow_pipeline.py`：导出 + 消费诊断一条龙。
 6. 现场对照采（空桌）：`slot_contrast_20261110_214216*` → 0 VALID 块，正式 verify 因关联未确认保持 UNKNOWN；消费 BLOCKED。
 7. 历史单红 + 采纳期望：LocalizedReview xy/height 已 MEASURED；因 `association=false` 正式仍 UNKNOWN（`camera_or_table_reference_unconfirmed`）。
+8. 红块居中对照：原始 `slot_contrast_20261110_214801` 生产 HSV(S≥160) 0 VALID；会话诊断 profile [`head_slot_contrast_s140.yaml`](../../config/vision_profiles/head_slot_contrast_s140.yaml) 离线回放 3/3 VALID red，`color_check=MATCH`，top xy≈6.7–7.2 mm / |h|≲1 mm。
+9. 影子复检：`slot_contrast_red_s140_shadow*_20261110_214801.json`；正式 verdict 仍 UNKNOWN（calibration 未绑定）；消费 BLOCKED（缺 binding/clock evidence、M context、hand_clear 等）。`audit_bundle(binding=None)` 不再抛异常。
 
-## 物理阻塞（仅此）
+## 物理阻塞
 
-在十字上**居中放置一块红积木**后继续对照采与关联影子复检。不执行臂/CAN。
+无。臂/CAN 仍不执行。下一步为 calibration 当前绑定批准与 post_place 证据链，而非再采对照。
 
 ## 仍不抬 control_ready 的原因
 
 - `calibration_hash` 未做当前绑定批准（C35 仍为候选）。
-- 目标关联未确认。
+- 录包 timing/`error_bound_evidence_ref` 不完整 → BundleBinding 无法构造。
 - post_place 缺动作完成/释放/稳定窗口证据。
