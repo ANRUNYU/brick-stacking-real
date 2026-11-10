@@ -6,22 +6,6 @@
   "permit": null,
   "blocking_gaps": [
     {
-      "gate_id": "association",
-      "status": "UNKNOWN",
-      "blocking": true,
-      "field_or_human_required": true,
-      "detail": "association flag asserted (CLI/request/export) but durable operator association_confirm record missing",
-      "owner_hint": "operator + V export switch"
-    },
-    {
-      "gate_id": "hand_clear",
-      "status": "UNKNOWN",
-      "blocking": true,
-      "field_or_human_required": true,
-      "detail": "explicit bool required by consume_handoff; scene_consistent must not be copied; current=None",
-      "owner_hint": "field evidence / M context"
-    },
-    {
       "gate_id": "yaw_bound",
       "status": "UNKNOWN",
       "blocking": true,
@@ -30,35 +14,11 @@
       "owner_hint": "V measurement policy / operator orientation confirm"
     },
     {
-      "gate_id": "calibration_binding",
-      "status": "BLOCKED",
-      "blocking": true,
-      "field_or_human_required": true,
-      "detail": "calibration_hash=None; candidate_status='FIT_ONLY_NOT_AN_APPROVED_CURRENT_BINDING'. C35 fit-only sha is not an approved current binding.",
-      "owner_hint": "calibration parallel agent / operator approve"
-    },
-    {
-      "gate_id": "bundle_binding_clock",
-      "status": "BLOCKED",
-      "blocking": true,
-      "field_or_human_required": true,
-      "detail": "clock_error_bound_s=None; evidence_ref=None; consumer_has_BUNDLE_BINDING_MISSING=True",
-      "owner_hint": "clock/BundleBinding parallel agent"
-    },
-    {
-      "gate_id": "m_context",
-      "status": "BLOCKED",
-      "blocking": true,
-      "field_or_human_required": false,
-      "detail": "consume_handoff context=None or mismatch \u2192 M_CONTEXT_MISSING",
-      "owner_hint": "M Context construction (target_id/scope/hashes)"
-    },
-    {
       "gate_id": "formal_verify_path",
       "status": "UNKNOWN",
       "blocking": true,
       "field_or_human_required": false,
-      "detail": "verdict_counts={'UNKNOWN': 3}; formal path not cleared",
+      "detail": "verdict_counts={'UNKNOWN': 2, 'PASS': 1}; formal path not cleared",
       "owner_hint": "verify_export + visual_transition.verify"
     },
     {
@@ -66,7 +26,7 @@
       "status": "BLOCKED",
       "blocking": true,
       "field_or_human_required": false,
-      "detail": "shadow_inspection_ready=0; blocked=3; reasons=['BUNDLE_BINDING_MISSING', 'CALIBRATION_BINDING_MISSING', 'ERROR_BOUND_UNKNOWN:yaw_rad', 'HAND_CLEAR_EVIDENCE_MISSING', 'M_CONTEXT_MISSING', 'SCENE_OR_RGBD_NOT_CONFIRMED', 'TIMING_UNKNOWN_STALE_OR_FUTURE']",
+      "detail": "shadow_inspection_ready=0; blocked=3; reasons=['ERROR_BOUND_UNKNOWN:yaw_rad', 'SCENE_OR_RGBD_NOT_CONFIRMED']",
       "owner_hint": "verify_handoff_consumer"
     },
     {
@@ -113,30 +73,18 @@
     }
   ],
   "consumer_reason_union": [
-    "BUNDLE_BINDING_MISSING",
-    "CALIBRATION_BINDING_MISSING",
     "ERROR_BOUND_UNKNOWN:yaw_rad",
-    "HAND_CLEAR_EVIDENCE_MISSING",
-    "M_CONTEXT_MISSING",
-    "SCENE_OR_RGBD_NOT_CONFIRMED",
-    "TIMING_UNKNOWN_STALE_OR_FUTURE"
+    "SCENE_OR_RGBD_NOT_CONFIRMED"
   ],
   "missing_software": [
-    "association",
-    "hand_clear",
     "yaw_bound",
-    "m_context",
     "formal_verify_path",
     "shadow_inspection",
     "permit",
     "control_ready_policy"
   ],
   "missing_field_or_human": [
-    "association",
-    "hand_clear",
-    "yaw_bound",
-    "calibration_binding",
-    "bundle_binding_clock"
+    "yaw_bound"
   ],
   "notes": [
     "Readiness reports gaps only; does not grant permit or raise control_ready.",

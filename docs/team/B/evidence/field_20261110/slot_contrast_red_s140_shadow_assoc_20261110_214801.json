@@ -1,14 +1,14 @@
 {
   "schema_version": "v-slot-shadow-pipeline-0.1",
-  "request": "E:/OneDrive/Desktop/brick-stacking-real/brick-stacking-real/config/planning/first_placement_review_request.adopted.json",
-  "request_status": "SHADOW_ADOPTED_CAMERA_EXPECTATIONS_UNBOUND_CALIBRATION",
-  "calibration_binding_path": "config/observed/calibration_current_binding_c35_20261110.json",
-  "calibration_hash": null,
+  "request": "config/planning/first_placement_review_request.adopted.json",
+  "request_status": "SHADOW_ADOPTED_CAMERA_EXPECTATIONS_CURRENT_CALIBRATION_BOUND",
   "control_ready": false,
   "motion_enabled": false,
+  "calibration_binding": "config/observed/calibration_current_binding_c35_20261110.json",
+  "build_m_context": true,
   "export": {
     "schema_version": "v-verify-field-handoff-0.2",
-    "source_bundles": "docs/team/B/evidence/field_20261110/slot_contrast_red_s140_20261110_214801_observation_bundles.jsonl",
+    "source_bundles": "D:/computer/Hermes/temp/tmp1cwzpoyf.jsonl",
     "phase": "pre_grasp",
     "expected_color": "red",
     "region_id": "m-first-placement-region-01",
@@ -28,7 +28,7 @@
       -0.7109416161657586,
       -0.7031851285400648
     ],
-    "calibration_hash": null,
+    "calibration_hash": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
     "calibration_candidate_sha256": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
     "n_frames": 3,
     "color_check_counts": {
@@ -87,7 +87,7 @@
         "color_check": "MATCH",
         "scene_consistent": false,
         "profile_hash": "b70d7556af358429b502143db4fa25af0591da29260c08a3840370139242b728",
-        "calibration_hash": null,
+        "calibration_hash": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
         "calibration_candidate_sha256": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
         "epoch": "replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af",
         "clock_domain": "process_monotonic",
@@ -95,7 +95,6 @@
         "clock_error_bound_s": 0.0016864349552430213,
         "error_bound_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
         "unknown_reasons": [
-          "calibration_hash_null",
           "yaw_error_unknown_90deg_symmetry",
           "support_evidence_missing",
           "stability_evidence_missing",
@@ -146,7 +145,7 @@
         "color_check": "MATCH",
         "scene_consistent": false,
         "profile_hash": "b70d7556af358429b502143db4fa25af0591da29260c08a3840370139242b728",
-        "calibration_hash": null,
+        "calibration_hash": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
         "calibration_candidate_sha256": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
         "epoch": "replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af",
         "clock_domain": "process_monotonic",
@@ -154,7 +153,6 @@
         "clock_error_bound_s": 0.0016864349552430213,
         "error_bound_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
         "unknown_reasons": [
-          "calibration_hash_null",
           "yaw_error_unknown_90deg_symmetry",
           "support_evidence_missing",
           "stability_evidence_missing",
@@ -205,7 +203,7 @@
         "color_check": "MATCH",
         "scene_consistent": true,
         "profile_hash": "b70d7556af358429b502143db4fa25af0591da29260c08a3840370139242b728",
-        "calibration_hash": null,
+        "calibration_hash": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
         "calibration_candidate_sha256": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
         "epoch": "replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af",
         "clock_domain": "process_monotonic",
@@ -213,7 +211,6 @@
         "clock_error_bound_s": 0.0016864349552430213,
         "error_bound_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
         "unknown_reasons": [
-          "calibration_hash_null",
           "yaw_error_unknown_90deg_symmetry",
           "support_evidence_missing",
           "stability_evidence_missing",
@@ -232,7 +229,7 @@
     "verification_evidence": [
       {
         "schema_version": "0.1",
-        "sample_id": "bba0ca7dee0147e2ab7052547376a9cd",
+        "sample_id": "db81aa7dff454b968ef527478e2a26a1",
         "source": "real",
         "device_id": "CP2L863000KL",
         "frame_id": "camera_CP2L863000KL_color_optical_frame",
@@ -255,15 +252,12 @@
         "region_id": "m-first-placement-region-01",
         "scene_version": "replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af",
         "config_hash": "b70d7556af358429b502143db4fa25af0591da29260c08a3840370139242b728",
-        "calibration_hash": "calibration_hash_unavailable",
-        "supporting_observation_refs": [],
-        "point_semantics_unknown_reasons": [
-          "calibration_hash_sentinel_not_binding"
-        ]
+        "calibration_hash": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
+        "supporting_observation_refs": []
       },
       {
         "schema_version": "0.1",
-        "sample_id": "b2b39db03ce040eb92cfc3bcc2a43b05",
+        "sample_id": "940ae00ec4d5408c8c678e92ce62750a",
         "source": "real",
         "device_id": "CP2L863000KL",
         "frame_id": "camera_CP2L863000KL_color_optical_frame",
@@ -286,15 +280,12 @@
         "region_id": "m-first-placement-region-01",
         "scene_version": "replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af",
         "config_hash": "b70d7556af358429b502143db4fa25af0591da29260c08a3840370139242b728",
-        "calibration_hash": "calibration_hash_unavailable",
-        "supporting_observation_refs": [],
-        "point_semantics_unknown_reasons": [
-          "calibration_hash_sentinel_not_binding"
-        ]
+        "calibration_hash": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
+        "supporting_observation_refs": []
       },
       {
         "schema_version": "0.1",
-        "sample_id": "71af51e6b2ba4e2f8c6c020e5d7bccc4",
+        "sample_id": "a32df6e1251749a6a827a4a9107a9e80",
         "source": "real",
         "device_id": "CP2L863000KL",
         "frame_id": "camera_CP2L863000KL_color_optical_frame",
@@ -317,12 +308,9 @@
         "region_id": "m-first-placement-region-01",
         "scene_version": "replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af",
         "config_hash": "b70d7556af358429b502143db4fa25af0591da29260c08a3840370139242b728",
-        "calibration_hash": "calibration_hash_unavailable",
+        "calibration_hash": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
         "supporting_observation_refs": [],
-        "scope": "position_only",
-        "point_semantics_unknown_reasons": [
-          "calibration_hash_sentinel_not_binding"
-        ]
+        "scope": "position_only"
       }
     ]
   },
@@ -337,10 +325,8 @@
       "diagnostic": {
         "status": "BLOCKED",
         "reasons": [
-          "CALIBRATION_BINDING_MISSING",
           "ERROR_BOUND_UNKNOWN:yaw_rad",
           "HAND_CLEAR_EVIDENCE_MISSING",
-          "M_CONTEXT_MISSING",
           "SCENE_OR_RGBD_NOT_CONFIRMED"
         ],
         "observation_id": "CP2L863000KL/replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af/7391.25724/0",
@@ -351,17 +337,17 @@
         "permit": null
       },
       "binding_present": true,
-      "inspection_ready": false
+      "inspection_ready": false,
+      "m_context_present": true,
+      "calibration_hash": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461"
     },
     {
       "sample_id": "CP2L863000KL/replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af/7391.857864",
       "diagnostic": {
         "status": "BLOCKED",
         "reasons": [
-          "CALIBRATION_BINDING_MISSING",
           "ERROR_BOUND_UNKNOWN:yaw_rad",
           "HAND_CLEAR_EVIDENCE_MISSING",
-          "M_CONTEXT_MISSING",
           "SCENE_OR_RGBD_NOT_CONFIRMED"
         ],
         "observation_id": "CP2L863000KL/replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af/7391.857864/0",
@@ -372,17 +358,17 @@
         "permit": null
       },
       "binding_present": true,
-      "inspection_ready": false
+      "inspection_ready": false,
+      "m_context_present": true,
+      "calibration_hash": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461"
     },
     {
       "sample_id": "CP2L863000KL/replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af/7391.991336",
       "diagnostic": {
         "status": "BLOCKED",
         "reasons": [
-          "CALIBRATION_BINDING_MISSING",
           "ERROR_BOUND_UNKNOWN:yaw_rad",
-          "HAND_CLEAR_EVIDENCE_MISSING",
-          "M_CONTEXT_MISSING"
+          "HAND_CLEAR_EVIDENCE_MISSING"
         ],
         "observation_id": "CP2L863000KL/replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af/7391.991336/0",
         "color_diagnostic": "MATCH",
@@ -392,12 +378,15 @@
         "permit": null
       },
       "binding_present": true,
-      "inspection_ready": false
+      "inspection_ready": false,
+      "m_context_present": true,
+      "calibration_hash": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461"
     }
   ],
   "notes": [
     "Unified pipeline on one branch; does not wait for a separate M merge.",
     "Missing calibration_hash / association / M context keep consumer BLOCKED.",
-    "Formal verify verdicts remain evidence-only; control_ready stays false."
+    "Formal verify verdicts remain evidence-only; control_ready stays false.",
+    "yaw remains UNKNOWN under 90deg symmetry unless MEASURED; do not invent yaw PASS."
   ]
 }

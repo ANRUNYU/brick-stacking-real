@@ -1,0 +1,49 @@
+{
+  "schema_version": "v-calibration-current-binding-0.1",
+  "status": "CURRENT_BINDING_ACTIVE",
+  "calibration_hash": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
+  "candidate": {
+    "path": "calibration/candidates/C35_left_head_fit_only_user10mm_20261108.json",
+    "file_sha256": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
+    "candidate_id": "C35_left_head_point_fit_only_user10mm_20261108",
+    "calibration_status": "OPERATOR_ACCEPTED_FIT_ONLY",
+    "independent_validation": "NOT_PERFORMED_AT_USER_REQUEST",
+    "approved": false,
+    "motion_enabled": false,
+    "status": "FIT_ONLY_NOT_AN_APPROVED_ACCURACY_CLAIM"
+  },
+  "identity": {
+    "camera_serial": "CP2L863000KL",
+    "camera_frame": "camera_CP2L863000KL_color_optical_frame",
+    "base_frame": "L_arm_root"
+  },
+  "scope": {
+    "binds_hash_for_verify_and_context_matching": true,
+    "does_not_approve_accuracy": true,
+    "does_not_enable_motion": true,
+    "does_not_set_control_ready": true,
+    "does_not_rewrite_candidate_approved": true
+  },
+  "evidence": {
+    "intake_ref": "config/observed/first_placement_reference_intake_20261110.json",
+    "mount_continuity_ref": "config/observed/first_placement_reference_intake_20261110.json",
+    "mount_continuity_status": "OPERATOR_CONFIRMED_UNCHANGED_RELATIVE_TO_ROBOT_BASE",
+    "live_serial_checked": true,
+    "live_serial_value": "CP2L863000KL",
+    "operator_attest_current_binding": true,
+    "blocking_reasons": [],
+    "warnings": [
+      "independent_validation_still_not_performed",
+      "binding_is_hash_identity_only_not_accuracy_approval",
+      "control_ready_and_motion_enabled_remain_false"
+    ]
+  },
+  "control_ready": false,
+  "motion_enabled": false,
+  "permit": null,
+  "notes": [
+    "Active binding sets calibration_hash to the candidate file sha256.",
+    "Candidate approved/motion_enabled flags must stay false.",
+    "Independent validation / accuracy approval are separate from current binding."
+  ]
+}

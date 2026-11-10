@@ -18,6 +18,9 @@ ROOT = Path(__file__).resolve().parents[3]
 FIELD = ROOT / "docs/team/B/evidence/field_20261110"
 ADOPTED = ROOT / "config/planning/first_placement_review_request.adopted.json"
 SHADOW_ASSOC = FIELD / "slot_contrast_red_s140_shadow_assoc_20261110_214801.json"
+SHADOW_BOUND = FIELD / "slot_contrast_red_s140_shadow_assoc_bound_20261110_214801.json"
+OVERLAY = FIELD / "first_placement_request_assoc_handclear_overlay_20261110.json"
+ASSOC_RECORD = FIELD / "association_confirm_switch_20261110.json"
 
 
 def test_gate_catalog_covers_required_ids():
@@ -34,6 +37,7 @@ def test_gate_catalog_covers_required_ids():
 
 
 def test_field_shadow_readiness_blocks_and_never_grants_entry():
+    # Adopted alone still lacks durable association/hand_clear overlay fields.
     request = json.loads(ADOPTED.read_text(encoding="utf-8"))
     shadow = json.loads(SHADOW_ASSOC.read_text(encoding="utf-8"))
     report = evaluate_pre_grasp_readiness(
@@ -52,10 +56,12 @@ def test_field_shadow_readiness_blocks_and_never_grants_entry():
     assert by_id["reference_id"].status == "PASS"
     assert by_id["color_match"].status == "PASS"
     assert by_id["xy_height_measured"].status == "PASS"
-    assert by_id["calibration_binding"].status == "BLOCKED"
-    assert by_id["bundle_binding_clock"].status == "BLOCKED"
+    # Current-binding ACTIVE stamps calibration_hash; clock BundleBinding already present.
+    assert by_id["calibration_binding"].status == "PASS"
+    assert by_id["bundle_binding_clock"].status == "PASS"
+    assert by_id["m_context"].status == "PASS"
     assert by_id["hand_clear"].status == "UNKNOWN"
-    assert by_id["m_context"].status == "BLOCKED"
+    assert by_id["yaw_bound"].status == "UNKNOWN"
     assert by_id["permit"].status == "POLICY_HOLD"
     assert by_id["control_ready_policy"].status == "POLICY_HOLD"
     # CLI association on shadow without durable record → association UNKNOWN
@@ -63,10 +69,34 @@ def test_field_shadow_readiness_blocks_and_never_grants_entry():
     gaps = evidence_gap_report(report)
     assert gaps["formal_grasp_entry_allowed"] is False
     assert gaps["control_ready"] is False
-    assert any(g["gate_id"] == "calibration_binding" for g in gaps["blocking_gaps"])
-    assert "BUNDLE_BINDING_MISSING" in report.consumer_reason_union
-    assert "M_CONTEXT_MISSING" in report.consumer_reason_union
+    assert "ERROR_BOUND_UNKNOWN:yaw_rad" in report.consumer_reason_union
     assert "HAND_CLEAR_EVIDENCE_MISSING" in report.consumer_reason_union
+    assert "CALIBRATION_BINDING_MISSING" not in report.consumer_reason_union
+    assert "M_CONTEXT_MISSING" not in report.consumer_reason_union
+
+
+def test_overlay_handclear_association_still_blocks_on_yaw():
+    request = json.loads(OVERLAY.read_text(encoding="utf-8"))
+    shadow = json.loads(SHADOW_BOUND.read_text(encoding="utf-8"))
+    association = json.loads(ASSOC_RECORD.read_text(encoding="utf-8"))
+    report = evaluate_pre_grasp_readiness(
+        request=request,
+        shadow_report=shadow,
+        association_record=association,
+        request_path=str(OVERLAY),
+        shadow_path=str(SHADOW_BOUND),
+        association_path=str(ASSOC_RECORD),
+    )
+    by_id = {g.gate_id: g for g in report.gates}
+    assert by_id["association"].status == "PASS"
+    assert by_id["hand_clear"].status == "PASS"
+    assert by_id["calibration_binding"].status == "PASS"
+    assert by_id["m_context"].status == "PASS"
+    assert by_id["yaw_bound"].status == "UNKNOWN"
+    assert by_id["shadow_inspection"].status != "PASS"
+    assert report.formal_grasp_entry_allowed is False
+    assert report.control_ready is False
+    assert "ERROR_BOUND_UNKNOWN:yaw_rad" in report.consumer_reason_union
 
 
 def test_association_record_without_forging_control_ready():
@@ -88,7 +118,8 @@ def test_association_record_without_forging_control_ready():
     assert by_id["association"].status == "PASS"
     assert report.formal_grasp_entry_allowed is False
     assert report.control_ready is False
-    assert by_id["calibration_binding"].status == "BLOCKED"
+    assert by_id["calibration_binding"].status == "PASS"
+    assert by_id["yaw_bound"].status == "UNKNOWN"
 
 
 def test_association_switch_requires_evidence_fields():

@@ -9,21 +9,24 @@
   "gates": [
     {
       "gate_id": "association",
-      "status": "UNKNOWN",
+      "status": "PASS",
       "software_landed": true,
       "field_or_human_required": true,
       "blocking_for_formal_grasp": true,
-      "detail": "association flag asserted (CLI/request/export) but durable operator association_confirm record missing",
-      "evidence_refs": [],
+      "detail": "operator association record present and matches target/reference",
+      "evidence_refs": [
+        "docs/team/B/evidence/field_20261110/association_confirm_switch_20261110.json",
+        "docs/team/B/evidence/field_20261110/slot_contrast_20261110_214801.zip"
+      ],
       "owner_hint": "operator + V export switch"
     },
     {
       "gate_id": "hand_clear",
-      "status": "UNKNOWN",
+      "status": "PASS",
       "software_landed": true,
       "field_or_human_required": true,
       "blocking_for_formal_grasp": true,
-      "detail": "explicit bool required by consume_handoff; scene_consistent must not be copied; current=None",
+      "detail": "explicit bool required by consume_handoff; scene_consistent must not be copied; current=True",
       "evidence_refs": [],
       "owner_hint": "field evidence / M context"
     },
@@ -103,37 +106,37 @@
       "software_landed": true,
       "field_or_human_required": false,
       "blocking_for_formal_grasp": false,
-      "detail": "request.status='SHADOW_ADOPTED_CAMERA_EXPECTATIONS_UNBOUND_CALIBRATION'; formal/review expectations present=True",
+      "detail": "request.status='SHADOW_ASSOC_HANDCLEAR_CURRENT_CALIBRATION_BOUND_YAW_UNKNOWN'; formal/review expectations present=True",
       "evidence_refs": [],
       "owner_hint": "adopted request shadow"
     },
     {
       "gate_id": "calibration_binding",
-      "status": "BLOCKED",
+      "status": "PASS",
       "software_landed": false,
       "field_or_human_required": true,
       "blocking_for_formal_grasp": true,
-      "detail": "calibration_hash=None; candidate_status='FIT_ONLY_NOT_AN_APPROVED_CURRENT_BINDING'. C35 fit-only sha is not an approved current binding.",
+      "detail": "calibration_hash='a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461'; candidate_status='BOUND_AS_CURRENT_HASH_IDENTITY_ONLY'. C35 fit-only sha is not an approved current binding.",
       "evidence_refs": [],
       "owner_hint": "calibration parallel agent / operator approve"
     },
     {
       "gate_id": "bundle_binding_clock",
-      "status": "BLOCKED",
+      "status": "PASS",
       "software_landed": false,
       "field_or_human_required": true,
       "blocking_for_formal_grasp": true,
-      "detail": "clock_error_bound_s=None; evidence_ref=None; consumer_has_BUNDLE_BINDING_MISSING=True",
+      "detail": "clock_error_bound_s=0.0016864349552430213; evidence_ref='docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json'; consumer_has_BUNDLE_BINDING_MISSING=False",
       "evidence_refs": [],
       "owner_hint": "clock/BundleBinding parallel agent"
     },
     {
       "gate_id": "m_context",
-      "status": "BLOCKED",
+      "status": "PASS",
       "software_landed": true,
       "field_or_human_required": false,
-      "blocking_for_formal_grasp": true,
-      "detail": "consume_handoff context=None or mismatch \u2192 M_CONTEXT_MISSING",
+      "blocking_for_formal_grasp": false,
+      "detail": "no M_CONTEXT_* reasons in consumer diagnostics",
       "evidence_refs": [],
       "owner_hint": "M Context construction (target_id/scope/hashes)"
     },
@@ -143,7 +146,7 @@
       "software_landed": true,
       "field_or_human_required": false,
       "blocking_for_formal_grasp": true,
-      "detail": "verdict_counts={'UNKNOWN': 3}; formal path not cleared",
+      "detail": "verdict_counts={'UNKNOWN': 2, 'PASS': 1}; formal path not cleared",
       "evidence_refs": [],
       "owner_hint": "verify_export + visual_transition.verify"
     },
@@ -153,7 +156,7 @@
       "software_landed": true,
       "field_or_human_required": false,
       "blocking_for_formal_grasp": true,
-      "detail": "shadow_inspection_ready=0; blocked=3; reasons=['BUNDLE_BINDING_MISSING', 'CALIBRATION_BINDING_MISSING', 'ERROR_BOUND_UNKNOWN:yaw_rad', 'HAND_CLEAR_EVIDENCE_MISSING', 'M_CONTEXT_MISSING', 'SCENE_OR_RGBD_NOT_CONFIRMED', 'TIMING_UNKNOWN_STALE_OR_FUTURE']",
+      "detail": "shadow_inspection_ready=0; blocked=3; reasons=['ERROR_BOUND_UNKNOWN:yaw_rad', 'SCENE_OR_RGBD_NOT_CONFIRMED']",
       "evidence_refs": [],
       "owner_hint": "verify_handoff_consumer"
     },
@@ -179,33 +182,22 @@
     }
   ],
   "missing_software": [
-    "association",
-    "hand_clear",
     "yaw_bound",
-    "m_context",
     "formal_verify_path",
     "shadow_inspection",
     "permit",
     "control_ready_policy"
   ],
   "missing_field_or_human": [
-    "association",
-    "hand_clear",
-    "yaw_bound",
-    "calibration_binding",
-    "bundle_binding_clock"
+    "yaw_bound"
   ],
   "consumer_reason_union": [
-    "BUNDLE_BINDING_MISSING",
-    "CALIBRATION_BINDING_MISSING",
     "ERROR_BOUND_UNKNOWN:yaw_rad",
-    "HAND_CLEAR_EVIDENCE_MISSING",
-    "M_CONTEXT_MISSING",
-    "SCENE_OR_RGBD_NOT_CONFIRMED",
-    "TIMING_UNKNOWN_STALE_OR_FUTURE"
+    "SCENE_OR_RGBD_NOT_CONFIRMED"
   ],
   "formal_verdict_counts": {
-    "UNKNOWN": 3
+    "UNKNOWN": 2,
+    "PASS": 1
   },
   "notes": [
     "Readiness reports gaps only; does not grant permit or raise control_ready.",
@@ -215,10 +207,10 @@
     "formal_grasp_entry_allowed is always false here; evidence_gates_clear is diagnostic only."
   ],
   "inputs": {
-    "request_path": "E:/OneDrive/Desktop/brick-stacking-real/brick-stacking-real/config/planning/first_placement_review_request.adopted.json",
-    "shadow_path": "docs/team/B/evidence/field_20261110/slot_contrast_red_s140_shadow_assoc_20261110_214801.json",
-    "association_path": null,
-    "request_status": "SHADOW_ADOPTED_CAMERA_EXPECTATIONS_UNBOUND_CALIBRATION",
+    "request_path": "docs/team/B/evidence/field_20261110/first_placement_request_assoc_handclear_overlay_20261110.json",
+    "shadow_path": "docs/team/B/evidence/field_20261110/slot_contrast_red_s140_shadow_assoc_bound_20261110_214801.json",
+    "association_path": "docs/team/B/evidence/field_20261110/association_confirm_switch_20261110.json",
+    "request_status": "SHADOW_ASSOC_HANDCLEAR_CURRENT_CALIBRATION_BOUND_YAW_UNKNOWN",
     "target_id": "m-first-red-01",
     "reference_id": "table_black_cross_20mm"
   }

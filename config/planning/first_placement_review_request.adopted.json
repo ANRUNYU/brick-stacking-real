@@ -1,6 +1,6 @@
 {
   "schema_version": "m-placement-target-request-draft-1",
-  "status": "SHADOW_ADOPTED_CAMERA_EXPECTATIONS_UNBOUND_CALIBRATION",
+  "status": "SHADOW_ADOPTED_CAMERA_EXPECTATIONS_CURRENT_CALIBRATION_BOUND",
   "target_id": "m-first-red-01",
   "slot_id": "m-first-placement-slot-01",
   "region_id": "m-first-placement-region-01",
@@ -14,10 +14,10 @@
   "epoch": null,
   "profile_hash": "28be42d1dee02baad1816f046eda516f444b142e7cccf01af1444826eaa28aa1",
   "profile_path": "config/vision_profiles/head_replacement_candidate.yaml",
-  "calibration_hash": null,
+  "calibration_hash": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
   "calibration_candidate": {
     "path": "calibration/candidates/C35_left_head_fit_only_user10mm_20261108.json",
-    "status": "FIT_ONLY_NOT_AN_APPROVED_CURRENT_BINDING",
+    "status": "BOUND_AS_CURRENT_HASH_IDENTITY_ONLY",
     "file_sha256": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461"
   },
   "placement_review_reference": {
@@ -73,6 +73,8 @@
     "Unified branch adopts V-proposed camera expectations for shadow verify without waiting for a separate M merge.",
     "calibration_hash remains null; C35 candidate sha is not an approved current binding.",
     "target_association_confirmed stays false until a red block is explicitly associated.",
-    "control_ready stays false; no arm/CAN actions."
-  ]
+    "control_ready stays false; no arm/CAN actions.",
+    "calibration_hash is the active current-binding identity; not accuracy/motion approval."
+  ],
+  "calibration_binding_path": "config/observed/calibration_current_binding_c35_20261110.json"
 }

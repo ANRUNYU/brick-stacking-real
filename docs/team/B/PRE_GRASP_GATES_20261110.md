@@ -4,25 +4,27 @@
 
 **硬约束**：门禁未全过前 `control_ready` 必须保持 `false`；不发运动/CAN；不伪造正式 PASS / permit。
 
-对照证据基线：红块 S140 影子 `docs/team/B/evidence/field_20261110/slot_contrast_red_s140_shadow_assoc_20261110_214801.json`（3/3 MATCH，xy≈7 mm；正式 UNKNOWN；消费 BLOCKED）。
+**裁决标注**：操作员授权 AI 代裁决（「你来自己决定不用问我」）。
+
+对照证据（bound overlay）：`docs/team/B/evidence/field_20261110/slot_contrast_red_s140_shadow_assoc_bound_20261110_214801.json`（3/3 MATCH；消费仍 BLOCKED，仅剩 yaw / 部分 SCENE）。
 
 | 门禁 | 接口/字段 | 软件现状 | 阻塞？ | 备注 |
 | --- | --- | --- | --- | --- |
-| association | `target_association_confirmed` + 操作员记录 | 脚本开关已落地；adopted 仍 false；assoc 影子可 CLI 置 true，但缺 durable operator record → readiness=UNKNOWN | 是 | 单 VALID 候选 ≠ 关联；见 FIELD_OPS |
-| hand_clear | handoff `hand_clear: bool` | 现 null；consumer 缺则 `HAND_CLEAR_EVIDENCE_MISSING` | 是 | 不可用 `scene_consistent` 冒充 |
+| association | `target_association_confirmed` + 操作员记录 | durable `association_confirm_switch_20261110.json` → PASS | 已过（代裁决） | reference=`table_black_cross_20mm`；target=`m-first-red-01` |
+| hand_clear | handoff `hand_clear: bool` | overlay + `hand_clear_arm_idle_evidence_20261110.json` → PASS | 已过（代裁决） | 依据=`arm_idle/no_motion`；非 scene_consistent |
 | support_ok | handoff / post_place | null；Inspection 可保留 None | 否（FAIL 才阻塞） | post_place 更关键 |
 | stable | handoff / 稳定窗口 | null；pre_grasp 记缺口 | 否（FAIL 才阻塞） | post_place 必需 |
 | neighbors_unchanged | handoff | null | 否 | 显式证据 |
-| yaw_bound | `yaw_rad` MEASURED | UNKNOWN（90° 对称） | 是（Inspection） | 需朝向策略或人工确认 |
+| yaw_bound | `yaw_rad` MEASURED | UNKNOWN（90° 对称） | **是（Inspection）** | **未伪造 PASS**；无有界测量 |
 | xy/height | LocalizedReview ErrorBound | 红对照 MEASURED，xy≈6.7–7.2 mm | 对照已过 | 正式 verify 另路 |
-| color_match | color_check | S140 诊断 3/3 MATCH | 对照已过 | 生产 HSV S≥160 仍 0 VALID |
+| color_match | color_check | S140 诊断 3/3 MATCH | 对照已过 | 会话临时 S140；生产默认未改 |
 | reference_id | `table_black_cross_20mm` | 已确认并采纳 | 已过 | |
 | expected_pose_adopted | adopted request formal/review | 已采纳相机系期望 | 已过 | formal=`model_center`；review=`visible_top_center` |
-| calibration_binding | `calibration_hash` 当前绑定 | null；C35 仅候选 sha | **是** | **依赖并行 calibration 工作** |
-| bundle_binding_clock | BundleBinding + `clock_error_bound_s` + evidence_ref | 对照包 timing bound/ref 空 → `BUNDLE_BINDING_MISSING` | **是** | **依赖并行 clock/BundleBinding** |
-| m_context | `Context(target_id, scope, hashes…)` | shadow pipeline `context=None` → `M_CONTEXT_MISSING` | 是 | 软件可补 Context；勿伪造 hash |
-| formal_verify_path | `visual_transition.verify` | 正式仍 UNKNOWN（缺 association/calibration/clock 等） | 是 | 位置 PASS ≠ 抓取许可 |
-| shadow_inspection | `SHADOW_INSPECTION_READY` | 现全部 BLOCKED | 是 | 见 consumer reasons |
+| calibration_binding | `calibration_hash` 当前绑定 | `CURRENT_BINDING_ACTIVE` a8711b80… | 已过（代裁决） | hash 身份 only；非精度批准 |
+| bundle_binding_clock | BundleBinding + `clock_error_bound_s` + evidence_ref | S140 3/3 binding_present | 已过 | |
+| m_context | `Context(target_id, scope, hashes…)` | `--build-m-context` 最小合法 Context | 已过（影子） | 勿伪造 hash |
+| formal_verify_path | `visual_transition.verify` | 1 PASS / 2 UNKNOWN（SCENE） | **是** | 位置 PASS ≠ 抓取许可 |
+| shadow_inspection | `SHADOW_INSPECTION_READY` | 仍 BLOCKED（yaw±SCENE） | **是** | 见 consumer reasons |
 | permit | permit | 恒 null | 是（策略） | 本工具永不签发 |
 | control_ready_policy | control_ready | 恒 false | 是（策略） | 本工具永不抬升 |
 
@@ -35,14 +37,23 @@ python tools/association_confirm_switch.py \
   --evidence-ref docs/team/B/evidence/field_20261110/slot_contrast_20261110_214801.zip \
   --output docs/team/B/evidence/field_20261110/association_confirm_switch_20261110.json
 
-# 影子复检（已有）
+# 标定当前绑定（ACTIVE；不抬 control_ready）
+python tools/approve_calibration_current_binding.py \
+  --live-serial CP2L863000KL --attest-live-serial --attest-current-binding \
+  --activate --write --force --update-adopted-request
+
+# 影子复检（binding + M Context）
 python tools/slot_shadow_pipeline.py <bundles.jsonl> \
   --association-confirmed \
-  --output docs/team/B/evidence/field_20261110/slot_contrast_red_s140_shadow_assoc_….json
+  --calibration-binding config/observed/calibration_current_binding_c35_20261110.json \
+  --build-m-context \
+  --request docs/team/B/evidence/field_20261110/first_placement_request_assoc_handclear_overlay_20261110.json \
+  --output docs/team/B/evidence/field_20261110/slot_contrast_red_s140_shadow_assoc_bound_….json
 
 # 缺口 / readiness（永不 control_ready=true）
 python tools/pre_grasp_readiness.py \
-  --shadow docs/team/B/evidence/field_20261110/slot_contrast_red_s140_shadow_assoc_20261110_214801.json \
+  --request docs/team/B/evidence/field_20261110/first_placement_request_assoc_handclear_overlay_20261110.json \
+  --shadow docs/team/B/evidence/field_20261110/slot_contrast_red_s140_shadow_assoc_bound_20261110_214801.json \
   --association-record docs/team/B/evidence/field_20261110/association_confirm_switch_20261110.json \
   --output docs/team/B/evidence/field_20261110/pre_grasp_readiness_20261110.json
 

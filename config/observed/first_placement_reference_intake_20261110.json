@@ -5,16 +5,17 @@
   "camera_mount_continuity": {
     "status": "OPERATOR_CONFIRMED_UNCHANGED_RELATIVE_TO_ROBOT_BASE",
     "since": "C35 calibration on 2026-11-08",
-    "operator_statement": "确认未变化",
+    "operator_statement": "\u786e\u8ba4\u672a\u53d8\u5316",
     "expected_camera_serial": "CP2L863000KL",
-    "current_device_serial_checked": false,
-    "does_not_prove_independent_calibration_accuracy": true
+    "current_device_serial_checked": true,
+    "does_not_prove_independent_calibration_accuracy": true,
+    "current_device_serial": "CP2L863000KL"
   },
   "calibration_candidate": {
     "path": "calibration/candidates/C35_left_head_fit_only_user10mm_20261108.json",
     "file_sha256": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
     "independent_validation_accepted": false,
-    "current_session_binding": null
+    "current_session_binding": "config/observed/calibration_current_binding_c35_20261110.json"
   },
   "target_slot": {
     "status": "OPERATOR_DEFINED_BLACK_CROSS_TABLE_CENTER",
