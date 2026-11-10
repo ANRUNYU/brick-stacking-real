@@ -12,6 +12,7 @@
 - [A个人任务](team/A.md)、[B个人任务](team/B.md)、[C个人任务](team/C.md)、[D个人任务](team/D.md)。
 - [任务看板](TASK_BOARD.md)及[机器可读任务](team/tasks_20261107.json)：36项计划任务，每人两阶段各10个相对点；不是工期承诺。
 - [公共契约提案](CONTRACTS.md)、[合并点](MERGE_PLAN.md)、[验收建议](ACCEPTANCE.md)、[Git目录归属](GIT_WORKFLOW.md)。
+- **[两线开发至首次完整单块抓放](THREE_TRACK_GRASP_DEV_PLAN.md)（2026-11-10）**：V 视觉 / M 运动栈（手眼+路径+执行）；含握手点、时序图、误差预算与「不达标改方法、不放宽门控」规则。
 
 新计划M0—M6是两个阶段中的合并点，与旧设计的同名阶段含义不同。tasks.json中的TODO是初始计划模板，领取前须对照当前main、已有分支/PR和验证证据更新；不能把已通过的软件任务重新开发，也不能把已有Mock当真机通过。
 
