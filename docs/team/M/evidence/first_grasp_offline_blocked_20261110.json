@@ -1,0 +1,47 @@
+{
+  "schema_version": "m-first-grasp-plan-bundle-diagnostic-1",
+  "source": "recorded",
+  "input_refs": {
+    "localized": "e7325fef10de42e529a1459ee1c224732365e89f245d6460870c3b97be0b26df",
+    "c35": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
+    "c49": "a807c99204a3917e99e5810dc5a3ccc347bc097a0b1619c07b7878ea0f43788c",
+    "h0": "b44c207046beb86fb95e18846f06928af985cad5891f2ddf2930b726c1fd9cd7",
+    "localized_report": "docs/team/M/evidence/H0_C35_single_red_20261110.json"
+  },
+  "localization_frame": "L_arm_root",
+  "localization_points_ref": "docs/team/M/evidence/H0_C35_single_red_20261110.json",
+  "grasp_version": "left_o6_pinch_50mm_raw_245_58_246_246_254_254_v1",
+  "flange_frame": "L8_Link",
+  "grasp_transform_direction": "T_flange_block; target flange = T_base_block @ inverse(T_flange_block)",
+  "temporary_C35_point_offset_used_as_TCP": false,
+  "flange_targets": null,
+  "plan_result": null,
+  "error_budgets_m": {
+    "camera_fit_max": 0.01,
+    "camera_independent_validation_max": 0.01,
+    "top_center_planar_max": 0.01,
+    "top_center_table_height_max": 0.008,
+    "cartesian_arrival_max": 0.01,
+    "placement_planar_max": 0.015
+  },
+  "diagnostic_receive_freshness_s": 2.564,
+  "freshness_policy_status": "diagnostic_receive_based_pending_exposure_clock",
+  "status": "BLOCKED_FOR_EXECUTION",
+  "reasons": [
+    "BLOCK_ORIENTATION_POLICY_NOT_BOUND",
+    "C35_NOT_INDEPENDENTLY_VALIDATED_AND_APPROVED",
+    "C49_GRASP_EXECUTION_ACCEPTANCE_PENDING",
+    "CLOCK_ERROR_BOUND_UNKNOWN",
+    "CURRENT_SEVEN_AXIS_STATE_NOT_BOUND",
+    "EXPOSURE_LATENCY_BOUND_UNKNOWN",
+    "IK_TRAJECTORY_AND_FULL_COLLISION_NOT_PROVIDED",
+    "INDEPENDENT_RULER_REFERENCE_MISSING",
+    "REAL_PORT_AND_STOP_POLICY_NOT_BOUND",
+    "TABLE_AND_FULL_ENVIRONMENT_MODEL_NOT_BOUND"
+  ],
+  "permit": null,
+  "permit_request_allowed": false,
+  "motion_enabled": false,
+  "control_ready": false,
+  "bundle_sha256": "324ec6d8efe37076f6f3970c9da7c992c09eac57900d4375444dceebac4db439"
+}
