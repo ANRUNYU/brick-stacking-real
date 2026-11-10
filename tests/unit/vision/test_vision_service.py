@@ -54,6 +54,8 @@ def test_continuous_replay_publishes_all_frames_and_keeps_latency_null(tmp_path)
     assert len(bundles) == 3
     assert summary["published"] == 3
     assert summary["rejected"] == []
+    assert summary["preserved_host_clocks"] is False
+    assert summary["clock_error_bound_s"] is None
     assert summary["control_ready"] is False
     assert summary["independent_scene_validation"] is False
     assert summary["online_metrics"]["exposure_to_output_s"] is None
@@ -62,8 +64,44 @@ def test_continuous_replay_publishes_all_frames_and_keeps_latency_null(tmp_path)
         assert row["control_ready"] is False
         assert row["exposure_to_output_s"] is None
         assert row["valid_blocks"] >= 1
+        assert row["output_monotonic_s"] is not None
     saved = json.loads(report.read_text(encoding="utf-8"))
     assert saved["profile_hash"] == summary["profile_hash"]
+
+
+def test_field_preserve_clock_replay_fills_binding_timing():
+    from brick_stacking.planning.placement_bridge import BundleBinding, audit_bundle
+
+    field = ROOT / "docs/team/B/evidence/field_20261110/slot_contrast_20261110_214801/rgbd"
+    npz = sorted(field.glob("observed_00_*.npz"))
+    config = ROOT / "config/vision_profiles/head_slot_contrast_s140.yaml"
+    if len(npz) < 3 or not config.is_file():
+        pytest.skip("field slot-contrast NPZ / S140 profile unavailable")
+    rows, summary = replay_recordings(
+        npz, config_path=config, max_receive_age_s=3., max_pair_skew_s=.05,
+    )
+    assert summary["preserved_host_clocks"] is True
+    assert summary["published"] == 3
+    assert summary["clock_error_bound_s"] is not None
+    assert summary["control_ready"] is False
+    for row in rows:
+        timing = row["bundle"]["timing"]
+        assert timing["validity"] == "VALID"
+        assert timing["error_bound_evidence_ref"]
+        assert timing["output_monotonic_s"] is not None
+        assert timing["exposure_host_stamp_s"] is not None
+        assert timing["exposure_to_output_s"] is not None
+        rgbd = row["bundle"]["rgbd"]
+        binding = BundleBinding(
+            rgbd["device_id"], rgbd["frame_id"], rgbd["epoch"], timing["host_boot_epoch"],
+            row["bundle"]["profile_hash"], timing["error_bound_evidence_ref"], 2.656,
+        )
+        report = audit_bundle(
+            row["bundle"], binding, now_s=timing["output_monotonic_s"], expected_color="red",
+        )
+        assert "BUNDLE_BINDING_MISSING" not in report["problems"]
+        assert "TIMING_UNKNOWN_STALE_OR_FUTURE" not in report["problems"]
+    assert sum(row["valid_blocks"] for row in rows) == 3
 
 
 def test_vision_session_get_observation_expires():

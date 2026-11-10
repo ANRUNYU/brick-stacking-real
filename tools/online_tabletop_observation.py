@@ -6,15 +6,15 @@ from threading import Event, Thread
 import numpy as np
 
 from brick_stacking.models.camera_frame import CameraFrame
-from brick_stacking.vision.clock_error_bound import load_observation_timing_bound
+from brick_stacking.vision.clock_error_bound import (
+    DEFAULT_CLOCK_BOUND_EVIDENCE,
+    load_observation_timing_bound,
+    resolve_clock_bound_evidence_path,
+)
 from brick_stacking.vision.latest_frame_pipeline import LatestFramePipeline
 from brick_stacking.vision.observation_exchange import CaptureContext, profile_hash
 from brick_stacking.vision.scene_consistency import SceneConsistencyMonitor
 from brick_stacking.vision.tabletop_segmentation import TabletopDetector
-
-DEFAULT_CLOCK_BOUND_EVIDENCE = (
-    "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json"
-)
 
 
 def observe(output, report, config, *, max_age_s, max_skew_s, reconnects, capture_attempt,
@@ -27,9 +27,10 @@ def observe(output, report, config, *, max_age_s, max_skew_s, reconnects, captur
     )
     boot_path = Path("/proc/sys/kernel/random/boot_id")
     boot_epoch = boot_path.read_text(encoding="ascii").strip() if boot_path.is_file() else None
-    evidence_path = Path(clock_bound_evidence or config.get("clock_error_bound_evidence")
-                         or DEFAULT_CLOCK_BOUND_EVIDENCE)
-    timing_bound = load_observation_timing_bound(evidence_path) if evidence_path.is_file() else None
+    evidence_hint = (clock_bound_evidence or config.get("clock_error_bound_evidence")
+                     or DEFAULT_CLOCK_BOUND_EVIDENCE)
+    evidence_path = resolve_clock_bound_evidence_path(evidence_hint)
+    timing_bound = load_observation_timing_bound(evidence_path) if evidence_path else None
     report["capture_attempts"] = []
     report["observation_count"] = 0
     report["limits"] = {"max_receive_age_s": max_age_s, "max_pair_skew_s": max_skew_s,
@@ -41,6 +42,10 @@ def observe(output, report, config, *, max_age_s, max_skew_s, reconnects, captur
             "control_ready": False,
         }
     )
+    if timing_bound is None:
+        report["clock_error_bound_unavailable_reason"] = (
+            f"accepted study not found or not accepted: {evidence_hint}"
+        )
     event_path = output / "observation_bundles.jsonl"
     with event_path.open("w", encoding="utf-8") as events:
         for attempt in range(reconnects + 1):

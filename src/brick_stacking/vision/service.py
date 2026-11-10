@@ -35,8 +35,12 @@ def detect_blocks(frame, profile):
 
 
 def replay(recording, *, config_path, recorded=True, stale=False,
-           report_path=None, image_ref=None) -> ObservationBundle:
-    """Rebuild one ObservationBundle from an NPZ recording without inventing timing bounds."""
+           report_path=None, image_ref=None, clock_bound_evidence=None) -> ObservationBundle:
+    """Rebuild one ObservationBundle from an NPZ recording.
+
+    Optional accepted clock study fills timing bound/evidence. Single-frame replay
+    still omits output_monotonic_s; use replay_recordings for binding-capable stamps.
+    """
     path = Path(recording)
     frame, metadata = RecordedCamera.read_recording(path)
     profile, digest, name = load_tabletop_profile(config_path)
@@ -45,8 +49,15 @@ def replay(recording, *, config_path, recorded=True, stale=False,
     if report_file.is_file():
         import json
         report = json.loads(report_file.read_text(encoding="utf-8"))
+    patched = dict(metadata)
+    if clock_bound_evidence is not None:
+        from brick_stacking.vision.clock_error_bound import load_observation_timing_bound
+        timing_bound = load_observation_timing_bound(clock_bound_evidence)
+        if timing_bound is not None:
+            patched["clock_error_bound_s"] = timing_bound[0]
+            patched["error_bound_evidence_ref"] = timing_bound[1]
     context = CaptureContext.from_recording(
-        frame, metadata,
+        frame, patched,
         image_ref=image_ref or path.as_posix(),
         profile=name, profile_hash=digest, report=report,
     )

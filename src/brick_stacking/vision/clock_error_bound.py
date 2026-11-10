@@ -13,25 +13,80 @@ ACCEPTED_FOR_OBSERVATION_TIMING = {
     "ACCEPTED_FOR_OBSERVATION_TIMING",
     "PROVISIONAL_MULTI_SESSION_DIAGNOSTIC",
 }
+REPO_ROOT = Path(__file__).resolve().parents[3]
+DEFAULT_CLOCK_BOUND_EVIDENCE = (
+    "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json"
+)
 
 
-def load_observation_timing_bound(path: Path | str):
+def resolve_clock_bound_evidence_path(path: Path | str | None = None) -> Path | None:
+    """Resolve study path against cwd, then repo root. Missing → None (never invent)."""
+    raw = Path(path or DEFAULT_CLOCK_BOUND_EVIDENCE)
+    candidates = [raw]
+    if not raw.is_absolute():
+        candidates.append(REPO_ROOT / raw)
+    for candidate in candidates:
+        if candidate.is_file():
+            return candidate
+    return None
+
+
+def load_observation_timing_bound(path: Path | str | None = None):
     """Return (bound_s, evidence_ref) when a study may fill ObservationBundle timing.
 
-    Does not authorize control_ready or motion.
+    Does not authorize control_ready or motion. Relative paths try cwd then repo root
+    so SSH/capture scripts that do not chdir into the checkout still find the study.
     """
-    path = Path(path)
-    report = json.loads(path.read_text(encoding="utf-8"))
+    resolved = resolve_clock_bound_evidence_path(path)
+    if resolved is None:
+        return None
+    report = json.loads(resolved.read_text(encoding="utf-8"))
     bound = report.get("clock_error_bound_s")
     acceptance = report.get("acceptance")
     if bound is None or bound < 0 or acceptance not in ACCEPTED_FOR_OBSERVATION_TIMING:
         return None
-    ref = path.as_posix()
-    try:
-        ref = path.resolve().relative_to(Path.cwd().resolve()).as_posix()
-    except ValueError:
-        pass
+    ref = resolved.as_posix()
+    for base in (Path.cwd().resolve(), REPO_ROOT.resolve()):
+        try:
+            ref = resolved.resolve().relative_to(base).as_posix()
+            break
+        except ValueError:
+            continue
     return float(bound), ref
+
+
+def attach_accepted_timing_bound(bundle: dict, path: Path | str | None = None) -> bool:
+    """Fill null clock bound/evidence on a bundle that already has exposure mapping.
+
+    Requires exposure_host_stamp_s. Optionally checks host_boot_epoch against the study.
+    Never invents output_monotonic_s. Does not raise control_ready.
+    """
+    loaded = load_observation_timing_bound(path)
+    if loaded is None:
+        return False
+    bound, ref = loaded
+    timing = bundle.setdefault("timing", {})
+    exposure = timing.get("exposure_host_stamp_s")
+    if exposure is None:
+        return False
+    if timing.get("clock_error_bound_s") is not None or timing.get("error_bound_evidence_ref"):
+        return (
+            timing.get("clock_error_bound_s") == bound
+            and timing.get("error_bound_evidence_ref") == ref
+            and timing.get("validity") == "VALID"
+        )
+    study_path = resolve_clock_bound_evidence_path(path)
+    study = json.loads(study_path.read_text(encoding="utf-8")) if study_path else {}
+    epochs = study.get("host_boot_epochs") or []
+    boot = timing.get("host_boot_epoch")
+    if epochs and boot is not None and boot not in epochs:
+        return False
+    timing["clock_error_bound_s"] = bound
+    timing["error_bound_evidence_ref"] = ref
+    timing["validity"] = "VALID"
+    timing["reason"] = None
+    bundle["control_ready"] = False
+    return True
 
 
 def _pct(values, q):

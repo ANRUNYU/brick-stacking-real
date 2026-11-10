@@ -7,7 +7,7 @@
 | #16 / #8 | [H0 草案](evidence/first_grasp_h0_draft.json) **V+M 已 ACK 预算**（`control_ready` 仍 false）。Fixture 索引、三帧 C 录包样例、四类状态与契约门面 `vision.service`。 | 时钟误差界与标定 hash 仍缺；C/D 审查字段及样例 |
 | #7 / #17 | 两会话联采后 [时钟研究](evidence/field_20261110/clock_error_bound_study_v0.1.json) **≈1.69 ms** 已写入在线观测；短采冒烟 16/16 `timing.validity=VALID`（见 [live smoke](evidence/field_20261110/clock_bound_live_smoke_20261110.json)）。`control_ready` 仍 false。 | M 完成独立对尺；标定 hash 仍缺 |
 | #9 / #20 | **exposure→output** p50≈0.69 s / max≈1.33 s；诊断 freshness 门建议 **2.656 s**（max×2）。在线 freshness 在有 bound 时按曝光候选计龄。 | H0 正式冻结 freshness；M 路径模板 #20 |
-| #10 | 点语义冻结；十字已确认；期望已 shadow 采纳；红块居中对照完成（S140）；统一影子管线已复检；pre_grasp 门禁清单 + readiness/association 开关已落地（见 [PRE_GRASP_GATES](PRE_GRASP_GATES_20261110.md) / [FIELD_OPS](FIELD_OPS_PRE_GRASP_20261110.md)）。进度 [UNIFIED_SLOT_PROGRESS](UNIFIED_SLOT_PROGRESS_20261110.md)。 | calibration 当前绑定仍缺；录包 clock evidence 不完整；association durable/hand_clear/yaw/M context；post_place 需释放/稳定；`control_ready` 仍 false |
+| #10 | 点语义冻结；十字已确认；期望已 shadow 采纳；红块居中对照完成（S140）；统一影子管线已复检；pre_grasp 门禁清单 + readiness/association 开关已落地；S140 preserve-clock 回放已可构造 BundleBinding（见 [UNIFIED_SLOT_PROGRESS](UNIFIED_SLOT_PROGRESS_20261110.md)）。 | calibration 当前绑定仍缺；association durable/hand_clear/yaw/M context；post_place 需释放/稳定；`control_ready` 仍 false |
 | #18 / #19 | 提供观测与复检接口供 M 线接入。 | 由 M 按 H5、H6 和 T1–T5 逐级验收 |
 | #11 | 三帧既有开发录包已登记 SHA-256 与原始出处。 | 独立布局、物理参考及逐条件报告，首抓后验收 |
 
