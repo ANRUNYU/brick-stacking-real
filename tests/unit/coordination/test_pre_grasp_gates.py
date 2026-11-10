@@ -36,6 +36,25 @@ def test_gate_catalog_covers_required_ids():
     assert required.issubset(set(GATE_IDS))
 
 
+def test_s140_npz_scene_consistency_is_warmup_not_shift():
+    """Field S140 NPZ replay: required_frames=3 → first two WARMING_UP, last CONFIRMED."""
+    bundles = FIELD / "slot_contrast_red_s140_20261110_214801_observation_bundles_bound.jsonl"
+    rows = [
+        json.loads(line)
+        for line in bundles.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    assert len(rows) == 3
+    scenes = [(row.get("timing") or {}).get("scene_consistency") or {} for row in rows]
+    assert [s.get("state") for s in scenes] == ["WARMING_UP", "WARMING_UP", "CONFIRMED"]
+    assert [s.get("consecutive_frames") for s in scenes] == [1, 2, 3]
+    assert [s.get("scene_consistent") for s in scenes] == [False, False, True]
+    # Agreement path, not gap/shift rejection.
+    assert scenes[0]["reason"] == "initial_observation"
+    assert scenes[1]["reason"] == "consecutive_current_observations_agree"
+    assert scenes[2]["reason"] == "consecutive_current_observations_agree"
+
+
 def test_field_shadow_readiness_blocks_and_never_grants_entry():
     # Adopted alone still lacks durable association/hand_clear overlay fields.
     request = json.loads(ADOPTED.read_text(encoding="utf-8"))
@@ -94,9 +113,54 @@ def test_overlay_handclear_association_still_blocks_on_yaw():
     assert by_id["m_context"].status == "PASS"
     assert by_id["yaw_bound"].status == "UNKNOWN"
     assert by_id["shadow_inspection"].status != "PASS"
+    # S140: frames 0-1 WARMING_UP, frame 2 CONFIRMED → formal path adopts confirmed PASS only.
+    assert by_id["formal_verify_path"].status == "PASS"
+    assert "warmup_or_unconfirmed_skipped=2" in by_id["shadow_inspection"].detail
     assert report.formal_grasp_entry_allowed is False
     assert report.control_ready is False
     assert "ERROR_BOUND_UNKNOWN:yaw_rad" in report.consumer_reason_union
+    # Warmup SCENE_OR_RGBD_NOT_CONFIRMED must not remain a session-level blocker.
+    assert "SCENE_OR_RGBD_NOT_CONFIRMED" not in report.consumer_reason_union
+
+
+def test_readiness_skips_warmup_scene_and_accepts_confirmed_ready():
+    """required_frames warmup is expected; only scene_consistent frames gate readiness."""
+    request = json.loads(OVERLAY.read_text(encoding="utf-8"))
+    shadow = json.loads(SHADOW_BOUND.read_text(encoding="utf-8"))
+    # Keep warmup rows BLOCKED on SCENE; promote confirmed frame to ready with MEASURED yaw.
+    assert shadow["export"]["localized_review_handoffs"][0]["scene_consistent"] is False
+    assert shadow["export"]["localized_review_handoffs"][1]["scene_consistent"] is False
+    assert shadow["export"]["localized_review_handoffs"][2]["scene_consistent"] is True
+    confirmed = shadow["export"]["localized_review_handoffs"][2]
+    confirmed["yaw_rad"] = {"value": 0.0, "bound": 0.05, "status": "MEASURED"}
+    shadow["consumption"][2]["diagnostic"] = {
+        "status": "SHADOW_INSPECTION_READY",
+        "reasons": [],
+        "formal_placement_verdict": "UNKNOWN",
+        "control_ready": False,
+        "motion_enabled": False,
+        "permit": None,
+    }
+    shadow["consumption_summary"] = {
+        "n": 3,
+        "blocked": 2,
+        "shadow_inspection_ready": 1,
+    }
+    association = json.loads(ASSOC_RECORD.read_text(encoding="utf-8"))
+    report = evaluate_pre_grasp_readiness(
+        request=request,
+        shadow_report=shadow,
+        association_record=association,
+    )
+    by_id = {g.gate_id: g for g in report.gates}
+    assert by_id["formal_verify_path"].status == "PASS"
+    assert by_id["shadow_inspection"].status == "PASS"
+    assert by_id["yaw_bound"].status == "PASS"
+    assert "SCENE_OR_RGBD_NOT_CONFIRMED" not in report.consumer_reason_union
+    # Policy gates still hold; never forge grasp entry.
+    assert by_id["permit"].status == "POLICY_HOLD"
+    assert report.formal_grasp_entry_allowed is False
+    assert report.control_ready is False
 
 
 def test_association_record_without_forging_control_ready():

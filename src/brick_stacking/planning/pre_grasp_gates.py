@@ -82,14 +82,72 @@ def _handoff_rows(shadow: dict[str, Any] | None) -> list[dict[str, Any]]:
     return list(export.get("localized_review_handoffs") or [])
 
 
-def _consumption_reasons(shadow: dict[str, Any] | None) -> list[str]:
+def _scene_consistent_indices(handoffs: list[dict[str, Any]]) -> list[int]:
+    """Indices where monitor reached CONFIRMED (required_frames consecutive agree).
+
+    Earlier WARMING_UP frames are expected non-candidates under required_frames>=2;
+    they must not be forged to scene_consistent=true and must not block readiness
+    once a later confirmed frame exists.
+    """
+    return [i for i, row in enumerate(handoffs) if row.get("scene_consistent") is True]
+
+
+def _preferred_handoff(handoffs: list[dict[str, Any]]) -> dict[str, Any]:
+    """Prefer the latest scene_consistent handoff; else first row (honest gap)."""
+    consistent = [row for row in handoffs if row.get("scene_consistent") is True]
+    if consistent:
+        return consistent[-1]
+    return handoffs[0] if handoffs else {}
+
+
+def _consumption_reasons(
+    shadow: dict[str, Any] | None,
+    *,
+    eligible_indices: list[int] | None = None,
+) -> list[str]:
     if not shadow:
         return []
+    rows = list(shadow.get("consumption") or [])
+    if eligible_indices is None:
+        selected = rows
+    else:
+        selected = [rows[i] for i in eligible_indices if 0 <= i < len(rows)]
+        # No confirmed frame yet: keep full union so SCENE warmup gap stays visible.
+        if not selected:
+            selected = rows
     reasons: list[str] = []
-    for row in shadow.get("consumption") or []:
+    for row in selected:
         diagnostic = row.get("diagnostic") or {}
         reasons.extend(diagnostic.get("reasons") or [])
     return sorted(set(reasons))
+
+
+def _eligible_consumption_counts(
+    shadow: dict[str, Any] | None,
+    eligible_indices: list[int],
+) -> tuple[int, int, int]:
+    """Return (ready_n, blocked_n, warmup_skipped) over scene_consistent frames only."""
+    rows = list((shadow or {}).get("consumption") or [])
+    if not eligible_indices:
+        ready_n = sum(
+            1
+            for row in rows
+            if (row.get("diagnostic") or {}).get("status") == "SHADOW_INSPECTION_READY"
+        )
+        blocked_n = sum(
+            1 for row in rows if (row.get("diagnostic") or {}).get("status") == "BLOCKED"
+        )
+        return ready_n, blocked_n, 0
+    eligible = [rows[i] for i in eligible_indices if 0 <= i < len(rows)]
+    ready_n = sum(
+        1
+        for row in eligible
+        if (row.get("diagnostic") or {}).get("status") == "SHADOW_INSPECTION_READY"
+    )
+    blocked_n = sum(
+        1 for row in eligible if (row.get("diagnostic") or {}).get("status") == "BLOCKED"
+    )
+    return ready_n, blocked_n, max(0, len(rows) - len(eligible_indices))
 
 
 def evaluate_pre_grasp_readiness(
@@ -104,8 +162,9 @@ def evaluate_pre_grasp_readiness(
     """Assemble gate status from adopted request + optional shadow/association artifacts."""
     req = request or {}
     handoffs = _handoff_rows(shadow_report)
-    first = handoffs[0] if handoffs else {}
-    reasons = _consumption_reasons(shadow_report)
+    consistent_idx = _scene_consistent_indices(handoffs)
+    first = _preferred_handoff(handoffs)
+    reasons = _consumption_reasons(shadow_report, eligible_indices=consistent_idx)
     export = (shadow_report or {}).get("export") or {}
     verdict_counts = dict(export.get("verification_verdict_counts") or {})
     color_counts = dict(export.get("color_check_counts") or {})
@@ -387,18 +446,45 @@ def evaluate_pre_grasp_readiness(
     )
 
     # --- formal verify path ---
-    unknown_n = int(verdict_counts.get("UNKNOWN") or 0)
-    pass_n = int(verdict_counts.get("PASS") or 0)
+    # Warmup frames stay UNKNOWN (reference_confirmed requires scene_consistent).
+    # Gate only on scene_consistent frames; do not lower required_frames / forge confirm.
+    evidence_rows = list(export.get("verification_evidence") or [])
+    if consistent_idx and evidence_rows:
+        confirmed_verdicts = [
+            (evidence_rows[i] or {}).get("verdict")
+            for i in consistent_idx
+            if i < len(evidence_rows)
+        ]
+        pass_n = sum(1 for v in confirmed_verdicts if v == "PASS")
+        unknown_n = sum(1 for v in confirmed_verdicts if v == "UNKNOWN")
+        fail_n = sum(1 for v in confirmed_verdicts if v == "FAIL")
+        formal_counts = {
+            "PASS": pass_n,
+            "UNKNOWN": unknown_n,
+            "FAIL": fail_n,
+            "warmup_skipped": max(0, len(handoffs) - len(consistent_idx)),
+        }
+    else:
+        pass_n = int(verdict_counts.get("PASS") or 0)
+        unknown_n = int(verdict_counts.get("UNKNOWN") or 0)
+        fail_n = int(verdict_counts.get("FAIL") or 0)
+        formal_counts = dict(verdict_counts)
     if not handoffs:
         formal_status = "UNKNOWN"
         formal_detail = "no verification_evidence loaded"
-    elif pass_n > 0 and unknown_n == 0 and int(verdict_counts.get("FAIL") or 0) == 0:
+    elif pass_n > 0 and unknown_n == 0 and fail_n == 0:
         # Even if formal PASS appears, readiness still refuses control_ready elevation here.
         formal_status = "PASS"
-        formal_detail = f"verdict_counts={verdict_counts} (position_only scope possible)"
+        formal_detail = (
+            f"scene_consistent_verdicts={formal_counts}; "
+            f"raw_verdict_counts={verdict_counts} (position_only scope possible)"
+        )
     else:
         formal_status = "UNKNOWN"
-        formal_detail = f"verdict_counts={verdict_counts}; formal path not cleared"
+        formal_detail = (
+            f"scene_consistent_verdicts={formal_counts}; "
+            f"raw_verdict_counts={verdict_counts}; formal path not cleared"
+        )
     gates.append(
         gate(
             "formal_verify_path",
@@ -412,9 +498,12 @@ def evaluate_pre_grasp_readiness(
     )
 
     # --- shadow inspection / permit / control_ready policy ---
-    ready_n = int(((shadow_report or {}).get("consumption_summary") or {}).get("shadow_inspection_ready") or 0)
-    blocked_n = int(((shadow_report or {}).get("consumption_summary") or {}).get("blocked") or 0)
-    insp_ok = ready_n > 0 and blocked_n == 0
+    # Only scene_consistent frames are readiness candidates; WARMING_UP
+    # SCENE_OR_RGBD_NOT_CONFIRMED is expected and skipped (not a safety relax).
+    ready_n, blocked_n, warmup_skipped = _eligible_consumption_counts(
+        shadow_report, consistent_idx
+    )
+    insp_ok = ready_n > 0 and blocked_n == 0 and bool(consistent_idx)
     gates.append(
         gate(
             "shadow_inspection",
@@ -422,7 +511,11 @@ def evaluate_pre_grasp_readiness(
             software=True,
             field=False,
             blocking=not insp_ok,
-            detail=f"shadow_inspection_ready={ready_n}; blocked={blocked_n}; reasons={reasons}",
+            detail=(
+                f"shadow_inspection_ready={ready_n}; blocked={blocked_n}; "
+                f"warmup_or_unconfirmed_skipped={warmup_skipped}; "
+                f"scene_consistent_frames={len(consistent_idx)}; reasons={reasons}"
+            ),
             owner="verify_handoff_consumer",
         )
     )
@@ -491,6 +584,7 @@ def evaluate_pre_grasp_readiness(
         "Calibration binding and BundleBinding/clock are parallel dependencies.",
         "hand_clear/support/stable/neighbors are never inferred from scene_consistent.",
         "formal_grasp_entry_allowed is always false here; evidence_gates_clear is diagnostic only.",
+        "Readiness adopts only scene_consistent frames; WARMING_UP SCENE_OR_RGBD_NOT_CONFIRMED is skipped, not forged.",
     )
     return ReadinessReport(
         schema_version=SCHEMA,

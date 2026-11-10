@@ -30,10 +30,15 @@
 ## 仍不抬 control_ready 的原因（真实剩余阻塞）
 
 - **yaw_bound = UNKNOWN**（方块 90° 对称，无有界测量；**未伪造 MEASURED PASS**）。消费仍 `ERROR_BOUND_UNKNOWN:yaw_rad` → 无法 `SHADOW_INSPECTION_READY`。
-- 前两帧另有 `SCENE_OR_RGBD_NOT_CONFIRMED`（正式 verify 1 PASS / 2 UNKNOWN）。
 - post_place 缺动作完成/释放/稳定窗口证据（本轮非抓取入口硬阻塞，但列出）。
 - `permit` / `control_ready` 策略性保持 null/false，直至上述阻塞真实清除。
 
+## SCENE 说明（已解除会话级误报）
+
+S140 三帧：`required_frames=3` → 帧0/1 为 `WARMING_UP`（consecutive=1/2，`scene_consistent=false`），帧2 `CONFIRMED`。原因是时序确认窗口，**不是** gap/shift 失败；**无需现场重采**。
+
+readiness 现只采纳 `scene_consistent` 帧：warmup 上的 `SCENE_OR_RGBD_NOT_CONFIRMED` 跳过（不伪造 confirm、不降低 `required_frames`）。正式 verify 在 confirmed 帧为 PASS；raw 仍可见 1 PASS / 2 UNKNOWN。
+
 ## 能否进入正式抓取
 
-**否。** 证据门禁已大幅推进，但 yaw UNKNOWN + 影子 Inspection 未就绪 + 策略门禁仍挡。
+**否。** SCENE 已不再构成会话级阻塞；剩余为 yaw UNKNOWN + 影子 Inspection 未就绪 + 策略门禁。
