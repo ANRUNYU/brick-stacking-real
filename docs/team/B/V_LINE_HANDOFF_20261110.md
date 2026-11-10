@@ -5,7 +5,7 @@
 | 顺序 | 本次交付 | 现场或跨线待验收 |
 | --- | --- | --- |
 | #16 / #8 | [H0 草案](evidence/first_grasp_h0_draft.json) **V+M 已 ACK 预算**（`control_ready` 仍 false）。Fixture 索引、三帧 C 录包样例、四类状态与契约门面 `vision.service`。 | 时钟误差界与标定 hash 仍缺；C/D 审查字段及样例 |
-| #7 / #17 | 两会话联采后 [时钟研究](evidence/field_20261110/clock_error_bound_study_v0.1.json) **≈1.69 ms** 已 `ACCEPTED_FOR_OBSERVATION_TIMING`；在线观测可填 `clock_error_bound_s`（`control_ready` 仍 false）。 | M 完成独立对尺；标定 hash 仍缺 |
+| #7 / #17 | 两会话联采后 [时钟研究](evidence/field_20261110/clock_error_bound_study_v0.1.json) **≈1.69 ms** 已写入在线观测；短采冒烟 16/16 `timing.validity=VALID`（见 [live smoke](evidence/field_20261110/clock_bound_live_smoke_20261110.json)）。`control_ready` 仍 false。 | M 完成独立对尺；标定 hash 仍缺 |
 | #9 / #20 | **exposure→output** p50≈0.69 s / max≈1.33 s；诊断 freshness 门建议 **2.656 s**（max×2）。在线 freshness 在有 bound 时按曝光候选计龄。 | H0 正式冻结 freshness；M 路径模板 #20 |
 | #10 | pre_grasp / post_grasp / post_place 证据、`service.verify` 门面、Mock golden 与 D FSM 兼容回归。 | 实景关联、持握、撤离后释放和稳定证据 |
 | #18 / #19 | 提供观测与复检接口供 M 线接入。 | 由 M 按 H5、H6 和 T1–T5 逐级验收 |
