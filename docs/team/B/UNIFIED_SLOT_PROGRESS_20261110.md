@@ -39,8 +39,8 @@
 
 - live `permit=null`（仅 D/M SafetyGate 可签发 live；本路径只发 diagnostic + dry-run 签发诊断）。
 - `formal_grasp_entry_allowed=false`（缺 live Permit + live VALID 臂；recorded ≠ live）。
-- `control_ready=false`：formal 未过 + operator policy attest **默认关闭**（开关已实现，未打开）。
-- `motion_enabled` 仍默认 false。
+- `control_ready=false`：**reporter 硬持有**（大幅运动安全）；operator policy attest **默认关闭**（开关已实现，未打开；打开也不在本路径抬升）。
+- `motion_enabled` 硬持有 false。
 - dry-run MockArm 路径：`dry_run_grasp_entry_ready=true`；**不等于**正式抓取入口。
 - host checklist 软件两项已关；仍差：live Permit + live VALID 臂读 +（抬 control_ready 时）显式 attest +（真运动前）开臂；H3 生产 PlanBundle 仍待 #20。
 - post_place 缺动作完成/释放/稳定窗口证据（本轮非抓取入口硬阻塞，但列出）。

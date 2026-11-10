@@ -109,7 +109,8 @@ def main(argv=None) -> int:
         probe_dry_run=bool(args.probe_dry_run_arm_disabled),
     )
     payload = report.to_dict()
-    # Belt-and-suspenders: motion never enabled; live_permit never echoed.
+    # Hard safety: never unlock large-motion paths from this CLI.
+    payload["control_ready"] = False
     payload["motion_enabled"] = False
     payload["live_permit"] = None
 
@@ -123,7 +124,13 @@ def main(argv=None) -> int:
             "vision_pre_grasp_ready": ladder.get("vision_pre_grasp_ready"),
             "dry_run_grasp_entry_ready": ladder.get("dry_run_grasp_entry_ready"),
             "formal_grasp_entry_allowed": ladder.get("formal_grasp_entry_allowed"),
-            "control_ready": ladder.get("control_ready"),
+            "control_ready": False,
+            "control_ready_prerequisites_met": ladder.get(
+                "control_ready_prerequisites_met"
+            ),
+            "reporter_never_raises_control_ready": ladder.get(
+                "reporter_never_raises_control_ready", True
+            ),
             "can_enter_formal_grasp": ladder.get("can_enter_formal_grasp"),
             "formal_grasp_entry_missing": list(ladder.get("formal_grasp_entry_missing") or []),
             "control_ready_missing": list(ladder.get("control_ready_missing") or []),

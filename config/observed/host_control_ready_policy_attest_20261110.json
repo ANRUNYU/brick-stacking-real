@@ -4,7 +4,7 @@
   "operator_attest_control_ready": false,
   "operator": "field-ops-default",
   "evidence_ref": "docs/team/B/evidence/field_20261110/host_control_readiness_20261110.json",
-  "notes": "DEFAULT CLOSED for 2026-11-10 session. Switch exists but is not opened; control_ready stays false.",
+  "notes": "DEFAULT CLOSED for 2026-11-10 session. Switch exists but is not opened; host_control_readiness hard-holds control_ready=false (no large-motion unlock).",
   "control_ready": false,
   "motion_enabled": false,
   "permit": null,

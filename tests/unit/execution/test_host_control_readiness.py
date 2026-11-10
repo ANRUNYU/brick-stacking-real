@@ -192,9 +192,17 @@ def test_attest_open_without_formal_still_holds_control_ready():
     assert payload["dry_run_grasp_entry_ready"] is True
     assert payload["formal_grasp_entry_allowed"] is False
     assert payload["control_ready"] is False
+    assert payload["motion_enabled"] is False
     assert payload["operator_policy_attest"]["attested"] is True
+    assert payload["gate_ladder"]["reporter_never_raises_control_ready"] is True
+    assert payload["gate_ladder"]["control_ready_prerequisites_met"] is False
+    assert "reporter_hard_hold_no_large_motion_elevation" in payload["gate_ladder"][
+        "control_ready_missing"
+    ]
     by_id = {item.id: item for item in report.checklist}
-    assert by_id["operator_policy_attest_control_ready"].status == "POLICY_HOLD"
+    # Attest open clears the attest prerequisite item, but reporter still holds control_ready.
+    assert by_id["operator_policy_attest_control_ready"].status == "PASS"
+    assert by_id["host_policy_control_ready"].status == "POLICY_HOLD"
 
 
 def test_cli_writes_report(tmp_path):
