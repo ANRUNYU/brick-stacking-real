@@ -199,6 +199,36 @@ body {
   line-height: 1.45;
 }
 
+.control-grid {
+  margin-top: 0.75rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+}
+.control-grid label {
+  display: grid;
+  gap: 0.25rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+}
+.control-grid label:first-child { grid-column: 1 / -1; }
+.control-grid select,
+.control-grid input {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.28);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  padding: 0.4rem 0.5rem;
+}
+.control-actions { margin-top: 0.75rem; }
+.control-panel code {
+  color: var(--signal);
+  font-size: 0.7rem;
+}
+#control-msg { min-height: 1.1rem; }
+
 @media (max-width: 960px) {
   .layout { grid-template-columns: 1fr; }
   .top { align-items: start; flex-direction: column; }

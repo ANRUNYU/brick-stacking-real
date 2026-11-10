@@ -14,7 +14,7 @@
   <header class="top">
     <div class="brand">
       <p class="brand-mark">垒砖监视台</p>
-      <p class="brand-sub">HOST CAMERA · JOINT TELEMETRY · READ ONLY</p>
+      <p class="brand-sub">HOST CAMERA · JOINT TELEMETRY · OPTIONAL SINGLE-JOINT</p>
     </div>
     <div class="status-pill" id="link-pill">连接中…</div>
   </header>
@@ -44,16 +44,53 @@
         <dl id="service-meta" class="kv"></dl>
       </section>
       <section class="panel" id="arms-root">
-        <h2>关节</h2>
-        <p class="hint">J6/J7 若无只读角度，显示为 —（与现网 ArmStateReader 一致）</p>
+        <h2>关节遥测</h2>
+        <p class="hint">只读轮询；控制会话打开时会暂停，避免抢 can2</p>
         <div id="arms"></div>
+      </section>
+      <section class="panel control-panel">
+        <h2>左臂单关节控制</h2>
+        <p class="hint">流程对齐 motor_menu / p7_test_v1_joints：READY → 选关节 → ENABLE → MOVE → RELEASE。需进程带 <code>--enable-motion</code>。</p>
+        <div class="control-grid">
+          <label>关节
+            <select id="ctl-joint">
+              <option value="1">J1 (V1 / 61)</option>
+              <option value="2">J2 (V1 / 62)</option>
+              <option value="3">J3 (V1 / 63)</option>
+              <option value="4">J4 (V1 / 64)</option>
+              <option value="5">J5 (V1 / 65)</option>
+              <option value="6">J6 (V2 / 66)</option>
+              <option value="7">J7 (V2 / 67)</option>
+            </select>
+          </label>
+          <label>步长 °
+            <input id="ctl-step" type="number" min="0.5" max="10" step="0.5" value="5" />
+          </label>
+          <label>方向
+            <select id="ctl-dir">
+              <option value="0">自动（优先正向）</option>
+              <option value="1">正向 +</option>
+              <option value="-1">负向 −</option>
+            </select>
+          </label>
+        </div>
+        <div class="cam-actions control-actions">
+          <button type="button" id="btn-ready" class="btn">READY 开会话</button>
+          <button type="button" id="btn-prepare" class="btn">Prepare</button>
+          <button type="button" id="btn-enable" class="btn danger">ENABLE</button>
+          <button type="button" id="btn-move" class="btn danger">MOVE</button>
+          <button type="button" id="btn-jrelease" class="btn">RELEASE</button>
+          <button type="button" id="btn-close" class="btn">关会话</button>
+        </div>
+        <dl id="control-meta" class="kv"></dl>
+        <p id="control-msg" class="hint"></p>
       </section>
       <section class="panel warn">
         <h2>边界</h2>
         <ul>
-          <li>只读监视，不发运动 / 使能 / Flash</li>
-          <li>开发采图前点「释放摄像头」，结束后可「重新占用」</li>
-          <li>仅建议同局域网访问</li>
+          <li>默认只读；运动需 <code>--enable-motion</code> + 显式确认词</li>
+          <li>不构造完整 P7，不写 Flash；一次只控一关节、小步长</li>
+          <li>采图前点「释放摄像头」；控制前清场、确认空间</li>
         </ul>
       </section>
     </aside>

@@ -138,16 +138,16 @@ class MockCameraWorker(threading.Thread):
         self.hub = hub
         self.camera_id = camera_id
         self.period = 1.0 / max(fps, 1.0)
-        self._stop = threading.Event()
+        self._stop_evt = threading.Event()
 
     def stop(self) -> None:
-        self._stop.set()
+        self._stop_evt.set()
 
     def run(self) -> None:
         import numpy as np
 
         t0 = time.monotonic()
-        while not self._stop.is_set():
+        while not self._stop_evt.is_set():
             t = time.monotonic() - t0
             h, w = 360, 640
             yy, xx = np.mgrid[0:h, 0:w]
@@ -162,7 +162,7 @@ class MockCameraWorker(threading.Thread):
                 self.hub.set_frame(FramePacket(jpeg, w, h, time.monotonic(), self.camera_id, "mock"))
             except Exception as exc:  # noqa: BLE001 - keep stream alive
                 self.hub.set_frame(FramePacket(b"", 0, 0, time.monotonic(), self.camera_id, "mock", str(exc)))
-            self._stop.wait(self.period)
+            self._stop_evt.wait(self.period)
 
 
 class OrbbecCameraWorker(threading.Thread):
@@ -178,11 +178,11 @@ class OrbbecCameraWorker(threading.Thread):
         self.height = height
         self.fps = fps
         self.jpeg_quality = jpeg_quality
-        self._stop = threading.Event()
+        self._stop_evt = threading.Event()
         self._released = threading.Event()
 
     def stop(self) -> None:
-        self._stop.set()
+        self._stop_evt.set()
 
     def wait_released(self, timeout_s: float = 5.0) -> bool:
         return self._released.wait(timeout_s)
@@ -220,7 +220,7 @@ class OrbbecCameraWorker(threading.Thread):
             started = True
             with self.hub.lock:
                 self.hub.meta["camera_held"] = True
-            while not self._stop.is_set():
+            while not self._stop_evt.is_set():
                 frames = pipe.wait_for_frames(100)
                 if frames is None:
                     continue
@@ -263,15 +263,15 @@ class MockArmWorker(threading.Thread):
         self.hub = hub
         self.role = role
         self.period_s = period_s
-        self._stop = threading.Event()
+        self._stop_evt = threading.Event()
 
     def stop(self) -> None:
-        self._stop.set()
+        self._stop_evt.set()
 
     def run(self) -> None:
         names = ("J1", "J2", "J3", "J4", "J5", "J6", "J7")
         t0 = time.monotonic()
-        while not self._stop.is_set():
+        while not self._stop_evt.is_set():
             t = time.monotonic() - t0
             q = tuple(0.2 * math.sin(t * 0.6 + i) for i in range(5)) + (None, None)
             self.hub.set_arm(ArmPacket(
@@ -284,7 +284,7 @@ class MockArmWorker(threading.Thread):
                 stamp_s=time.monotonic(),
                 source="mock",
             ))
-            self._stop.wait(self.period_s)
+            self._stop_evt.wait(self.period_s)
 
 
 class ArmReaderWorker(threading.Thread):
@@ -294,10 +294,10 @@ class ArmReaderWorker(threading.Thread):
         self.role = role
         self.channel = channel
         self.period_s = period_s
-        self._stop = threading.Event()
+        self._stop_evt = threading.Event()
 
     def stop(self) -> None:
-        self._stop.set()
+        self._stop_evt.set()
 
     def run(self) -> None:
         try:
@@ -310,7 +310,7 @@ class ArmReaderWorker(threading.Thread):
             return
         try:
             with ArmStateReader.open(self.role, self.channel) as reader:
-                while not self._stop.is_set():
+                while not self._stop_evt.is_set():
                     try:
                         state = reader.read_state()
                         self.hub.set_arm(ArmPacket(
@@ -328,7 +328,7 @@ class ArmReaderWorker(threading.Thread):
                             self.role, self.channel, JOINTS, (None,) * 7,
                             "INVALID", str(exc), time.monotonic(), "real", str(exc),
                         ))
-                    self._stop.wait(self.period_s)
+                    self._stop_evt.wait(self.period_s)
         except Exception as exc:  # noqa: BLE001
             self.hub.set_arm(ArmPacket(
                 self.role, self.channel, ("J1", "J2", "J3", "J4", "J5", "J6", "J7"),
