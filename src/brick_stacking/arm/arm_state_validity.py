@@ -15,6 +15,11 @@ from typing import Any
 from uuid import uuid4
 
 from brick_stacking.arm.state import ENDPOINTS, JOINTS
+from brick_stacking.arm.v2_wrist_readonly import (
+    ARM_STATE_READER_LIVE_HOLD,
+    HARD_BLOCK_ID as J6J7_READONLY_HARD_BLOCK_ID,
+    hard_block_report as j6j7_readonly_hard_block_report,
+)
 from brick_stacking.contracts import ArmState, JointName, Source, Validity
 
 LIVE_OR_RECORDED_SCHEMA = "arm-live-or-recorded-0.1"
@@ -31,13 +36,6 @@ LIVE_VALID_CONDITIONS = (
     "clock_domain_host_monotonic",
     "epoch_present",
     "host_receive_stamp_finite",
-)
-
-# Why ArmStateReader samples stay INVALID today (audited readonly path).
-ARM_STATE_READER_LIVE_HOLD = (
-    "J6/J7: no audited read-only position query (ArmStateReader leaves q_rad None)",
-    "validity remains INVALID until seven finite joint angles are available",
-    "Rest/raw V2 capture is not an audited read-only path and is not used here",
 )
 
 
@@ -105,6 +103,7 @@ def classify_arm_state(state: ArmState | dict[str, Any] | None) -> dict[str, Any
             "blockers": ["arm_state missing"],
             "joint_completeness": None,
             "arm_state_reader_live_hold": list(ARM_STATE_READER_LIVE_HOLD),
+            "j6j7_readonly_hard_block": j6j7_readonly_hard_block_report(),
             "control_ready": False,
             "motion_enabled": False,
         }
@@ -167,9 +166,11 @@ def classify_arm_state(state: ArmState | dict[str, Any] | None) -> dict[str, Any
         "blockers": blockers,
         "joint_completeness": joints,
         "arm_state_reader_live_hold": list(ARM_STATE_READER_LIVE_HOLD),
+        "j6j7_readonly_hard_block": j6j7_readonly_hard_block_report(),
         "notes": [
             "recorded/mock VALID (or recorded binding) do not count as live VALID.",
             "ArmStateReader readonly path currently cannot satisfy all_seven_q_rad_finite.",
+            f"hard_block={J6J7_READONLY_HARD_BLOCK_ID}",
             "This classifier never raises control_ready or opens CAN.",
         ],
         "control_ready": False,

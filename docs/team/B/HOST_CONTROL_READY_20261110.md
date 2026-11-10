@@ -34,6 +34,7 @@
 | `counts_as_live_valid` | **false** | **false** | **false** | **false**（直至七轴有限角度可读） |
 
 机读：`arm_feedback.counts_as_live_valid`；checklist `live_valid_arm_state` 与 `arm_state_device_id` 分开——后者 recorded 可 PASS，前者仍 MISSING。  
+**硬阻塞文档**：[J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md](J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md)（`hard_block=j6_j7_no_audited_readonly_position_query`；骨架 `v2_wrist_readonly.py`；禁止 Rest 回退）。  
 CLI：`python tools/arm_state_live_or_recorded.py --mode recorded|fixture-valid|live-readonly --output …`（`live-readonly` 软失败可跳过；不 enable-motion / 不 Rest）。
 
 M 侧 Permit 权威见 [M_PERMIT_AUTHORITY_20261110.md](M_PERMIT_AUTHORITY_20261110.md)。

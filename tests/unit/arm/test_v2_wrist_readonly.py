@@ -1,0 +1,61 @@
+"""J6/J7 audited readonly hard-block skeleton (no CAN / no Rest / no motion)."""
+from __future__ import annotations
+
+import pytest
+
+from brick_stacking.arm import v2_wrist_readonly as wrist
+from brick_stacking.arm.arm_state_validity import classify_arm_state
+from brick_stacking.arm.v2_wrist_readonly import (
+    AUDITED_READONLY_POSITION_QUERY_BYTES,
+    HARD_BLOCK_ID,
+    J6J7ReadonlyPositionHardBlock,
+    decode_audited_wrist_position_reply,
+    hard_block_report,
+    try_read_wrist_positions_readonly,
+)
+
+
+def test_hard_block_report_refuses_live_valid_via_readonly():
+    report = hard_block_report()
+    assert report["id"] == HARD_BLOCK_ID
+    assert report["status"] == "HARD_BLOCK"
+    assert report["audited_readonly_position_query_available"] is False
+    assert report["counts_as_live_valid_reachable_via_readonly"] is False
+    assert report["allows_rest"] is False
+    assert report["allows_enable_motion"] is False
+    assert report["allows_large_joint_motion"] is False
+    assert AUDITED_READONLY_POSITION_QUERY_BYTES is None
+
+
+def test_try_read_refuses_even_when_bus_handle_passed():
+    sentinel = object()
+    result = try_read_wrist_positions_readonly(bus=sentinel)
+    assert result["attempted"] is False
+    assert result["bus_touched"] is False
+    assert result["q_rad"] == (None, None)
+    assert HARD_BLOCK_ID in (result.get("error") or "")
+
+
+def test_decode_skeleton_raises_hard_block():
+    with pytest.raises(J6J7ReadonlyPositionHardBlock, match="AUDITED_READONLY"):
+        decode_audited_wrist_position_reply(motor_id=66, reply=b"\x00" * 8)
+
+
+def test_decode_rejects_non_wrist_ids():
+    with pytest.raises(ValueError, match="not a V2 wrist"):
+        decode_audited_wrist_position_reply(motor_id=61, reply=b"\x00" * 8)
+
+
+def test_classify_embeds_hard_block():
+    classified = classify_arm_state(None)
+    block = classified["j6j7_readonly_hard_block"]
+    assert block["id"] == HARD_BLOCK_ID
+    assert block["status"] == "HARD_BLOCK"
+    assert classified["counts_as_live_valid"] is False
+
+
+def test_known_non_readonly_paths_documented():
+    text = " ".join(wrist.KNOWN_NON_READONLY_OR_UNAUDITED)
+    assert "Rest" in text
+    assert "read_initial_state" in text
+    assert "quantization" in text.lower() or "COM Theta" in text or "U16" in text

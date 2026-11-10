@@ -600,25 +600,31 @@ def evaluate_host_control_readiness(
             live_status = "MISSING"
             live_detail = (
                 "recorded ArmState/device_id binding present but does not count as "
-                f"live VALID; blockers={blockers}"
+                "live VALID "
+                f"(hard_block=j6_j7_no_audited_readonly_position_query); "
+                f"blockers={blockers}"
             )
         elif source_kind == "mock":
             live_status = "MISSING"
             live_detail = (
-                f"MockArm VALID is dry-run only; blockers={blockers}"
+                "MockArm VALID is dry-run only "
+                f"(hard_block=j6_j7_no_audited_readonly_position_query); "
+                f"blockers={blockers}"
             )
         elif source_kind == "live_real":
             live_status = "FAIL"
             live_detail = (
                 "live ArmStateReader sample present but not VALID "
-                f"(typically J6/J7 missing); blockers={blockers}; "
+                f"(hard_block=j6_j7_no_audited_readonly_position_query; "
+                f"typically J6/J7 missing); blockers={blockers}; "
                 f"reason={arm_feedback.get('reason')}"
             )
         else:
             live_status = "MISSING"
             live_detail = (
                 "fresh VALID live ArmState missing "
-                f"(source_kind={source_kind}; blockers={blockers})"
+                f"(hard_block=j6_j7_no_audited_readonly_position_query; "
+                f"source_kind={source_kind}; blockers={blockers})"
             )
         items.append(
             _item(
@@ -1034,6 +1040,8 @@ def evaluate_host_control_readiness(
         "live_valid_arm_gap": list(live_arm_software_gap),
         "arm_feedback_source_kind": arm_feedback.get("source_kind"),
         "counts_as_live_valid": arm_ok_live,
+        "j6j7_readonly_position_hard_block": True,
+        "j6j7_readonly_hard_block_id": "j6_j7_no_audited_readonly_position_query",
     }
 
     issuance_notes: list[str] = []
@@ -1060,6 +1068,9 @@ def evaluate_host_control_readiness(
         "Never invents live contracts.Permit or opens CAN.",
         "Dry-run probe uses OfflineSafetyGate + MockArm (hardware_enabled=False).",
         "ArmStateReader readonly path currently cannot satisfy all_seven_q_rad_finite (J6/J7).",
+        "hard_block=j6_j7_no_audited_readonly_position_query "
+        "(docs/team/B/J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md); "
+        "no Rest/enable-motion fallback.",
         f"can_enter_formal_grasp={formal_grasp_entry_allowed}; "
         f"control_ready_prerequisites_met={control_ready_prerequisites_met}.",
         *issuance_notes,
@@ -1102,6 +1113,7 @@ def evaluate_host_control_readiness(
                 "MockArm.hardware_enabled": "src/brick_stacking/arm/adapter.py",
                 "ArmStateReader": "src/brick_stacking/arm/state.py",
                 "arm_state_validity": "src/brick_stacking/arm/arm_state_validity.py",
+                "v2_wrist_readonly_hard_block": "src/brick_stacking/arm/v2_wrist_readonly.py",
                 "config_loader_offline_only": "src/brick_stacking/runtime/config_loader.py",
                 "ObservationBundle.control_ready": "Literal[False] in contracts",
                 "host_monitor_motion": "tools/host_monitor on main (--enable-motion)",

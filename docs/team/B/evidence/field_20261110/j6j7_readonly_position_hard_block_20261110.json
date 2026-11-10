@@ -1,0 +1,23 @@
+{
+  "schema_version": "j6j7-readonly-position-hard-block-0.1",
+  "id": "j6_j7_no_audited_readonly_position_query",
+  "status": "HARD_BLOCK",
+  "audited_readonly_position_query_available": false,
+  "audited_readonly_position_query_bytes": null,
+  "audited_position_quantization": null,
+  "counts_as_live_valid_reachable_via_readonly": false,
+  "allows_rest": false,
+  "allows_enable_motion": false,
+  "allows_large_joint_motion": false,
+  "live_valid_reachable": false,
+  "formal_grasp_entry_allowed": false,
+  "needs_operator_action_now": false,
+  "doc": "docs/team/B/J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md",
+  "code": "src/brick_stacking/arm/v2_wrist_readonly.py",
+  "notes": [
+    "Flash mode READ is audited but is not angle.",
+    "Rest / MotorV2.read_initial_state / raw U16 feedback are not audited readonly position paths.",
+    "ArmStateReader keeps J6/J7 q_rad=None; validity=INVALID; counts_as_live_valid=false.",
+    "No CAN opened for this evidence artifact; software hard-block only."
+  ]
+}

@@ -140,9 +140,12 @@ def test_host_readiness_distinguishes_recorded_vs_live_valid():
     by_id = {item["id"]: item for item in payload["checklist"]}
     assert by_id["arm_state_device_id"]["status"] == "PASS"
     assert by_id["live_valid_arm_state"]["status"] == "MISSING"
+    assert "j6_j7_no_audited_readonly_position_query" in by_id["live_valid_arm_state"]["detail"]
     assert payload["arm_feedback"]["counts_as_live_valid"] is False
     assert payload["arm_feedback"]["source_kind"] == "recorded"
+    assert payload["arm_feedback"]["j6j7_readonly_hard_block"]["status"] == "HARD_BLOCK"
     assert payload["gate_ladder"]["counts_as_live_valid"] is False
+    assert payload["gate_ladder"]["j6j7_readonly_position_hard_block"] is True
     assert "live_valid_arm_state" not in payload["missing_software"]
     assert any(b["id"] == "live_valid_arm_state" for b in payload["hard_blockers"])
 
