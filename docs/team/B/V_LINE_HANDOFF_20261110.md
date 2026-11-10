@@ -6,7 +6,7 @@
 | --- | --- | --- |
 | #16 / #8 | [H0 草案](evidence/first_grasp_h0_draft.json)已写 **V ACK**（待 M ACK）。Fixture 索引、三帧 C 录包样例、四类状态与契约门面 `vision.service`。 | M 书面 ACK；C/D 审查字段及样例 |
 | #7 / #17 | 读取 C 录包设备/SDK/主机时间；`CaptureContext` 边界单测（逆序、schema、缺域、无误差界）。 | 统一曝光参考、boot/进程时钟映射与误差界；C/M 完成独立对尺 |
-| #9 / #20 | 最新完整帧对队列、连续录包回放、[延迟诊断](evidence/c_recording_replay_latency_v0.1.json)、同 SN 有限重连。 | 头相机原生流连续测试，冻结实测曝光延迟上界及有效期 |
+| #9 / #20 | 最新完整帧对队列、连续录包回放、[延迟诊断](evidence/c_recording_replay_latency_v0.1.json)、同 SN 有限重连。2026-11-10 现场单红块：12/12 有效红候选；接收→输出 max≈1.28s，诊断 freshness 门 2.56s。 | 曝光到输出延迟与时钟误差界仍未验收 |
 | #10 | pre_grasp / post_grasp / post_place 证据、`service.verify` 门面、Mock golden 与 D FSM 兼容回归。 | 实景关联、持握、撤离后释放和稳定证据 |
 | #18 / #19 | 提供观测与复检接口供 M 线接入。 | 由 M 按 H5、H6 和 T1–T5 逐级验收 |
 | #11 | 三帧既有开发录包已登记 SHA-256 与原始出处。 | 独立布局、物理参考及逐条件报告，首抓后验收 |
@@ -37,6 +37,10 @@ from brick_stacking.vision.service import replay, detect_blocks, verify, VisionS
 ```text
 python -c "from brick_stacking.vision.replay_pipeline import replay_recordings; replay_recordings(['tests/fixtures/real/C_20261108_tabletop/camera/frame_000.npz','tests/fixtures/real/C_20261108_tabletop/camera/frame_001.npz','tests/fixtures/real/C_20261108_tabletop/camera/frame_002.npz'], config_path='config/vision_profiles/head_replacement_candidate.yaml', report_path='docs/team/B/evidence/c_recording_replay_latency_v0.1.json')"
 ```
+
+## 现场单红块（2026-11-10）
+
+头相机 `CP2L863000KL`，会话内关自动曝光（exposure=100，gain=16，非持久写入）。桌面仅一块疏排红方块时，在线入口发布 12 帧，每帧 1 个 `VALID` 红候选。相机系顶面点相对中位偏差最大约 1.1 mm，这只说明静态重复性，不是基座系 10 mm 验收。`control_ready` 保持 false；`exposure_to_output_s` 与 `clock_error_bound_s` 保持 null。诊断用接收龄期门建议 2.564 s（实测 max×2），写入 H0 草案时标明尚未替代曝光时钟门。证据见 [field_20261110](evidence/field_20261110/single_red_stability.json)。
 
 ## 在线诊断入口
 

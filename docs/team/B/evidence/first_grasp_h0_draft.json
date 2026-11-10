@@ -38,7 +38,15 @@
   },
   "placement_color_match_required": true,
   "observed_exposure_latency_upper_bound_s": null,
-  "freshness_gate_s": null,
+  "field_receive_to_output_s": {
+    "scene": "single_red_sparse_20261110",
+    "p50": 0.636,
+    "p95": 1.016,
+    "max": 1.282,
+    "basis": "host receive to observation output; exposure-to-output still null"
+  },
+  "freshness_gate_s": 2.564,
+  "freshness_gate_status": "diagnostic_receive_based_pending_exposure_clock",
   "clock_error_bound_s": null,
   "calibration_hash": null,
   "control_ready": false,
@@ -47,7 +55,8 @@
     "h1_status": "tests/fixtures/vision_exchange/synthetic_status_v0.1.json",
     "h4_mock": "tests/fixtures/vision_exchange/verification_v0.1.json",
     "fixture_index": "tests/fixtures/vision_exchange/FIXTURE_INDEX.json",
-    "replay_latency_diagnostic": "docs/team/B/evidence/c_recording_replay_latency_v0.1.json"
+    "replay_latency_diagnostic": "docs/team/B/evidence/c_recording_replay_latency_v0.1.json",
+    "field_single_red": "docs/team/B/evidence/field_20261110/single_red_stability.json"
   },
   "api": {
     "module": "brick_stacking.vision.service",

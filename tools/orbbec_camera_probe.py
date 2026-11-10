@@ -87,6 +87,34 @@ def exposure_window_stable(samples):
     return bool(np.all(np.ptp(values,axis=0)<=np.maximum(2.,.03*np.median(values,axis=0))))
 
 
+def apply_fixed_color_exposure(sdk, device, *, exposure, gain=None):
+    """Disable color AE for one session. Values are device property units (not validated as µs)."""
+    if type(exposure) is not int or exposure <= 0:
+        raise ValueError("explicit positive color exposure required")
+    if gain is not None and (type(gain) is not int or gain <= 0):
+        raise ValueError("explicit positive color gain required")
+    prop = sdk.OBPropertyID
+    before = {
+        "auto_exposure": device.get_bool_property(prop.OB_PROP_COLOR_AUTO_EXPOSURE_BOOL),
+        "exposure": device.get_int_property(prop.OB_PROP_COLOR_EXPOSURE_INT),
+        "gain": device.get_int_property(prop.OB_PROP_COLOR_GAIN_INT),
+    }
+    device.set_bool_property(prop.OB_PROP_COLOR_AUTO_EXPOSURE_BOOL, False)
+    device.set_int_property(prop.OB_PROP_COLOR_EXPOSURE_INT, exposure)
+    if gain is not None:
+        device.set_int_property(prop.OB_PROP_COLOR_GAIN_INT, gain)
+    after = {
+        "auto_exposure": device.get_bool_property(prop.OB_PROP_COLOR_AUTO_EXPOSURE_BOOL),
+        "exposure": device.get_int_property(prop.OB_PROP_COLOR_EXPOSURE_INT),
+        "gain": device.get_int_property(prop.OB_PROP_COLOR_GAIN_INT),
+    }
+    if after["auto_exposure"] or after["exposure"] != exposure:
+        raise ValueError("fixed color exposure did not stick on device")
+    if gain is not None and after["gain"] != gain:
+        raise ValueError("fixed color gain did not stick on device")
+    return {"before": before, "after": after, "persistent_write": False}
+
+
 def choose_profile(profiles, formats, *, size=None, fps=None):
     candidates = []
     for i in range(profiles.get_count()):
@@ -259,6 +287,9 @@ def main(argv=None):
     p.add_argument("--observe-profile", type=Path, help="run latest-pair tabletop detection during capture")
     p.add_argument("--max-receive-age-s", type=float, help="diagnostic receive-to-output limit")
     p.add_argument("--reconnects", type=int, default=0, help="bounded same-serial capture retries in observation mode")
+    p.add_argument("--fixed-color-exposure", type=int,
+                   help="disable color AE and set this device exposure unit for the session")
+    p.add_argument("--fixed-color-gain", type=int, help="optional fixed color gain with --fixed-color-exposure")
     p.add_argument("--output", type=Path, required=True)
     args = p.parse_args(argv)
     if args.output.exists():
@@ -281,6 +312,12 @@ def main(argv=None):
         p.error("observation mode requires capture, exact width/height/fps and a positive receive age")
     if not 0 <= args.reconnects <= 3 or (args.reconnects and not args.observe_profile):
         p.error("up to three retries are supported in observation mode")
+    if args.fixed_color_gain is not None and args.fixed_color_exposure is None:
+        p.error("--fixed-color-gain requires --fixed-color-exposure")
+    if args.fixed_color_exposure is not None and args.fixed_color_exposure <= 0:
+        p.error("--fixed-color-exposure must be positive")
+    if args.fixed_color_gain is not None and args.fixed_color_gain <= 0:
+        p.error("--fixed-color-gain must be positive")
     args.output.mkdir(parents=True)
     report = {"started_at": datetime.now(timezone.utc).isoformat(), "scope": "camera_only",
         "robot_motion_accessed": False, "can_accessed": False, "devices": [],
@@ -308,6 +345,10 @@ def main(argv=None):
                                   "firmware": info.get_firmware_version(), "connection": info.get_connection_type()}
             if report["selected"]["serial"] != args.serial:
                 raise ValueError("opened device serial does not match explicit requested serial")
+            if args.fixed_color_exposure is not None:
+                report["color_exposure_lock"] = apply_fixed_color_exposure(
+                    sdk, device, exposure=args.fixed_color_exposure, gain=args.fixed_color_gain,
+                )
             options = dict(count=args.frames, seconds=args.seconds, max_skew_ms=args.max_skew_ms,
                            size=(args.width,args.height) if args.width is not None else None,
                            fps=args.fps, warmup_frames=args.warmup_frames)
@@ -333,6 +374,11 @@ def main(argv=None):
                     selected = available.get_device_by_serial_number(args.serial)
                     if selected.get_device_info().get_serial_number() != args.serial:
                         raise ValueError("reopened camera serial mismatch")
+                    if args.fixed_color_exposure is not None:
+                        session["color_exposure_lock"] = apply_fixed_color_exposure(
+                            sdk, selected, exposure=args.fixed_color_exposure,
+                            gain=args.fixed_color_gain,
+                        )
                     session["sdk_clock_unavailable_reason"] = report.get("sdk_clock_unavailable_reason")
                     capture(sdk, selected, args.serial, args.output, session, **options,
                             on_frame=offer, sdk_clock_type=sdk_clock_type)
