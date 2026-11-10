@@ -1,5 +1,5 @@
 {
-  "status": "V_ACK_PENDING_M_ACK",
+  "status": "V_M_ACK_PENDING_EXECUTION_GATES",
   "schema_version": "0.1",
   "plan_path": "docs/THREE_TRACK_GRASP_DEV_PLAN.md",
   "plan_sha256_utf8_lf": "bc30f3198e5dbaf8beb6cd4b7b4d59d83a5702938ad52cbf5e4fdbe9f562e5ff",
@@ -12,9 +12,12 @@
       "branch": "codex/v-vision-20261110"
     },
     "M": {
-      "status": "PENDING",
-      "date": null,
-      "note": null
+      "status": "ACK",
+      "date": "2026-11-10",
+      "branch": "codex/m-h0-c35-20261110",
+      "note": "ACK H0 section 0.2 budgets and ObservationBundle semantics without relaxation. 2.564s is diagnostic receive-age only, not exposure latency/error bound. C35 offline geometry only; independent ruler reference missing. No executable permit until clock, calibration/independent checks and H2-H6 are met.",
+      "v_input_commit": "a79e679c399529574272608c9d82deaa8fd58eed",
+      "diagnostic_report": "docs/team/M/evidence/H0_C35_single_red_20261110.json"
     }
   },
   "vision_profile": {

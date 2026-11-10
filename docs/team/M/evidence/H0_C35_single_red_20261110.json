@@ -1,0 +1,270 @@
+{
+  "schema_version": "m-h0-c35-diagnostic-1",
+  "rows": [
+    {
+      "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308974.477649/0",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308974.477649",
+      "frame_id": "L_arm_root",
+      "top_center_base_m": [
+        0.45994423469243145,
+        -0.18795659061693049,
+        -0.4782484360019184
+      ],
+      "model_center_base_m": [
+        0.45832083800576995,
+        -0.189372026384857,
+        -0.5031554857024472
+      ],
+      "orientation_xyzw": null,
+      "source_stamp_s": 308974.477649,
+      "clock_domain": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "epoch": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "control_ready": false
+    },
+    {
+      "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308975.078273/0",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308975.078273",
+      "frame_id": "L_arm_root",
+      "top_center_base_m": [
+        0.4603367273466113,
+        -0.18698491859290184,
+        -0.47825712488953914
+      ],
+      "model_center_base_m": [
+        0.4586643360228563,
+        -0.18840185877050314,
+        -0.503160847257758
+      ],
+      "orientation_xyzw": null,
+      "source_stamp_s": 308975.078273,
+      "clock_domain": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "epoch": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "control_ready": false
+    },
+    {
+      "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308975.678897/0",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308975.678897",
+      "frame_id": "L_arm_root",
+      "top_center_base_m": [
+        0.46015815885422134,
+        -0.18795994523273338,
+        -0.47843785831914815
+      ],
+      "model_center_base_m": [
+        0.4584916585018812,
+        -0.18937220881722633,
+        -0.5033422412294626
+      ],
+      "orientation_xyzw": null,
+      "source_stamp_s": 308975.678897,
+      "clock_domain": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "epoch": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "control_ready": false
+    },
+    {
+      "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308976.212785/0",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308976.212785",
+      "frame_id": "L_arm_root",
+      "top_center_base_m": [
+        0.46056316621499105,
+        -0.18721573570650193,
+        -0.4782140497579462
+      ],
+      "model_center_base_m": [
+        0.45894584474016076,
+        -0.18864539471523556,
+        -0.5031206823357517
+      ],
+      "orientation_xyzw": null,
+      "source_stamp_s": 308976.212785,
+      "clock_domain": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "epoch": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "control_ready": false
+    },
+    {
+      "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308976.813409/0",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308976.813409",
+      "frame_id": "L_arm_root",
+      "top_center_base_m": [
+        0.4598666092403991,
+        -0.18789131324609312,
+        -0.4781705920874532
+      ],
+      "model_center_base_m": [
+        0.45819050091655183,
+        -0.18930845667744423,
+        -0.5030740529991762
+      ],
+      "orientation_xyzw": null,
+      "source_stamp_s": 308976.813409,
+      "clock_domain": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "epoch": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "control_ready": false
+    },
+    {
+      "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308977.414033/0",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308977.414033",
+      "frame_id": "L_arm_root",
+      "top_center_base_m": [
+        0.4599407013309378,
+        -0.18602274370970726,
+        -0.47836091800896624
+      ],
+      "model_center_base_m": [
+        0.45830636355554805,
+        -0.18743761848254675,
+        -0.5032672840508665
+      ],
+      "orientation_xyzw": null,
+      "source_stamp_s": 308977.414033,
+      "clock_domain": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "epoch": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "control_ready": false
+    },
+    {
+      "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308978.014657/0",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308978.014657",
+      "frame_id": "L_arm_root",
+      "top_center_base_m": [
+        0.46008376811456825,
+        -0.18705124102776496,
+        -0.47823286389646474
+      ],
+      "model_center_base_m": [
+        0.45841916484488854,
+        -0.18845986814132648,
+        -0.503137579626814
+      ],
+      "orientation_xyzw": null,
+      "source_stamp_s": 308978.014657,
+      "clock_domain": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "epoch": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "control_ready": false
+    },
+    {
+      "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308978.615281/0",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308978.615281",
+      "frame_id": "L_arm_root",
+      "top_center_base_m": [
+        0.45985306751321336,
+        -0.18695099694638148,
+        -0.47859142264449644
+      ],
+      "model_center_base_m": [
+        0.4581860285331078,
+        -0.18836187490218825,
+        -0.5034958480430602
+      ],
+      "orientation_xyzw": null,
+      "source_stamp_s": 308978.615281,
+      "clock_domain": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "epoch": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "control_ready": false
+    },
+    {
+      "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308979.215905/0",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308979.215905",
+      "frame_id": "L_arm_root",
+      "top_center_base_m": [
+        0.45968932161707865,
+        -0.18742287947091413,
+        -0.4782252732535556
+      ],
+      "model_center_base_m": [
+        0.4580396347823923,
+        -0.1888515477497918,
+        -0.5031298399090185
+      ],
+      "orientation_xyzw": null,
+      "source_stamp_s": 308979.215905,
+      "clock_domain": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "epoch": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "control_ready": false
+    },
+    {
+      "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308979.816529/0",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308979.816529",
+      "frame_id": "L_arm_root",
+      "top_center_base_m": [
+        0.4604192237005923,
+        -0.18642357222106348,
+        -0.4785084289098253
+      ],
+      "model_center_base_m": [
+        0.45878442384322204,
+        -0.1878435700364975,
+        -0.5034144730684329
+      ],
+      "orientation_xyzw": null,
+      "source_stamp_s": 308979.816529,
+      "clock_domain": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "epoch": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "control_ready": false
+    },
+    {
+      "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308980.350417/0",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308980.350417",
+      "frame_id": "L_arm_root",
+      "top_center_base_m": [
+        0.46013860018046493,
+        -0.18738296436494994,
+        -0.4779535259884243
+      ],
+      "model_center_base_m": [
+        0.4584925227164011,
+        -0.18880748049943152,
+        -0.5028585693083003
+      ],
+      "orientation_xyzw": null,
+      "source_stamp_s": 308980.350417,
+      "clock_domain": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "epoch": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "control_ready": false
+    },
+    {
+      "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308980.417153/0",
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71/308980.417153",
+      "frame_id": "L_arm_root",
+      "top_center_base_m": [
+        0.4594876318886827,
+        -0.18700480549364798,
+        -0.47792138748570406
+      ],
+      "model_center_base_m": [
+        0.45782408937964436,
+        -0.18842284694951497,
+        -0.5028256398284279
+      ],
+      "orientation_xyzw": null,
+      "source_stamp_s": 308980.417153,
+      "clock_domain": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "epoch": "orbbec_CP2L863000KL_21524fe45092480287ec158e9ebe2f71",
+      "control_ready": false
+    }
+  ],
+  "frames": 12,
+  "transform_direction": "T_base_camera maps camera points into base",
+  "calibration_hash": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
+  "calibration_status": "OPERATOR_ACCEPTED_FIT_ONLY",
+  "calibration_independent_validation": "NOT_PERFORMED_AT_USER_REQUEST",
+  "median_top_center_base_m": [
+    0.46001400140349985,
+    -0.18713348836713345,
+    -0.4782406499491916
+  ],
+  "max_deviation_from_median_m": 0.0011196387814113972,
+  "repeatability_is_not_absolute_accuracy": true,
+  "reference_comparison": null,
+  "ruler_acceptance": "NOT_PERFORMED_REFERENCE_MISSING",
+  "clock_error_bound_s": null,
+  "exposure_to_output_s": null,
+  "live_freshness_checked": false,
+  "control_ready": false,
+  "motion_enabled": false,
+  "warnings": [
+    "Camera mount unchanged must be separately established.",
+    "C35 uses a different capture profile; identical optical-frame convention must be confirmed.",
+    "A camera-to-base point transform is not TCP or a motion permit."
+  ],
+  "input_bundles_sha256": "ca38598c7245be807893a8baaa8c2e88ff073dcd2a0d06adba8b662f8d1e0660"
+}
