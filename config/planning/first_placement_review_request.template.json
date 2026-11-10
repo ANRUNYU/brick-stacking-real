@@ -1,6 +1,6 @@
 {
   "schema_version": "m-placement-target-request-draft-1",
-  "status": "LOGICAL_IDS_ONLY_REFERENCE_UNCONFIGURED",
+  "status": "TABLE_FRAME_TARGET_DEFINED_CAMERA_REFERENCE_PENDING",
   "target_id": "m-first-red-01",
   "slot_id": "m-first-placement-slot-01",
   "region_id": "m-first-placement-region-01",
@@ -50,5 +50,29 @@
     "Candidate file hash identifies bytes only; it does not approve calibration or fill historical bundles.",
     "Top surface center and model center are different points; bind the chosen semantics explicitly.",
     "V mirrors this M draft for local export wiring; authoritative updates remain on the M line."
-  ]
+  ],
+  "target_definition": {
+    "source": "operator_confirmed_20261110",
+    "reference_frame": "table_black_cross_20mm",
+    "table_center_m": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "nominal_edge_m": 0.05,
+    "nominal_model_center_m": [
+      0.0,
+      0.0,
+      0.025
+    ],
+    "nominal_visible_top_center_m": [
+      0.0,
+      0.0,
+      0.05
+    ],
+    "measured_edge_m": null,
+    "reference_measurement_error_m": null,
+    "camera_expectations_measured": false,
+    "definition_evidence_ref": "config/observed/first_placement_reference_intake_20261110.json"
+  }
 }
