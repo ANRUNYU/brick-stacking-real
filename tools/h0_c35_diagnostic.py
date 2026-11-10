@@ -53,6 +53,14 @@ def diagnose(bundles,calibration,*,calibration_hash,reference=None):
                    conservative_planar_with_reference_bound_m=float(planar.max()+bound),
                    conservative_height_with_reference_bound_m=float(height.max()+bound),
                    diagnostic_budget_met=bool(planar.max()+bound<=.01 and height.max()+bound<=.008))
+    timings=[b.get('timing',{}) for b in bundles]
+    valid_timing=all(t.get('validity')=='VALID' and
+                     type(t.get('clock_error_bound_s')) in (int,float) and
+                     np.isfinite(t['clock_error_bound_s']) and t['clock_error_bound_s']>0 and
+                     t.get('error_bound_evidence_ref') and
+                     type(t.get('exposure_to_output_s')) in (int,float) and
+                     np.isfinite(t['exposure_to_output_s']) and t['exposure_to_output_s']>=0
+                     for t in timings)
     return dict(schema_version='m-h0-c35-diagnostic-1',rows=rows,frames=len(rows),
                 transform_direction='T_base_camera maps camera points into base',
                 calibration_hash=calibration_hash,calibration_status=calibration.get('calibration_status'),
@@ -61,7 +69,9 @@ def diagnose(bundles,calibration,*,calibration_hash,reference=None):
                 max_deviation_from_median_m=float(np.linalg.norm(points-median,axis=1).max()),
                 repeatability_is_not_absolute_accuracy=True,reference_comparison=error,
                 ruler_acceptance='NOT_PERFORMED_REFERENCE_MISSING' if error is None else 'DIAGNOSTIC_ONLY',
-                clock_error_bound_s=None,exposure_to_output_s=None,
+                clock_error_bound_s=max(t['clock_error_bound_s'] for t in timings) if valid_timing else None,
+                exposure_to_output_s=max(t['exposure_to_output_s'] for t in timings) if valid_timing else None,
+                exposure_latency_scope='recorded measured maximum, not a future runtime bound',
                 live_freshness_checked=False,control_ready=False,motion_enabled=False,
                 warnings=['Camera mount unchanged must be separately established.',
                           'C35 uses a different capture profile; identical optical-frame convention must be confirmed.',

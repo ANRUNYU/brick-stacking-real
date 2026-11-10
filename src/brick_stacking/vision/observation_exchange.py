@@ -23,6 +23,22 @@ def _stamp(value):
     return float(value)
 
 
+EXPOSURE_REFERENCE_GLOBAL_MONOTONIC = (
+    "orbbec_color_global_timestamp_mapped_to_process_monotonic"
+)
+
+
+def exposure_host_candidate_s(clock_observation):
+    """Return SDK global→host-monotonic exposure candidate, or None."""
+    if not clock_observation:
+        return None
+    color = clock_observation.get("frames", {}).get("color") or {}
+    value = color.get("global_host_monotonic_candidate_s")
+    if not color.get("global_available") or value is None:
+        return None
+    return float(value)
+
+
 @dataclass(frozen=True)
 class CaptureContext:
     """Acquisition metadata for one immutable CameraFrame, in seconds/metres."""
@@ -40,17 +56,25 @@ class CaptureContext:
     host_boot_epoch: str | None = None
     clock_unavailable_reason: str | None = None
     capture_profile_hash: str | None = None
+    clock_error_bound_s: float | None = None
+    error_bound_evidence_ref: str | None = None
 
     def __post_init__(self):
         if not all((self.image_ref, self.profile, self.profile_hash, self.epoch)):
             raise ValueError("image reference, profile hash and session epoch required")
         for value in (self.host_receive_s, self.color_device_s, self.depth_device_s,
-                      self.depth_scale_m_per_unit):
+                      self.depth_scale_m_per_unit, self.clock_error_bound_s):
             _stamp(value)
         if (self.host_receive_s is None) != (self.host_clock_domain is None):
             raise ValueError("host arrival must name its clock domain")
         if self.depth_scale_m_per_unit == 0:
             raise ValueError("depth scale must be positive")
+        if (self.clock_error_bound_s is None) != (self.error_bound_evidence_ref is None):
+            raise ValueError("clock error bound and evidence ref must be set together")
+        if self.clock_error_bound_s is not None and not self.error_bound_evidence_ref:
+            raise ValueError("clock error bound requires evidence ref")
+        if self.clock_error_bound_s == 0:
+            raise ValueError("zero clock error bound is not allowed")
 
     @property
     def rgb_depth_delta_s(self):
@@ -77,6 +101,8 @@ class CaptureContext:
         if color is not None and not math.isclose(color, frame.stamp_s, abs_tol=1e-6, rel_tol=0):
             raise ValueError("recorded color stamp does not match the RGB-D frame")
         scale = metadata.get("depth_scale_mm", row.get("depth_scale_mm"))
+        bound = metadata.get("clock_error_bound_s", report.get("clock_error_bound_s"))
+        evidence = metadata.get("error_bound_evidence_ref", report.get("error_bound_evidence_ref"))
         return cls(
             image_ref=image_ref,
             profile=metadata.get("image_profile_version", profile),
@@ -93,6 +119,8 @@ class CaptureContext:
             clock_unavailable_reason=metadata.get("clock_unavailable_reason",
                                                   report.get("sdk_clock_unavailable_reason")),
             capture_profile_hash=metadata.get("profile_hash"),
+            clock_error_bound_s=None if bound is None else float(bound),
+            error_bound_evidence_ref=evidence,
         )
 
 
@@ -123,14 +151,30 @@ def observation_exchange(frame, context, detections, *, nominal_edge_m, recorded
         profile=context.profile, depth_registered_to_rgb=frame.registered,
         rgb_depth_delta_s=context.rgb_depth_delta_s,
     )
+    exposure_host = exposure_host_candidate_s(context.clock_observation)
+    bound = context.clock_error_bound_s
+    evidence_ref = context.error_bound_evidence_ref
+    if bound is not None and (bound < 0 or evidence_ref is None):
+        raise ValueError("clock error bound requires non-negative value and evidence ref")
+    if bound is None or exposure_host is None:
+        timing_validity, timing_reason = "UNKNOWN", (
+            "clock_mapping_bound_unvalidated" if exposure_host is not None
+            else "exposure_reference_and_clock_mapping_unvalidated"
+        )
+        bound, evidence_ref = None, None
+    else:
+        # Bound authorizes timing fields only; ObservationBundle.control_ready stays false.
+        timing_validity, timing_reason = "VALID", None
     timing = dict(
         frame_stamp_s=frame.stamp_s, device_clock_domain=frame.clock_domain,
         color_device_stamp_s=context.color_device_s, depth_device_stamp_s=context.depth_device_s,
         host_receive_stamp_s=context.host_receive_s, host_clock_domain=context.host_clock_domain,
         host_boot_epoch=context.host_boot_epoch, sdk_clock_observation=context.clock_observation,
-        rgb_depth_delta_s=context.rgb_depth_delta_s, exposure_reference=None,
-        exposure_host_stamp_s=None, clock_error_bound_s=None, error_bound_evidence_ref=None,
-        validity="UNKNOWN", reason="exposure_reference_and_clock_mapping_unvalidated",
+        rgb_depth_delta_s=context.rgb_depth_delta_s,
+        exposure_reference=(EXPOSURE_REFERENCE_GLOBAL_MONOTONIC if exposure_host is not None else None),
+        exposure_host_stamp_s=exposure_host, clock_error_bound_s=bound,
+        error_bound_evidence_ref=evidence_ref,
+        validity=timing_validity, reason=timing_reason,
         sdk_clock_unavailable_reason=context.clock_unavailable_reason,
         capture_profile_hash=context.capture_profile_hash,
         original_source=frame.source, valid_depth_ratio=valid_depth_ratio,

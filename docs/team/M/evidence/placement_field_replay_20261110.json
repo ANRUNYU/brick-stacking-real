@@ -1,0 +1,769 @@
+{
+  "schema_version": "m-placement-field-replay-1",
+  "source": "recorded_field_exports",
+  "live_freshness_checked": false,
+  "age_evaluated_at": "recorded output; not current wall time",
+  "cases": {
+    "verify_pre_grasp": {
+      "frames": 15,
+      "binding": {
+        "camera_id": "CP2L863000KL",
+        "optical_frame": "camera_CP2L863000KL_color_optical_frame",
+        "camera_epoch": "orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48",
+        "host_boot_epoch": "f9016d4a-56d7-4a83-a8c2-3fa6d11f8153",
+        "profile_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+        "clock_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+        "max_age_s": 2.656
+      },
+      "color_counts": {
+        "MATCH": 15
+      },
+      "source_checks_passed": 13,
+      "problem_counts": {
+        "SCENE_OR_RGBD_NOT_CONFIRMED": 2
+      },
+      "placement_verdicts": {
+        "UNKNOWN": 15
+      },
+      "reports": [
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326709.325321",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326709.325321/0",
+          "observed_candidate_color_check": "MATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [
+            "SCENE_OR_RGBD_NOT_CONFIRMED"
+          ],
+          "source_checks_passed": false,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6525553729152307,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326709.925945",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326709.925945/0",
+          "observed_candidate_color_check": "MATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [
+            "SCENE_OR_RGBD_NOT_CONFIRMED"
+          ],
+          "source_checks_passed": false,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6472596794483252,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326710.526569",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326710.526569/0",
+          "observed_candidate_color_check": "MATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [],
+          "source_checks_passed": true,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6452287899446674,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326711.127193",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326711.127193/0",
+          "observed_candidate_color_check": "MATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [],
+          "source_checks_passed": true,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6479563082684763,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326711.727817",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326711.727817/0",
+          "observed_candidate_color_check": "MATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [],
+          "source_checks_passed": true,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6525071244104765,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326712.328441",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326712.328441/0",
+          "observed_candidate_color_check": "MATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [],
+          "source_checks_passed": true,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6502859604079276,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326712.929065",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326712.929065/0",
+          "observed_candidate_color_check": "MATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [],
+          "source_checks_passed": true,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6430070549831726,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326713.529689",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326713.529689/0",
+          "observed_candidate_color_check": "MATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [],
+          "source_checks_passed": true,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6343204965814948,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326714.063577",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326714.063577/0",
+          "observed_candidate_color_check": "MATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [],
+          "source_checks_passed": true,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.7078442323254421,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326714.730937",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326714.730937/0",
+          "observed_candidate_color_check": "MATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [],
+          "source_checks_passed": true,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6407092066365294,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326715.331561",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326715.331561/0",
+          "observed_candidate_color_check": "MATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [],
+          "source_checks_passed": true,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.637791457993444,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326715.865449",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326715.865449/0",
+          "observed_candidate_color_check": "MATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [],
+          "source_checks_passed": true,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.7173657701350749,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326716.532809",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326716.532809/0",
+          "observed_candidate_color_check": "MATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [],
+          "source_checks_passed": true,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6622282135067508,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326717.133433",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326717.133433/0",
+          "observed_candidate_color_check": "MATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [],
+          "source_checks_passed": true,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.8232076945714653,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326717.266905",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_3c8a4f33b0d040349b775d74cdee2f48/326717.266905/0",
+          "observed_candidate_color_check": "MATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [],
+          "source_checks_passed": true,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 1.2565001910552382,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        }
+      ]
+    },
+    "verify_empty": {
+      "frames": 12,
+      "binding": {
+        "camera_id": "CP2L863000KL",
+        "optical_frame": "camera_CP2L863000KL_color_optical_frame",
+        "camera_epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+        "host_boot_epoch": "f9016d4a-56d7-4a83-a8c2-3fa6d11f8153",
+        "profile_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+        "clock_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+        "max_age_s": 2.656
+      },
+      "color_counts": {
+        "UNKNOWN": 12
+      },
+      "source_checks_passed": 0,
+      "problem_counts": {
+        "SCENE_OR_RGBD_NOT_CONFIRMED": 12,
+        "MISSING_OR_AMBIGUOUS_TARGET": 12
+      },
+      "placement_verdicts": {
+        "UNKNOWN": 12
+      },
+      "reports": [
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326993.273698",
+          "selected_observation_id": null,
+          "observed_candidate_color_check": "UNKNOWN",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "MISSING_OR_AMBIGUOUS_TARGET"
+          ],
+          "source_checks_passed": false,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6401094027678482,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326993.874322",
+          "selected_observation_id": null,
+          "observed_candidate_color_check": "UNKNOWN",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "MISSING_OR_AMBIGUOUS_TARGET"
+          ],
+          "source_checks_passed": false,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.616105381748639,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326994.40821",
+          "selected_observation_id": null,
+          "observed_candidate_color_check": "UNKNOWN",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "MISSING_OR_AMBIGUOUS_TARGET"
+          ],
+          "source_checks_passed": false,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6579173030913807,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326995.008834",
+          "selected_observation_id": null,
+          "observed_candidate_color_check": "UNKNOWN",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "MISSING_OR_AMBIGUOUS_TARGET"
+          ],
+          "source_checks_passed": false,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6339995636371896,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326995.542722",
+          "selected_observation_id": null,
+          "observed_candidate_color_check": "UNKNOWN",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "MISSING_OR_AMBIGUOUS_TARGET"
+          ],
+          "source_checks_passed": false,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6670652697794139,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326996.143346",
+          "selected_observation_id": null,
+          "observed_candidate_color_check": "UNKNOWN",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "MISSING_OR_AMBIGUOUS_TARGET"
+          ],
+          "source_checks_passed": false,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6272485636873171,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326996.677234",
+          "selected_observation_id": null,
+          "observed_candidate_color_check": "UNKNOWN",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "MISSING_OR_AMBIGUOUS_TARGET"
+          ],
+          "source_checks_passed": false,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6621684500132687,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326997.277858",
+          "selected_observation_id": null,
+          "observed_candidate_color_check": "UNKNOWN",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "MISSING_OR_AMBIGUOUS_TARGET"
+          ],
+          "source_checks_passed": false,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6409091348177753,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326997.878482",
+          "selected_observation_id": null,
+          "observed_candidate_color_check": "UNKNOWN",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "MISSING_OR_AMBIGUOUS_TARGET"
+          ],
+          "source_checks_passed": false,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6157188143697567,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326998.41237",
+          "selected_observation_id": null,
+          "observed_candidate_color_check": "UNKNOWN",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "MISSING_OR_AMBIGUOUS_TARGET"
+          ],
+          "source_checks_passed": false,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6757515111239627,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326999.012994",
+          "selected_observation_id": null,
+          "observed_candidate_color_check": "UNKNOWN",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "MISSING_OR_AMBIGUOUS_TARGET"
+          ],
+          "source_checks_passed": false,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.8241180481854826,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95/326999.213202",
+          "selected_observation_id": null,
+          "observed_candidate_color_check": "UNKNOWN",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [
+            "SCENE_OR_RGBD_NOT_CONFIRMED",
+            "MISSING_OR_AMBIGUOUS_TARGET"
+          ],
+          "source_checks_passed": false,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 1.1643428505631164,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        }
+      ]
+    },
+    "verify_green": {
+      "frames": 11,
+      "binding": {
+        "camera_id": "CP2L863000KL",
+        "optical_frame": "camera_CP2L863000KL_color_optical_frame",
+        "camera_epoch": "orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b",
+        "host_boot_epoch": "f9016d4a-56d7-4a83-a8c2-3fa6d11f8153",
+        "profile_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+        "clock_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+        "max_age_s": 2.656
+      },
+      "color_counts": {
+        "MISMATCH": 11
+      },
+      "source_checks_passed": 9,
+      "problem_counts": {
+        "SCENE_OR_RGBD_NOT_CONFIRMED": 2
+      },
+      "placement_verdicts": {
+        "UNKNOWN": 11
+      },
+      "reports": [
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327316.930986",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327316.930986/0",
+          "observed_candidate_color_check": "MISMATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [
+            "SCENE_OR_RGBD_NOT_CONFIRMED"
+          ],
+          "source_checks_passed": false,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6584145988454111,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327317.53161",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327317.53161/0",
+          "observed_candidate_color_check": "MISMATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [
+            "SCENE_OR_RGBD_NOT_CONFIRMED"
+          ],
+          "source_checks_passed": false,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6560254585929215,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327318.132234",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327318.132234/0",
+          "observed_candidate_color_check": "MISMATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [],
+          "source_checks_passed": true,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6554352156817913,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327318.732858",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327318.732858/0",
+          "observed_candidate_color_check": "MISMATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [],
+          "source_checks_passed": true,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6653039830853231,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327319.333482",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327319.333482/0",
+          "observed_candidate_color_check": "MISMATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [],
+          "source_checks_passed": true,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6627704800921492,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327319.934106",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327319.934106/0",
+          "observed_candidate_color_check": "MISMATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [],
+          "source_checks_passed": true,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6584248719154857,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327320.53473",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327320.53473/0",
+          "observed_candidate_color_check": "MISMATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [],
+          "source_checks_passed": true,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6628070405567996,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327321.135354",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327321.135354/0",
+          "observed_candidate_color_check": "MISMATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [],
+          "source_checks_passed": true,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6641840088414028,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327321.735978",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327321.735978/0",
+          "observed_candidate_color_check": "MISMATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [],
+          "source_checks_passed": true,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6752902314183302,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327322.336602",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327322.336602/0",
+          "observed_candidate_color_check": "MISMATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [],
+          "source_checks_passed": true,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.6858320572064258,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        },
+        {
+          "schema_version": "m-placement-bundle-audit-1",
+          "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327322.87049",
+          "selected_observation_id": "CP2L863000KL/orbbec_CP2L863000KL_8033b9edc72249bc9a9afb303cd2452b/327322.87049/0",
+          "observed_candidate_color_check": "MISMATCH",
+          "target_association_confirmed": false,
+          "placement_verdict": "UNKNOWN",
+          "problems": [],
+          "source_checks_passed": true,
+          "clock_error_bound_s": 0.0016864349552430213,
+          "exposure_to_output_s": 0.9019105038023554,
+          "source_control_ready": false,
+          "motion_enabled": false,
+          "control_ready": false,
+          "permit": null
+        }
+      ]
+    }
+  },
+  "ruler": {
+    "schema_version": "m-ruler-reference-audit-1",
+    "reference_available": true,
+    "reference_frame": "table_black_cross_20mm",
+    "base_frame": "L_arm_root",
+    "base_reference": null,
+    "j1_equals_base_confirmed": false,
+    "cross_column_horizontal_closure_residual_mm": 0.04903343707565,
+    "j1_height_spread_mm": 7,
+    "control_ready": false,
+    "motion_enabled": false,
+    "permit": null,
+    "status": "FRAME_BRIDGE_REQUIRED",
+    "missing": [
+      "J1 axis center versus L_arm_root origin relation",
+      "table-cross to base orientation and translation, independently verified",
+      "bridge error bound including rotation contribution at reference point",
+      "camera mount/frame convention unchanged since C35 independently confirmed"
+    ]
+  },
+  "input_sha256": {
+    "docs/team/B/evidence/field_20261110/verify_pre_grasp_observation_bundles.jsonl": "7b3102f44711a7e6eccf9701f27ede7702c34c6bfa9c2420720e0c6a049e54d1",
+    "docs/team/B/evidence/field_20261110/verify_empty_observation_bundles.jsonl": "370c084c74e10ca0511d863274755572284a8069b1dd76658bf6a62eae2b2c43",
+    "docs/team/B/evidence/field_20261110/verify_green_observation_bundles.jsonl": "82f70899b967d6d2a5eee471dba457f5d5c180fc01e7a440cc1ec38364b07130",
+    "docs/team/B/evidence/field_20261110/independent_ruler_reference_v0.1.json": "750f07832abb5f93df186b4548ac388c0dfa0b1b2d7e2b7d8047601f54e36638"
+  },
+  "control_ready": false,
+  "motion_enabled": false,
+  "commands_sent": 0,
+  "remaining": [
+    "independent frame bridge",
+    "target/region association",
+    "localized bounded errors",
+    "support/stability/retraction evidence",
+    "approved execution context and full Gate"
+  ]
+}

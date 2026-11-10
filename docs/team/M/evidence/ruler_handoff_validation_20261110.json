@@ -1,0 +1,54 @@
+{
+  "schema_version": "m-ruler-validation-handoff-1",
+  "ruler_audit": {
+    "schema_version": "m-ruler-reference-audit-1",
+    "reference_available": true,
+    "reference_frame": "table_black_cross_20mm",
+    "base_frame": "L_arm_root",
+    "base_reference": null,
+    "j1_equals_base_confirmed": false,
+    "cross_column_horizontal_closure_residual_mm": 0.04903343707565,
+    "j1_height_spread_mm": 7,
+    "control_ready": false,
+    "motion_enabled": false,
+    "permit": null,
+    "status": "FRAME_BRIDGE_REQUIRED",
+    "missing": [
+      "J1 axis center versus L_arm_root origin relation",
+      "table-cross to base orientation and translation, independently verified",
+      "bridge error bound including rotation contribution at reference point",
+      "camera mount/frame convention unchanged since C35 independently confirmed"
+    ]
+  },
+  "source_frame_check": {
+    "observed_frames": [
+      "head"
+    ],
+    "c35_camera_frame": "camera_CP2L863000KL_color_optical_frame",
+    "status": "FRAME_CONVENTION_UNCONFIRMED"
+  },
+  "source_frames_count": 5,
+  "raw_top_center_source_frame_median_m": [
+    -0.00857277169680702,
+    0.23910018050785925,
+    0.7889878854086705
+  ],
+  "localize": null,
+  "conditional_radius_check": {
+    "assumption": "J1 axis center equals L_arm_root origin; NOT CONFIRMED",
+    "ruler_radius_m": 0.6902101129366333,
+    "c35_radius_m": null,
+    "absolute_radius_difference_m": null,
+    "acceptance": "NOT_AN_XY_OR_HEIGHT_ACCEPTANCE",
+    "note": "One distance cannot recover orientation; ruler J1 height spread is 7 mm."
+  },
+  "input_sha256": {
+    "docs/team/B/evidence/field_20261110/independent_ruler_reference_v0.1.json": "750f07832abb5f93df186b4548ac388c0dfa0b1b2d7e2b7d8047601f54e36638",
+    "docs/team/B/evidence/field_20261110/ruler_bind_observation_bundles.jsonl": "cf95880d4bc320eec6c43c77b877ef8c21769219b8ed429b24f2d1386c8a879f",
+    "calibration/candidates/C35_left_head_fit_only_user10mm_20261108.json": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461"
+  },
+  "control_ready": false,
+  "motion_enabled": false,
+  "commands_sent": 0,
+  "permit": null
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "v-verify-empty-0.1",
+  "date": "2026-11-10",
+  "phase": "post_grasp_or_missing_negative",
+  "host_artifact": "artifacts/v_verify_empty_20261110",
+  "result": "OBSERVED",
+  "observation_count": 12,
+  "empty_frames": 12,
+  "valid_block_frames": 0,
+  "scene_consistency_reason": "tabletop_detection_unavailable: automatic table search: no elevated colored-object support",
+  "fixed_color_exposure": 80,
+  "fixed_color_gain": 16,
+  "warmup_unstable_override": true,
+  "timing_validity": "VALID",
+  "clock_error_bound_s": 0.0016864349552430213,
+  "control_ready": false,
+  "preview": "docs/team/B/evidence/field_20261110/verify_empty_preview.jpg",
+  "bundles": "docs/team/B/evidence/field_20261110/verify_empty_observation_bundles.jsonl",
+  "notes": [
+    "Black cross retained; red block removed",
+    "Useful as missing-target / grasp-empty visual negative; not a held-in-hand post_grasp PASS"
+  ]
+}

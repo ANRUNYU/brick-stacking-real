@@ -1,5 +1,5 @@
 {
-  "status": "V_M_ACK_PENDING_EXECUTION_GATES",
+  "status": "BOTH_ACK_BUDGETS_CONTROL_READY_FALSE",
   "schema_version": "0.1",
   "plan_path": "docs/THREE_TRACK_GRASP_DEV_PLAN.md",
   "plan_sha256_utf8_lf": "bc30f3198e5dbaf8beb6cd4b7b4d59d83a5702938ad52cbf5e4fdbe9f562e5ff",
@@ -9,15 +9,15 @@
       "status": "ACK",
       "date": "2026-11-10",
       "note": "Accept §0.2 budgets without relaxation; control_ready stays false until clock bound + calibration hash + H2 rules.",
-      "branch": "codex/v-vision-20261110"
+      "branch": "codex/v-vision-20261110",
+      "tip": "9408685"
     },
     "M": {
       "status": "ACK",
       "date": "2026-11-10",
+      "note": "ACK §0.2 and ObservationBundle semantics via PR #21 / issue #16; C35 fit-only offline localize done; independent ruler was missing then, now provided under field_independent_ruler; control_ready stays false.",
       "branch": "codex/m-h0-c35-20261110",
-      "note": "ACK H0 section 0.2 budgets and ObservationBundle semantics without relaxation. 2.564s is diagnostic receive-age only, not exposure latency/error bound. C35 offline geometry only; independent ruler reference missing. No executable permit until clock, calibration/independent checks and H2-H6 are met.",
-      "v_input_commit": "a79e679c399529574272608c9d82deaa8fd58eed",
-      "diagnostic_report": "docs/team/M/evidence/H0_C35_single_red_20261110.json"
+      "pr": 21
     }
   },
   "vision_profile": {
@@ -40,17 +40,32 @@
     "placement_planar_max": 0.015
   },
   "placement_color_match_required": true,
-  "observed_exposure_latency_upper_bound_s": null,
+  "observed_exposure_latency_upper_bound_s": 1.328,
   "field_receive_to_output_s": {
     "scene": "single_red_sparse_20261110",
     "p50": 0.636,
     "p95": 1.016,
     "max": 1.282,
-    "basis": "host receive to observation output; exposure-to-output still null"
+    "basis": "host receive to observation output; superseded diagnostically by clock mapping study for exposure path"
   },
-  "freshness_gate_s": 2.564,
-  "freshness_gate_status": "diagnostic_receive_based_pending_exposure_clock",
-  "clock_error_bound_s": null,
+  "field_exposure_to_output_s": {
+    "scene": "clock_mapping_20261110_two_sessions",
+    "p50": 0.688,
+    "max": 1.328,
+    "basis": "SDK color global→process_monotonic candidate to observation output",
+    "evidence": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json"
+  },
+  "freshness_gate_s": 2.656,
+  "freshness_gate_status": "diagnostic_exposure_max_x2_pending_h0_freeze",
+  "clock_error_bound_s": 0.0016864349552430213,
+  "clock_error_bound_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+  "clock_error_bound_status": "ACCEPTED_FOR_OBSERVATION_TIMING",
+  "clock_error_bound_study_s": {
+    "value": 0.0016864349552430213,
+    "status": "ACCEPTED_FOR_OBSERVATION_TIMING",
+    "evidence": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+    "note": "fills ObservationBundle.timing when evidence file is present; control_ready stays false"
+  },
   "calibration_hash": null,
   "control_ready": false,
   "golden": {
@@ -59,7 +74,8 @@
     "h4_mock": "tests/fixtures/vision_exchange/verification_v0.1.json",
     "fixture_index": "tests/fixtures/vision_exchange/FIXTURE_INDEX.json",
     "replay_latency_diagnostic": "docs/team/B/evidence/c_recording_replay_latency_v0.1.json",
-    "field_single_red": "docs/team/B/evidence/field_20261110/single_red_stability.json"
+    "field_single_red": "docs/team/B/evidence/field_20261110/single_red_stability.json",
+    "field_independent_ruler": "docs/team/B/evidence/field_20261110/independent_ruler_reference_v0.1.json"
   },
   "api": {
     "module": "brick_stacking.vision.service",

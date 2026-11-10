@@ -61,7 +61,12 @@ def test_recorded_c_clock_observation_preserved_without_bound():
     bundle = observation_exchange(frame, context, (), nominal_edge_m=.05, recorded=True)
     assert bundle["timing"]["sdk_clock_observation"] is not None
     assert bundle["timing"]["clock_error_bound_s"] is None
-    assert bundle["timing"]["exposure_reference"] is None
+    assert bundle["timing"]["exposure_reference"] == (
+        "orbbec_color_global_timestamp_mapped_to_process_monotonic"
+    )
+    assert bundle["timing"]["exposure_host_stamp_s"] is not None
+    assert bundle["timing"]["validity"] == "UNKNOWN"
+    assert bundle["timing"]["reason"] == "clock_mapping_bound_unvalidated"
 
 
 def test_unsupported_clock_observation_schema_rejected():
@@ -88,3 +93,39 @@ def test_color_stamp_mismatch_rejected():
 
 def test_profile_hash_is_stable_for_identical_tables():
     assert profile_hash({"a": 1, "b": [2, 3]}) == profile_hash({"b": [2, 3], "a": 1})
+
+
+def test_bound_without_evidence_rejected():
+    with pytest.raises(ValueError, match="together"):
+        CaptureContext(
+            "img.npz", "profile", "hash", "epoch", 10., "process_monotonic",
+            clock_error_bound_s=0.002,
+        )
+
+
+def test_zero_bound_rejected():
+    with pytest.raises(ValueError, match="zero clock error"):
+        CaptureContext(
+            "img.npz", "profile", "hash", "epoch", 10., "process_monotonic",
+            clock_error_bound_s=0., error_bound_evidence_ref="docs/x.json",
+        )
+
+
+def test_field_bound_makes_timing_valid_without_control_ready():
+    path = REAL / "frame_000.npz"
+    report = __import__("json").loads((REAL / "camera_report.json").read_text(encoding="utf-8"))
+    frame, metadata = RecordedCamera.read_recording(path)
+    evidence = "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json"
+    context = CaptureContext.from_recording(
+        frame, dict(metadata, clock_error_bound_s=0.0016864349552430213,
+                    error_bound_evidence_ref=evidence),
+        image_ref=path.as_posix(), profile="head_replacement_candidate",
+        profile_hash="abc", report=report,
+    )
+    bundle = observation_exchange(frame, context, (), nominal_edge_m=.05, recorded=True)
+    assert bundle["timing"]["validity"] == "VALID"
+    assert bundle["timing"]["reason"] is None
+    assert bundle["timing"]["clock_error_bound_s"] == pytest.approx(0.0016864349552430213)
+    assert bundle["timing"]["error_bound_evidence_ref"] == evidence
+    assert bundle["timing"]["exposure_host_stamp_s"] is not None
+    assert bundle["control_ready"] is False

@@ -51,6 +51,8 @@ def diagnostic_bundle(localized,c35,c49,*,refs,h0,plan_result=None):
         reasons.append('C35_NOT_INDEPENDENTLY_VALIDATED_AND_APPROVED')
     if localized.get('clock_error_bound_s') is None:reasons.append('CLOCK_ERROR_BOUND_UNKNOWN')
     if localized.get('exposure_to_output_s') is None:reasons.append('EXPOSURE_LATENCY_BOUND_UNKNOWN')
+    if h0.get('freshness_gate_status')!='FROZEN_FOR_EXECUTION':
+        reasons.append('FRESHNESS_POLICY_NOT_FROZEN_FOR_EXECUTION')
     if c49.get('approved') is not True:reasons.append('C49_GRASP_EXECUTION_ACCEPTANCE_PENDING')
     if plan_result is None:reasons.append('IK_TRAJECTORY_AND_FULL_COLLISION_NOT_PROVIDED')
     else:
@@ -68,7 +70,8 @@ def diagnostic_bundle(localized,c35,c49,*,refs,h0,plan_result=None):
                 grasp_transform_direction='T_flange_block; target flange = T_base_block @ inverse(T_flange_block)',
                 temporary_C35_point_offset_used_as_TCP=False,
                 flange_targets=None,plan_result=plan_result,
-                error_budgets_m=h0['budget_m'],diagnostic_receive_freshness_s=h0['freshness_gate_s'],
+                error_budgets_m=h0['budget_m'],diagnostic_freshness_s=h0['freshness_gate_s'],
+                diagnostic_freshness_basis=('exposure_candidate' if h0.get('field_exposure_to_output_s') else 'host_receive'),
                 freshness_policy_status=h0['freshness_gate_status'],
                 status='BLOCKED_FOR_EXECUTION',reasons=sorted(set(reasons)),
                 permit=None,permit_request_allowed=False,motion_enabled=False,control_ready=False)

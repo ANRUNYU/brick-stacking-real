@@ -1,0 +1,22 @@
+{
+  "schema_version": "v-verify-pre-grasp-0.1",
+  "date": "2026-11-10",
+  "phase": "pre_grasp",
+  "host_artifact": "artifacts/v_verify_pre_grasp_20261110d",
+  "result": "OBSERVED",
+  "observation_count": 15,
+  "valid_red_frames": 15,
+  "candidate_status": "SINGLE_CUBE_CANDIDATE",
+  "fixed_color_exposure": 80,
+  "fixed_color_gain": 16,
+  "warmup_unstable_override": true,
+  "timing_validity": "VALID",
+  "clock_error_bound_s": 0.0016864349552430213,
+  "control_ready": false,
+  "preview": "docs/team/B/evidence/field_20261110/verify_pre_grasp_preview.jpg",
+  "bundles": "docs/team/B/evidence/field_20261110/verify_pre_grasp_observation_bundles.jsonl",
+  "notes": [
+    "Field flicker prevented strict RGB warmup; diagnostic --allow-unstable-warmup used",
+    "Scene cleared to black cross + single red before this capture"
+  ]
+}

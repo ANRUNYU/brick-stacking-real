@@ -133,7 +133,8 @@ def choose_profile(profiles, formats, *, size=None, fps=None):
 
 
 def capture(sdk, device, serial, output, report, *, count, seconds, max_skew_ms, size=None,
-            fps=None, warmup_frames=30, on_frame=None, sdk_clock_type=None):
+            fps=None, warmup_frames=30, on_frame=None, sdk_clock_type=None,
+            allow_unstable_warmup=False):
     import cv2
     import numpy as np
     pipe = sdk.Pipeline(device)
@@ -219,9 +220,13 @@ def capture(sdk, device, serial, output, report, *, count, seconds, max_skew_ms,
             stable=exposure_window_stable(rgb_history)
             if not captured:
                 report['warmup_observations'].append({'stamp_s':ct,'median_rgb':median_rgb,'stable_window':stable})
-                if warmup<=warmup_frames or not stable:
+                if warmup <= warmup_frames:
                     continue
-                report['capture_started_after_rgb_stabilization']=True
+                if not stable and not allow_unstable_warmup:
+                    continue
+                report['capture_started_after_rgb_stabilization'] = bool(stable)
+                if not stable:
+                    report['warmup_unstable_override'] = True
             elif not stable:
                 report['exposure_changed_during_capture']=True
             if d.get_format() != sdk.OBFormat.Y16:
@@ -284,6 +289,8 @@ def main(argv=None):
     p.add_argument('--height',type=int,help='exact native stream height; requires --width')
     p.add_argument('--fps',type=int,help='exact stream frame rate, no fallback')
     p.add_argument('--warmup-frames',type=int,default=30,help='minimum startup frames, then wait for stable RGB medians')
+    p.add_argument('--allow-unstable-warmup', action='store_true',
+                   help='diagnostic only: start capture after warmup frames even if RGB medians still flicker')
     p.add_argument("--observe-profile", type=Path, help="run latest-pair tabletop detection during capture")
     p.add_argument("--max-receive-age-s", type=float, help="diagnostic receive-to-output limit")
     p.add_argument("--reconnects", type=int, default=0, help="bounded same-serial capture retries in observation mode")
@@ -351,7 +358,8 @@ def main(argv=None):
                 )
             options = dict(count=args.frames, seconds=args.seconds, max_skew_ms=args.max_skew_ms,
                            size=(args.width,args.height) if args.width is not None else None,
-                           fps=args.fps, warmup_frames=args.warmup_frames)
+                           fps=args.fps, warmup_frames=args.warmup_frames,
+                           allow_unstable_warmup=args.allow_unstable_warmup)
             if args.observe_profile:
                 if __package__:
                     from .online_tabletop_observation import observe

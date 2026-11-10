@@ -1,0 +1,110 @@
+{
+  "schema_version": "v-independent-ruler-reference-0.1",
+  "status": "RECONCILED_FOR_M_REVIEW",
+  "date": "2026-11-10",
+  "camera_id": "CP2L863000KL",
+  "control_ready": false,
+  "summary_for_M": {
+    "what_this_is": "桌面临时十字原点下的红块独立尺量，并附中心立柱与左肩 J1 的场景几何",
+    "what_this_is_not": "尚未经 M 确认为最终 L_arm_root 坐标系下的验收对尺；control_ready 仍为 false",
+    "recommended_block_reference_m": {
+      "frame": "table_black_cross_20mm",
+      "point": "red_top_center_via_table_projection_plus_height",
+      "xyz": [0.172, 0.079, 0.05],
+      "unit": "m",
+      "estimated_error_m": 0.002
+    },
+    "recommended_J1_relative_to_cross_mm": {
+      "robot_right": 26,
+      "toward_robot": 586,
+      "above_table": 495,
+      "notes": "J1 到立柱水平 165 mm 拟合值；高度采用桌面以上实测约 495 mm"
+    }
+  },
+  "frames": {
+    "table_black_cross_20mm": {
+      "description": "桌面固定 20x20mm 黑色十字中心",
+      "on_tabletop": true,
+      "photo": "docs/team/B/evidence/field_20261110/scene_robot_table_overview.jpg",
+      "axes": {
+        "x": "从十字指向右侧为正",
+        "y": "从十字指向靠近机器人一侧为正",
+        "z": "桌面法向向上"
+      }
+    },
+    "robot_center_column_section_center": {
+      "description": "机器人中间立柱横截面中心；水平关系参考点",
+      "not": "完整 L_arm_root"
+    },
+    "left_shoulder_J1_axis_center": {
+      "description": "左肩 J1 轴中心；操作者定义为左臂基座候选，待 M 确认是否等同 L_arm_root"
+    }
+  },
+  "block": {
+    "measurement_point": "table_projection_of_red_top_surface_center",
+    "measurement_point_note": "尺量平面点是红块顶面中心在桌面的竖直投影；高度另测",
+    "in_cross_frame_m": {
+      "xyz": [0.172, 0.079, 0.05],
+      "raw_mm": {
+        "projection_right": 172,
+        "projection_toward_robot": 79,
+        "top_height_above_table": 50
+      },
+      "estimated_error_m": 0.002
+    }
+  },
+  "accepted_scene_mm": {
+    "table_height_above_floor": 748,
+    "camera_height_above_floor": {"value": 1520, "error": 8},
+    "camera_to_cross_slant": {"value": 910, "error": 3},
+    "camera_height_above_table_derived": 772,
+    "camera_to_cross_horizontal_derived": 481.8,
+    "cross_left_of_center_column": 191,
+    "cross_foreaft_from_center_column": {
+      "value": 592,
+      "definition": "垂直于桌面左右方向、立柱中心到十字中心的距离"
+    },
+    "cross_to_center_column_horizontal": {
+      "measured": 622,
+      "from_191_and_592": 622.0,
+      "residual": 0.0
+    },
+    "J1_height_above_floor": 1250,
+    "J1_height_above_table": {
+      "measured": 495,
+      "from_floor_1250": 502,
+      "from_slant_772": 502,
+      "adopted": 495,
+      "spread_mm": 7
+    },
+    "J1_to_center_column_horizontal": {"value": 165, "earlier": 168},
+    "J1_to_cross_slant": {"value": 772, "qualifier": "approximate"},
+    "J1_toward_robot_from_cross": {"measured": 585, "fitted_with_165_circle": 586},
+    "J1_right_of_cross_fitted": 26
+  },
+  "superseded_mm": {
+    "cross_left_of_column_543_as_leftright": "redefined: 543 was an earlier fore-aft attempt; final fore-aft is 592",
+    "cross_to_column_horizontal_673.4": "replaced by 622",
+    "J1_above_table_550": "replaced by 495"
+  },
+  "vision_bind": {
+    "observation_bundles": "docs/team/B/evidence/field_20261110/ruler_bind_observation_bundles.jsonl",
+    "preview": "docs/team/B/evidence/field_20261110/ruler_bind_preview_b.jpg",
+    "origin_check_preview": "docs/team/B/evidence/field_20261110/origin_check_preview.jpg",
+    "fixed_color_exposure": 80,
+    "fixed_color_gain": 16,
+    "frames": 5,
+    "all_single_valid_red": true,
+    "top_surface_point_camera_m_median": [
+      -0.00857277169680702,
+      0.23910018050785925,
+      0.7889878854086705
+    ],
+    "top_surface_max_dev_from_median_m": 0.0010557537281802051
+  },
+  "remaining_for_M": [
+    "确认 left_shoulder_J1_axis_center 是否等于 L_arm_root",
+    "把 table_black_cross_20mm 接到 L_arm_root，或直接在 L_arm_root 下重测红块",
+    "完成独立验证点报告；当前不是放宽后的 10 mm 验收通过"
+  ]
+}

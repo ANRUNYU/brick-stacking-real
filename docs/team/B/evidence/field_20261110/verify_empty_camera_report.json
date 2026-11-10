@@ -1,0 +1,452 @@
+{
+  "started_at": "2026-11-10T08:30:35.805139+00:00",
+  "scope": "camera_only",
+  "robot_motion_accessed": false,
+  "can_accessed": false,
+  "devices": [
+    {
+      "serial": "CP2L863000KL",
+      "name": "Orbbec Gemini 335L",
+      "uid": "2-3.4.3-61"
+    },
+    {
+      "serial": "AY6M86300GH",
+      "name": "Orbbec Gemini2",
+      "uid": "2-3.4.4-62"
+    },
+    {
+      "serial": "AY6M8630086",
+      "name": "Orbbec Gemini2",
+      "uid": "2-3.4.2-63"
+    }
+  ],
+  "frames": [],
+  "rejected_skew": 0,
+  "errors": [],
+  "cleanup_errors": [],
+  "result": "OBSERVED",
+  "binding_version": "2.1.3",
+  "sdk_version": "2.10.6",
+  "selected": {
+    "serial": "CP2L863000KL",
+    "name": "Orbbec Gemini 335L",
+    "firmware": "1.4.60",
+    "connection": "USB3.2"
+  },
+  "color_exposure_lock": {
+    "before": {
+      "auto_exposure": false,
+      "exposure": 80,
+      "gain": 16
+    },
+    "after": {
+      "auto_exposure": false,
+      "exposure": 80,
+      "gain": 16
+    },
+    "persistent_write": false
+  },
+  "capture_attempts": [
+    {
+      "frames": [],
+      "rejected_skew": 0,
+      "cleanup_errors": [],
+      "color_exposure_lock": {
+        "before": {
+          "auto_exposure": false,
+          "exposure": 80,
+          "gain": 16
+        },
+        "after": {
+          "auto_exposure": false,
+          "exposure": 80,
+          "gain": 16
+        },
+        "persistent_write": false
+      },
+      "sdk_clock_unavailable_reason": null,
+      "requested_profiles": {
+        "size_wh": [
+          640,
+          480
+        ],
+        "fps": 15,
+        "explicit_request_has_no_fallback": true
+      },
+      "profiles": {
+        "color": {
+          "width": 640,
+          "height": 480,
+          "fps": 15,
+          "format": "OBFormat.RGB"
+        },
+        "depth": {
+          "width": 640,
+          "height": 480,
+          "fps": 15,
+          "format": "OBFormat.Y16"
+        }
+      },
+      "calibration": {
+        "K": [
+          [
+            368.1024169921875,
+            0.0,
+            322.947021484375
+          ],
+          [
+            0.0,
+            368.163330078125,
+            237.29510498046875
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "distortion": {
+          "k1": -0.031556159257888794,
+          "k2": 0.036501653492450714,
+          "k3": -0.012785496190190315,
+          "k4": 0.0,
+          "k5": 0.0,
+          "k6": 0.0,
+          "p1": -0.0005816970369778574,
+          "p2": 0.0004935592296533287,
+          "model": "OBCameraDistortionModel.BROWN_CONRADY_K6"
+        },
+        "width": 640,
+        "height": 480,
+        "extrinsics_available": false
+      },
+      "warmup_minimum_frames": 30,
+      "warmup_observations": [
+        {
+          "stamp_s": 326991.271619,
+          "median_rgb": [
+            146.0,
+            150.0,
+            146.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326991.338354,
+          "median_rgb": [
+            141.0,
+            144.0,
+            140.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326991.40509,
+          "median_rgb": [
+            137.0,
+            140.0,
+            136.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326991.471826,
+          "median_rgb": [
+            147.0,
+            150.0,
+            145.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326991.538562,
+          "median_rgb": [
+            142.0,
+            144.0,
+            140.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326991.605298,
+          "median_rgb": [
+            138.0,
+            140.0,
+            135.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326991.672034,
+          "median_rgb": [
+            147.0,
+            150.0,
+            145.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326991.73877,
+          "median_rgb": [
+            142.0,
+            144.0,
+            139.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326991.805506,
+          "median_rgb": [
+            138.0,
+            140.0,
+            135.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326991.872242,
+          "median_rgb": [
+            147.0,
+            150.0,
+            145.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326991.938978,
+          "median_rgb": [
+            143.0,
+            145.0,
+            140.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326992.005714,
+          "median_rgb": [
+            139.0,
+            139.0,
+            135.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326992.07245,
+          "median_rgb": [
+            147.0,
+            149.0,
+            145.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326992.139186,
+          "median_rgb": [
+            143.0,
+            145.0,
+            140.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326992.205922,
+          "median_rgb": [
+            139.0,
+            139.0,
+            135.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326992.272658,
+          "median_rgb": [
+            147.0,
+            149.0,
+            145.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326992.339394,
+          "median_rgb": [
+            143.0,
+            145.0,
+            141.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326992.40613,
+          "median_rgb": [
+            138.0,
+            139.0,
+            135.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326992.472866,
+          "median_rgb": [
+            147.0,
+            149.0,
+            145.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326992.539602,
+          "median_rgb": [
+            143.0,
+            145.0,
+            141.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326992.606338,
+          "median_rgb": [
+            138.0,
+            139.0,
+            135.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326992.673074,
+          "median_rgb": [
+            147.0,
+            149.0,
+            145.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326992.73981,
+          "median_rgb": [
+            144.0,
+            146.0,
+            141.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326992.806546,
+          "median_rgb": [
+            138.0,
+            139.0,
+            135.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326992.873282,
+          "median_rgb": [
+            147.0,
+            149.0,
+            145.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326992.940018,
+          "median_rgb": [
+            144.0,
+            146.0,
+            142.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326993.006754,
+          "median_rgb": [
+            138.0,
+            139.0,
+            135.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326993.07349,
+          "median_rgb": [
+            147.0,
+            149.0,
+            145.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326993.140226,
+          "median_rgb": [
+            144.0,
+            146.0,
+            142.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326993.206962,
+          "median_rgb": [
+            138.0,
+            139.0,
+            135.0
+          ],
+          "stable_window": false
+        },
+        {
+          "stamp_s": 326993.273698,
+          "median_rgb": [
+            146.0,
+            149.0,
+            144.0
+          ],
+          "stable_window": false
+        }
+      ],
+      "capture_started_after_rgb_stabilization": false,
+      "warmup_unstable_override": true,
+      "epoch": "orbbec_CP2L863000KL_aee34776abfc4196bc68acc58ff8ec95",
+      "profile_hash": "634f7a19db6cd5edfc6fa80314d300594e3764327fa639d246548acc542f7697",
+      "exposure_changed_during_capture": true,
+      "captured_pairs": 90,
+      "result": "CAPTURED",
+      "notice": "Capture is not depth accuracy, alignment accuracy or block-detection acceptance. Clock is per-camera; no arm/world transform.",
+      "observation_count": 12
+    }
+  ],
+  "observation_count": 12,
+  "limits": {
+    "max_receive_age_s": 2.656,
+    "max_pair_skew_s": 0.02,
+    "status": "diagnostic_limits_not_validated"
+  },
+  "clock_error_bound": {
+    "clock_error_bound_s": 0.0016864349552430213,
+    "error_bound_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+    "control_ready": false
+  },
+  "online_metrics": {
+    "counts": {
+      "sessions": 1,
+      "accepted": 90,
+      "overwritten_pending": 78,
+      "published": 12,
+      "detection_unavailable": 12
+    },
+    "latency_samples": 12,
+    "receive_to_output_s": {
+      "p50": 0.6191494175291155,
+      "p95": 0.9465214068943166,
+      "max": 1.133739417011384
+    },
+    "detection_s": {
+      "p50": 0.5199635534954723,
+      "p95": 0.6087569876748602,
+      "max": 0.6945300299557857
+    },
+    "exposure_to_output_s": {
+      "p50": 0.649413218954578,
+      "p95": 0.9772192092554175,
+      "max": 1.1643428505631164
+    }
+  }
+}
