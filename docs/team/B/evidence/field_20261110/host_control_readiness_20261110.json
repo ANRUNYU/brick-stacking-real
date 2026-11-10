@@ -37,18 +37,18 @@
     },
     {
       "id": "plan_bundle_trajectory_hash",
-      "status": "MISSING",
-      "blocking": true,
+      "status": "PASS",
+      "blocking": false,
       "category": "software",
-      "detail": "no PlanBundle trajectory_hash on host path (diagnostic=MISSING_PLAN_BUNDLE); do not invent",
+      "detail": "trajectory_hash present: c28c3b72fadd2816b9034fa121ef4a875bf7ee1520973f4fe807f92f7f8c1a24",
       "owner": "M planning"
     },
     {
       "id": "arm_state_device_id",
-      "status": "MISSING",
-      "blocking": true,
+      "status": "PASS",
+      "blocking": false,
       "category": "software",
-      "detail": "fresh ArmState.device_id missing (diagnostic=MISSING_LIVE_ARM; camera SN is not arm device_id)",
+      "detail": "ArmState.device_id=can2:61,62,63,64,65,66,67 source=recorded",
       "owner": "A / arm adapter"
     },
     {
@@ -92,10 +92,7 @@
       "owner": "host/safety (this checklist never enables)"
     }
   ],
-  "missing_software": [
-    "plan_bundle_trajectory_hash",
-    "arm_state_device_id"
-  ],
+  "missing_software": [],
   "missing_field_or_operator": [
     "live_permit",
     "host_monitor_enable_motion",
@@ -110,20 +107,6 @@
       "category": "live_permit",
       "detail": "contracts.Permit is null; only D/M SafetyGate may issue at execution. diagnostic field hints={device_id:MISSING_LIVE_ARM, trajectory_hash:MISSING_PLAN_BUNDLE, config_hash:PRESENT_FROM_SHADOW, calibration_hash:PRESENT, scene_version:PRESENT, valid_until_host_monotonic_s:MISSING_ISSUANCE_CLOCK}",
       "owner": "D/M SafetyGate"
-    },
-    {
-      "id": "plan_bundle_trajectory_hash",
-      "status": "MISSING",
-      "category": "software",
-      "detail": "no PlanBundle trajectory_hash on host path (diagnostic=MISSING_PLAN_BUNDLE); do not invent",
-      "owner": "M planning"
-    },
-    {
-      "id": "arm_state_device_id",
-      "status": "MISSING",
-      "category": "software",
-      "detail": "fresh ArmState.device_id missing (diagnostic=MISSING_LIVE_ARM; camera SN is not arm device_id)",
-      "owner": "A / arm adapter"
     },
     {
       "id": "host_monitor_enable_motion",

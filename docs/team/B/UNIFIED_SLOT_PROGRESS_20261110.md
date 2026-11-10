@@ -25,7 +25,8 @@
 17. **yaw_policy=symmetric_90_unbounded**：方块 90° 对称保持 `yaw_rad=UNKNOWN`（**未伪造 MEASURED**）；consumer 在显式策略下构造 `Inspection.yaw_rad=None`，不再报 `ERROR_BOUND_UNKNOWN:yaw_rad`。confirmed 帧 → `SHADOW_INSPECTION_READY`；`evidence_gates_clear=true`。
 18. **vision_pre_grasp_ready 接通（A）**：证据门禁已清时宣布「视觉侧 pre_grasp 就绪」；**不**抬 `control_ready`、**不**开臂/CAN。`formal_grasp_entry_allowed` 恒 false。
 19. **diagnostic permit 资格（本轮）**：证据齐 → `permit_eligible=true` + `m-diagnostic-permit-eligibility-0.1`（`executable=false`，`live_permit=null`）。权威说明见 [M_PERMIT_AUTHORITY_20261110.md](M_PERMIT_AUTHORITY_20261110.md)。`awaiting_m_permit=false` → `awaiting_live_permit_host_enable=true`（精确状态）。**未伪造** live `contracts.Permit`。
-20. **host/safety checklist（本轮）**：机读抬起条件 + dry-run/arm-disabled 探测已接通；见 [HOST_CONTROL_READY_20261110.md](HOST_CONTROL_READY_20261110.md) 与 `host_control_readiness_20261110.json`。`only_operator_enable_remaining=false`；**仍不**抬 `control_ready` / 开臂 / CAN。
+20. **host/safety checklist**：机读抬起条件 + dry-run/arm-disabled 探测已接通；见 [HOST_CONTROL_READY_20261110.md](HOST_CONTROL_READY_20261110.md) 与 `host_control_readiness_20261110.json`。`only_operator_enable_remaining=false`；**仍不**抬 `control_ready` / 开臂 / CAN。
+21. **shadow PlanBundle + recorded 臂 ID（本轮）**：`tools/emit_shadow_plan_and_arm_state.py` 产出 `shadow_plan_bundle_20261110.json`（`trajectory_hash` 由 `arm.adapter.trajectory_hash` 计算）与 `recorded_arm_state_left_p7_20261110.json`（`device_id=can2:61,62,63,64,65,66,67`，`source=recorded`）。host checklist **`missing_software=[]`**；**不是** H3 生产 PlanBundle（#20），**不是** live 臂读。
 
 ## 物理阻塞
 
@@ -36,7 +37,7 @@
 - live `permit=null`（仅 D/M SafetyGate 可签发；本路径只发 diagnostic 资格）。
 - `control_ready` / `motion_enabled` 策略性保持 false（host/safety；本 readiness 永不抬升）。
 - `formal_grasp_entry_allowed=false`（设计硬持有；视觉就绪 ≠ 正式抓取入口）。
-- 仍差：host enable + PlanBundle `trajectory_hash` + 新鲜臂 `device_id` + 开臂（物理动作前）。
+- host checklist 软件两项已关；仍差：live Permit + host 策略抬升 +（真运动前）开臂；H3 生产 PlanBundle / live 臂新鲜读仍待后续。
 - post_place 缺动作完成/释放/稳定窗口证据（本轮非抓取入口硬阻塞，但列出）。
 
 ## SCENE 说明（已解除会话级误报）

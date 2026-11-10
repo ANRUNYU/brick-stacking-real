@@ -37,8 +37,8 @@
 1. live SafetyGate 在执行时刻签发
 2. host/safety 使能路径（`control_ready`）
 3. 操作员开臂 / 执行器使能（仅真实运动前）
-4. `PlanBundle.trajectory_hash`
-5. 新鲜 `ArmState.device_id`
+4. H3 生产 `PlanBundle`（#20；host 路径已有 **shadow** `trajectory_hash`，不可当 live 可执行包）
+5. **新鲜** live `ArmState.device_id`（host 路径已有 **recorded** `can2:61,62,63,64,65,66,67`；非 CAN 读）
 
 ## Shadow vs live
 
@@ -46,6 +46,7 @@
 - readiness 输出：`permit=null` 恒成立；`permit_eligible=true` 仅表示证据够做资格评估。
 - `awaiting_m_permit`：证据未齐时 true；证据齐后 **false**，改为 `awaiting_live_permit_host_enable=true`。
 - `awaiting_actuator_enable`：物理开臂前保持 true；**不为宣布视觉就绪而开臂**。
+- shadow PlanBundle / recorded ArmState 仅关闭 host checklist 软件项；**不得**冒充 live Permit 字段完备。
 
 ## CLI
 
@@ -56,4 +57,10 @@ python tools/pre_grasp_readiness.py \
   --association-record docs/team/B/evidence/field_20261110/association_confirm_switch_20261110.json \
   --output docs/team/B/evidence/field_20261110/pre_grasp_readiness_20261110.json \
   --diagnostic-permit-output docs/team/B/evidence/field_20261110/diagnostic_permit_eligibility_20261110.json
+
+python tools/emit_shadow_plan_and_arm_state.py \
+  --diagnostic-permit docs/team/B/evidence/field_20261110/diagnostic_permit_eligibility_20261110.json \
+  --shadow docs/team/B/evidence/field_20261110/slot_contrast_red_s140_shadow_assoc_bound_20261110_214801.json \
+  --plan-bundle-output docs/team/B/evidence/field_20261110/shadow_plan_bundle_20261110.json \
+  --arm-state-output docs/team/B/evidence/field_20261110/recorded_arm_state_left_p7_20261110.json
 ```

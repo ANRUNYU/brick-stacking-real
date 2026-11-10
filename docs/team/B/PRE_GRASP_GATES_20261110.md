@@ -89,10 +89,19 @@ python tools/pre_grasp_readiness.py \
 
 python tools/pre_grasp_readiness.py --gaps-only --shadow … --output …/pre_grasp_gaps_20261110.json
 
+# shadow PlanBundle + recorded arm device_id（不开臂/不发 CAN）
+python tools/emit_shadow_plan_and_arm_state.py \
+  --diagnostic-permit docs/team/B/evidence/field_20261110/diagnostic_permit_eligibility_20261110.json \
+  --shadow docs/team/B/evidence/field_20261110/slot_contrast_red_s140_shadow_assoc_bound_20261110_214801.json \
+  --plan-bundle-output docs/team/B/evidence/field_20261110/shadow_plan_bundle_20261110.json \
+  --arm-state-output docs/team/B/evidence/field_20261110/recorded_arm_state_left_p7_20261110.json
+
 # host/safety checklist（永不 control_ready=true；可探测 dry-run/arm-disabled）
 python tools/host_control_readiness.py \
   --pre-grasp-gaps docs/team/B/evidence/field_20261110/pre_grasp_gaps_20261110.json \
   --diagnostic-permit docs/team/B/evidence/field_20261110/diagnostic_permit_eligibility_20261110.json \
+  --plan-bundle docs/team/B/evidence/field_20261110/shadow_plan_bundle_20261110.json \
+  --arm-state docs/team/B/evidence/field_20261110/recorded_arm_state_left_p7_20261110.json \
   --probe-dry-run-arm-disabled \
   --output docs/team/B/evidence/field_20261110/host_control_readiness_20261110.json
 ```

@@ -1,0 +1,24 @@
+{
+  "schema_version": "arm-device-binding-0.1",
+  "role": "left",
+  "model": "P7_protocol_layout",
+  "channel": "can2",
+  "motor_ids": [61, 62, 63, 64, 65, 66, 67],
+  "device_id": "can2:61,62,63,64,65,66,67",
+  "device_id_format": "{channel}:{comma_separated_motor_ids}",
+  "code_authority": "src/brick_stacking/arm/state.py::ENDPOINTS['left']",
+  "evidence_refs": [
+    "config/observed/hardware_20261107.json#arms[left_arm]",
+    "docs/team/C/evidence/fixed_camera_C35_fit_inputs.json#arm_device_id",
+    "calibration/candidates/C35_left_head_fit_only_user10mm_20261108.json#arm_device_id"
+  ],
+  "historical_label": "operator_selected_left_P7_can2_61_to_67",
+  "notes": [
+    "ArmState.device_id is CAN channel + motor ids, not camera SN and not hand SN.",
+    "This binding is recorded/config authority for host checklist; live Permit still needs a fresh ArmState read.",
+    "This file does not open CAN and does not enable actuators."
+  ],
+  "can_opened": false,
+  "motion_enabled": false,
+  "control_ready": false
+}
