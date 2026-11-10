@@ -1,9 +1,22 @@
 {
-  "status": "DRAFT_PENDING_V_M_ACK",
+  "status": "V_ACK_PENDING_M_ACK",
   "schema_version": "0.1",
   "plan_path": "docs/THREE_TRACK_GRASP_DEV_PLAN.md",
   "plan_sha256_utf8_lf": "bc30f3198e5dbaf8beb6cd4b7b4d59d83a5702938ad52cbf5e4fdbe9f562e5ff",
   "plan_section": "0.2",
+  "acks": {
+    "V": {
+      "status": "ACK",
+      "date": "2026-11-10",
+      "note": "Accept §0.2 budgets without relaxation; control_ready stays false until clock bound + calibration hash + H2 rules.",
+      "branch": "codex/v-vision-20261110"
+    },
+    "M": {
+      "status": "PENDING",
+      "date": null,
+      "note": null
+    }
+  },
   "vision_profile": {
     "path": "config/vision_profiles/head_replacement_candidate.yaml",
     "tabletop_sha256": "99b8e713de95ab5659ef1f907b0ed2ce0ea16d2601c4bd8fca75c0aa84aa7203",
@@ -12,7 +25,8 @@
       640,
       480
     ],
-    "head_camera_id": "CP2L863000KL"
+    "head_camera_id": "CP2L863000KL",
+    "nominal_edge_m": 0.05
   },
   "budget_m": {
     "camera_fit_max": 0.01,
@@ -31,7 +45,18 @@
   "golden": {
     "h1_recorded": "tests/fixtures/vision_exchange/c_recording_bundles_v0.1.json",
     "h1_status": "tests/fixtures/vision_exchange/synthetic_status_v0.1.json",
-    "h4_mock": "tests/fixtures/vision_exchange/verification_v0.1.json"
+    "h4_mock": "tests/fixtures/vision_exchange/verification_v0.1.json",
+    "fixture_index": "tests/fixtures/vision_exchange/FIXTURE_INDEX.json",
+    "replay_latency_diagnostic": "docs/team/B/evidence/c_recording_replay_latency_v0.1.json"
+  },
+  "api": {
+    "module": "brick_stacking.vision.service",
+    "methods": [
+      "get_observation",
+      "detect_blocks",
+      "verify",
+      "replay"
+    ]
   },
   "recorded_fixture": {
     "index": "tests/fixtures/real/C_20261108_tabletop/sample_manifest.json",

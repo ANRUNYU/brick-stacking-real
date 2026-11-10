@@ -30,7 +30,7 @@ B负责单次观测及短期关联线索；D拥有持久block_id、持有者和�
 
 ## 3. 建议方法
 A：read_state()、validate_trajectory()、execute_trajectory(trajectory, permit)、cancel(command_id)、get_execution_result()、request_stop(policy)。
-B：get_observation()、detect_blocks(observation)、verify(request)、replay(recording)。
+B：get_observation()、detect_blocks(observation)、verify(request)、replay(recording)。V 线门面见 `brick_stacking.vision.service`（`VisionSession.get_observation` / `detect_blocks` / `verify` / `replay`）；`control_ready` 在时钟误差界与标定 hash 就绪前保持 false。
 C：localize(observation, transforms)、plan_pick_place(request)、validate_plan(plan, context)。
 D手：read_hand_state()、execute_preset(preset, permit)、get_hand_result()、request_hand_stop(policy)。
 D流程：run(task_spec)、cancel(task_id)、get_task_state()。

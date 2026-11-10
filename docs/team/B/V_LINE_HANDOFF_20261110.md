@@ -4,15 +4,16 @@
 
 | 顺序 | 本次交付 | 现场或跨线待验收 |
 | --- | --- | --- |
-| #16 / #8 | [H0 草案](evidence/first_grasp_h0_draft.json)绑定计划内容哈希、视觉候选 profile 和 golden 路径。发布现有三帧 C 录包样例和四类状态。 | V/M 书面 ACK，C/D 审查字段及样例 |
-| #7 / #17 | 读取 C 录包中的设备、SDK system/global、主机接收时间、时钟域、session 和 RGB-D 配对差。保留原始桥接证据。 | 统一曝光参考、boot/进程时钟映射与误差界，由 C 完成独立对尺 |
-| #9 / #20 | 最新完整帧对队列、覆盖计数、过期拒绝、同 SN 有限重连、延迟统计、场景复确认。 | 头相机原生流连续测试，冻结实测曝光延迟上界及有效期 |
-| #10 | pre_grasp、post_grasp、post_place 的 V 证据生成器、Mock golden 和 D FSM 兼容回归。 | 实景关联、持握、撤离后释放和稳定证据 |
+| #16 / #8 | [H0 草案](evidence/first_grasp_h0_draft.json)已写 **V ACK**（待 M ACK）。Fixture 索引、三帧 C 录包样例、四类状态与契约门面 `vision.service`。 | M 书面 ACK；C/D 审查字段及样例 |
+| #7 / #17 | 读取 C 录包设备/SDK/主机时间；`CaptureContext` 边界单测（逆序、schema、缺域、无误差界）。 | 统一曝光参考、boot/进程时钟映射与误差界；C/M 完成独立对尺 |
+| #9 / #20 | 最新完整帧对队列、连续录包回放、[延迟诊断](evidence/c_recording_replay_latency_v0.1.json)、同 SN 有限重连。 | 头相机原生流连续测试，冻结实测曝光延迟上界及有效期 |
+| #10 | pre_grasp / post_grasp / post_place 证据、`service.verify` 门面、Mock golden 与 D FSM 兼容回归。 | 实景关联、持握、撤离后释放和稳定证据 |
 | #18 / #19 | 提供观测与复检接口供 M 线接入。 | 由 M 按 H5、H6 和 T1–T5 逐级验收 |
 | #11 | 三帧既有开发录包已登记 SHA-256 与原始出处。 | 独立布局、物理参考及逐条件报告，首抓后验收 |
 
 ## H1 样例与坐标
 
+- [Fixture 索引](../../../tests/fixtures/vision_exchange/FIXTURE_INDEX.json)列出录包、合成状态与复检 golden；并标明仍缺的独立单块/紧贴失败例。
 - [三帧 C 实录回放](../../../tests/fixtures/vision_exchange/c_recording_bundles_v0.1.json)源自头相机 CP2L863000KL，原流 1280×800@15，样例图为裁剪。三帧都产生四个单块候选和两个歧义候选。该结果来自同场景开发样本，独立精度仍待验收。
 - [合成状态样例](../../../tests/fixtures/vision_exchange/synthetic_status_v0.1.json)覆盖正常、歧义、无效深度和过期。合成 RGB-D 可用 `python -m brick_stacking.app.offline_runner --synthetic` 重建，invalid-depth 由同一帧的深度置为 NaN 生成。
 - `rgbd.sample_id` 和 `blocks[].observation_id` 只在当前采集会话内引用图像及检测。持久对象关联由 M 的事务侧维护。
@@ -23,6 +24,18 @@
 
 ```text
 python -m brick_stacking.app.tabletop_runner --config config/vision_profiles/head_replacement_candidate.yaml --recordings tests/fixtures/real/C_20261108_tabletop/camera/frame_000.npz tests/fixtures/real/C_20261108_tabletop/camera/frame_001.npz tests/fixtures/real/C_20261108_tabletop/camera/frame_002.npz
+```
+
+契约门面：
+
+```text
+from brick_stacking.vision.service import replay, detect_blocks, verify, VisionSession
+```
+
+连续录包经最新帧队列回放（主机到达时间重映射，不伪造曝光延迟）：
+
+```text
+python -c "from brick_stacking.vision.replay_pipeline import replay_recordings; replay_recordings(['tests/fixtures/real/C_20261108_tabletop/camera/frame_000.npz','tests/fixtures/real/C_20261108_tabletop/camera/frame_001.npz','tests/fixtures/real/C_20261108_tabletop/camera/frame_002.npz'], config_path='config/vision_profiles/head_replacement_candidate.yaml', report_path='docs/team/B/evidence/c_recording_replay_latency_v0.1.json')"
 ```
 
 ## 在线诊断入口
@@ -37,4 +50,4 @@ python tools/orbbec_camera_probe.py --capture --serial CP2L863000KL --width 640 
 
 ## H4 复检
 
-[Mock 请求与期望响应](../../../tests/fixtures/vision_exchange/verification_v0.1.json)覆盖持握、抓空、撤离后稳定、错色、偏移、遮挡、失效深度、超时、移机和旧帧复用。生产者使用 `verification.visual_transition.verify()`，由调用方把目标关联和图像证据装入 `VisualSample`。post_place 要求颜色相符、平面偏差 ≤15 mm、明确释放证据及独立稳定帧。真机请求还需有效曝光误差界及其证据引用。仅有供料区消失或单帧到位时返回 UNKNOWN。D 的 `PICK`/`PLACE` 回调兼容现有 `VerificationEvidence`，槽位提交仍由 FSM 负责。
+[Mock 请求与期望响应](../../../tests/fixtures/vision_exchange/verification_v0.1.json)覆盖持握、抓空、撤离后稳定、错色、偏移、遮挡、失效深度、超时、移机和旧帧复用。生产者使用 `verification.visual_transition.verify()`（或 `vision.service.verify`），由调用方把目标关联和图像证据装入 `VisualSample`。post_place 要求颜色相符、平面偏差 ≤15 mm、明确释放证据及独立稳定帧。真机请求还需有效曝光误差界及其证据引用。仅有供料区消失或单帧到位时返回 UNKNOWN。D 的 `PICK`/`PLACE` 回调兼容现有 `VerificationEvidence`，槽位提交仍由 FSM 负责。
