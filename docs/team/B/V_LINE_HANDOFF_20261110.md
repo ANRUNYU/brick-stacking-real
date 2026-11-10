@@ -7,7 +7,7 @@
 | #16 / #8 | [H0 草案](evidence/first_grasp_h0_draft.json) **V+M 已 ACK 预算**（`control_ready` 仍 false）。Fixture 索引、三帧 C 录包样例、四类状态与契约门面 `vision.service`。 | 时钟误差界与标定 hash 仍缺；C/D 审查字段及样例 |
 | #7 / #17 | 两会话联采后 [时钟研究](evidence/field_20261110/clock_error_bound_study_v0.1.json) **≈1.69 ms** 已写入在线观测；短采冒烟 16/16 `timing.validity=VALID`（见 [live smoke](evidence/field_20261110/clock_bound_live_smoke_20261110.json)）。`control_ready` 仍 false。 | M 完成独立对尺；标定 hash 仍缺 |
 | #9 / #20 | **exposure→output** p50≈0.69 s / max≈1.33 s；诊断 freshness 门建议 **2.656 s**（max×2）。在线 freshness 在有 bound 时按曝光候选计龄。 | H0 正式冻结 freshness；M 路径模板 #20 |
-| #10 | Mock golden + 现场三组导出；[`verify_handoff_index_v0.1.json`](evidence/field_20261110/verify_handoff_index_v0.1.json) 提供 LocalizedReview 侧车与复现命令；`frame_id` 说明见 [FRAME_ID_HEAD_VS_C35.md](FRAME_ID_HEAD_VS_C35.md)。已 ACK M `be50b37`：接入目标请求模板、**禁止** model/top 点语义静默回退，见 [POINT_SEMANTICS_MODEL_VS_TOP_20261110.md](POINT_SEMANTICS_MODEL_VS_TOP_20261110.md)；v0.2 侧车仍 38 帧 UNKNOWN。 | M 提供真实槽位期望、当前标定绑定与关联证据后才能出正式 PASS/FAIL；post_place 还需释放/稳定窗口；真持握/撤手仍待联调 |
+| #10 | Mock golden + 现场三组导出；点语义冻结见 [POINT_SEMANTICS_MODEL_VS_TOP_20261110.md](POINT_SEMANTICS_MODEL_VS_TOP_20261110.md)。槽位十字已操作员确认；清场固定曝光采集 + 相机系期望草案见 [`slot_camera_expectation_handoff_20261110_212838.json`](evidence/field_20261110/slot_camera_expectation_handoff_20261110_212838.json)（review=顶面 / formal=模型中心）。 | M 审阅并绑定 calibration_hash/scene/epoch 后才能正式 PASS/FAIL；关联与红块对照仍待；post_place 还需释放/稳定窗口 |
 | #18 / #19 | 提供观测与复检接口供 M 线接入。 | 由 M 按 H5、H6 和 T1–T5 逐级验收 |
 | #11 | 三帧既有开发录包已登记 SHA-256 与原始出处。 | 独立布局、物理参考及逐条件报告，首抓后验收 |
 

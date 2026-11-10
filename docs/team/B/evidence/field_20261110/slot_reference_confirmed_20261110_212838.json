@@ -1,0 +1,118 @@
+{
+  "schema_version": "v-slot-reference-annotation-0.1",
+  "source_capture": "docs/team/B/evidence/field_20261110/slot_reference_fixedexp_20261110_212838",
+  "source_zip": "docs/team/B/evidence/field_20261110/slot_reference_fixedexp_20261110_212838.zip",
+  "annotated_utc": "2026-11-10T13:30:57.247029+00:00",
+  "camera_id": "CP2L863000KL",
+  "scene_note": "cleared table; no people in FOV; paper with black plus visible",
+  "capture_overrides": {
+    "reason": "default M entry blocked by AE flicker (stable_window never true)",
+    "fixed_color_exposure": 100,
+    "fixed_color_gain": 16,
+    "allow_unstable_warmup": true,
+    "note": "session exposure lock; not a persistent device config change"
+  },
+  "image": {
+    "file": "rgbd/frame_000.npz#rgb",
+    "resolution_wh": [
+      640,
+      480
+    ],
+    "coordinate_convention": "OpenCV image pixels; origin top-left; +u right; +v down; raw color/NPZ rgb 640x480",
+    "distortion_note": "annotation on raw color pixels; K from capture used without extra undistort"
+  },
+  "marker_center_pixel": {
+    "u": 245.28,
+    "v": 331.8,
+    "u_round": 245,
+    "v_round": 332,
+    "method": "plus template match + intensity centroid in 11x11",
+    "uncertainty_px": 2.0,
+    "gray_center": 112,
+    "operator_confirm_required": false,
+    "notes": "Operator confirmed black plus is the agreed 20x20mm table_black_cross slot center",
+    "confirmed": true
+  },
+  "marker_depth_sample": {
+    "depth_m_at_round_pixel": 0.8740000128746033,
+    "depth_neighborhood_3x3_m": [
+      [
+        0.8740000128746033,
+        0.8759999871253967,
+        0.8769999742507935
+      ],
+      [
+        0.8730000257492065,
+        0.8740000128746033,
+        0.8740000128746033
+      ],
+      [
+        0.871999979019165,
+        0.871999979019165,
+        0.8730000257492065
+      ]
+    ],
+    "point_camera_m_from_depth": [
+      -0.18440785673710075,
+      0.22434955552541325,
+      0.8740000128746033
+    ]
+  },
+  "table_plane_camera": {
+    "fit_region": "pixels within 120px of marker with depth in [0.75,0.95] m",
+    "n_points": 25727,
+    "point_on_plane_camera_m": [
+      -0.1794279397551448,
+      0.25502793125546336,
+      0.8465925291943421
+    ],
+    "upward_normal_camera": [
+      -0.009627741360879422,
+      -0.7109416161657586,
+      -0.7031851285400648
+    ],
+    "residual_abs_m": {
+      "p50": 0.0012611574535125463,
+      "p95": 0.0039193961057301,
+      "max": 0.012296107921421816
+    },
+    "marker_ray_plane_intersection_camera_m": [
+      -0.18502531581521375,
+      0.22510075274759705,
+      0.8769264567461876
+    ],
+    "depth_vs_plane_delta_m": -0.002926443871584361
+  },
+  "K": [
+    [
+      368.1024169921875,
+      0.0,
+      322.947021484375
+    ],
+    [
+      0.0,
+      368.163330078125,
+      237.29510498046875
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "control_ready": false,
+  "result": "ANNOTATION_CONFIRMED_CAMERA_EXPECTATIONS_PROPOSED",
+  "next_required": [
+    "M reviews/adopts camera-frame expectations and error propagation",
+    "M binds current calibration_hash/scene/epoch/profile",
+    "optional: independent caliper of actual cube edge; currently nominal 50mm ±2mm from prior ruler height",
+    "then contrast capture with red block centered / known offset"
+  ],
+  "confirmed_utc": "2026-11-10T13:33:04.486590+00:00",
+  "operator_confirmation": {
+    "slot_marker_is_table_black_cross_20mm": true,
+    "source": "user message 2026-11-10 confirm continue",
+    "slot_id": "m-first-placement-slot-01",
+    "reference_frame": "table_black_cross_20mm"
+  }
+}
