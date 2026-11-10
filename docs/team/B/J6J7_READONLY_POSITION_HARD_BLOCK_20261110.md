@@ -1,11 +1,14 @@
-# J6/J7 只读位置硬阻塞（2026-11-10）
+# J6/J7 只读位置硬阻塞（2026-11-10 / 检索更新 2026-11-11）
 
 ## 裁决
 
 **不存在**已审计的 MotorV2（J6/J7）**只读位置**查询。  
-因此 `ArmStateReader` 不能产出七轴有限 `q_rad`，`counts_as_live_valid=false`，`live_valid_arm_state` 保持硬阻塞，**正式抓取入口仍否**。
+2026-11-11 全库 + 主机 pinned SDK（`motor_v2.py` SHA256 `6f45000ba0f7f049e0a23b7ddceb318154b9672a5181472ea899099ea3127aba`）穷尽检索后：**仍无**可进入 `pending_protocol_audit` 的位置读角载荷（`ENABLE_PENDING_PROTOCOL_AUDIT` 默认 **false**，且 payload 为空）。
 
-机读：`src/brick_stacking/arm/v2_wrist_readonly.py`（`HARD_BLOCK_ID=j6_j7_no_audited_readonly_position_query`）。
+因此 `ArmStateReader` 不能产出七轴有限 `q_rad`，`counts_as_live_valid=false`，`live_valid_arm_state` 保持硬阻塞，**正式抓取入口仍否**。  
+**Goal 不得标 complete**——现约束下（禁 Rest / 禁 `--enable-motion` / 禁伪造 live VALID）**无法仅靠软件解除** `j6_j7_readonly`。
+
+机读：`src/brick_stacking/arm/v2_wrist_readonly.py`（`HARD_BLOCK_ID=j6_j7_no_audited_readonly_position_query`；`candidate_search_report()`）。
 
 ## 已审计 / 未审计对照
 
@@ -13,29 +16,55 @@
 | --- | --- | --- | --- |
 | A7 `0x06`（J1–J5） | float32 rad | 是 | 是（前五轴） |
 | Flash mode `670b…`（J6/J7） | 控制模式 int | 是 | **否**（不是角度） |
+| Flash 通用 `_read_flash_param(index)` | 任意 index 的 READ 帧形 | 是（协议形） | **否**（SDK 仅定义 `0x00` SAVE / `0x0B` MODE；Theta MIN/MAX **无索引**；即使有也是量程不是 live 角） |
 | `MotorV2.read_initial_state` / Rest `FF×7+FD` | 状态切换后原始反馈 | **否**（失持） | **否**（副作用；非只读） |
+| Enter Motor `FF×7+FC` / P-T-M 控制帧 | 使能或施 PD 目标 | **否** | **否** |
 | host_monitor J6/J7 `_read_angle_locked` | 调用 Rest | **否** | **否** |
 | `c_left_wrist_rest_capture` | 显式 Rest（需支撑+授权） | **否** | **否**（现场授权采样，非正式只读 API） |
 | 使能后 V2 打包反馈 U16 | 运行反馈 | 需使能/心跳 | **否**（量化/COM Theta 未审计） |
+| 被动 CAN 监听（C21） | 无发送 | 是 | **否**（空闲窗口 0 帧） |
+| SDK 默认 ±12.5 rad 反量化 | 注释出厂量程 | N/A | **否**（未现场读回；`left_wrist_theta_ranges.json` 仍 null） |
 
-依据：[`LEFT_STATE_ACQUISITION.md`](../C/LEFT_STATE_ACQUISITION.md)、[`HARDWARE_INTERFACES.md`](../../hardware/HARDWARE_INTERFACES.md)、`tools/c_left_arm_readonly_probe.py`。
+依据：[`LEFT_STATE_ACQUISITION.md`](../C/LEFT_STATE_ACQUISITION.md)、[`HARDWARE_INTERFACES.md`](../../hardware/HARDWARE_INTERFACES.md)、`tools/c_left_arm_readonly_probe.py`、主机 `motor_v2.py` 源码只读核对。
+
+## 候选评估（朝解除硬阻塞；无一合格）
+
+| 候选 id | 运动/Rest/使能？ | 证据 | `pending_protocol_audit`？ | 结论 |
+| --- | --- | --- | --- | --- |
+| `a7_cmd_0x06_on_v2_ids` | 否 | 弱 | 否 | MotorV2 无 A7 寄存器读路径 |
+| `flash_control_mode_0x0b` | 否 | 强（已审计） | 否 | 只读但非角度 |
+| `flash_generic_read_unknown_theta_indices` | 否 | 仅协议形 | 否 | **禁止盲猜索引**；且非 live 角 |
+| `rest_ff7_fd_read_initial_state` | **是（Rest）** | 强 | 否 | 唯一无使能的取角路径，副作用失持 |
+| `enter_motor_fc_or_ptm_stream` | **是** | 强 | 否 | 使能/施力目标 |
+| `passive_can_listen` | 否 | 现场 C21 | 否 | 无自发反馈流 |
+| `host_monitor_j6j7_read_angle` | **是（Rest）** | 强 | 否 | 包装 Rest |
+| `sdk_default_pm_12_5_u16_map` | 取决于馈源 | SDK 默认未核验 | 否 | 量化未审计 |
+
+`ENABLE_PENDING_PROTOCOL_AUDIT`：**默认 false**。打开后若仍无 `position_query_bytes`，实现仍拒绝碰总线，**不会**产出 `counts_as_live_valid`。
 
 ## 安全默认（本轮强制）
 
 - **禁止** enable-motion / Rest / 大幅关节运动 / Flash 写入 / 构造会写模式的 P7 初始化路径。
+- **禁止** 对 Flash index 做盲扫以“碰运气”找 Theta。
 - `ArmStateReader` 继续：J1–J5 位置 READ + J6/J7 **仅** mode READ；J6/J7 `q_rad=None` → `validity=INVALID`。
 - 真机 `live-readonly` 仅允许上述已审计只读；失败软跳过；**不得**回退到 Rest 补角。
 - Mock / recorded / fixture **不等于** live VALID。
 
-## 解除条件（需另轮审计）
+## 解除条件（需外部输入；软件 alone 不够）
 
 同时满足后才可实现并单测接通：
 
-1. 厂商或源码确认的 **纯查询** 请求字节与应答布局（无 Rest / 无使能副作用）。
-2. U16（或其它）→ rad 的量化与符号/零位版本，有现场交叉验证。
+1. 厂商手册或源码确认的 **纯查询** 请求字节与应答布局（无 Rest / 无使能 / 无 P-T-M 目标副作用），**或**厂商书面确认不存在此类查询（则只能走另授权的支撑 Rest，且仍非正式只读 API）。
+2. U16（或其它）→ rad 的量化与符号/零位版本，有现场交叉验证（优先 Flash 读回本机 COM Theta MIN/MAX，索引须厂商给出）。
 3. 新鲜度与绑定规则写入 `AUDITED_READONLY_POSITION_QUERY_BYTES` 等常量后，再改 `ArmStateReader`。
 
-在此之前：骨架 `decode_audited_wrist_position_reply` / `try_read_wrist_positions_readonly` **一律拒绝**，保持 `counts_as_live_valid` 不可达。
+### 需用户提供 / 授权的下一步
+
+1. **Motorevo CAN 协议手册**（SDK 引用 §6.3.2 打包帧）：纯状态/位置查询命令（若有）的精确 8 字节请求与应答；Flash 参数表中 CAN COM Theta MIN/MAX（及任何 live 位置相关）**索引号**。
+2. 公开产品页无协议 PDF；联系厂商或 LinkerBot 索取与本驱动栈匹配的手册（例：`sales@mail.motorevo.cn`）。
+3. （可选）在腕部可靠支撑下，授权 **示波器 / candump** 对照一次 Rest 与一次心跳反馈布局——仅交叉验证，**不能**在无手册纯查询时冒充正式只读 API。
+
+在此之前：骨架 `decode_audited_wrist_position_reply` / `try_read_wrist_positions_readonly` **一律拒绝**，保持 `counts_as_live_valid` 不可达；**不要**把 Goal 标 complete。
 
 ## 对正式抓取的影响
 
@@ -44,4 +73,5 @@
 | live VALID 是否可达？ | **否**（只读路径下） |
 | 正式抓取是否仍否？ | **是（仍否）** |
 | 现需用户开臂/Rest/大幅运动？ | **否**（软件硬阻塞；勿为补角动腕） |
-| 用户可做的后续？ | 提供/确认 V2 纯查询协议文档，或单独授权支撑 Rest 采样（仍不算正式只读 API） |
+| 仅靠软件能否推进 Goal 到 complete？ | **否**——缺厂商纯查询或等价协议证据 |
+| 用户可做的后续？ | 提供 Motorevo/LinkerBot 协议手册或 Flash 索引图；或单独授权支撑 Rest 采样（仍不算正式只读 API）+ 量化交叉验证 |

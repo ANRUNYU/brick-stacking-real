@@ -1,5 +1,5 @@
 {
-  "schema_version": "j6j7-readonly-position-hard-block-0.1",
+  "schema_version": "j6j7-readonly-position-hard-block-0.2",
   "id": "j6_j7_no_audited_readonly_position_query",
   "status": "HARD_BLOCK",
   "audited_readonly_position_query_available": false,
@@ -11,13 +11,45 @@
   "allows_large_joint_motion": false,
   "live_valid_reachable": false,
   "formal_grasp_entry_allowed": false,
+  "goal_complete": false,
+  "goal_software_only_completable": false,
   "needs_operator_action_now": false,
+  "enable_pending_protocol_audit": false,
+  "position_readonly_candidate_found": false,
+  "pending_protocol_audit": {
+    "enabled_by_default": false,
+    "position_query_bytes": null,
+    "counts_as_live_valid_when_enabled": false,
+    "reason_empty": "host motor_v2.py + in-repo docs/tools expose no pure J6/J7 position query; Flash READ index map for live angle does not exist in SDK"
+  },
+  "vendor_sdk_motor_v2_sha256": "6f45000ba0f7f049e0a23b7ddceb318154b9672a5181472ea899099ea3127aba",
+  "vendor_sdk_motor_v2_path": "/home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e/src/linkerbot/arm/p7/motor_v2.py",
+  "candidate_ids_evaluated": [
+    "a7_cmd_0x06_on_v2_ids",
+    "flash_control_mode_0x0b",
+    "flash_generic_read_unknown_theta_indices",
+    "rest_ff7_fd_read_initial_state",
+    "enter_motor_fc_or_ptm_stream",
+    "passive_can_listen",
+    "host_monitor_j6j7_read_angle",
+    "sdk_default_pm_12_5_u16_map"
+  ],
+  "pending_protocol_audit_eligible_ids": [],
+  "external_next_steps": [
+    "Obtain Motorevo CAN protocol manual (SDK cites §6.3.2) with pure position/status query bytes OR written confirmation none exists",
+    "Vendor Flash index map for CAN COM Theta MIN/MAX — do not brute-force indices",
+    "Optional authorized candump/scope of braced Rest vs heartbeat for layout cross-check only",
+    "Contact Motorevo/LinkerBot for drive manual (public product pages omit protocol PDF)"
+  ],
+  "user_authorization_needed": "motorevo_or_linkerbot_protocol_manual_or_flash_index_map",
   "doc": "docs/team/B/J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md",
   "code": "src/brick_stacking/arm/v2_wrist_readonly.py",
   "notes": [
     "Flash mode READ is audited but is not angle.",
     "Rest / MotorV2.read_initial_state / raw U16 feedback are not audited readonly position paths.",
     "ArmStateReader keeps J6/J7 q_rad=None; validity=INVALID; counts_as_live_valid=false.",
-    "No CAN opened for this evidence artifact; software hard-block only."
+    "2026-11-11 exhaustive candidate sweep: zero position-readonly payloads for pending_protocol_audit.",
+    "Under no-Rest / no-enable-motion constraints, Goal cannot complete via software alone.",
+    "No CAN opened for this evidence artifact; software hard-block + SSH source audit only."
   ]
 }

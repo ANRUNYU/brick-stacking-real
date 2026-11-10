@@ -1,9 +1,17 @@
 {
   "schema_version": "formal-grasp-entry-audit-0.2",
-  "audited_at_utc": "2026-11-10T15:55:00Z",
+  "audited_at_utc": "2026-11-10T16:05:00Z",
   "branch": "codex/v-vision-20261110",
   "goal": "advance_to_formal_grasp_entry_pre_grasp",
   "goal_complete": false,
+  "j6j7_candidate_search": {
+    "position_readonly_candidate_found": false,
+    "pending_protocol_audit_eligible_ids": [],
+    "enable_pending_protocol_audit_default": false,
+    "vendor_sdk_motor_v2_sha256": "6f45000ba0f7f049e0a23b7ddceb318154b9672a5181472ea899099ea3127aba",
+    "goal_software_only_completable": false,
+    "evidence": "docs/team/B/evidence/field_20261110/j6j7_readonly_position_hard_block_20261110.json"
+  },
   "definition_of_formal_entry": {
     "authority": "docs/team/B/HOST_CONTROL_READY_20261110.md gate_ladder",
     "formal_grasp_entry_allowed_requires": [
@@ -130,7 +138,7 @@
     {
       "id": "j6_j7_readonly",
       "software_solvable_without_motion": false,
-      "detail": "MotorV2 J6/J7 has no audited read-only position query; ArmStateReader leaves wrist q_rad=None → counts_as_live_valid=false; hard_block=j6_j7_no_audited_readonly_position_query"
+      "detail": "MotorV2 J6/J7 has no audited read-only position query; 2026-11-11 candidate sweep found zero pending payloads (motor_v2 SHA 6f45000b…); ArmStateReader leaves wrist q_rad=None → counts_as_live_valid=false; hard_block=j6_j7_no_audited_readonly_position_query; software-alone cannot clear under no-Rest/no-enable-motion"
     },
     {
       "id": "awaiting_live_arm",
@@ -162,14 +170,15 @@
   "operator_actions": {
     "needed_now": false,
     "needed_before_real_motion": [
-      "protocol audit authorization for V2 readonly position query (or separate braced Rest sample — still not formal readonly API)",
+      "Motorevo/LinkerBot CAN protocol manual or Flash index map for pure J6/J7 position query (or written confirmation none exists)",
+      "optional authorized candump/scope of braced Rest vs heartbeat for layout cross-check only",
       "live VALID arm feedback path once audited seven-joint read exists",
       "live SafetyGate Permit issuance",
       "explicit operator_policy_attest --attested (default closed)",
       "host_monitor --enable-motion + READY/ENABLE (separate path; not this reporter)"
     ],
     "physical_placement": "not required for this audit; association/hand_clear/calibration already adjudicated for static pre_grasp contrast",
-    "user_authorization_needed": "protocol_audit_for_j6_j7_readonly_position_query"
+    "user_authorization_needed": "motorevo_or_linkerbot_protocol_manual_or_flash_index_map"
   },
   "evidence_refs": [
     "docs/team/B/evidence/field_20261110/pre_grasp_readiness_20261110.json",
@@ -187,6 +196,6 @@
   "verdict": {
     "goal_complete": false,
     "permit_path_status": "software_exhausted_awaiting_live_arm",
-    "reason": "dry_run_grasp_entry_ready=true and Mock Permit field path exhausted; formal_grasp_blocked_by=[j6_j7_readonly, awaiting_live_arm]; live Permit null; control_ready hard-false; needs protocol audit authorization — not Rest/enable-motion"
+    "reason": "dry_run_grasp_entry_ready=true and Mock Permit field path exhausted; formal_grasp_blocked_by=[j6_j7_readonly, awaiting_live_arm]; live Permit null; control_ready hard-false; 2026-11-11 candidate sweep=empty pending payload; need Motorevo/LinkerBot manual — not Rest/enable-motion; goal_complete=false"
   }
 }
