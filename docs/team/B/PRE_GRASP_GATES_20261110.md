@@ -28,7 +28,8 @@
 | permit | permit (live) | 恒 null；证据齐时 `permit_eligible=true` | 是（策略） | live 仅 D/M SafetyGate；本工具可发 **diagnostic** 资格记录 |
 | control_ready_policy | control_ready | 恒 false | 是（策略） | 本工具永不抬升；host/safety |
 
-权威细节见 [M_PERMIT_AUTHORITY_20261110.md](M_PERMIT_AUTHORITY_20261110.md)。
+权威细节见 [M_PERMIT_AUTHORITY_20261110.md](M_PERMIT_AUTHORITY_20261110.md)。  
+host/safety 抬起条件与 dry-run 探测见 [HOST_CONTROL_READY_20261110.md](HOST_CONTROL_READY_20261110.md)（`only_operator_enable_remaining=false`；永不抬 `control_ready`）。
 
 ## 布尔语义（A/B 区分）
 
@@ -87,6 +88,13 @@ python tools/pre_grasp_readiness.py \
   --diagnostic-permit-output docs/team/B/evidence/field_20261110/diagnostic_permit_eligibility_20261110.json
 
 python tools/pre_grasp_readiness.py --gaps-only --shadow … --output …/pre_grasp_gaps_20261110.json
+
+# host/safety checklist（永不 control_ready=true；可探测 dry-run/arm-disabled）
+python tools/host_control_readiness.py \
+  --pre-grasp-gaps docs/team/B/evidence/field_20261110/pre_grasp_gaps_20261110.json \
+  --diagnostic-permit docs/team/B/evidence/field_20261110/diagnostic_permit_eligibility_20261110.json \
+  --probe-dry-run-arm-disabled \
+  --output docs/team/B/evidence/field_20261110/host_control_readiness_20261110.json
 ```
 
 ## 与 permit / Inspection 接口

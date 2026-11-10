@@ -25,6 +25,7 @@
 17. **yaw_policy=symmetric_90_unbounded**：方块 90° 对称保持 `yaw_rad=UNKNOWN`（**未伪造 MEASURED**）；consumer 在显式策略下构造 `Inspection.yaw_rad=None`，不再报 `ERROR_BOUND_UNKNOWN:yaw_rad`。confirmed 帧 → `SHADOW_INSPECTION_READY`；`evidence_gates_clear=true`。
 18. **vision_pre_grasp_ready 接通（A）**：证据门禁已清时宣布「视觉侧 pre_grasp 就绪」；**不**抬 `control_ready`、**不**开臂/CAN。`formal_grasp_entry_allowed` 恒 false。
 19. **diagnostic permit 资格（本轮）**：证据齐 → `permit_eligible=true` + `m-diagnostic-permit-eligibility-0.1`（`executable=false`，`live_permit=null`）。权威说明见 [M_PERMIT_AUTHORITY_20261110.md](M_PERMIT_AUTHORITY_20261110.md)。`awaiting_m_permit=false` → `awaiting_live_permit_host_enable=true`（精确状态）。**未伪造** live `contracts.Permit`。
+20. **host/safety checklist（本轮）**：机读抬起条件 + dry-run/arm-disabled 探测已接通；见 [HOST_CONTROL_READY_20261110.md](HOST_CONTROL_READY_20261110.md) 与 `host_control_readiness_20261110.json`。`only_operator_enable_remaining=false`；**仍不**抬 `control_ready` / 开臂 / CAN。
 
 ## 物理阻塞
 

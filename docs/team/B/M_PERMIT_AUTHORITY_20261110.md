@@ -8,7 +8,7 @@
 | --- | --- | --- |
 | `contracts.Permit`（**live**） | **D/M SafetyGate**（执行前；`OfflineSafetyGate.check_step_evidence` 校验） | 是（在 A 独立复核后） |
 | `m-diagnostic-permit-eligibility-0.1`（**shadow/diagnostic**） | `pre_grasp_gates` / `tools/pre_grasp_readiness.py` | **否**（`executable=false`） |
-| `control_ready` / `motion_enabled` | host/safety 路径（并行智能体） | 本 readiness **永不抬升** |
+| `control_ready` / `motion_enabled` | host/safety 路径（见 [HOST_CONTROL_READY_20261110.md](HOST_CONTROL_READY_20261110.md)） | 本 readiness **永不抬升**；host checklist 亦永不抬升 |
 
 契约依据：`docs/CONTRACTS.md` §4；`docs/THREE_TRACK_GRASP_DEV_PLAN.md` M-10。
 

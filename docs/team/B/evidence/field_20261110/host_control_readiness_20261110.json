@@ -1,0 +1,218 @@
+{
+  "schema_version": "host-control-readiness-0.1",
+  "control_ready": false,
+  "motion_enabled": false,
+  "formal_grasp_entry_allowed": false,
+  "formal_grasp_ready": false,
+  "only_operator_enable_remaining": false,
+  "needs_operator_physical_enable_now": false,
+  "needs_operator_physical_enable_before_real_motion": true,
+  "vision_pre_grasp_ready": true,
+  "permit_eligible": true,
+  "live_permit": null,
+  "checklist": [
+    {
+      "id": "vision_pre_grasp_ready",
+      "status": "PASS",
+      "blocking": false,
+      "category": "software",
+      "detail": "vision_pre_grasp_ready=true in pre_grasp evidence",
+      "owner": "V / pre_grasp_gates"
+    },
+    {
+      "id": "permit_eligible_diagnostic",
+      "status": "PASS",
+      "blocking": false,
+      "category": "software",
+      "detail": "diagnostic permit_eligible=true (not a live Permit)",
+      "owner": "pre_grasp_gates diagnostic"
+    },
+    {
+      "id": "live_permit",
+      "status": "MISSING",
+      "blocking": true,
+      "category": "live_permit",
+      "detail": "contracts.Permit is null; only D/M SafetyGate may issue at execution. diagnostic field hints={device_id:MISSING_LIVE_ARM, trajectory_hash:MISSING_PLAN_BUNDLE, config_hash:PRESENT_FROM_SHADOW, calibration_hash:PRESENT, scene_version:PRESENT, valid_until_host_monotonic_s:MISSING_ISSUANCE_CLOCK}",
+      "owner": "D/M SafetyGate"
+    },
+    {
+      "id": "plan_bundle_trajectory_hash",
+      "status": "MISSING",
+      "blocking": true,
+      "category": "software",
+      "detail": "no PlanBundle trajectory_hash on host path (diagnostic=MISSING_PLAN_BUNDLE); do not invent",
+      "owner": "M planning"
+    },
+    {
+      "id": "arm_state_device_id",
+      "status": "MISSING",
+      "blocking": true,
+      "category": "software",
+      "detail": "fresh ArmState.device_id missing (diagnostic=MISSING_LIVE_ARM; camera SN is not arm device_id)",
+      "owner": "A / arm adapter"
+    },
+    {
+      "id": "dry_run_arm_disabled_path",
+      "status": "PROBED",
+      "blocking": false,
+      "category": "dry_run",
+      "detail": "OfflineSafetyGate+MockArm reachable; hardware_enabled=false; step_without_permit_rejected=True",
+      "owner": "execution / OfflineSafetyGate"
+    },
+    {
+      "id": "host_monitor_enable_motion",
+      "status": "MISSING",
+      "blocking": true,
+      "category": "actuator_operator",
+      "detail": "no host_monitor snapshot; live motion_enabled requires --enable-motion + READY + ENABLE (this branch may lack host_monitor sources)",
+      "owner": "operator / host_monitor"
+    },
+    {
+      "id": "host_monitor_session_ready",
+      "status": "MISSING",
+      "blocking": true,
+      "category": "actuator_operator",
+      "detail": "session_open unknown (no host_monitor snapshot)",
+      "owner": "operator / host_monitor"
+    },
+    {
+      "id": "host_policy_control_ready",
+      "status": "POLICY_HOLD",
+      "blocking": true,
+      "category": "host_policy",
+      "detail": "control_ready held false by host/safety checklist; ObservationBundle.control_ready is Literal[False]; OfflineExecutionManager refuses hardware adapters; no production host path on this branch raises control_ready=true",
+      "owner": "host/safety (this checklist never raises)"
+    },
+    {
+      "id": "host_policy_motion_enabled",
+      "status": "POLICY_HOLD",
+      "blocking": true,
+      "category": "host_policy",
+      "detail": "motion_enabled held false by default; live path needs host_monitor --enable-motion + READY/ENABLE; planning outputs stay false",
+      "owner": "host/safety (this checklist never enables)"
+    }
+  ],
+  "missing_software": [
+    "plan_bundle_trajectory_hash",
+    "arm_state_device_id"
+  ],
+  "missing_field_or_operator": [
+    "live_permit",
+    "host_monitor_enable_motion",
+    "host_monitor_session_ready",
+    "host_policy_control_ready",
+    "host_policy_motion_enabled"
+  ],
+  "hard_blockers": [
+    {
+      "id": "live_permit",
+      "status": "MISSING",
+      "category": "live_permit",
+      "detail": "contracts.Permit is null; only D/M SafetyGate may issue at execution. diagnostic field hints={device_id:MISSING_LIVE_ARM, trajectory_hash:MISSING_PLAN_BUNDLE, config_hash:PRESENT_FROM_SHADOW, calibration_hash:PRESENT, scene_version:PRESENT, valid_until_host_monotonic_s:MISSING_ISSUANCE_CLOCK}",
+      "owner": "D/M SafetyGate"
+    },
+    {
+      "id": "plan_bundle_trajectory_hash",
+      "status": "MISSING",
+      "category": "software",
+      "detail": "no PlanBundle trajectory_hash on host path (diagnostic=MISSING_PLAN_BUNDLE); do not invent",
+      "owner": "M planning"
+    },
+    {
+      "id": "arm_state_device_id",
+      "status": "MISSING",
+      "category": "software",
+      "detail": "fresh ArmState.device_id missing (diagnostic=MISSING_LIVE_ARM; camera SN is not arm device_id)",
+      "owner": "A / arm adapter"
+    },
+    {
+      "id": "host_monitor_enable_motion",
+      "status": "MISSING",
+      "category": "actuator_operator",
+      "detail": "no host_monitor snapshot; live motion_enabled requires --enable-motion + READY + ENABLE (this branch may lack host_monitor sources)",
+      "owner": "operator / host_monitor"
+    },
+    {
+      "id": "host_monitor_session_ready",
+      "status": "MISSING",
+      "category": "actuator_operator",
+      "detail": "session_open unknown (no host_monitor snapshot)",
+      "owner": "operator / host_monitor"
+    },
+    {
+      "id": "host_policy_control_ready",
+      "status": "POLICY_HOLD",
+      "category": "host_policy",
+      "detail": "control_ready held false by host/safety checklist; ObservationBundle.control_ready is Literal[False]; OfflineExecutionManager refuses hardware adapters; no production host path on this branch raises control_ready=true",
+      "owner": "host/safety (this checklist never raises)"
+    },
+    {
+      "id": "host_policy_motion_enabled",
+      "status": "POLICY_HOLD",
+      "category": "host_policy",
+      "detail": "motion_enabled held false by default; live path needs host_monitor --enable-motion + READY/ENABLE; planning outputs stay false",
+      "owner": "host/safety (this checklist never enables)"
+    }
+  ],
+  "dry_run_arm_disabled": {
+    "schema_version": "host-dry-run-arm-disabled-0.1",
+    "reachable": true,
+    "config_path": "config/offline_task.yaml",
+    "project": {
+      "dry_run": true,
+      "environment": "offline"
+    },
+    "offline_dry_run_config_ok": true,
+    "offline_gate_port_check_ok": true,
+    "offline_gate_port_check_error": null,
+    "mock_arm": {
+      "backend": "mock",
+      "hardware_enabled": false,
+      "device_id": "mock-arm-host-checklist"
+    },
+    "step_without_permit_rejected": true,
+    "step_without_permit_detail": "execution permit is unknown",
+    "control_ready": false,
+    "motion_enabled": false,
+    "commands_sent": 0,
+    "can_opened": false,
+    "usage": [
+      "Dry-run / arm-disabled path is OfflineSafetyGate + MockArm only.",
+      "This probe does not raise control_ready or invent a live Permit.",
+      "host_monitor --enable-motion is a separate live host path (main branch)."
+    ]
+  },
+  "elevation_conditions": {
+    "control_ready": [
+      "vision_pre_grasp_ready_or_evidence_gates_clear",
+      "live_contracts_Permit_from_SafetyGate",
+      "PlanBundle_trajectory_hash",
+      "fresh_ArmState_device_id_matching_permit",
+      "offline_dry_run_config_or_explicit_live_host_policy",
+      "host_policy_decision_to_raise_control_ready"
+    ],
+    "motion_enabled": [
+      "process_started_with_enable_motion",
+      "control_session_confirm_READY",
+      "joint_confirm_ENABLE",
+      "live_permit_and_control_ready_for_trajectory_path"
+    ],
+    "code_refs": {
+      "OfflineSafetyGate": "src/brick_stacking/execution/safety_gate.py",
+      "OfflineExecutionManager": "src/brick_stacking/execution/execution_manager.py",
+      "MockArm.hardware_enabled": "src/brick_stacking/arm/adapter.py",
+      "config_loader_offline_only": "src/brick_stacking/runtime/config_loader.py",
+      "ObservationBundle.control_ready": "Literal[False] in contracts",
+      "host_monitor_motion": "tools/host_monitor on main (--enable-motion)"
+    }
+  },
+  "notes": [
+    "This checklist reports host/safety elevation conditions only.",
+    "Never sets control_ready=true or motion_enabled=true.",
+    "Never issues contracts.Permit or opens CAN.",
+    "Dry-run probe uses OfflineSafetyGate + MockArm (hardware_enabled=False).",
+    "host_monitor motion path (main) is separate: --enable-motion \u2192 READY \u2192 ENABLE \u2192 MOVE.",
+    "only_operator_enable_remaining stays false while host_policy holds control_ready down or PlanBundle / live Permit / ArmState are missing.",
+    "Formal grasp: NO until live Permit + host policy raise + actuator enable."
+  ]
+}

@@ -40,7 +40,7 @@
    软件已可宣布 `vision_pre_grasp_ready` + `permit_eligible`（diagnostic）；**不要**为宣布视觉就绪而开臂。  
    仅当 D/M SafetyGate 准备签发 **live** `Permit` 且 host/safety 准备抬 `control_ready` 并真正发运动时，才需要操作员开臂/使能。  
    当前：`awaiting_m_permit=false`、`awaiting_live_permit_host_enable=true`、`awaiting_actuator_enable=true`。  
-   影子 Inspection 证明：**仅差** host enable + live SafetyGate + PlanBundle + 开臂，不差视觉证据。
+   host checklist：`only_operator_enable_remaining=false`（还差 PlanBundle / 臂 device_id / live Permit / host 策略抬升，**不只**差开臂按钮）。见 [HOST_CONTROL_READY_20261110.md](HOST_CONTROL_READY_20261110.md)。
 
 ## 软件已覆盖、现场不必重复
 
