@@ -1,0 +1,11 @@
+{
+  "remote_out": "/tmp/line_h_place_layer1_20261111/two_row_blocks_20261111_212725",
+  "local_dir": "docs/team/B/evidence/line_h/two_row_blocks_20261111_212725",
+  "fixed_color_exposure": 28,
+  "fixed_color_gain": 12,
+    "scene_note": "blocks restored after outward nudge; re-capture for clearance package; arm cleared FOV; read-only",
+  "control_ready": false,
+  "executable": false,
+  "motion_enabled": false,
+  "operator_confirmed": false
+}
