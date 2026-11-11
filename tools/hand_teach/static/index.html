@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hand Teach · Left O6</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Hand Teach · 左手 O6</h1>
+      <p class="sub">本机浏览器调姿 · 主机只控手 · 不发机械臂运动</p>
+    </header>
+
+    <section class="card" id="statusCard">
+      <div class="row">
+        <span>模式</span>
+        <strong id="modeLabel">…</strong>
+      </div>
+      <div class="row">
+        <span>会话</span>
+        <strong id="sessionLabel">closed</strong>
+      </div>
+      <div class="row">
+        <span>SN</span>
+        <code id="serialLabel">—</code>
+      </div>
+      <div class="row">
+        <span>反馈龄期</span>
+        <code id="ageLabel">—</code>
+      </div>
+      <p id="errorLabel" class="error" hidden></p>
+    </section>
+
+    <section class="card">
+      <h2>实时读数</h2>
+      <div id="liveBars" class="bars"></div>
+    </section>
+
+    <section class="card">
+      <h2>目标姿态（百分数 0–100）</h2>
+      <div id="sliders" class="sliders"></div>
+      <label class="speed">
+        速度（≤服务器上限）
+        <input id="speedInput" type="number" min="1" max="15" step="1" value="10" />
+      </label>
+      <div class="presets" id="presets"></div>
+      <div class="actions">
+        <button id="btnReady" type="button">READY 开会话</button>
+        <button id="btnApply" type="button" class="primary" disabled>APPLY 下发</button>
+        <button id="btnClose" type="button">关闭会话</button>
+        <button id="btnSync" type="button">用读数填目标</button>
+      </div>
+      <p class="hint">流程：READY → 拖滑条/点预设 → APPLY。退出页面不会自动停手，最后目标会保持。</p>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>
