@@ -1,0 +1,34 @@
+{
+  "schema_version": "line-h-mid-zone-poses-0.1",
+  "created_from": "docs/team/B/evidence/line_h/mid_zone_localize_20261111_153156.json",
+  "control_ready": false,
+  "motion_enabled": false,
+  "executable": false,
+  "accuracy_claim": "C35_FIT_ONLY",
+  "base_cross": {
+    "parent_frame": "L_arm_root",
+    "child_frame": "table_black_cross_20mm",
+    "translation_m": [
+      0.2882745527306005,
+      -0.2447346666306224,
+      -0.5158477902172576
+    ],
+    "quaternion_xyzw": [
+      -0.02723981007811356,
+      0.03046710153223024,
+      -0.0008306123017595426,
+      0.9991641799796155
+    ],
+    "note": "robot-side mid below left checkerboard; clearer marker 20261111_153156",
+    "source_pixel_uv": [
+      361.64963503649636,
+      435.4160583941606
+    ],
+    "source_point_camera_m": [
+      0.07513138382049728,
+      0.38453833653947495,
+      0.7145782012640564
+    ]
+  },
+  "calibration_sha256": "2339af8daa000ef986b68b3faa6e26a63c91b74c563c78e1ccbcb39590e28a62"
+}

@@ -1,0 +1,179 @@
+{
+  "schema_version": "line-h-mid-zone-localize-0.1",
+  "created_utc": "2026-11-11T06:54:31.840760+00:00",
+  "source_capture": "docs/team/B/evidence/line_h/mid_zone_box_cross_20261111_145219",
+  "source_frame": "frame_000.npz",
+  "camera_id": "CP2L863000KL",
+  "camera_frame": "camera_CP2L863000KL_color_optical_frame",
+  "base_frame": "L_arm_root",
+  "child_frame": "mid_box_cross",
+  "scene_note": "robot-side mid position marked with box + cross; hand-eye prep only",
+  "marker_center_pixel": {
+    "u": 252.5,
+    "v": 329.5,
+    "u_round": 252,
+    "v_round": 330,
+    "template_score": 0.5805341601371765,
+    "method": "plus template match + intensity centroid in 11x11",
+    "roi_xyxy": [
+      120,
+      220,
+      420,
+      400
+    ],
+    "gray_center": 154,
+    "uncertainty_px": 2.0
+  },
+  "box_detection": null,
+  "table_plane_camera": {
+    "fit_region": "pixels within 120px of marker with depth in [0.65,1.05] m",
+    "n_points": 31665,
+    "point_on_plane_camera_m": [
+      -0.1589979147055099,
+      0.27095006987632375,
+      0.8309043423477817
+    ],
+    "upward_normal_camera": [
+      -0.00903484924336931,
+      -0.7110561479748779,
+      -0.7030771834772327
+    ],
+    "residual_abs_m": {
+      "p50": 0.0011099562383884913,
+      "p95": 0.0035848125361393197,
+      "max": 0.016382273173027078
+    },
+    "marker_ray_plane_intersection_camera_m": [
+      -0.16874342568846323,
+      0.22082403587728008,
+      0.8817244723574557
+    ],
+    "depth_at_round_pixel_m": 0.8809999823570251,
+    "depth_neighborhood_3x3_m": [
+      [
+        0.8820000290870667,
+        0.8820000290870667,
+        0.8820000290870667
+      ],
+      [
+        0.8809999823570251,
+        0.8809999823570251,
+        0.8809999823570251
+      ],
+      [
+        0.8790000081062317,
+        0.8790000081062317,
+        0.8790000081062317
+      ]
+    ],
+    "depth_vs_plane_delta_m": -0.000724490000430511
+  },
+  "point_camera_m_from_depth": [
+    -0.16860477361700282,
+    0.22064259052687482,
+    0.8809999823570251
+  ],
+  "point_camera_m_plane_intersection": [
+    -0.16874342568846323,
+    0.22082403587728008,
+    0.8817244723574557
+  ],
+  "pose_camera": {
+    "parent_frame": "camera_CP2L863000KL_color_optical_frame",
+    "child_frame": "mid_box_cross",
+    "translation_m": [
+      -0.16874342568846323,
+      0.22082403587728008,
+      0.8817244723574557
+    ],
+    "quaternion_xyzw": [
+      0.9227868455385894,
+      -0.0017405285278011791,
+      -0.004168705089625607,
+      0.3852843497460796
+    ],
+    "rotation_matrix_rows": [
+      [
+        0.9999591849166394,
+        0.0,
+        -0.00903484924336931
+      ],
+      [
+        -0.0064245473189583,
+        -0.703105880802369,
+        -0.7110561479748779
+      ],
+      [
+        -0.006352455635175796,
+        0.7110851709754078,
+        -0.7030771834772327
+      ]
+    ]
+  },
+  "pose_base_c35": {
+    "parent_frame": "L_arm_root",
+    "child_frame": "mid_box_cross",
+    "translation_m": [
+      0.5596719452592895,
+      -0.04547721916478966,
+      -0.5450898122540597
+    ],
+    "quaternion_xyzw": [
+      -0.031026497945408286,
+      0.03294364037856736,
+      -0.0010231745570015572,
+      0.9989749877237553
+    ],
+    "rotation_matrix_rows": [
+      [
+        0.9978273393448672,
+        0.0,
+        0.06588323653209148
+      ],
+      [
+        -0.0040885031620795575,
+        0.9980726190781389,
+        0.061921976618950006
+      ],
+      [
+        -0.06575625443892906,
+        -0.06205680499755143,
+        0.9959041459677025
+      ]
+    ]
+  },
+  "calibration": {
+    "path": "calibration/candidates/C35_left_head_fit_only_user10mm_20261108.json",
+    "sha256": "2339af8daa000ef986b68b3faa6e26a63c91b74c563c78e1ccbcb39590e28a62",
+    "accuracy_claim": "FIT_ONLY",
+    "approved": false,
+    "note": "C35 fit-only; not an execution permit"
+  },
+  "K": [
+    [
+      368.1024169921875,
+      0.0,
+      322.947021484375
+    ],
+    [
+      0.0,
+      368.163330078125,
+      237.29510498046875
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "overlay_png": "docs/team/B/evidence/line_h/mid_zone_localize_20261111_145219_overlay.png",
+  "control_ready": false,
+  "motion_enabled": false,
+  "executable": false,
+  "result": "MID_ZONE_LOCALIZED_C35_FIT_ONLY",
+  "next_required": [
+    "operator confirm overlay hits the intended robot-side mid box+cross",
+    "optional independent ruler check of mid mark in L_arm_root",
+    "bind as base_cross / handoff mid for wrist-target rebuild after confirm"
+  ]
+}

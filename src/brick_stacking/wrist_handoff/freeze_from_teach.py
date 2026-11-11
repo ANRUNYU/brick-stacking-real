@@ -106,6 +106,79 @@ def freeze_provisional_handoff_wrist_target_from_teach(
     return out
 
 
+def freeze_grasp_relative_from_teach_and_mid(
+    *,
+    relative_version: str,
+    pack_version: str,
+    samples: Sequence[Mapping[str, Any]],
+    base_block_pose: Mapping[str, Any],
+    base_mid_pose: Mapping[str, Any],
+    open_percent: Sequence[float] | None = None,
+    notes: Sequence[str] = (),
+    cross_frame: str = "mid_box_cross",
+) -> dict[str, Any]:
+    """Freeze T_L8_block / T_L8_mid from teach flanges + vision base poses.
+
+    Uses ``handoff_ready`` teach as the mid/place seed (provisional). Does not
+    require ``place_ready_at_cross`` or ``block_pose_base`` inside teach samples.
+    """
+    hang = _optional_sample(samples, "hang")
+    pre = _sample(samples, "preshape_at_block")
+    handoff = _sample(samples, "handoff_ready")
+    close = _optional_sample(samples, "close_at_block")
+
+    flange_pre = transform_from_pose_dict(
+        pre["flange_pose"], parent_frame=PARENT_FRAME, child_frame=CHILD_FRAME
+    )
+    flange_mid = transform_from_pose_dict(
+        handoff["flange_pose"], parent_frame=PARENT_FRAME, child_frame=CHILD_FRAME
+    )
+    block = transform_from_pose_dict(
+        dict(base_block_pose), parent_frame=PARENT_FRAME, child_frame="block"
+    )
+    mid = transform_from_pose_dict(
+        dict(base_mid_pose), parent_frame=PARENT_FRAME, child_frame=cross_frame
+    )
+    t_l8_block = relative_from_base_poses(base_flange=flange_pre, base_object=block)
+    t_l8_mid = relative_from_base_poses(base_flange=flange_mid, base_object=mid)
+
+    open_pct = list(open_percent) if open_percent is not None else (
+        list(hang["hand"]["values"]) if hang is not None else (100, 100, 100, 100, 100, 100)
+    )
+    close_pct = list(close["hand"]["values"]) if close is not None else list(pre["hand"]["values"])
+    pack = build_hand_preset_pack(
+        role="left",
+        pack_version=pack_version,
+        open_percent=open_pct,
+        preshape_percent=pre["hand"]["values"],
+        close_percent=close_pct,
+        notes=("frozen_from_teach_and_vision_mid", "three_finger_not_c49"),
+    )
+    evidence = [str(s.get("sample_id")) for s in (hang, pre, close, handoff) if s is not None]
+    out = build_grasp_relative(
+        relative_version=relative_version,
+        hand_preset_pack=pack,
+        t_l8_block=t_l8_block,
+        t_l8_cross=t_l8_mid,
+        grasp_ready_seed_q_rad=pre["q_rad"],
+        place_ready_seed_q_rad=handoff["q_rad"],
+        hang_seed_q_rad=None if hang is None else hang["q_rad"],
+        cross_frame=cross_frame,
+        evidence_refs=evidence,
+        notes=list(notes)
+        + [
+            "handoff_provisional=true",
+            "place_ready seed is handoff_ready teach; cross is vision mid_box_cross",
+            "C35 fit-only vision poses; not an execution permit",
+        ],
+        grasp_seed_provenance=pre.get("seed_provenance"),
+        place_seed_provenance=handoff.get("seed_provenance"),
+        hang_seed_provenance=None if hang is None else hang.get("seed_provenance"),
+    )
+    out["handoff_provisional"] = True
+    return out
+
+
 def freeze_grasp_relative_from_teach(
     *,
     relative_version: str,

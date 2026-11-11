@@ -1,0 +1,105 @@
+{
+  "schema_version": "line-h-mid-zone-localize-0.1",
+  "created_utc": "2026-11-11T07:35:38.865900+00:00",
+  "source_capture": "docs/team/B/evidence/line_h/mid_zone_box_cross_20261111_153156",
+  "source_frame": "frame_000.npz",
+  "camera_id": "CP2L863000KL",
+  "camera_frame": "camera_CP2L863000KL_color_optical_frame",
+  "base_frame": "L_arm_root",
+  "child_frame": "mid_box_cross",
+  "scene_note": "clearer mid box+cross below left checkerboard; old origin not used",
+  "marker_center_pixel": {
+    "u": 361.64963503649636,
+    "v": 435.4160583941606,
+    "u_round": 362,
+    "v_round": 435,
+    "template_score": 0.6416683197021484,
+    "method": "box contour near below-left-board + plus template + dark centroid",
+    "box_center_uv": [
+      361.0,
+      436.0
+    ],
+    "uncertainty_px": 2.0,
+    "gray_center": 97
+  },
+  "box_detection": {
+    "center_uv": [
+      361.0,
+      436.0
+    ],
+    "size_wh_px": [
+      28.0,
+      30.0
+    ],
+    "method": "canny_minAreaRect"
+  },
+  "table_plane_camera": {
+    "n_points": 22456,
+    "upward_normal_camera": [
+      -0.000732308771944079,
+      -0.7085437637291517,
+      -0.7056664924767158
+    ],
+    "marker_ray_plane_intersection_camera_m": [
+      0.07513138382049728,
+      0.38453833653947495,
+      0.7145782012640564
+    ],
+    "depth_at_round_pixel_m": 0.7139999866485596,
+    "residual_abs_m": {
+      "p95": 0.003264247161071419
+    }
+  },
+  "point_camera_m_plane_intersection": [
+    0.07513138382049728,
+    0.38453833653947495,
+    0.7145782012640564
+  ],
+  "pose_base_c35": {
+    "parent_frame": "L_arm_root",
+    "child_frame": "mid_box_cross",
+    "translation_m": [
+      0.2882745527306005,
+      -0.2447346666306224,
+      -0.5158477902172576
+    ],
+    "quaternion_xyzw": [
+      -0.02723981007811356,
+      0.03046710153223024,
+      -0.0008306123017595426,
+      0.9991641799796155
+    ]
+  },
+  "calibration": {
+    "path": "calibration/candidates/C35_left_head_fit_only_user10mm_20261108.json",
+    "sha256": "2339af8daa000ef986b68b3faa6e26a63c91b74c563c78e1ccbcb39590e28a62",
+    "accuracy_claim": "FIT_ONLY",
+    "approved": false
+  },
+  "K": [
+    [
+      368.1024169921875,
+      0.0,
+      322.947021484375
+    ],
+    [
+      0.0,
+      368.163330078125,
+      237.29510498046875
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "overlay_png": "docs/team/B/evidence/line_h/mid_zone_localize_20261111_153156_overlay.png",
+  "control_ready": false,
+  "motion_enabled": false,
+  "executable": false,
+  "result": "MID_ZONE_LOCALIZED_C35_FIT_ONLY",
+  "operator_confirmed": true,
+  "confirmed_utc": "2026-11-11T07:37:00+00:00",
+  "confirmation_note": "operator confirmed overlay on clearer mid box+cross below left checkerboard",
+  "supersedes": "docs/team/B/evidence/line_h/mid_zone_localize_20261111_145219.json"
+}

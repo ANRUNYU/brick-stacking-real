@@ -64,6 +64,36 @@ python tools/h_check_wrist_path.py <wrist_target.json> <wrist_path.json> --tip-p
 
 仅当 check `ok=true` 且另有现场授权口令后，才可低速：到 `grasp_ready` → 停稳闭合 → 到 `place_ready` → 停稳张开。
 
+## 头摄定位靠机器人一侧 mid（方框+十字）
+
+固定曝光采头机后本地解算（不发运动）：
+
+```powershell
+$env:PYTHONPATH='src'
+python tools/h_localize_mid_cross_from_rgbd.py `
+  docs/team/B/evidence/line_h/mid_zone_box_cross_<stamp> `
+  docs/team/B/evidence/line_h/mid_zone_localize_<stamp>.json
+```
+
+核对叠加图十字落点；`pose_base_c35` / `mid_zone_poses_base_*.json` 的 `base_cross` 供后续 handoff / `h_build_wrist_target` 使用。C35 仍为 fit-only，`executable=false`。
+
+示教齐且 mid/块视觉位姿齐后冻结：
+
+```powershell
+$env:PYTHONPATH='src'
+python tools/h_freeze_from_teach_and_mid.py `
+  docs/team/B/evidence/line_h/teach_hang_20261111.json `
+  docs/team/B/evidence/line_h/teach_preshape_20261111.json `
+  docs/team/B/evidence/line_h/teach_close_20261111.json `
+  docs/team/B/evidence/line_h/teach_handoff_ready_20261111.json `
+  --base-block docs/team/B/evidence/line_h/base_block_<stamp>.json `
+  --base-mid docs/team/B/evidence/line_h/mid_zone_localize_20261111_153156.json `
+  --relative-version field-mid-rel-0.1 `
+  --pack-version field-mid-hand-0.1 `
+  --output-relative docs/team/B/evidence/line_h/grasp_relative_field_mid_0.1.json `
+  --output-wrist-target docs/team/B/evidence/line_h/wrist_target_field_mid_0.1.json
+```
+
 ## #32 棋盘格挪桌
 
 ```powershell

@@ -1,0 +1,482 @@
+{
+  "started_at": "2026-11-11T07:31:55.655110+00:00",
+  "scope": "camera_only",
+  "robot_motion_accessed": false,
+  "can_accessed": false,
+  "devices": [
+    {
+      "serial": "CP2L863000KL",
+      "name": "Orbbec Gemini 335L",
+      "uid": "2-3.4.3-65"
+    },
+    {
+      "serial": "AY6M86300GH",
+      "name": "Orbbec Gemini2",
+      "uid": "2-3.4.4-62"
+    },
+    {
+      "serial": "AY6M8630086",
+      "name": "Orbbec Gemini2",
+      "uid": "2-3.4.2-63"
+    }
+  ],
+  "frames": [
+    {
+      "file": "frame_000.npz",
+      "rgb_stamp_s": 71207.214717,
+      "depth_stamp_s": 71207.214736,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.900478515625,
+      "median_depth_m": 2.2730000019073486
+    },
+    {
+      "file": "frame_001.npz",
+      "rgb_stamp_s": 71207.281453,
+      "depth_stamp_s": 71207.281472,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.8973958333333333,
+      "median_depth_m": 2.2709999084472656
+    },
+    {
+      "file": "frame_002.npz",
+      "rgb_stamp_s": 71207.348189,
+      "depth_stamp_s": 71207.348208,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9025227864583333,
+      "median_depth_m": 2.2720000743865967
+    },
+    {
+      "file": "frame_003.npz",
+      "rgb_stamp_s": 71207.414925,
+      "depth_stamp_s": 71207.414944,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.899580078125,
+      "median_depth_m": 2.2699999809265137
+    },
+    {
+      "file": "frame_004.npz",
+      "rgb_stamp_s": 71207.481661,
+      "depth_stamp_s": 71207.48168,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.8963020833333334,
+      "median_depth_m": 2.2699999809265137
+    },
+    {
+      "file": "frame_005.npz",
+      "rgb_stamp_s": 71207.548397,
+      "depth_stamp_s": 71207.548416,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.8993587239583334,
+      "median_depth_m": 2.2699999809265137
+    },
+    {
+      "file": "frame_006.npz",
+      "rgb_stamp_s": 71207.615133,
+      "depth_stamp_s": 71207.615152,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.900576171875,
+      "median_depth_m": 2.2720000743865967
+    },
+    {
+      "file": "frame_007.npz",
+      "rgb_stamp_s": 71207.681869,
+      "depth_stamp_s": 71207.681888,
+      "skew_ms": 0.019000013708136976,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.8989290364583333,
+      "median_depth_m": 2.2720000743865967
+    },
+    {
+      "file": "frame_008.npz",
+      "rgb_stamp_s": 71207.748605,
+      "depth_stamp_s": 71207.748624,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.89736328125,
+      "median_depth_m": 2.2679998874664307
+    },
+    {
+      "file": "frame_009.npz",
+      "rgb_stamp_s": 71207.815341,
+      "depth_stamp_s": 71207.81536,
+      "skew_ms": 0.018999999156221747,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.9031608072916667,
+      "median_depth_m": 2.2709999084472656
+    }
+  ],
+  "rejected_skew": 0,
+  "errors": [],
+  "cleanup_errors": [],
+  "result": "CAPTURED",
+  "binding_version": "2.1.3",
+  "sdk_version": "2.10.6",
+  "selected": {
+    "serial": "CP2L863000KL",
+    "name": "Orbbec Gemini 335L",
+    "firmware": "1.4.60",
+    "connection": "USB3.2"
+  },
+  "color_exposure_lock": {
+    "before": {
+      "auto_exposure": false,
+      "exposure": 16,
+      "gain": 8
+    },
+    "after": {
+      "auto_exposure": false,
+      "exposure": 20,
+      "gain": 10
+    },
+    "persistent_write": false
+  },
+  "requested_profiles": {
+    "size_wh": [
+      640,
+      480
+    ],
+    "fps": 15,
+    "explicit_request_has_no_fallback": true
+  },
+  "profiles": {
+    "color": {
+      "width": 640,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.RGB"
+    },
+    "depth": {
+      "width": 640,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    }
+  },
+  "calibration": {
+    "K": [
+      [
+        368.1024169921875,
+        0.0,
+        322.947021484375
+      ],
+      [
+        0.0,
+        368.163330078125,
+        237.29510498046875
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "distortion": {
+      "k1": -0.031556159257888794,
+      "k2": 0.036501653492450714,
+      "k3": -0.012785496190190315,
+      "k4": 0.0,
+      "k5": 0.0,
+      "k6": 0.0,
+      "p1": -0.0005816970369778574,
+      "p2": 0.0004935592296533287,
+      "model": "OBCameraDistortionModel.BROWN_CONRADY_K6"
+    },
+    "width": 640,
+    "height": 480,
+    "extrinsics_available": false
+  },
+  "warmup_minimum_frames": 30,
+  "warmup_observations": [
+    {
+      "stamp_s": 71205.212637,
+      "median_rgb": [
+        120.0,
+        121.0,
+        113.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71205.279373,
+      "median_rgb": [
+        125.0,
+        126.0,
+        116.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71205.346109,
+      "median_rgb": [
+        103.0,
+        104.0,
+        101.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71205.412845,
+      "median_rgb": [
+        119.0,
+        120.0,
+        112.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71205.479581,
+      "median_rgb": [
+        125.0,
+        127.0,
+        118.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71205.546317,
+      "median_rgb": [
+        103.0,
+        104.0,
+        102.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71205.613053,
+      "median_rgb": [
+        116.0,
+        119.0,
+        113.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71205.679789,
+      "median_rgb": [
+        125.0,
+        127.0,
+        119.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71205.746525,
+      "median_rgb": [
+        102.0,
+        104.0,
+        104.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71205.813261,
+      "median_rgb": [
+        114.0,
+        118.0,
+        113.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71205.879997,
+      "median_rgb": [
+        125.0,
+        128.0,
+        120.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71205.946733,
+      "median_rgb": [
+        103.0,
+        105.0,
+        105.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71206.013469,
+      "median_rgb": [
+        112.0,
+        117.0,
+        113.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71206.080205,
+      "median_rgb": [
+        124.0,
+        128.0,
+        121.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71206.146941,
+      "median_rgb": [
+        103.0,
+        106.0,
+        106.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71206.213677,
+      "median_rgb": [
+        110.0,
+        115.0,
+        113.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71206.280413,
+      "median_rgb": [
+        123.0,
+        129.0,
+        123.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71206.347149,
+      "median_rgb": [
+        103.0,
+        108.0,
+        108.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71206.413885,
+      "median_rgb": [
+        108.0,
+        114.0,
+        113.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71206.480621,
+      "median_rgb": [
+        123.0,
+        129.0,
+        123.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71206.547357,
+      "median_rgb": [
+        104.0,
+        110.0,
+        110.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71206.614093,
+      "median_rgb": [
+        107.0,
+        113.0,
+        112.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71206.680829,
+      "median_rgb": [
+        123.0,
+        129.0,
+        123.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71206.747565,
+      "median_rgb": [
+        106.0,
+        111.0,
+        111.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71206.814301,
+      "median_rgb": [
+        106.0,
+        111.0,
+        111.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71206.881037,
+      "median_rgb": [
+        123.0,
+        128.0,
+        123.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71206.947773,
+      "median_rgb": [
+        107.0,
+        113.0,
+        113.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71207.014509,
+      "median_rgb": [
+        105.0,
+        110.0,
+        111.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71207.081245,
+      "median_rgb": [
+        123.0,
+        128.0,
+        123.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71207.147981,
+      "median_rgb": [
+        109.0,
+        115.0,
+        114.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 71207.214717,
+      "median_rgb": [
+        104.0,
+        109.0,
+        110.0
+      ],
+      "stable_window": false
+    }
+  ],
+  "capture_started_after_rgb_stabilization": false,
+  "warmup_unstable_override": true,
+  "exposure_changed_during_capture": true,
+  "captured_pairs": 10,
+  "notice": "Capture is not depth accuracy, alignment accuracy or block-detection acceptance. Clock is per-camera; no arm/world transform."
+}

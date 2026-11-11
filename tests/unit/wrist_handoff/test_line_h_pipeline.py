@@ -59,6 +59,39 @@ def test_freeze_and_wrist_target_roundtrip():
     assert grasp["translation_m"] == pytest.approx([0.50, 0.05, -0.30], abs=1e-9)
 
 
+def test_freeze_from_teach_and_vision_mid():
+    root = Path("docs/team/B/evidence/line_h")
+    samples = [
+        json.loads((root / name).read_text(encoding="utf-8"))
+        for name in (
+            "teach_hang_20261111.json",
+            "teach_preshape_20261111.json",
+            "teach_close_20261111.json",
+            "teach_handoff_ready_20261111.json",
+        )
+    ]
+    mid = json.loads((root / "mid_zone_localize_20261111_153156.json").read_text(encoding="utf-8"))
+    # Synthetic block near taught grasp flange for unit coverage only.
+    block = {
+        "parent_frame": "L_arm_root",
+        "child_frame": "block",
+        "translation_m": [0.45, -0.10, -0.50],
+        "quaternion_xyzw": [0.0, 0.0, 0.0, 1.0],
+    }
+    from brick_stacking.wrist_handoff.freeze_from_teach import freeze_grasp_relative_from_teach_and_mid
+
+    rel = freeze_grasp_relative_from_teach_and_mid(
+        relative_version="field-mid-rel-test-0.1",
+        pack_version="field-mid-hand-test-0.1",
+        samples=samples,
+        base_block_pose=block,
+        base_mid_pose=mid["pose_base_c35"],
+    )
+    assert rel["handoff_provisional"] is True
+    assert rel["cross_frame"] == "mid_box_cross"
+    assert "T_L8_block" in rel and "T_L8_cross" in rel
+
+
 def test_provisional_handoff_wrist_target_from_field_teach():
     root = Path("docs/team/B/evidence/line_h")
     samples = [

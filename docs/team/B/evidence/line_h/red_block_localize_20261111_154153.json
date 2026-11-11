@@ -1,0 +1,148 @@
+{
+  "schema_version": "line-h-red-block-localize-0.1",
+  "created_utc": "2026-11-11T07:43:40.116914+00:00",
+  "source_capture": "docs/team/B/evidence/line_h/red_block_20261111_154153",
+  "source_frame": "frame_000.npz",
+  "camera_id": "CP2L863000KL",
+  "camera_frame": "camera_CP2L863000KL_color_optical_frame",
+  "base_frame": "L_arm_root",
+  "child_frame": "block",
+  "edge_m": 0.05,
+  "detection": {
+    "area_px": 889,
+    "centroid_uv": [
+      243.16085489313835,
+      366.6974128233971
+    ],
+    "bbox_xywh": [
+      228,
+      350,
+      31,
+      33
+    ],
+    "method": "hsv_red_mask + largest_component + depth/plane",
+    "top_pixel_uv": [
+      243.16085489313835,
+      366.6974128233971
+    ],
+    "top_depth_median_m": 0.7720000147819519,
+    "n_mask_pixels": 889
+  },
+  "table_plane_camera": {
+    "n_points": 44914,
+    "upward_normal_camera": [
+      -0.009193359945107409,
+      -0.7130804832905867,
+      -0.7010219015715436
+    ],
+    "residual_p95_m": 0.003665312576410079
+  },
+  "top_center_camera_m": [
+    -0.17674506314842597,
+    0.2866090197872161,
+    0.8154331473235403
+  ],
+  "model_center_camera_m": [
+    -0.17651522914979828,
+    0.30443603186948076,
+    0.8329586948628289
+  ],
+  "top_center_base_m": [
+    0.4691779713065664,
+    -0.02144069775762482,
+    -0.5406947693975919
+  ],
+  "model_center_base_m": [
+    0.46745930481010056,
+    -0.02298014527248339,
+    -0.5655880674278435
+  ],
+  "pose_camera": {
+    "parent_frame": "camera_CP2L863000KL_color_optical_frame",
+    "child_frame": "block",
+    "translation_m": [
+      -0.17651522914979828,
+      0.30443603186948076,
+      0.8329586948628289
+    ],
+    "quaternion_xyzw": [
+      0.9222297937109448,
+      -0.0017771825004705949,
+      -0.004239284798563441,
+      0.38661489583127145
+    ],
+    "rpy_extrinsic_zyx_rad": [
+      -0.006556065732803198,
+      0.006445063655928284,
+      2.347646194317325
+    ]
+  },
+  "pose_base_c35": {
+    "parent_frame": "L_arm_root",
+    "child_frame": "block",
+    "translation_m": [
+      0.46745930481010056,
+      -0.02298014527248339,
+      -0.5655880674278435
+    ],
+    "quaternion_xyzw": [
+      -0.030858419236679733,
+      0.034377279665266575,
+      -0.0010619628480514592,
+      0.9989318459434251
+    ],
+    "rpy_extrinsic_zyx_rad": [
+      -0.004253351235946944,
+      0.0686695337432252,
+      -0.06190928605946816
+    ]
+  },
+  "base_block": {
+    "parent_frame": "L_arm_root",
+    "child_frame": "block",
+    "translation_m": [
+      0.46745930481010056,
+      -0.02298014527248339,
+      -0.5655880674278435
+    ],
+    "quaternion_xyzw": [
+      -0.030858419236679733,
+      0.034377279665266575,
+      -0.0010619628480514592,
+      0.9989318459434251
+    ],
+    "rpy_extrinsic_zyx_rad": [
+      -0.004253351235946944,
+      0.0686695337432252,
+      -0.06190928605946816
+    ]
+  },
+  "calibration": {
+    "path": "calibration/candidates/C35_left_head_fit_only_user10mm_20261108.json",
+    "sha256": "2339af8daa000ef986b68b3faa6e26a63c91b74c563c78e1ccbcb39590e28a62",
+    "accuracy_claim": "FIT_ONLY",
+    "approved": false
+  },
+  "K": [
+    [
+      368.1024169921875,
+      0.0,
+      322.947021484375
+    ],
+    [
+      0.0,
+      368.163330078125,
+      237.29510498046875
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "overlay_png": "docs/team/B/evidence/line_h/red_block_localize_20261111_154153_overlay.png",
+  "control_ready": false,
+  "motion_enabled": false,
+  "executable": false,
+  "result": "RED_BLOCK_LOCALIZED_C35_FIT_ONLY"
+}
