@@ -1,0 +1,37 @@
+# Lateral single-block approach template (software closed-loop).
+# Path constraints from THREE_TRACK §0.2 / §3.4. Not a live motion permit.
+schema_version: m-single-block-approach-0.1
+reference_id: table_black_cross_20mm
+slot_id: m-first-placement-slot-01
+target_id: m-first-red-01
+
+# Place = adopted cross slot (table frame). Pick = same observation translated
+# in-plane by supply_offset (synthetic feed pose for leave-then-return replay).
+supply_offset_m: [0.15, 0.0, 0.0]
+supply_pose_source: synthetic_offset
+
+table_z_m: 0.0
+cube_edge_m: 0.05
+# Model center height above table (nominal 25 mm half-edge).
+block_center_z_m: 0.025
+
+# Clearance gates (metres). Reject template if violated.
+approach_height_m: 0.08          # horizontal segments >= table_z + this
+lift_clearance_m: 0.03           # vertical lift after close before side move
+descend_clearance_m: 0.0         # grasp/place TCP z relative to block top policy
+side_standoff_m: 0.12            # lateral wait / outer approach offset in XY
+tool_half_extent_m: [0.04, 0.04, 0.04]
+table_half_thickness_m: 0.01     # thin-box obstacle about table plane
+
+# Top-up grasp; 90° symmetry allowed (yaw multiples of pi/2).
+grasp_top_up: true
+yaw_symmetry_rad: 1.5707963267948966
+
+# TCP relative to block model center (top-face pinch style, top-up).
+# T_tcp_block: block expressed in TCP (block along +Z_tcp); tcp_target_for_block
+# inverts this so world TCP sits above the block when top_up R maps TCP +Z down.
+tcp_block_translation_m: [0.0, 0.0, 0.03]
+tcp_geometry_version: synthetic_top_up_tcp_v1
+
+accuracy_claim: FIT_ONLY
+calibration_candidate_id: C35_left_head_fit_only_user10mm_20261108
