@@ -1,0 +1,10 @@
+/home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e/src/linkerbot/arm/kinetix/urdf
+/home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e/src/linkerbot/arm/kinetix/urdf/a7_lite__left.urdf
+/home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e/src/linkerbot/arm/kinetix/urdf/a7_lite__right.urdf
+/home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e/src/linkerbot/arm/kinetix/urdf/a7__right.urdf
+/home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e/src/linkerbot/arm/kinetix/urdf/p7__right.urdf
+/home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e/src/linkerbot/arm/kinetix/urdf/a7__left.urdf
+/home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e/src/linkerbot/arm/kinetix/urdf/p7__left.urdf
+/home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e/docs/zh/src/images/coordinate_urdf.png
+
+ERR

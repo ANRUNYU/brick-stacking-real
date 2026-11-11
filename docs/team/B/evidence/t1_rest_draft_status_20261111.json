@@ -1,0 +1,171 @@
+{
+  "schema_version": "t1-rest-draft-status-0.1",
+  "rest_capture_path": "docs\\team\\B\\evidence\\left_supported_rest_20261111_011818.json",
+  "range_profile_path": "calibration\\measurement_templates\\left_wrist_theta_ranges.json",
+  "rest_draft_attempt": {
+    "schema_version": "rest-draft-attempt-0.1",
+    "rest_state_capture": {
+      "schema_version": "rest-state-capture-gate-0.2",
+      "rest_state_capture_available": true,
+      "rest_state_capture_enabled": true,
+      "attest_rest_for_pregrasp_enabled": true,
+      "dual_gate_open": true,
+      "blocked_unless_rest_attested": false,
+      "default_enabled": false,
+      "default_attest_enabled": false,
+      "env_var": "BRICK_STACKING_REST_STATE_CAPTURE",
+      "attest_env_var": "BRICK_STACKING_ATTEST_REST_FOR_PREGRASP",
+      "live_arm_via_when_dual_and_valid_draft": "rest_attested",
+      "ci_never_auto_rest": true,
+      "sends_rest_or_opens_can": false,
+      "loss_of_hold_not_large_trajectory": true,
+      "forbids_enable_motion_trajectory": true,
+      "raises_formal_grasp_entry_allowed": true,
+      "raises_control_ready": false,
+      "counts_as_audited_j6j7_readonly": false,
+      "notes": [
+        "Rest drops wrist hold; not --enable-motion / large trajectory.",
+        "Default false; CI and default paths never auto Rest on hardware.",
+        "Dual gate: --rest-state-capture + --attest-rest-for-pregrasp (or matching env). Only then may a structurally live VALID Rest draft arm formal ladder via live_arm_via=rest_attested.",
+        "Rest attested \u2260 audited J6/J7 readonly; never raises control_ready.",
+        "See docs/team/B/J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md."
+      ],
+      "code_refs": {
+        "gate": "src/brick_stacking/arm/rest_state_capture.py",
+        "hardware_capture": "tools/c_left_wrist_rest_capture.py",
+        "readonly_hard_block": "src/brick_stacking/arm/v2_wrist_readonly.py"
+      }
+    },
+    "sdk_report_angles": {
+      "schema_version": "rest-sdk-report-angles-0.1",
+      "source": "real",
+      "capture_id": "16521757-15bb-45f7-b804-cdf6a0228cb4",
+      "authorization_ref": "chat-20261111-wrist-supported-rest",
+      "wrist": {
+        "66": {
+          "motor_id": 66,
+          "position_raw_u16": 32622,
+          "position_sdk_report_rad": -0.05550469214923304,
+          "theta_map_rad": [
+            -12.5,
+            12.5
+          ],
+          "provenance": "sdk_default_pm_12_5_dequantize",
+          "audited_range_profile": false,
+          "equals_verified_left_wrist_theta_ranges": false
+        },
+        "67": {
+          "motor_id": 67,
+          "position_raw_u16": 33179,
+          "position_sdk_report_rad": 0.15697718776226388,
+          "theta_map_rad": [
+            -12.5,
+            12.5
+          ],
+          "provenance": "sdk_default_pm_12_5_dequantize",
+          "audited_range_profile": false,
+          "equals_verified_left_wrist_theta_ranges": false
+        }
+      },
+      "audited_range_profile": false,
+      "may_mark_left_wrist_theta_ranges_verified": false,
+      "may_build_rest_draft_as_audited": false,
+      "notes": [
+        "SDK report rad mirrors MotorV2._dequantize(..., \u00b112.5, 16) after Rest.",
+        "Provenance \u2260 audited COM Theta / left_wrist_theta_ranges verified.",
+        "Do not set verified=true from this annotation alone."
+      ]
+    },
+    "control_ready": false,
+    "motion_enabled": false,
+    "range_profile_verified": {
+      "66": false,
+      "67": false
+    },
+    "verdict": "GAP_UNVERIFIED_RANGE_OR_DECODE",
+    "pass": false,
+    "error": "range_profile[66] must be verified units=rad",
+    "draft": null,
+    "honest_non_pass": true
+  },
+  "t1_status": {
+    "schema_version": "t1-bounded-live-runner-0.1",
+    "prerequisites": {
+      "schema_version": "t1-bounded-live-runner-0.1",
+      "t1_level": "empty_run_no_block",
+      "subset": "rest_then_optional_single_joint_or_short_traj",
+      "rest_capture_ok": true,
+      "j1_j5_sdk_ok": true,
+      "wrist_range_audited": false,
+      "rest_draft_pass": false,
+      "urdf_available": true,
+      "block_present": false,
+      "motion_enabled": false,
+      "control_ready": false,
+      "default_motion_enabled": false,
+      "default_control_ready": false,
+      "subset_dry_plan_allowed": true,
+      "live_motion_allowed": false,
+      "full_plan_bundle_live_executor": false,
+      "blocked_by": [
+        "j6_j7_range_profile_unverified",
+        "rest_draft_not_pass"
+      ],
+      "notes": [
+        "Prefer Rest\u2192low-speed single-joint/short empty path over synthetic PlanBundle.",
+        "Skeleton refuses --enable-motion / control_ready elevation.",
+        "J6/J7 audited range still required before wrist motion or audited rest-draft PASS.",
+        "host_monitor single-joint --enable-motion remains a separate, explicit path."
+      ]
+    },
+    "dry_plan": {
+      "schema_version": "t1-bounded-live-runner-0.1",
+      "kind": "t1_single_joint_empty_dry_plan",
+      "executable": false,
+      "motion_enabled": false,
+      "control_ready": false,
+      "joint": "J1",
+      "start_rad": 0.005440838169306517,
+      "target_rad": 0.025440838169306517,
+      "step_rad": 0.02,
+      "max_step_rad": 0.05,
+      "seed_source": "rest_capture_j1_j5_position_sdk_rad",
+      "wrist_j6_j7_commanded": false,
+      "block_present": false,
+      "refuse_reason": "live_motion_disabled_by_skeleton",
+      "prerequisites": {
+        "schema_version": "t1-bounded-live-runner-0.1",
+        "t1_level": "empty_run_no_block",
+        "subset": "rest_then_optional_single_joint_or_short_traj",
+        "rest_capture_ok": true,
+        "j1_j5_sdk_ok": true,
+        "wrist_range_audited": false,
+        "rest_draft_pass": false,
+        "urdf_available": true,
+        "block_present": false,
+        "motion_enabled": false,
+        "control_ready": false,
+        "default_motion_enabled": false,
+        "default_control_ready": false,
+        "subset_dry_plan_allowed": true,
+        "live_motion_allowed": false,
+        "full_plan_bundle_live_executor": false,
+        "blocked_by": [
+          "j6_j7_range_profile_unverified",
+          "rest_draft_not_pass"
+        ],
+        "notes": [
+          "Prefer Rest\u2192low-speed single-joint/short empty path over synthetic PlanBundle.",
+          "Skeleton refuses --enable-motion / control_ready elevation.",
+          "J6/J7 audited range still required before wrist motion or audited rest-draft PASS.",
+          "host_monitor single-joint --enable-motion remains a separate, explicit path."
+        ]
+      },
+      "next_hardware_step": "operator-reviewed host_monitor single-joint OR future enable-gated runner; still T1 empty, no block"
+    },
+    "live_executor_present": false,
+    "software_plan_bundle_not_live_trajectory": true
+  },
+  "control_ready": false,
+  "motion_enabled": false
+}

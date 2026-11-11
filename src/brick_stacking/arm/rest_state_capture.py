@@ -384,3 +384,155 @@ def build_live_valid_draft_from_rest(
     )
     payload["schema_version"] = DRAFT_SCHEMA
     return payload
+
+
+# MotorV2 factory COM-Theta comment used by ``motor.angle.angle`` after Rest.
+# This is *not* an audited device readback of Flash COM Theta MIN/MAX.
+SDK_DEFAULT_THETA_MIN_RAD = -12.5
+SDK_DEFAULT_THETA_MAX_RAD = 12.5
+SDK_REPORT_PROVENANCE = "sdk_default_pm_12_5_dequantize"
+SDK_REPORT_SCHEMA = "rest-sdk-report-angles-0.1"
+
+
+def sdk_default_u16_to_rad(u16: int) -> float:
+    """Dequantize U16 with MotorV2 SDK default ±12.5 rad (unaudited)."""
+    return _u16_to_rad(int(u16), SDK_DEFAULT_THETA_MIN_RAD, SDK_DEFAULT_THETA_MAX_RAD)
+
+
+def annotate_sdk_report_wrist_angles(
+    rest_capture: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Record SDK-style J6/J7 rad from Rest U16 without forging verified ranges.
+
+    ``motor.angle.angle`` after ``MotorV2.read_initial_state`` uses the same
+    ±12.5 map. Output is diagnostic only: ``audited_range_profile=false`` and
+    must never be written into ``left_wrist_theta_ranges.json`` as verified.
+    """
+    received = rest_capture.get("received") or rest_capture.get("received_positions")
+    if not isinstance(received, list):
+        raise ValueError("rest_capture.received (or received_positions) required")
+
+    wrists: dict[str, Any] = {}
+    for row in received:
+        if not isinstance(row, Mapping):
+            continue
+        mid = row.get("motor_id")
+        if mid not in (66, 67):
+            continue
+        # Skip Flash mode READ / other non-Rest rows (they also carry raw_hex).
+        if "control_mode" in row and "position_raw_u16" not in row:
+            continue
+        if "position_raw_u16" in row:
+            u16 = int(row["position_raw_u16"])
+        elif "status" in row and isinstance(row.get("raw_hex"), str):
+            data = bytes.fromhex(str(row["raw_hex"]))
+            if len(data) != 8:
+                raise ValueError(f"wrist {mid} Rest feedback must be 8 bytes")
+            u16 = int.from_bytes(data[1:3], "big")
+        else:
+            continue
+        key = str(int(mid))
+        if key in wrists:
+            raise ValueError(f"duplicate wrist motor_id {key}")
+        wrists[key] = {
+            "motor_id": int(mid),
+            "position_raw_u16": u16,
+            "position_sdk_report_rad": sdk_default_u16_to_rad(u16),
+            "theta_map_rad": [SDK_DEFAULT_THETA_MIN_RAD, SDK_DEFAULT_THETA_MAX_RAD],
+            "provenance": SDK_REPORT_PROVENANCE,
+            "audited_range_profile": False,
+            "equals_verified_left_wrist_theta_ranges": False,
+        }
+
+    missing = [str(m) for m in (66, 67) if str(m) not in wrists]
+    if missing:
+        raise ValueError(f"incomplete wrist Rest rows; missing motor_ids={missing}")
+
+    return {
+        "schema_version": SDK_REPORT_SCHEMA,
+        "source": rest_capture.get("source"),
+        "capture_id": rest_capture.get("capture_id"),
+        "authorization_ref": rest_capture.get("authorization_ref"),
+        "wrist": wrists,
+        "audited_range_profile": False,
+        "may_mark_left_wrist_theta_ranges_verified": False,
+        "may_build_rest_draft_as_audited": False,
+        "notes": [
+            "SDK report rad mirrors MotorV2._dequantize(..., ±12.5, 16) after Rest.",
+            "Provenance ≠ audited COM Theta / left_wrist_theta_ranges verified.",
+            "Do not set verified=true from this annotation alone.",
+        ],
+    }
+
+
+def attempt_rest_draft_or_gap(
+    rest_capture: Mapping[str, Any],
+    *,
+    range_profile: Mapping[str, Any],
+    rest_state_capture: bool,
+    attest_rest_for_pregrasp: bool = False,
+    role: str = "left",
+) -> dict[str, Any]:
+    """Try dual-gate rest-draft; on unverified ranges return an honest GAP report."""
+    sdk_report = annotate_sdk_report_wrist_angles(rest_capture)
+    gate = rest_state_capture_gate_report(
+        enabled=rest_state_capture, attest_enabled=attest_rest_for_pregrasp
+    )
+    base: dict[str, Any] = {
+        "schema_version": "rest-draft-attempt-0.1",
+        "rest_state_capture": gate,
+        "sdk_report_angles": sdk_report,
+        "control_ready": False,
+        "motion_enabled": False,
+        "range_profile_verified": {
+            "66": bool(
+                isinstance(range_profile.get("66"), Mapping)
+                and range_profile["66"].get("verified") is True
+            ),
+            "67": bool(
+                isinstance(range_profile.get("67"), Mapping)
+                and range_profile["67"].get("verified") is True
+            ),
+        },
+    }
+    try:
+        draft = build_live_valid_draft_from_rest(
+            rest_capture,
+            rest_state_capture=rest_state_capture,
+            range_profile=range_profile,
+            role=role,
+            attest_rest_for_pregrasp=attest_rest_for_pregrasp,
+        )
+    except RestStateCaptureDisabled as exc:
+        base.update(
+            {
+                "verdict": "GATE_CLOSED",
+                "pass": False,
+                "error": str(exc),
+                "draft": None,
+            }
+        )
+        return base
+    except ValueError as exc:
+        base.update(
+            {
+                "verdict": "GAP_UNVERIFIED_RANGE_OR_DECODE",
+                "pass": False,
+                "error": str(exc),
+                "draft": None,
+                "honest_non_pass": True,
+            }
+        )
+        return base
+
+    draft["control_ready"] = False
+    draft["motion_enabled"] = False
+    base.update(
+        {
+            "verdict": "DRAFT_BUILT",
+            "pass": True,
+            "error": None,
+            "draft": draft,
+        }
+    )
+    return base
