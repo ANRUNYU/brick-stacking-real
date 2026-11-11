@@ -1,6 +1,6 @@
 # 单块抓放 · 真机门
 
-**状态**：操作员已于 2026-11-11 授权持续推进；支撑 Rest 与 **T1 子集（J1 有界单关节空跑）已 PASS**。仍按 T1→T4，不可跳级进 T2。软件闭环已离线可跑；真机默认仍 `control_ready=false`，每步显式门控。
+**状态**：操作员已于 2026-11-11 授权持续推进；支撑 Rest、**T1 单关节子集**与 **T1 短多关节有界空跑（J1–J5）均已 PASS**。仍按 T1→T4，不可跳级进 T2。软件闭环已离线可跑；真机默认仍 `control_ready=false`，每步显式门控。
 
 **关联**：`PRE_GRASP_GATES_20261110.md`、`HOST_CONTROL_READY_20261110.md`、`J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md`、`THREE_TRACK_GRASP_DEV_PLAN.md` §3.5。
 
@@ -34,7 +34,8 @@
 | URDF | 主机 SDK 包内有 `p7__left.urdf`（L6/L7 limit ±1.59）；摘录在 `evidence/host_sdk_snippets_20261111/`；runner 尚未接线真机执行 |
 | T1 执行器 | 仅有 **有界 dry-plan 骨架**（`t1_bounded_live_runner`，默认 motion 关）；**无**整段 PlanBundle 真机执行器 |
 | T1 子集真机 | **PASS**（2026-11-11）：`host_monitor` 已带 `--enable-motion`；J6 ENABLE-only 恢复持力（未 MOVE）→ J1 `step_deg=1.0` READY→ENABLE→MOVE→RELEASE；`|err|=4.3e-6 rad` ≪ 0.012；证据 `t1_bounded_single_joint_live_20261111_093412.json`；auth=`chat-20261111-operator-continue-t1-bounded` |
-| T1 全量 / 短多关节 | **未做**；不得据此进 T2 |
+| T1 短多关节真机 | **PASS**（2026-11-11）：同会话门控；J6 ENABLE-only → 顺序 J1–J5 各 `step_deg=1.0` READY→ENABLE→MOVE→RELEASE（一轴失败即停）；各轴 `|err|` ≪ 0.012；证据 `t1_bounded_multi_joint_live_20261111_093852.json`；auth 同上；**仍非**整段 PlanBundle 真机轨迹 |
+| T1 全量 / 整段空跑 | **未做**（无有界整段执行器）；不得据此进 T2 |
 | `control_ready` / live Permit | 仍 false / 不伪造 |
 
 ## 未解除则永不发真机命令
@@ -52,7 +53,7 @@
 
 | 级 | 内容 | 未过则 |
 |----|------|--------|
-| **T1** | 无块空跑（本轮子集：Rest 七轴 → 低速单关节/短轨迹空跑；**单关节子集已 PASS**，短多关节/整段仍缺） | **不得碰块**；停在此级 |
+| **T1** | 无块空跑（Rest 七轴 → 低速单关节/短多关节空跑；**单关节 + J1–J5 短多关节已 PASS**；整段 PlanBundle 真机仍缺） | **不得碰块**；停在此级 |
 | **T2** | 触块：下探 → 闭合 → 微抬 | 不得进入只抓 |
 | **T3** | 只抓（Pick only） | 不得进入抓放 |
 | **T4** | 抓起 + 放到十字槽 | 复检 PASS 且 ≤ §0.2 放置门 |
