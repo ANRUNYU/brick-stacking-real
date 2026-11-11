@@ -1,0 +1,373 @@
+{
+  "schema_version": "rest-state-capture-draft-0.1",
+  "kind": "arm_live_or_recorded",
+  "mode": "rest-state-capture-draft",
+  "binding_path": null,
+  "arm_state": {
+    "sample_id": "c7b61b07e74940cfb2ed4e41f322ded0",
+    "source": "real",
+    "device_id": "can2:61,62,63,64,65,66,67",
+    "frame_id": "left_arm_base",
+    "device_stamp": null,
+    "host_receive_stamp": 6.0,
+    "clock_domain": "host_monotonic",
+    "epoch": "linux_boot:audit-rerun",
+    "validity": "VALID",
+    "reason": "rest_state_capture_draft:rest_ff7_fd_supported_capture; auth=audit-rerun-mock-only; seven_finite_from_rest",
+    "joint_names": [
+      "J1",
+      "J2",
+      "J3",
+      "J4",
+      "J5",
+      "J6",
+      "J7"
+    ],
+    "joint_bindings": {
+      "J1": {
+        "sdk_index": 0,
+        "device_joint_id": "61"
+      },
+      "J2": {
+        "sdk_index": 1,
+        "device_joint_id": "62"
+      },
+      "J3": {
+        "sdk_index": 2,
+        "device_joint_id": "63"
+      },
+      "J4": {
+        "sdk_index": 3,
+        "device_joint_id": "64"
+      },
+      "J5": {
+        "sdk_index": 4,
+        "device_joint_id": "65"
+      },
+      "J6": {
+        "sdk_index": 5,
+        "device_joint_id": "66"
+      },
+      "J7": {
+        "sdk_index": 6,
+        "device_joint_id": "67"
+      }
+    },
+    "q_rad": [
+      0.01,
+      0.02,
+      0.03,
+      0.04,
+      0.05,
+      0.49999237048905165,
+      0.49999237048905165
+    ],
+    "dq_rad_s": null,
+    "enabled": false,
+    "fault": null,
+    "rest_state_capture": {
+      "schema_version": "rest-state-capture-draft-0.1",
+      "provenance": "rest_ff7_fd_supported_capture",
+      "gate_enabled": true,
+      "attest_rest_for_pregrasp": true,
+      "counts_as_formal_live_valid": true,
+      "live_arm_via": "rest_attested",
+      "counts_as_audited_j6j7_readonly": false,
+      "authorization_ref": "audit-rerun-mock-only",
+      "warning": "Rest removes holding; draft only; no auto re-enable",
+      "quantization": "explicit_verified_range_profile"
+    }
+  },
+  "device_id": "can2:61,62,63,64,65,66,67",
+  "source": "real",
+  "validity": "VALID",
+  "fresh_live_read": false,
+  "can_opened": false,
+  "motion_enabled": false,
+  "control_ready": false,
+  "classification": {
+    "schema_version": "arm-state-validity-classification-0.1",
+    "present": true,
+    "source": "real",
+    "device_id": "can2:61,62,63,64,65,66,67",
+    "validity": "VALID",
+    "reason": "rest_state_capture_draft:rest_ff7_fd_supported_capture; auth=audit-rerun-mock-only; seven_finite_from_rest",
+    "source_kind": "live_real",
+    "device_id_ok": true,
+    "counts_as_recorded_binding": false,
+    "counts_as_mock_valid": false,
+    "counts_as_live_valid": true,
+    "condition_status": {
+      "source_is_real": "PASS",
+      "validity_field_is_VALID": "PASS",
+      "device_id_present": "PASS",
+      "joint_names_j1_through_j7": "PASS",
+      "all_seven_q_rad_finite": "PASS",
+      "fault_is_none": "PASS",
+      "clock_domain_host_monotonic": "PASS",
+      "epoch_present": "PASS",
+      "host_receive_stamp_finite": "PASS"
+    },
+    "blockers": [],
+    "joint_completeness": {
+      "expected_joint_names": [
+        "J1",
+        "J2",
+        "J3",
+        "J4",
+        "J5",
+        "J6",
+        "J7"
+      ],
+      "joint_names_ok": true,
+      "finite_joints": [
+        "J1",
+        "J2",
+        "J3",
+        "J4",
+        "J5",
+        "J6",
+        "J7"
+      ],
+      "missing_or_nonfinite_joints": [],
+      "all_seven_finite": true
+    },
+    "arm_state_reader_live_hold": [
+      "J6/J7: no audited read-only position query (ArmStateReader leaves q_rad None)",
+      "validity remains INVALID until seven finite joint angles are available",
+      "Rest/raw V2 capture is not an audited read-only path and is not used here",
+      "candidate search 2026-11-11: no pending_protocol_audit position payload",
+      "external protocol search 2026-11-11: no Motorevo manual / Theta index"
+    ],
+    "j6j7_readonly_hard_block": {
+      "schema_version": "j6j7-readonly-position-hard-block-0.2",
+      "id": "j6_j7_no_audited_readonly_position_query",
+      "status": "HARD_BLOCK",
+      "audited_readonly_position_query_available": false,
+      "audited_readonly_position_query_bytes": null,
+      "audited_position_quantization": null,
+      "audited_safe_reads": [
+        "A7 J1\u2013J5 position READ: CAN id=motor_id, data=0x06 \u2192 float32 rad",
+        "MotorV2 Flash control-mode READ: id=0x600+motor_id, data=670b000000000476 \u2192 mode int (not angle)"
+      ],
+      "known_non_readonly_or_unaudited": [
+        "MotorV2.read_initial_state \u2192 Rest (FF\u00d77 + FD); changes wrist hold state",
+        "tools/host_monitor JointControl._read_angle_locked(J6/J7) \u2192 Rest via MotorV2",
+        "tools/c_left_wrist_rest_capture.py \u2192 explicit Rest (support + auth required)",
+        "raw V2 runtime feedback U16 position \u2014 quantization / COM Theta not audited",
+        "P7 construct / Flash mode write / enable / start_polling / set_angle",
+        "MotorV2 state cmds FC (Enter Motor) / FE (Set Zero) \u2014 enable or zero side effects",
+        "MotorV2 P-T-M control frame \u2014 applies PD target; requires Motor state + heartbeat"
+      ],
+      "failure_reason": "J6/J7: no audited read-only position query",
+      "arm_state_reader_live_hold": [
+        "J6/J7: no audited read-only position query (ArmStateReader leaves q_rad None)",
+        "validity remains INVALID until seven finite joint angles are available",
+        "Rest/raw V2 capture is not an audited read-only path and is not used here",
+        "candidate search 2026-11-11: no pending_protocol_audit position payload",
+        "external protocol search 2026-11-11: no Motorevo manual / Theta index"
+      ],
+      "counts_as_live_valid_reachable_via_readonly": false,
+      "allows_rest": false,
+      "allows_enable_motion": false,
+      "allows_large_joint_motion": false,
+      "enable_pending_protocol_audit": false,
+      "pending_protocol_audit": {
+        "enabled_by_default": false,
+        "enable_flag": "ENABLE_PENDING_PROTOCOL_AUDIT",
+        "position_query_bytes": null,
+        "reply_layout": null,
+        "quantization": null,
+        "counts_as_live_valid_when_enabled": false,
+        "reason_empty": "host motor_v2.py + in-repo docs/tools + 2026-11-11 external Web/local search expose no pure J6/J7 position query; Flash READ index map for live angle / COM Theta does not exist in SDK or public manuals"
+      },
+      "position_readonly_candidate_found": false,
+      "candidate_search": {
+        "schema_version": "j6j7-position-readonly-candidate-search-0.1",
+        "searched_at_utc": "2026-11-10T16:00:00Z",
+        "vendor_sdk_motor_v2_sha256": "6f45000ba0f7f049e0a23b7ddceb318154b9672a5181472ea899099ea3127aba",
+        "vendor_sdk_motor_v2_path": "/home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e/src/linkerbot/arm/p7/motor_v2.py",
+        "position_readonly_candidate_found": false,
+        "pending_protocol_audit_eligible_ids": [],
+        "enable_pending_protocol_audit": false,
+        "pending_protocol_audit": {
+          "enabled_by_default": false,
+          "enable_flag": "ENABLE_PENDING_PROTOCOL_AUDIT",
+          "position_query_bytes": null,
+          "reply_layout": null,
+          "quantization": null,
+          "counts_as_live_valid_when_enabled": false,
+          "reason_empty": "host motor_v2.py + in-repo docs/tools + 2026-11-11 external Web/local search expose no pure J6/J7 position query; Flash READ index map for live angle / COM Theta does not exist in SDK or public manuals"
+        },
+        "candidates": [
+          {
+            "id": "a7_cmd_0x06_on_v2_ids",
+            "sends_motion_rest_or_enable": false,
+            "evidence": "weak",
+            "verdict": "rejected_no_sdk_path",
+            "pending_protocol_audit_eligible": false,
+            "notes": "A7 SensorType.POSITION=0x06 is A7Motor-only; MotorV2 has no _read_register / 0x06 path; readonly probe never sends 0x06 to 66/67"
+          },
+          {
+            "id": "flash_control_mode_0x0b",
+            "sends_motion_rest_or_enable": false,
+            "evidence": "strong_audited",
+            "verdict": "rejected_not_angle",
+            "pending_protocol_audit_eligible": false,
+            "request_bytes_hex": "670b000000000476",
+            "notes": "Audited Flash READ returns mode int; not encoder angle"
+          },
+          {
+            "id": "flash_generic_read_unknown_theta_indices",
+            "sends_motion_rest_or_enable": false,
+            "evidence": "protocol_shape_only",
+            "verdict": "rejected_index_map_missing",
+            "pending_protocol_audit_eligible": false,
+            "notes": "motor_v2._read_flash_param(index) is a generic READ (cmd 0x04) but SDK only defines indices 0x00=SAVE and 0x0B=CONTROL_MODE; COM Theta MIN/MAX indices are named in comments without numbers \u2014 guessing forbidden; even correct indices yield range params, not live q_rad"
+          },
+          {
+            "id": "rest_ff7_fd_read_initial_state",
+            "sends_motion_rest_or_enable": true,
+            "evidence": "strong_sdk_and_field",
+            "verdict": "rejected_side_effect",
+            "pending_protocol_audit_eligible": false,
+            "request_bytes_hex": "fffffffffffffffd",
+            "notes": "Only SDK path that solicits angle without enable; loses hold"
+          },
+          {
+            "id": "enter_motor_fc_or_ptm_stream",
+            "sends_motion_rest_or_enable": true,
+            "evidence": "strong_sdk",
+            "verdict": "rejected_side_effect",
+            "pending_protocol_audit_eligible": false,
+            "notes": "FC enters Motor; P-T-M frames apply targets + need heartbeat"
+          },
+          {
+            "id": "passive_can_listen",
+            "sends_motion_rest_or_enable": false,
+            "evidence": "field_C21",
+            "verdict": "rejected_no_frames",
+            "pending_protocol_audit_eligible": false,
+            "notes": "3s passive window on 61\u201367 observed 0 frames when idle"
+          },
+          {
+            "id": "host_monitor_j6j7_read_angle",
+            "sends_motion_rest_or_enable": true,
+            "evidence": "strong_code",
+            "verdict": "rejected_side_effect",
+            "pending_protocol_audit_eligible": false,
+            "notes": "JointControl._read_angle_locked \u2192 MotorV2.read_initial_state Rest"
+          },
+          {
+            "id": "sdk_default_pm_12_5_u16_map",
+            "sends_motion_rest_or_enable": "depends_on_feed",
+            "evidence": "sdk_default_unverified",
+            "verdict": "rejected_quantization_unaudited",
+            "pending_protocol_audit_eligible": false,
+            "notes": "\u00b112.5 rad factory comment is not device readback; left_wrist_theta_ranges.json remains null/verified=false"
+          }
+        ],
+        "external_next_steps": [
+          "Obtain Motorevo CAN protocol manual (SDK cites \u00a76.3.2 for P-T-M packing) with: (a) any pure status/position query command that is not Rest/FC/FE/P-T-M target, exact 8-byte request + reply layout; OR written confirmation that no such query exists.",
+          "If Flash holds live/comm parameters: vendor Flash index map for CAN COM Theta MIN/MAX (and any live-position index if one exists) \u2014 do not brute-force indices on the arm.",
+          "Optional authorized scope/candump of one braced Rest vs one P-T-M heartbeat on a supported wrist to cross-check feedback layout only \u2014 still not a formal readonly API unless the manual names a side-effect-free query.",
+          "Public Motorevo product pages do not publish the protocol PDF; contact vendor (e.g. sales@mail.motorevo.cn) or LinkerBot for the drive manual matching this Flash/P-T-M stack."
+        ],
+        "external_protocol_search": {
+          "schema_version": "j6j7-external-protocol-search-0.1",
+          "searched_at_local": "2026-11-11T00:23:00+08:00",
+          "evidence_json": "docs/team/B/evidence/field_20261110/j6j7_external_protocol_search_20261111.json",
+          "motorevo_protocol_manual_found": false,
+          "flash_theta_index_map_found": false,
+          "pure_position_query_bytes_found": false,
+          "pending_protocol_audit_payload_landed": false,
+          "goal_complete": false,
+          "public_motor_v2_main_sha256": "6f45000ba0f7f049e0a23b7ddceb318154b9672a5181472ea899099ea3127aba",
+          "negative_conclusion": "Round 00:23: Motorevo-Studio EXE-only; public motor_v2 SHA now matches host pin but Flash still SAVE/CONTROL_MODE only \u2014 no pure query / Theta index; pending_protocol_audit stays empty/default-off."
+        },
+        "goal_software_only_completable": false,
+        "counts_as_live_valid_reachable_via_readonly": false,
+        "notes": [
+          "No in-repo / host-SDK / external-search pure J6/J7 position query; formal grasp remains blocked on j6_j7_readonly until vendor protocol lands.",
+          "Do not raise control_ready / forge live VALID / enable-motion.",
+          "Do not re-spin the same eight in-repo candidates; need vendor input."
+        ]
+      },
+      "external_protocol_search": {
+        "schema_version": "j6j7-external-protocol-search-0.1",
+        "searched_at_local": "2026-11-11T00:23:00+08:00",
+        "evidence_json": "docs/team/B/evidence/field_20261110/j6j7_external_protocol_search_20261111.json",
+        "motorevo_protocol_manual_found": false,
+        "flash_theta_index_map_found": false,
+        "pure_position_query_bytes_found": false,
+        "pending_protocol_audit_payload_landed": false,
+        "goal_complete": false,
+        "public_motor_v2_main_sha256": "6f45000ba0f7f049e0a23b7ddceb318154b9672a5181472ea899099ea3127aba",
+        "negative_conclusion": "Round 00:23: Motorevo-Studio EXE-only; public motor_v2 SHA now matches host pin but Flash still SAVE/CONTROL_MODE only \u2014 no pure query / Theta index; pending_protocol_audit stays empty/default-off."
+      },
+      "goal_complete": false,
+      "doc": "docs/team/B/J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md",
+      "notes": [
+        "Do not call MotorV2.read_initial_state from ArmStateReader.",
+        "Flash mode READ remains allowed for binding identity only.",
+        "Live VALID requires a future audited query; until then formal grasp stays blocked.",
+        "2026-11-11 candidate sweep + external Web/local search: zero pending position payloads; need Motorevo manual / Flash Theta index / capture auth."
+      ]
+    },
+    "notes": [
+      "recorded/mock VALID (or recorded binding) do not count as live VALID.",
+      "ArmStateReader readonly path currently cannot satisfy all_seven_q_rad_finite.",
+      "hard_block=j6_j7_no_audited_readonly_position_query",
+      "This classifier never raises control_ready or opens CAN."
+    ],
+    "control_ready": false,
+    "motion_enabled": false
+  },
+  "counts_as_live_valid": true,
+  "counts_as_recorded_binding": false,
+  "notes": [
+    "Host checklist accepts recorded/mock for arm_state_device_id only.",
+    "live_valid_arm_state requires source=real + validity=VALID + seven finite q_rad.",
+    "Never raises control_ready; never enables motion.",
+    "Rest draft built offline from capture JSON; no CAN / no Rest send.",
+    "Dual gate open: structurally counts_as_live_valid may arm formal ladder via live_arm_via=rest_attested.",
+    "Default rest_state_capture gate is false; CI must not open this path.",
+    "attest_rest_for_pregrasp defaults false; dual gate required for formal arm via live_arm_via=rest_attested.",
+    "Never raises control_ready; never audited J6/J7 readonly."
+  ],
+  "rest_state_capture": {
+    "schema_version": "rest-state-capture-gate-0.2",
+    "rest_state_capture_available": true,
+    "rest_state_capture_enabled": true,
+    "attest_rest_for_pregrasp_enabled": true,
+    "dual_gate_open": true,
+    "blocked_unless_rest_attested": false,
+    "default_enabled": false,
+    "default_attest_enabled": false,
+    "env_var": "BRICK_STACKING_REST_STATE_CAPTURE",
+    "attest_env_var": "BRICK_STACKING_ATTEST_REST_FOR_PREGRASP",
+    "live_arm_via_when_dual_and_valid_draft": "rest_attested",
+    "ci_never_auto_rest": true,
+    "sends_rest_or_opens_can": false,
+    "loss_of_hold_not_large_trajectory": true,
+    "forbids_enable_motion_trajectory": true,
+    "raises_formal_grasp_entry_allowed": true,
+    "raises_control_ready": false,
+    "counts_as_audited_j6j7_readonly": false,
+    "notes": [
+      "Rest drops wrist hold; not --enable-motion / large trajectory.",
+      "Default false; CI and default paths never auto Rest on hardware.",
+      "Dual gate: --rest-state-capture + --attest-rest-for-pregrasp (or matching env). Only then may a structurally live VALID Rest draft arm formal ladder via live_arm_via=rest_attested.",
+      "Rest attested \u2260 audited J6/J7 readonly; never raises control_ready.",
+      "See docs/team/B/J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md."
+    ],
+    "code_refs": {
+      "gate": "src/brick_stacking/arm/rest_state_capture.py",
+      "hardware_capture": "tools/c_left_wrist_rest_capture.py",
+      "readonly_hard_block": "src/brick_stacking/arm/v2_wrist_readonly.py"
+    },
+    "draft": true,
+    "counts_as_formal_live_valid": true,
+    "live_arm_via": "rest_attested"
+  }
+}

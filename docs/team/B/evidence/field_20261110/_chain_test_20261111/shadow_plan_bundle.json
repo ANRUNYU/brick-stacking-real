@@ -1,0 +1,105 @@
+{
+  "schema_version": "m-shadow-plan-bundle-0.1",
+  "kind": "shadow_plan_bundle",
+  "executable": false,
+  "motion_enabled": false,
+  "control_ready": false,
+  "h3_production_plan": false,
+  "trajectory_hash": "c28c3b72fadd2816b9034fa121ef4a875bf7ee1520973f4fe807f92f7f8c1a24",
+  "trajectory": {
+    "hash": "c28c3b72fadd2816b9034fa121ef4a875bf7ee1520973f4fe807f92f7f8c1a24",
+    "contract": "contracts.Trajectory",
+    "joint_names": [
+      "J1",
+      "J2",
+      "J3",
+      "J4",
+      "J5",
+      "J6",
+      "J7"
+    ],
+    "points": [
+      {
+        "time_from_start_s": 0.0,
+        "q_rad": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "time_from_start_s": 1.0,
+        "q_rad": [
+          0.02,
+          -0.01,
+          0.015,
+          0.0,
+          0.0,
+          0.01,
+          -0.01
+        ]
+      },
+      {
+        "time_from_start_s": 2.0,
+        "q_rad": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    "source": "offline_shadow_waypoints",
+    "provenance": "synthetic offline waypoints for host checklist wiring; not IK of shadow Inspection pose; not H3 clearance-validated"
+  },
+  "identity": {
+    "target_id": "m-first-red-01",
+    "slot_id": "m-first-placement-slot-01",
+    "region_id": "m-first-placement-region-01",
+    "reference_id": "table_black_cross_20mm",
+    "observation_id": "CP2L863000KL/replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af/7391.991336/0",
+    "frame_id": "camera_CP2L863000KL_color_optical_frame",
+    "calibration_hash": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
+    "config_hash": "b70d7556af358429b502143db4fa25af0591da29260c08a3840370139242b728",
+    "scene_version": "replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af",
+    "epoch": "replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af",
+    "clock_domain": "process_monotonic",
+    "shadow_inspection_status": null
+  },
+  "collision_summary": {
+    "status": "UNKNOWN",
+    "scope": "not_checked_on_shadow_host_path",
+    "missing": [
+      "lateral_approach_template",
+      "ik_of_first_placement",
+      "arm_hand_mesh",
+      "table_thin_box_clearance"
+    ]
+  },
+  "inputs": {
+    "diagnostic_path": null,
+    "shadow_path": "docs/team/B/evidence/field_20261110/_chain_test_20261111/slot_shadow_assoc_bound.json"
+  },
+  "missing_for_h3_production": [
+    "issue #20 lateral approach \u2192 descend \u2192 lift \u2192 retreat template",
+    "IK of LocalizedBlock / first-placement pose",
+    "clearance + collision PASS (not UNKNOWN)",
+    "C49 / grasp_version / O6 preset binding"
+  ],
+  "identity_gaps": [],
+  "notes": [
+    "trajectory_hash is sha256 of validated contracts.Trajectory JSON (arm.adapter).",
+    "Do not treat this package as a live-executable PlanBundle.",
+    "Do not copy into contracts.Permit without SafetyGate issuance.",
+    "Host checklist may mark plan_bundle_trajectory_hash PASS when this hash is present."
+  ],
+  "can_opened": false,
+  "commands_sent": 0
+}
