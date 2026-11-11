@@ -1,8 +1,8 @@
 # 单块抓放 · 真机门
 
-**状态**：操作员已于 2026-11-11 授权持续推进。**T1 关节有界子集已收口 PASS**（单关节 / 短多关节 J1–J5 / 短组合往返 J1–J3；见 `c098f00`）。**整段 H3 PlanBundle 真机空跑仍缺**——谈 T2 前置 ≠ 进 T2。默认仍 `control_ready=false`，禁止碰块。
+**状态**：操作员已于 2026-11-11 授权持续推进。**T1 关节有界子集已收口 PASS**（单关节 / 短多关节 J1–J5 / 短组合往返 J1–J3；见 `c098f00`）。**整段 H3 PlanBundle 真机空跑仍缺**。**T2**：触块安全包（mock/dry-run）已落地；**真机触块未开始**（须现场摆块 + 显式 live runner）。默认仍 `control_ready=false`。
 
-**关联**：`PRE_GRASP_GATES_20261110.md`、`HOST_CONTROL_READY_20261110.md`、`J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md`、`THREE_TRACK_GRASP_DEV_PLAN.md` §3.5。
+**关联**：`PRE_GRASP_GATES_20261110.md`、`HOST_CONTROL_READY_20261110.md`、`J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md`、`THREE_TRACK_GRASP_DEV_PLAN.md` §3.5；后续运动方向 [`MOTION_STACK_DIRECTION_20261111.md`](MOTION_STACK_DIRECTION_20261111.md)；厂商资源 [`VENDOR_LINKERBOT_RESOURCES_20261111.md`](VENDOR_LINKERBOT_RESOURCES_20261111.md)。
 
 ## 授权记录
 
@@ -79,11 +79,12 @@ T1 未过禁止进入 T2。任一级失败：改方法，**不**放宽 §0.2 门
 | live VALID 七轴 / Permit | 无 audited 七轴 → 无 live Permit |
 | J6/J7 只读取角协议 | 硬阻塞未解除；短组合未对腕发 MOVE |
 | 整段 H3 空跑执行器 | 无 PlanBundle→真机有界执行；FK/IK 未接线 verified 量程 |
-| 触块安全包 | T2 需下探/闭合/微抬流程、急停与无误碰确认；尚未设计/门控 |
+| 触块安全包 | **软件已有**：`t2_touch_lift_package`（PRECHECK→…→MICRO_LIFT）；mock dry-run 需三attest；**真机 live runner 未接** |
 | `control_ready` | 仍硬持 false；本会话不抬升 |
 | C35 / 碰撞 | `accuracy_claim=FIT_ONLY`；`full_collision=UNKNOWN` |
+| 完整轨迹外借 | 方向已记：优先官方 SDK `move_l`/`move_j`/FK/IK（见 MOTION_STACK_DIRECTION）；≠ 已接线验收 |
 
-结论：**具备「列出 T2 前置缺口并讨论」的条件；不具备自动进入 T2 / 碰块的条件。**
+结论：**T2 mock/dry-run 可跑；真机触块须现场摆块并另开 live runner。** 不自动碰块。
 
 ## 软件包 vs 真机
 
@@ -118,6 +119,19 @@ python tools/t1_rest_draft_and_status.py \
 python tools/t1_urdf_joint_space_dry_plan.py \
   --rest-capture docs/team/B/evidence/left_supported_rest_20261111_011818.json \
   --output docs/team/B/evidence/t1_urdf_joint_space_dry_plan_20261111.json
+```
+
+## T2 现场摆放（真机触块前）
+
+1. 桌面只留 **1 块**目标色积木（建议红），疏排在头相机视野、左臂可达处。  
+2. 臂先停在块上方安全悬停高度（≥ 桌面 + 80 mm）；人手离工作区；急停可达。  
+3. 回复「T2 摆块完成，可以触块」后再跑显式 live runner（默认不开）。  
+4. Mock dry-run（无 CAN）：
+
+```bash
+python tools/t2_touch_lift_dry_run.py \
+  --attest-block-present --attest-clear-workspace --attest-e-stop \
+  --output docs/team/B/evidence/t2_touch_lift_dry_run.json
 ```
 
 ## 本会话明确不做

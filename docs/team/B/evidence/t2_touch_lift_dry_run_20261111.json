@@ -1,0 +1,64 @@
+{
+  "stage": "DONE",
+  "reason": "t2_mock_or_dry_stages_complete",
+  "stages": [
+    "PRECHECK",
+    "HOVER",
+    "DESCEND",
+    "CLOSE",
+    "MICRO_LIFT",
+    "HOLD_CHECK",
+    "DONE"
+  ],
+  "events": [
+    {
+      "stage": "PRECHECK",
+      "status": "MOCK_OK"
+    },
+    {
+      "stage": "HOVER",
+      "status": "MOCK_OK"
+    },
+    {
+      "stage": "DESCEND",
+      "status": "MOCK_OK"
+    },
+    {
+      "stage": "CLOSE",
+      "status": "MOCK_OK"
+    },
+    {
+      "stage": "MICRO_LIFT",
+      "status": "MOCK_OK"
+    },
+    {
+      "stage": "HOLD_CHECK",
+      "status": "MOCK_OK"
+    },
+    {
+      "stage": "DONE",
+      "status": "MOCK_OK"
+    }
+  ],
+  "control_ready": false,
+  "executable": false,
+  "live_motion_allowed": false,
+  "payload": {
+    "schema_version": "m-t2-touch-lift-package-0.1",
+    "limits": {
+      "descend_max_m": 0.03,
+      "micro_lift_min_m": 0.03,
+      "approach_height_min_m": 0.08,
+      "max_tcp_speed_m_s": 0.05,
+      "require_empty_table_except_target": true,
+      "require_explicit_live_motion": true,
+      "prefer_sdk_move_l": true
+    },
+    "mock": true,
+    "motion_stack_direction": "prefer_sdk_move_l_for_cartesian_micro",
+    "notes": [
+      "Not a live touch. Field: place one target block, attest, then live runner.",
+      "control_ready remains false."
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "source_url": "https://raw.githubusercontent.com/linker-bot/linker-sim-assets/main/src/linker_robot_assets/assets/components/arms/p7/variants/left/arm.urdf",
+  "sha256": "b898b9597d7d075cc5e7114d76a90d0ec514c387a5fd59411555455a6d722daa",
+  "bytes": 9139,
+  "joint_limits_rad": [
+    {
+      "name": "L1_Joint",
+      "lower": -2.91,
+      "upper": 2.91
+    },
+    {
+      "name": "L2_Joint",
+      "lower": -3.2,
+      "upper": 0.07
+    },
+    {
+      "name": "L3_Joint",
+      "lower": -2.69,
+      "upper": 2.69
+    },
+    {
+      "name": "L4_Joint",
+      "lower": -2.05,
+      "upper": 2.05
+    },
+    {
+      "name": "L5_Joint",
+      "lower": -2.69,
+      "upper": 2.69
+    },
+    {
+      "name": "L6_Joint",
+      "lower": -1.59,
+      "upper": 1.59
+    },
+    {
+      "name": "L7_Joint",
+      "lower": -1.59,
+      "upper": 1.59
+    }
+  ],
+  "notes": [
+    "sim-assets P7 left component URDF; may differ from SDK kinetix p7__left.urdf",
+    "includes L8 flange link per meta.yaml tool0"
+  ]
+}
