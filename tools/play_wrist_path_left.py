@@ -7,15 +7,17 @@ Dry-run (default):
     --assume-at-path-start \\
     --output docs/team/P/evidence/wrist_path_player_dryrun_<ts>.json
 
-Future authorized live empty-run (NOT this PR's job; both flags required):
+Future authorized live empty-run (both flags required; NEVER --assume-at-path-start):
   python tools/play_wrist_path_left.py PATH \\
     --expected-sha256-lf <lf-sha> \\
     --enable-live-motion \\
     --authorization-ref <field-auth-id> \\
     --output <report.json>
 
-Live backend is linkerbot.P7.move_j([J1..J7]) coordinated seven-axis — never
-host_monitor single-joint MOVE, never O6/hand, never Rest, never right arm.
+Live backend: set_velocities from TCP chord/0.02 then linkerbot.P7.move_j([J1..J7])
+(host-stream duration = in-motion limit). Never post-move sleep as speed control.
+Never host_monitor single-joint MOVE, O6/hand, Rest, or right arm.
+--assume-at-path-start is dry-run only and is hard-refused with live.
 """
 
 from __future__ import annotations
@@ -57,7 +59,10 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument(
         "--assume-at-path-start",
         action="store_true",
-        help="dry-run only: treat path grasp_ready seed as current pose",
+        help=(
+            "DRY-RUN ONLY: treat path grasp_ready seed as current pose. "
+            "Hard-refused when --enable-live-motion is set (must read P7.get_angles)."
+        ),
     )
     p.add_argument(
         "--enable-live-motion",
@@ -81,6 +86,25 @@ def main(argv: list[str] | None = None) -> int:
     )
     p.add_argument("--output", type=Path, required=True)
     args = p.parse_args(argv)
+
+    if bool(args.assume_at_path_start) and bool(args.enable_live_motion):
+        payload = {
+            "schema_version": "wrist-path-left-player-0.1",
+            "verdict": "REFUSE_ASSUME_AT_START_ON_LIVE",
+            "blocked_by": ["assume_at_path_start_forbidden_when_enable_live_motion"],
+            "finger_commands_issued": False,
+            "motion_started": False,
+            "notes": [
+                "--assume-at-path-start is dry-run only; refuse before CAN/enable/move.",
+            ],
+        }
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(
+            json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        print(json.dumps({"verdict": payload["verdict"], "output": str(args.output)}))
+        return 2
 
     current_q = None
     if args.current_q_json is not None:

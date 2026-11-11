@@ -4,6 +4,16 @@ Live dispatch (when separately authorized) uses coordinated seven-axis
 ``linkerbot.P7.move_j([J1..J7])`` — never host_monitor single-joint MOVE, never
 O6/hand, never right arm, never Rest.
 
+Speed limit: P7.move_j has no duration kwarg; host-stream duration is computed
+from ``set_velocities`` / ``set_accelerations`` *before* ``move_j``. This player
+sets those joint velocity caps from the TCP chord / 0.02 m/s budget so limiting
+happens *during* the streamed motion. Post-move sleep is forbidden as a speed
+control. Path chords denser than 2 mm keep joint-linear mid-step TCP overshoot
+bounded.
+
+``--assume-at-path-start`` is dry-run only; live + assume is hard-refused before
+CAN open.
+
 J6/J7 remain ``sdk_report_not_audited``. Readonly host_monitor snapshots may
 carry null wrist angles; this module refuses rather than inventing them.
 """
@@ -13,7 +23,6 @@ from __future__ import annotations
 import hashlib
 import json
 import math
-import time
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable, Mapping, Protocol, Sequence
@@ -34,7 +43,18 @@ URDF_JOINTS = tuple(f"L{i}_Joint" for i in range(1, 8))
 J2_MIN_RAD = -0.07
 ARRIVAL_MAX_M = float(DEFAULT_LIMITS["cartesian_arrival_max_m"])
 MAX_TCP_SPEED_M_S = float(DEFAULT_LIMITS["max_tcp_speed_m_s"])
+# Densify so each joint-linear move_j chord stays short (TCP mid-step overshoot).
+MAX_CART_CHORD_M = 0.002
+# Match P7 host stream interval floor (SDK _WAYPOINT_INTERVAL_S = 0.01).
+MIN_STEP_DURATION_S = 0.01
+# P7 consts: velocity [0, 50], acceleration [1, 50]. High accel → cruise≈|dq|/v.
+P7_ACCEL_FOR_CRUISE = 50.0
 MOTION_BACKEND_KIND = "linkerbot_P7_move_j_seven_axis_coordinated"
+SPEED_LIMIT_MODE = (
+    "p7_set_velocities_before_move_j_host_stream_duration;"
+    "no_post_move_sleep;"
+    f"densify_cart_chord_le_{MAX_CART_CHORD_M}m"
+)
 FORBIDDEN_BACKENDS = (
     "host_monitor_single_joint",
     "t1_bounded_short_combo",
@@ -53,8 +73,13 @@ class CoordinatedSevenAxisArm(Protocol):
         self,
         q_rad: Sequence[float],
         *,
-        duration_s: float | None = None,
+        joint_velocity_limits_rad_s: Sequence[float],
+        joint_acceleration_limits_rad_s2: Sequence[float],
+        planned_duration_s: float,
+        max_tcp_speed_m_s: float,
     ) -> None: ...
+
+    def enable_motors(self) -> None: ...
 
     def close(self) -> None: ...
 
@@ -69,6 +94,8 @@ class RecordingSevenAxisArm:
     hand_commands: list[Any] = field(default_factory=list)
     rest_commands: list[Any] = field(default_factory=list)
     right_arm_commands: list[Any] = field(default_factory=list)
+    enable_calls: int = 0
+    post_move_sleep_used: bool = False
     _q: list[float] = field(init=False)
 
     def __post_init__(self) -> None:
@@ -78,21 +105,34 @@ class RecordingSevenAxisArm:
     def read_q_rad(self) -> tuple[float, float, float, float, float, float, float]:
         return tuple(self._q)  # type: ignore[return-value]
 
+    def enable_motors(self) -> None:
+        self.enable_calls += 1
+
     def move_j_seven(
         self,
         q_rad: Sequence[float],
         *,
-        duration_s: float | None = None,
+        joint_velocity_limits_rad_s: Sequence[float],
+        joint_acceleration_limits_rad_s2: Sequence[float],
+        planned_duration_s: float,
+        max_tcp_speed_m_s: float,
     ) -> None:
         q = _require_finite_seven(q_rad, "move_j_seven q_rad")
-        if len(q) != 7:
-            raise ValueError("coordinated move requires exactly seven joints")
+        vels = [float(v) for v in joint_velocity_limits_rad_s]
+        accs = [float(a) for a in joint_acceleration_limits_rad_s2]
+        if len(vels) != 7 or len(accs) != 7:
+            raise ValueError("velocity/acceleration limits must be length 7")
         self.moves.append(
             {
                 "q_rad": list(q),
-                "duration_s": None if duration_s is None else float(duration_s),
+                "joint_velocity_limits_rad_s": vels,
+                "joint_acceleration_limits_rad_s2": accs,
+                "planned_duration_s": float(planned_duration_s),
+                "max_tcp_speed_m_s": float(max_tcp_speed_m_s),
                 "joint_count": 7,
                 "single_joint": False,
+                "post_move_sleep": False,
+                "speed_limit_mode": SPEED_LIMIT_MODE,
             }
         )
         self._q = list(q)
@@ -349,20 +389,72 @@ def evaluate_live_authorization(
     }
 
 
-def _segment_durations_speed_limited(
+def densify_flat_for_tcp_chord(
     flat: Sequence[Mapping[str, Any]],
     tips: Sequence[Sequence[float]],
     *,
-    max_tcp_speed_m_s: float = MAX_TCP_SPEED_M_S,
-) -> list[float]:
-    """Per-step durations so consecutive TCP motion stays ≤ speed cap."""
-    out: list[float] = []
+    urdf_path: Path | str,
+    max_chord_m: float = MAX_CART_CHORD_M,
+) -> tuple[list[dict[str, Any]], list[list[float]]]:
+    """Insert joint-linear midpoints so each TCP chord ≤ max_chord_m."""
+    if not flat:
+        return [], []
+    out_pts: list[dict[str, Any]] = [dict(flat[0])]
+    out_tips: list[list[float]] = [list(tips[0])]
     for i in range(1, len(flat)):
-        d = _dist_m(tips[i - 1], tips[i])
-        path_dt = float(flat[i]["time_from_start_s"]) - float(flat[i - 1]["time_from_start_s"])
-        need = 0.0 if d <= 1e-12 else d / float(max_tcp_speed_m_s)
-        out.append(max(path_dt, need))
-    return out
+        q0 = list(out_pts[-1]["q_rad"])
+        q1 = list(flat[i]["q_rad"])
+        tip0 = out_tips[-1]
+        tip1 = list(tips[i])
+        d = _dist_m(tip0, tip1)
+        n_sub = 1 if d <= max_chord_m + 1e-12 else int(math.ceil(d / max_chord_m))
+        for s in range(1, n_sub + 1):
+            frac = s / n_sub
+            q = [q0[j] + (q1[j] - q0[j]) * frac for j in range(7)]
+            if float(q[1]) < J2_MIN_RAD:
+                raise ValueError("densify produced J2 below -0.07 rad")
+            tip = list(fk_l8_translation_m(q, urdf_path=urdf_path))
+            pt = {
+                "segment_index": flat[i]["segment_index"],
+                "segment_from": flat[i].get("segment_from"),
+                "segment_to": flat[i].get("segment_to"),
+                "point_index": flat[i].get("point_index"),
+                "time_from_start_s": float(flat[i]["time_from_start_s"]),
+                "q_rad": q,
+                "densified": s < n_sub,
+            }
+            out_pts.append(pt)
+            out_tips.append(tip)
+    return out_pts, out_tips
+
+
+def plan_step_velocity_limits(
+    q0: Sequence[float],
+    q1: Sequence[float],
+    tip0: Sequence[float],
+    tip1: Sequence[float],
+    *,
+    max_tcp_speed_m_s: float,
+    path_dt_s: float = 0.0,
+) -> tuple[float, list[float], list[float]]:
+    """Choose P7 set_velocities so host-stream duration ≥ TCP chord / speed.
+
+    P7.move_j duration = max_i trapezoid(|dq_i|, v_i, a_i) using the *saved*
+    control velocities from set_velocities before the call. With high accel,
+    duration ≈ max(|dq_i|/v_i). Setting v_i = |dq_i|/T yields duration ≈ T.
+    """
+    d = _dist_m(tip0, tip1)
+    need = 0.0 if d <= 1e-12 else d / float(max_tcp_speed_m_s)
+    T = max(float(path_dt_s), need, MIN_STEP_DURATION_S)
+    vels: list[float] = []
+    for i in range(7):
+        dqi = abs(float(q1[i]) - float(q0[i]))
+        if dqi < 1e-12:
+            vels.append(0.0)
+        else:
+            vels.append(dqi / T)
+    accs = [P7_ACCEL_FOR_CRUISE] * 7
+    return T, vels, accs
 
 
 def play_wrist_path(
@@ -404,6 +496,7 @@ def play_wrist_path(
         "schema_version": SCHEMA,
         "path_file": str(path_file.as_posix()),
         "motion_backend_kind": MOTION_BACKEND_KIND,
+        "speed_limit_mode": SPEED_LIMIT_MODE,
         "forbidden_backends": list(FORBIDDEN_BACKENDS),
         "finger_commands_issued": False,
         "hand_touched": False,
@@ -411,11 +504,13 @@ def play_wrist_path(
         "rest_issued": False,
         "single_joint_moves": False,
         "path_file_mutated": False,
+        "post_move_sleep_used": False,
         "joint_audit": {"J6": "sdk_report_not_audited", "J7": "sdk_report_not_audited"},
         "limits": {
             "max_tcp_speed_m_s": float(max_tcp_speed_m_s),
             "cartesian_arrival_max_m": float(arrival_max_m),
             "j2_min_rad": J2_MIN_RAD,
+            "max_cart_chord_m": MAX_CART_CHORD_M,
         },
         "static_validation": {
             k: v
@@ -437,6 +532,17 @@ def play_wrist_path(
         report["blocked_by"] = list(static["blocked_by"])
         return report
 
+    # Hard refuse: assume-at-path-start is dry-run only. Live must read P7 angles.
+    if bool(assume_at_path_start) and bool(enable_live_motion):
+        report["verdict"] = "REFUSE_ASSUME_AT_START_ON_LIVE"
+        report["blocked_by"] = ["assume_at_path_start_forbidden_when_enable_live_motion"]
+        report["motion_started"] = False
+        report["notes"] = [
+            "--assume-at-path-start is dry-run only; live must use P7.get_angles().",
+            "Refuse before CAN open / enable / move.",
+        ]
+        return report
+
     # Live gate fails closed before any current-q read or CAN open.
     if enable_live_motion and not live_gate["live_dispatch_allowed"]:
         report["verdict"] = "REFUSE_LIVE_AUTHORIZATION"
@@ -450,6 +556,9 @@ def play_wrist_path(
     flat = static["flattened_points"]
     tips = static["tip_translations_m"]
     grasp_tip = static["grasp_ready_tip_m"]
+    play_pts, play_tips = densify_flat_for_tcp_chord(
+        flat, tips, urdf_path=urdf, max_chord_m=MAX_CART_CHORD_M
+    )
 
     q_now: tuple[float, ...] | None = None
     q_source: str | None = None
@@ -457,6 +566,7 @@ def play_wrist_path(
         q_now = _require_finite_seven(current_q_rad, "current_q_rad")
         q_source = "explicit"
     elif assume_at_path_start:
+        # Reached only when enable_live_motion is false (gated above).
         q_now = _require_finite_seven(flat[0]["q_rad"], "path_start_q")
         q_source = "assume_at_path_start"
 
@@ -482,11 +592,19 @@ def play_wrist_path(
             report["verdict"] = "REFUSE_START_POSE"
             report["blocked_by"] = [start["reason"]]
             return report
-        durations = _segment_durations_speed_limited(
-            flat, tips, max_tcp_speed_m_s=max_tcp_speed_m_s
-        )
-        report["planned_step_count"] = len(durations)
-        report["planned_total_duration_s"] = float(sum(durations))
+        planned_T = 0.0
+        for i in range(1, len(play_pts)):
+            T, _v, _a = plan_step_velocity_limits(
+                play_pts[i - 1]["q_rad"],
+                play_pts[i]["q_rad"],
+                play_tips[i - 1],
+                play_tips[i],
+                max_tcp_speed_m_s=max_tcp_speed_m_s,
+            )
+            planned_T += T
+        report["planned_step_count"] = len(play_pts) - 1
+        report["planned_total_duration_s"] = float(planned_T)
+        report["densified_point_count"] = len(play_pts)
         report["actual_speed_cap_m_s"] = float(max_tcp_speed_m_s)
         report["verdict"] = "DRY_RUN_OK"
         report["completed"] = False
@@ -494,11 +612,13 @@ def play_wrist_path(
         report["notes"] = [
             "Dry-run only: path hash/static gates/start pose OK; no motion commanded.",
             f"Future live backend: {MOTION_BACKEND_KIND} (seven joints per call).",
+            f"Speed limit mode: {SPEED_LIMIT_MODE}",
             "Not host_monitor single-joint; not T1 short-combo; not MockArm replay.",
             "Finger/hand commands are structurally absent from this player.",
         ]
         report["dry_plan"] = {
             "points": len(flat),
+            "densified_points": len(play_pts),
             "first_q_rad": list(flat[0]["q_rad"]),
             "last_q_rad": list(flat[-1]["q_rad"]),
             "segment_ends": [
@@ -556,23 +676,35 @@ def play_wrist_path(
             arm.close()
         return report
 
-    durations = _segment_durations_speed_limited(
-        flat, tips, max_tcp_speed_m_s=max_tcp_speed_m_s
-    )
-    report["planned_step_count"] = len(durations)
-    report["planned_total_duration_s"] = float(sum(durations))
+    planned_T = 0.0
+    for i in range(1, len(play_pts)):
+        T, _v, _a = plan_step_velocity_limits(
+            play_pts[i - 1]["q_rad"],
+            play_pts[i]["q_rad"],
+            play_tips[i - 1],
+            play_tips[i],
+            max_tcp_speed_m_s=max_tcp_speed_m_s,
+        )
+        planned_T += T
+    report["planned_step_count"] = len(play_pts) - 1
+    report["planned_total_duration_s"] = float(planned_T)
+    report["densified_point_count"] = len(play_pts)
     report["actual_speed_cap_m_s"] = float(max_tcp_speed_m_s)
 
     # Live coordinated playback.
     try:
+        arm.enable_motors()
         report["motion_started"] = True
         j2_min_obs = float(q_now[1])
         end_errors: list[dict[str, Any]] = []
         last_index_by_segment: dict[int, int] = {}
-        for i, pt in enumerate(flat):
-            last_index_by_segment[int(pt["segment_index"])] = i
+        for i, pt in enumerate(play_pts):
+            if not pt.get("densified"):
+                last_index_by_segment[int(pt["segment_index"])] = i
 
-        for i, pt in enumerate(flat):
+        q_prev = list(q_now)
+        tip_prev = list(fk_l8_translation_m(q_prev, urdf_path=urdf))
+        for i, pt in enumerate(play_pts):
             q = _require_finite_seven(pt["q_rad"], "path_point")
             j2_min_obs = min(j2_min_obs, float(q[1]))
             if float(q[1]) < J2_MIN_RAD:
@@ -581,14 +713,29 @@ def play_wrist_path(
                 report["j2_min_rad_observed"] = j2_min_obs
                 return report
             if i == 0:
-                # Already at start within gate; skip no-op move.
+                # Snap planning frame to measured start; skip no-op move.
+                q_prev = list(q)
+                tip_prev = list(play_tips[0])
                 continue
-            arm.move_j_seven(q, duration_s=durations[i - 1])
+            T, vels, accs = plan_step_velocity_limits(
+                q_prev,
+                q,
+                tip_prev,
+                play_tips[i],
+                max_tcp_speed_m_s=max_tcp_speed_m_s,
+            )
+            arm.move_j_seven(
+                q,
+                joint_velocity_limits_rad_s=vels,
+                joint_acceleration_limits_rad_s2=accs,
+                planned_duration_s=T,
+                max_tcp_speed_m_s=float(max_tcp_speed_m_s),
+            )
             report["moves_dispatched"] = int(report["moves_dispatched"]) + 1
             measured = arm.read_q_rad()
             j2_min_obs = min(j2_min_obs, float(measured[1]))
             tip_now = fk_l8_translation_m(measured, urdf_path=urdf)
-            tip_goal = tips[i]
+            tip_goal = play_tips[i]
             err = _dist_m(tip_now, tip_goal)
             if err > float(arrival_max_m) + 1e-9:
                 report["verdict"] = "ABORT_ARRIVAL"
@@ -607,17 +754,26 @@ def play_wrist_path(
                         "goal_tip_m": list(tip_goal),
                     }
                 )
+            q_prev = list(measured)
+            tip_prev = list(tip_now)
 
         report["completed"] = True
         report["verdict"] = "LIVE_PLAY_OK"
         report["segment_end_errors_m"] = end_errors
         report["j2_min_rad_observed"] = j2_min_obs
         report["finger_commands_issued"] = False
+        report["post_move_sleep_used"] = False
         if isinstance(arm, RecordingSevenAxisArm):
+            report["post_move_sleep_used"] = bool(arm.post_move_sleep_used)
             report["recording"] = {
                 "moves": len(arm.moves),
                 "all_moves_seven_axis": all(
                     m.get("joint_count") == 7 and m.get("single_joint") is False
+                    for m in arm.moves
+                ),
+                "all_moves_set_velocities_before_move": all(
+                    len(m.get("joint_velocity_limits_rad_s") or []) == 7
+                    and m.get("post_move_sleep") is False
                     for m in arm.moves
                 ),
                 "hand_commands": list(arm.hand_commands),
@@ -644,6 +800,10 @@ def build_linkerbot_p7_move_j_backend(
     Does not construct O6, does not call Rest, does not touch the right arm.
     Instantiating vendor ``P7`` may perform SDK-internal V2 mode checks; this
     factory is intentionally unreachable from the default dry-run path.
+
+    Speed: call ``set_velocities`` / ``set_accelerations`` *before* ``move_j``.
+    P7.move_j computes host-stream duration from those saved limits, then
+    streams waypoints over that duration (in-motion limit). No post-move sleep.
     """
     if linkerbot_src:
         import sys
@@ -658,28 +818,39 @@ def build_linkerbot_p7_move_j_backend(
 
         def __init__(self) -> None:
             self._arm = P7(side=side, interface_name=interface_name)
+            self._enabled = False
 
         def read_q_rad(self) -> tuple[float, float, float, float, float, float, float]:
             angles = self._arm.get_angles()
             return _require_finite_seven(list(angles), "P7.get_angles")
 
+        def enable_motors(self) -> None:
+            # Motor enable only — never Rest / home / hand.
+            self._arm.enable()
+            self._enabled = True
+
         def move_j_seven(
             self,
             q_rad: Sequence[float],
             *,
-            duration_s: float | None = None,
+            joint_velocity_limits_rad_s: Sequence[float],
+            joint_acceleration_limits_rad_s2: Sequence[float],
+            planned_duration_s: float,
+            max_tcp_speed_m_s: float,
         ) -> None:
+            del planned_duration_s, max_tcp_speed_m_s  # documented in caller plan
             q = _require_finite_seven(q_rad, "P7.move_j")
-            # Coordinated seven-axis command — one SDK call, not seven single-joint MOVEs.
-            if duration_s is not None and hasattr(self._arm, "move_j"):
-                t0 = time.monotonic()
-                self._arm.move_j(list(q))
-                # Best-effort pace to respect TCP speed budget if SDK returns early.
-                remain = float(duration_s) - (time.monotonic() - t0)
-                if remain > 0:
-                    time.sleep(remain)
-            else:
-                self._arm.move_j(list(q))
+            vels = [float(v) for v in joint_velocity_limits_rad_s]
+            accs = [float(a) for a in joint_acceleration_limits_rad_s2]
+            if len(vels) != 7 or len(accs) != 7:
+                raise ValueError("P7 velocity/acceleration limits must be length 7")
+            if not self._enabled:
+                raise RuntimeError("enable_motors required before move_j_seven")
+            # In-motion limit: P7.move_j uses these saved V/A for stream duration.
+            self._arm.set_velocities(vels)
+            self._arm.set_accelerations(accs)
+            self._arm.move_j(list(q), blocking=True)
+            # Intentionally no time.sleep after move_j.
 
         def close(self) -> None:
             close = getattr(self._arm, "close", None)
