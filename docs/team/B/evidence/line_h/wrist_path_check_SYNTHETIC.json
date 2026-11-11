@@ -1,0 +1,21 @@
+{
+  "schema_version": "wrist-path-check-0.1",
+  "ok": true,
+  "issues": [],
+  "arrival_reports": [
+    {
+      "to": "grasp_ready",
+      "error_m": 0.0,
+      "limit_m": 0.01,
+      "ok": true
+    },
+    {
+      "to": "place_ready",
+      "error_m": 0.0,
+      "limit_m": 0.01,
+      "ok": true
+    }
+  ],
+  "motion_enabled": false,
+  "live_authorized": false
+}
