@@ -1,0 +1,47 @@
+{
+  "schema_version": "table-board-0.1",
+  "board_id": "table_checkerboard_primary",
+  "square_size_m": 0.01938,
+  "inner_corners": [
+    9,
+    6
+  ],
+  "parent_frame": "L_arm_root",
+  "child_frame": "table_board",
+  "translation_m": [
+    0.2882745527306005,
+    -0.2447346666306224,
+    -0.5158477902172576
+  ],
+  "quaternion_xyzw": [
+    -0.027239810078113567,
+    0.030467101532230246,
+    -0.0008306123017595428,
+    0.9991641799796155
+  ],
+  "rpy_extrinsic_zyx_rad": [
+    -0.0033258389686809647,
+    0.06087561384649655,
+    -0.05461295343517072
+  ],
+  "table_height_m": -0.5158477902172576,
+  "nominal_table_height_m": -0.5158477902172576,
+  "height_check": {
+    "ok": true,
+    "delta_m": 0.0,
+    "max_delta_m": 0.008,
+    "reason": null
+  },
+  "camera_extrinsic_hash": "c35-fit-only",
+  "approved_for_motion": false,
+  "reject_emit_wrist_target": false,
+  "evidence_refs": [
+    "docs/team/B/evidence/line_h/mid_zone_localize_20261111_153156.json"
+  ],
+  "notes": [
+    "table height is confirmed mid-marker z in L_arm_root",
+    "not a fresh chessboard solve",
+    "C35 fit-only"
+  ],
+  "table_board_hash": "37978dfe32138c5f00a30039df9aba6154d78c9a69758f7f4eac161235303ad2"
+}
