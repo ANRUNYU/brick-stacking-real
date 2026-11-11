@@ -13,7 +13,6 @@
 - [任务看板](TASK_BOARD.md)及[机器可读任务](team/tasks_20261107.json)：36项计划任务，每人两阶段各10个相对点；不是工期承诺。
 - [公共契约提案](CONTRACTS.md)、[合并点](MERGE_PLAN.md)、[验收建议](ACCEPTANCE.md)、[Git目录归属](GIT_WORKFLOW.md)。
 - **[手腕目标两线计划](TWO_LINE_WRIST_PLAN_20261111.md)（2026-11-11）**：线 H 交手腕位姿，线 P 出七轴路径；含坐标、`wrist-target` / `wrist-path` 格式和桌子棋盘格重标定入口。进度 Epic [#27](https://github.com/ANRUNYU/brick-stacking-real/issues/27)（子任务 #28–#33）。
-- **[线 H 现场 Runbook](team/B/LINE_H_RUNBOOK_20261111.md)**：示教口令、冻结/`wrist-target`/路径校验/棋盘格入口命令；需要托举臂或手时按该文确认后再记录。
 - **[两线开发至首次完整单块抓放](THREE_TRACK_GRASP_DEV_PLAN.md)（2026-11-10）**：V 视觉 / M 运动栈（手眼+路径+执行）；含握手点、时序图、误差预算与「不达标改方法、不放宽门控」规则。误差门仍以该文件为准。
 
 新计划M0—M6是两个阶段中的合并点，与旧设计的同名阶段含义不同。tasks.json中的TODO是初始计划模板，领取前须对照当前main、已有分支/PR和验证证据更新；不能把已通过的软件任务重新开发，也不能把已有Mock当真机通过。
