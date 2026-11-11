@@ -1,0 +1,18 @@
+{
+  "schema_version": "v-clock-bound-live-smoke-0.1",
+  "date": "2026-11-10",
+  "branch_tip": "1a53d04",
+  "host_artifact": "artifacts/v_clock_bound_check_20261110",
+  "observation_count": 16,
+  "timing_validity": "VALID",
+  "clock_error_bound_s": 0.0016864349552430213,
+  "error_bound_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+  "exposure_host_present": true,
+  "sample_exposure_to_output_s": 0.58820874086814,
+  "control_ready": false,
+  "max_receive_age_s_used": 2.656,
+  "notes": [
+    "All 16 published bundles carried VALID timing with the accepted mapping bound",
+    "Does not authorize motion or raise control_ready"
+  ]
+}

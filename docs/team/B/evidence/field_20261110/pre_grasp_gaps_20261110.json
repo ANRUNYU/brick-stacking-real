@@ -1,0 +1,178 @@
+{
+  "schema_version": "pre-grasp-evidence-gaps-0.2",
+  "formal_grasp_entry_allowed": false,
+  "control_ready": false,
+  "motion_enabled": false,
+  "permit": null,
+  "permit_eligible": true,
+  "diagnostic_permit": {
+    "schema_version": "m-diagnostic-permit-eligibility-0.1",
+    "kind": "shadow_diagnostic",
+    "executable": false,
+    "live_permit": null,
+    "permit_eligible": true,
+    "evidence_gates_clear": true,
+    "vision_pre_grasp_ready": true,
+    "formal_grasp_entry_allowed": false,
+    "control_ready": false,
+    "motion_enabled": false,
+    "authority": {
+      "live_issuer": "D/M SafetyGate at execution (contracts.Permit; OfflineSafetyGate.check_step_evidence)",
+      "diagnostic_issuer": "pre_grasp_gates (unified V/M readiness on this branch)",
+      "not_authority_for": [
+        "arm.execute_trajectory",
+        "OfflineSafetyGate live step",
+        "control_ready",
+        "CAN / actuator enable"
+      ],
+      "required_live_fields": [
+        "device_id",
+        "trajectory_hash",
+        "config_hash",
+        "calibration_hash",
+        "scene_version",
+        "valid_until_host_monotonic_s"
+      ]
+    },
+    "context_present": {
+      "target_id": "m-first-red-01",
+      "slot_id": "m-first-placement-slot-01",
+      "region_id": "m-first-placement-region-01",
+      "reference_id": "table_black_cross_20mm",
+      "observation_id": "CP2L863000KL/replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af/7391.991336/0",
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "calibration_hash": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
+      "config_hash_or_profile_hash": "b70d7556af358429b502143db4fa25af0591da29260c08a3840370139242b728",
+      "scene_version": "replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af",
+      "epoch": "replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af",
+      "clock_domain": "process_monotonic",
+      "camera_device_id": "CP2L863000KL",
+      "shadow_inspection_status": "SHADOW_INSPECTION_READY"
+    },
+    "live_permit_field_status": {
+      "device_id": {
+        "status": "PRESENT_FROM_RECORDED_OR_MOCK_ARM",
+        "detail": "ArmState.device_id from recorded binding (validity='INVALID'); does NOT count as live VALID for formal_grasp_entry_allowed",
+        "value": "can2:61,62,63,64,65,66,67",
+        "source": "recorded",
+        "validity": "INVALID",
+        "camera_device_id_seen": "CP2L863000KL"
+      },
+      "trajectory_hash": {
+        "status": "PRESENT_FROM_SHADOW_PLAN_BUNDLE",
+        "detail": "shadow PlanBundle trajectory_hash present for dry-run / diagnostic wiring; not H3 production PlanBundle (#20); still not a live Permit",
+        "value": "c28c3b72fadd2816b9034fa121ef4a875bf7ee1520973f4fe807f92f7f8c1a24",
+        "executable": false,
+        "h3_production_plan": false
+      },
+      "config_hash": {
+        "status": "PRESENT_FROM_SHADOW",
+        "value": "b70d7556af358429b502143db4fa25af0591da29260c08a3840370139242b728"
+      },
+      "calibration_hash": {
+        "status": "PRESENT",
+        "value": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461"
+      },
+      "scene_version": {
+        "status": "PRESENT",
+        "value": "replay/orbbec_CP2L863000KL_de6b47c82f9f4e99af5622a80cb927af"
+      },
+      "valid_until_host_monotonic_s": {
+        "status": "MISSING_ISSUANCE_CLOCK",
+        "detail": "freshness window is set only by live SafetyGate at issuance"
+      }
+    },
+    "still_missing_for_live_permit": [
+      "live SafetyGate issuance (D/M authority at execution)",
+      "host/safety enable path for control_ready",
+      "actuator / arm power enable (operator)",
+      "fresh live VALID ArmState.device_id matching permit.device_id (recorded/mock \u2260 live)",
+      "valid_until_host_monotonic_s within OfflineSafetyGate freshness window"
+    ],
+    "proof": "shadow Inspection + evidence gates clear + shadow PlanBundle + recorded/mock arm device_id; still missing live VALID arm + live SafetyGate Permit + host/actuator enable before a live Permit can exist",
+    "inputs": {
+      "request_path": "docs/team/B/evidence/field_20261110/first_placement_request_assoc_handclear_overlay_20261110.json",
+      "shadow_path": "docs/team/B/evidence/field_20261110/slot_contrast_red_s140_shadow_assoc_bound_20261110_214801.json",
+      "plan_bundle_path": "docs/team/B/evidence/field_20261110/shadow_plan_bundle_20261110.json",
+      "arm_state_path": "docs/team/B/evidence/field_20261110/recorded_arm_state_left_p7_20261110.json"
+    },
+    "usage": [
+      "Readiness may set permit_eligible=true when evidence_gates_clear.",
+      "Do NOT copy this object into contracts.Permit / StepEvidence.permit.",
+      "Shadow PlanBundle / recorded arm update diagnostic field status only.",
+      "Live permit remains null until host/safety + SafetyGate issue one."
+    ]
+  },
+  "permit_hold_reason": "eligible_awaiting_host_enable_and_live_safety_gate",
+  "evidence_gates_clear": true,
+  "vision_pre_grasp_ready": true,
+  "awaiting_m_permit": false,
+  "awaiting_live_permit_host_enable": true,
+  "awaiting_actuator_enable": true,
+  "blocking_gaps": [
+    {
+      "gate_id": "permit",
+      "status": "POLICY_HOLD",
+      "blocking": true,
+      "field_or_human_required": true,
+      "detail": "live permit=null by design; diagnostic eligibility issued (permit_eligible=true). Still missing: host/safety enable, actuator enable, recorded/mock arm present but \u2260 live VALID, live VALID ArmState, live SafetyGate issuance.",
+      "owner_hint": "D/M SafetyGate (live); readiness issues diagnostic only"
+    },
+    {
+      "gate_id": "control_ready_policy",
+      "status": "POLICY_HOLD",
+      "blocking": true,
+      "field_or_human_required": true,
+      "detail": "control_ready held false by policy; host/safety path only (never raised here)",
+      "owner_hint": "host/safety (parallel); not raised by readiness"
+    }
+  ],
+  "nonblocking_gaps": [
+    {
+      "gate_id": "support_ok",
+      "status": "UNKNOWN",
+      "blocking": false,
+      "field_or_human_required": true,
+      "detail": "explicit bool or leave UNKNOWN; not inferred from scene_consistent; current=None",
+      "owner_hint": "field evidence / M context"
+    },
+    {
+      "gate_id": "stable",
+      "status": "UNKNOWN",
+      "blocking": false,
+      "field_or_human_required": true,
+      "detail": "stability window required for post_place; tracked as pre_grasp evidence gap; current=None",
+      "owner_hint": "field evidence / M context"
+    },
+    {
+      "gate_id": "neighbors_unchanged",
+      "status": "UNKNOWN",
+      "blocking": false,
+      "field_or_human_required": true,
+      "detail": "explicit bool or UNKNOWN; not inferred; current=None",
+      "owner_hint": "field evidence / M context"
+    }
+  ],
+  "consumer_reason_union": [],
+  "missing_software": [
+    "control_ready_policy"
+  ],
+  "missing_field_or_human": [
+    "permit",
+    "control_ready_policy"
+  ],
+  "notes": [
+    "Readiness reports gaps; may issue diagnostic permit eligibility; never live Permit.",
+    "Association CLI flag without durable operator record stays UNKNOWN.",
+    "Calibration binding and BundleBinding/clock are parallel dependencies.",
+    "hand_clear/support/stable/neighbors are never inferred from scene_consistent.",
+    "yaw_policy=symmetric_90_unbounded accepts UNKNOWN yaw for grasp-approach; never forges MEASURED.",
+    "vision_pre_grasp_ready mirrors evidence_gates_clear; it is NOT formal_grasp_entry_allowed.",
+    "formal_grasp_entry_allowed / control_ready / permit / motion_enabled stay false/null here by design.",
+    "permit_eligible=true means shadow Inspection evidence is enough to assess live issuance; not a Permit.",
+    "awaiting_m_permit=true only while evidence incomplete; when eligible \u2192 awaiting_live_permit_host_enable.",
+    "Remaining formal-entry hard holds: live SafetyGate Permit + live VALID arm + host/safety control_ready + actuator enable.",
+    "Readiness adopts only scene_consistent frames; WARMING_UP SCENE_OR_RGBD_NOT_CONFIRMED is skipped, not forged.",
+    "Optional shadow PlanBundle / recorded arm update diagnostic field status only; never live Permit."
+  ]
+}

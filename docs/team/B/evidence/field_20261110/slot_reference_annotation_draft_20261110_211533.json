@@ -1,0 +1,101 @@
+{
+  "schema_version": "v-slot-reference-annotation-0.1",
+  "source_capture": "docs/team/B/evidence/field_20261110/slot_reference_20261110_211533",
+  "source_zip": "docs/team/B/evidence/field_20261110/slot_reference_20261110_211533.zip",
+  "annotated_utc": "2026-11-10T13:23:04.193882+00:00",
+  "camera_id": "CP2L863000KL",
+  "image": {
+    "file": "rgbd/frame_000.npz#rgb / rgbd/color_raw.png",
+    "resolution_wh": [
+      640,
+      480
+    ],
+    "coordinate_convention": "OpenCV image pixels; origin top-left; +u right; +v down; units=pixels on raw color / NPZ rgb (same 640x480)",
+    "distortion_note": "annotation on raw color pixels; K from capture report used for backprojection without additional undistort step"
+  },
+  "marker_center_pixel": {
+    "u": 245.35,
+    "v": 332.09,
+    "u_round": 245,
+    "v_round": 332,
+    "method": "darkest-plus neighborhood near paper tab; intensity centroid of gray<100 in 9x9",
+    "uncertainty_px": 3.0,
+    "operator_confirm_required": true,
+    "notes": "Small black plus on paper tab; NOT yet independently confirmed as the same 20x20mm table_black_cross used in ruler evidence. Scene has people in background; exposure_changed=true during capture."
+  },
+  "marker_depth_sample": {
+    "depth_m_at_round_pixel": 0.8759999871253967,
+    "depth_neighborhood_3x3_m": [
+      [
+        0.8759999871253967,
+        0.8769999742507935,
+        0.8769999742507935
+      ],
+      [
+        0.875,
+        0.8759999871253967,
+        0.8759999871253967
+      ],
+      [
+        0.8730000257492065,
+        0.8740000128746033,
+        0.875
+      ]
+    ],
+    "point_camera_m_from_depth": [
+      -0.18466325316935997,
+      0.2255529544429136,
+      0.8759999871253967
+    ]
+  },
+  "table_plane_camera": {
+    "fit_region": "pixels within 120px of marker with depth in [0.75,0.95] m",
+    "n_points": 25832,
+    "point_on_plane_camera_m": [
+      -0.1792735348063653,
+      0.25518260158559813,
+      0.8468992724350156
+    ],
+    "upward_normal_camera": [
+      -0.01095282323412538,
+      -0.7107962044223387,
+      -0.7033127266316167
+    ],
+    "residual_abs_m": {
+      "p50": 0.0012808234709659415,
+      "p95": 0.0038860089694675685,
+      "max": 0.011399562485579258
+    },
+    "marker_ray_plane_intersection_camera_m": [
+      -0.18481891233694736,
+      0.22574308098153392,
+      0.8767383984035596
+    ],
+    "depth_vs_plane_delta_m": -0.000738411278162876
+  },
+  "K": [
+    [
+      368.1024169921875,
+      0.0,
+      322.947021484375
+    ],
+    [
+      0.0,
+      368.163330078125,
+      237.29510498046875
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "control_ready": false,
+  "result": "ANNOTATION_DRAFT_PENDING_OPERATOR_CONFIRM",
+  "next_required": [
+    "operator confirm this pixel is the intended slot cross center",
+    "clear scene / re-capture if marker or lighting inadequate",
+    "measure actual cube edge length and uncertainty",
+    "M constructs camera-frame expected top/model centers with error propagation"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "schema_version": "v-fixture-index-0.1",
+  "status": "development_fixtures_not_independent_validation",
+  "control_ready": false,
+  "profile": {
+    "path": "config/vision_profiles/head_replacement_candidate.yaml",
+    "status": "candidate_only",
+    "head_camera_id": "CP2L863000KL",
+    "nominal_edge_m": 0.05
+  },
+  "fixtures": [
+    {
+      "id": "c_recording_sparse_four_color_v0.1",
+      "kind": "recorded_same_scene_development",
+      "layout": "sparse_four_color_approx",
+      "path": "tests/fixtures/real/C_20261108_tabletop/",
+      "manifest": "tests/fixtures/real/C_20261108_tabletop/sample_manifest.json",
+      "exchange_golden": "tests/fixtures/vision_exchange/c_recording_bundles_v0.1.json",
+      "frames": 3,
+      "purpose": "H1 ObservationBundle samples + provisional SDK clock fields",
+      "independent_validation": false
+    },
+    {
+      "id": "synthetic_status_v0.1",
+      "kind": "synthetic",
+      "layout": "status_matrix",
+      "path": "tests/fixtures/vision_exchange/synthetic_status_v0.1.json",
+      "covers": ["normal_and_ambiguous", "invalid_depth", "expired"],
+      "purpose": "H0/H1 status and validity mapping",
+      "independent_validation": false
+    },
+    {
+      "id": "verification_mock_v0.1",
+      "kind": "mock",
+      "layout": "phase_matrix",
+      "path": "tests/fixtures/vision_exchange/verification_v0.1.json",
+      "covers": ["pre_grasp", "post_grasp", "post_place", "occlusion", "timeout", "stale", "camera_moved"],
+      "purpose": "H4 VerificationEvidence golden for FSM hook",
+      "independent_validation": false
+    },
+    {
+      "id": "head_recorded_dense_labels_20261106",
+      "kind": "recorded_2d_labels",
+      "layout": "dense_ten_block_same_scene",
+      "path": "tests/fixtures/scenes/head_recorded_scene_labels.json",
+      "purpose": "Provisional 2D IoU regression only; not first-grasp sparse fixture",
+      "independent_validation": false,
+      "first_grasp_scope": false
+    }
+  ],
+  "missing_for_v2_v3": [
+    "sparse_single_color_single_block independent fixture with physical scale reference",
+    "intentional same-color contact failure examples under fixed exposure",
+    "independent hold-out layout not used for HSV tuning"
+  ]
+}

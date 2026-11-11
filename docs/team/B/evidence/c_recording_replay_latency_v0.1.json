@@ -1,0 +1,87 @@
+{
+  "generated_at_host": "2026-11-10T10:53:20+0800",
+  "config_path": "config/vision_profiles/head_replacement_candidate.yaml",
+  "profile_hash": "99b8e713de95ab5659ef1f907b0ed2ce0ea16d2601c4bd8fca75c0aa84aa7203",
+  "profile_name": "head_replacement_candidate",
+  "camera_id": "CP2L863000KL",
+  "epoch": "replay/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+  "recordings": [
+    "tests/fixtures/real/C_20261108_tabletop/camera/frame_000.npz",
+    "tests/fixtures/real/C_20261108_tabletop/camera/frame_001.npz",
+    "tests/fixtures/real/C_20261108_tabletop/camera/frame_002.npz"
+  ],
+  "published": 3,
+  "rejected": [],
+  "per_frame": [
+    {
+      "path": "tests/fixtures/real/C_20261108_tabletop/camera/frame_000.npz",
+      "status_counts": {
+        "SINGLE_CUBE_CANDIDATE": 4,
+        "AMBIGUOUS": 2
+      },
+      "valid_blocks": 4,
+      "ambiguous_blocks": 2,
+      "control_ready": false,
+      "clock_error_bound_s": null,
+      "exposure_to_output_s": null,
+      "receive_to_output_s": 0.0
+    },
+    {
+      "path": "tests/fixtures/real/C_20261108_tabletop/camera/frame_001.npz",
+      "status_counts": {
+        "SINGLE_CUBE_CANDIDATE": 4,
+        "AMBIGUOUS": 2
+      },
+      "valid_blocks": 4,
+      "ambiguous_blocks": 2,
+      "control_ready": false,
+      "clock_error_bound_s": null,
+      "exposure_to_output_s": null,
+      "receive_to_output_s": 0.0
+    },
+    {
+      "path": "tests/fixtures/real/C_20261108_tabletop/camera/frame_002.npz",
+      "status_counts": {
+        "SINGLE_CUBE_CANDIDATE": 4,
+        "AMBIGUOUS": 2
+      },
+      "valid_blocks": 4,
+      "ambiguous_blocks": 2,
+      "control_ready": false,
+      "clock_error_bound_s": null,
+      "exposure_to_output_s": null,
+      "receive_to_output_s": 0.0
+    }
+  ],
+  "online_metrics": {
+    "counts": {
+      "sessions": 1,
+      "accepted": 3,
+      "published": 3
+    },
+    "latency_samples": 3,
+    "exposure_to_output_s": null,
+    "receive_to_output_s": {
+      "p50": 0.0,
+      "p95": 0.0,
+      "max": 0.0
+    },
+    "detection_s": {
+      "p50": 0.0,
+      "p95": 0.0,
+      "max": 0.0
+    }
+  },
+  "limits": {
+    "max_receive_age_s": 3.0,
+    "max_pair_skew_s": 0.05,
+    "status": "diagnostic_replay_limits_not_field_validated"
+  },
+  "independent_scene_validation": false,
+  "control_ready": false,
+  "notes": [
+    "Host arrival remapped to synthetic process_monotonic for age-gate replay.",
+    "exposure_to_output_s remains null until exposure reference and clock bound exist.",
+    "Same-scene development recordings are not an independent validation set."
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "host": "qwer@10.157.173.135",
+  "artifact": "~/brick-stacking-real/artifacts/head_online_v_diagnostic_20261110_b",
+  "result": "OBSERVED",
+  "observation_count": 7,
+  "online_metrics": {
+    "counts": {
+      "sessions": 1,
+      "accepted": 60,
+      "overwritten_pending": 53,
+      "published": 7
+    },
+    "latency_samples": 7,
+    "exposure_to_output_s": null,
+    "receive_to_output_s": {
+      "p50": 0.8353846110403538,
+      "p95": 1.4517039805708913,
+      "max": 1.6543123069568537
+    },
+    "detection_s": {
+      "p50": 0.7082194070098922,
+      "p95": 0.8789091167971491,
+      "max": 0.8999977739877068
+    }
+  },
+  "color_exposure_lock": {
+    "before": {
+      "auto_exposure": false,
+      "exposure": 160,
+      "gain": 16
+    },
+    "after": {
+      "auto_exposure": false,
+      "exposure": 160,
+      "gain": 16
+    },
+    "persistent_write": false
+  },
+  "candidate_status_totals": {
+    "AMBIGUOUS": 1,
+    "SINGLE_CUBE_CANDIDATE": 33
+  },
+  "color_totals": {
+    "yellow": 13,
+    "green": 7,
+    "blue": 14
+  },
+  "control_ready": false,
+  "exposure_to_output_s": null,
+  "proposed_freshness_diagnostic_s": null,
+  "notes": [
+    "Fixed AE off; exposure=160 gain=16 session-only",
+    "receive_to_output measured; exposure-to-output still null pending clock bound",
+    "Need sparse single red block + stable lighting for first-grasp H1 scene"
+  ],
+  "suggested_latency_upper_bound_s_receive_to_output": 1.6543123069568537,
+  "suggested_freshness_gate_s_x2": 3.309
+}

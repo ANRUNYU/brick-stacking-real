@@ -1,0 +1,1121 @@
+[
+  {
+    "schema_version": "0.1",
+    "rgbd": {
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.878967",
+      "source": "recorded",
+      "device_id": "CP2L863000KL",
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "device_stamp": 154906.878967,
+      "host_receive_stamp": 278437.025385762,
+      "clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+      "epoch": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+      "validity": "VALID",
+      "reason": null,
+      "camera_sn": "CP2L863000KL",
+      "rgb_ref": "tests/fixtures/real/C_20261108_tabletop/camera/frame_000.npz#rgb",
+      "depth_ref": "tests/fixtures/real/C_20261108_tabletop/camera/frame_000.npz#depth_m",
+      "intrinsics_k": [
+        609.669189453125,
+        0.0,
+        69.880615234375,
+        0.0,
+        609.7700805664062,
+        -14.980255126953125,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "distortion_d": [],
+      "depth_scale_m_per_unit": 0.001,
+      "profile": "gemini335L_1280x800_15_rectified_crop575_410_545_280_C34",
+      "depth_registered_to_rgb": true,
+      "rgb_depth_delta_s": 2.0000006770715117e-05
+    },
+    "blocks": [
+      {
+        "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.878967",
+        "source": "recorded",
+        "device_id": "CP2L863000KL",
+        "frame_id": "camera_CP2L863000KL_color_optical_frame",
+        "device_stamp": 154906.878967,
+        "host_receive_stamp": 278437.025385762,
+        "clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "epoch": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "validity": "VALID",
+        "reason": "color_height_footprint_supported",
+        "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.878967/0",
+        "color": "red",
+        "camera_pose": null,
+        "size_m": [
+          0.05,
+          0.05,
+          0.05
+        ],
+        "size_source": "nominal_profile",
+        "quality": null,
+        "covariance": null,
+        "visibility": "VISIBLE_CANDIDATE",
+        "b_extensions": {
+          "candidate_status": "SINGLE_CUBE_CANDIDATE",
+          "top_surface_point_camera_m": [
+            -0.056378685521219704,
+            0.06661033591679166,
+            0.9641018630456002
+          ],
+          "top_surface_point_kind": "visible_top_center",
+          "model_center_camera_m": [
+            -0.056332238893769905,
+            0.0844855681080279,
+            0.9815796751747023
+          ],
+          "center_source": "top_center_minus_half_nominal_edge_along_plane_normal",
+          "measured_top_span_m": [
+            0.04928718879818916,
+            0.07144571840763092
+          ],
+          "orientation": null,
+          "yaw_symmetry_period_rad": 1.5707963267948966
+        }
+      },
+      {
+        "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.878967",
+        "source": "recorded",
+        "device_id": "CP2L863000KL",
+        "frame_id": "camera_CP2L863000KL_color_optical_frame",
+        "device_stamp": 154906.878967,
+        "host_receive_stamp": 278437.025385762,
+        "clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "epoch": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "validity": "VALID",
+        "reason": "color_height_footprint_supported",
+        "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.878967/1",
+        "color": "red",
+        "camera_pose": null,
+        "size_m": [
+          0.05,
+          0.05,
+          0.05
+        ],
+        "size_source": "nominal_profile",
+        "quality": null,
+        "covariance": null,
+        "visibility": "VISIBLE_CANDIDATE",
+        "b_extensions": {
+          "candidate_status": "SINGLE_CUBE_CANDIDATE",
+          "top_surface_point_camera_m": [
+            0.18276443868833425,
+            0.1292091160382805,
+            0.8995067405865629
+          ],
+          "top_surface_point_kind": "visible_top_center",
+          "model_center_camera_m": [
+            0.18281088531578404,
+            0.14708434822951674,
+            0.916984552715665
+          ],
+          "center_source": "top_center_minus_half_nominal_edge_along_plane_normal",
+          "measured_top_span_m": [
+            0.04748167842626572,
+            0.05580434575676918
+          ],
+          "orientation": null,
+          "yaw_symmetry_period_rad": 1.5707963267948966
+        }
+      },
+      {
+        "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.878967",
+        "source": "recorded",
+        "device_id": "CP2L863000KL",
+        "frame_id": "camera_CP2L863000KL_color_optical_frame",
+        "device_stamp": 154906.878967,
+        "host_receive_stamp": 278437.025385762,
+        "clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "epoch": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "validity": "UNKNOWN",
+        "reason": "merged_or_partial_or_irregular_geometry",
+        "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.878967/2",
+        "color": "red",
+        "camera_pose": null,
+        "size_m": null,
+        "size_source": "unknown",
+        "quality": null,
+        "covariance": null,
+        "visibility": "VISIBLE_CANDIDATE",
+        "b_extensions": {
+          "candidate_status": "AMBIGUOUS",
+          "top_surface_point_camera_m": null,
+          "top_surface_point_kind": null,
+          "model_center_camera_m": null,
+          "center_source": null,
+          "measured_top_span_m": [
+            0.021000893786549568,
+            0.055979639291763306
+          ],
+          "orientation": null,
+          "yaw_symmetry_period_rad": null
+        }
+      },
+      {
+        "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.878967",
+        "source": "recorded",
+        "device_id": "CP2L863000KL",
+        "frame_id": "camera_CP2L863000KL_color_optical_frame",
+        "device_stamp": 154906.878967,
+        "host_receive_stamp": 278437.025385762,
+        "clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "epoch": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "validity": "VALID",
+        "reason": "color_height_footprint_supported",
+        "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.878967/3",
+        "color": "yellow",
+        "camera_pose": null,
+        "size_m": [
+          0.05,
+          0.05,
+          0.05
+        ],
+        "size_source": "nominal_profile",
+        "quality": null,
+        "covariance": null,
+        "visibility": "VISIBLE_CANDIDATE",
+        "b_extensions": {
+          "candidate_status": "SINGLE_CUBE_CANDIDATE",
+          "top_surface_point_camera_m": [
+            -0.07251135598639165,
+            0.17646393860591197,
+            0.8511114633617691
+          ],
+          "top_surface_point_kind": "visible_top_center",
+          "model_center_camera_m": [
+            -0.07246490935894186,
+            0.19433917079714821,
+            0.8685892754908713
+          ],
+          "center_source": "top_center_minus_half_nominal_edge_along_plane_normal",
+          "measured_top_span_m": [
+            0.04386141896247864,
+            0.046374306082725525
+          ],
+          "orientation": null,
+          "yaw_symmetry_period_rad": 1.5707963267948966
+        }
+      },
+      {
+        "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.878967",
+        "source": "recorded",
+        "device_id": "CP2L863000KL",
+        "frame_id": "camera_CP2L863000KL_color_optical_frame",
+        "device_stamp": 154906.878967,
+        "host_receive_stamp": 278437.025385762,
+        "clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "epoch": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "validity": "VALID",
+        "reason": "color_height_footprint_supported",
+        "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.878967/4",
+        "color": "yellow",
+        "camera_pose": null,
+        "size_m": [
+          0.05,
+          0.05,
+          0.05
+        ],
+        "size_source": "nominal_profile",
+        "quality": null,
+        "covariance": null,
+        "visibility": "VISIBLE_CANDIDATE",
+        "b_extensions": {
+          "candidate_status": "SINGLE_CUBE_CANDIDATE",
+          "top_surface_point_camera_m": [
+            -0.0009557484358692682,
+            0.10255439629332153,
+            0.9275888601924582
+          ],
+          "top_surface_point_kind": "visible_top_center",
+          "model_center_camera_m": [
+            -0.0009093018084194704,
+            0.12042962848455777,
+            0.9450666723215604
+          ],
+          "center_source": "top_center_minus_half_nominal_edge_along_plane_normal",
+          "measured_top_span_m": [
+            0.04101550206542015,
+            0.04595411941409111
+          ],
+          "orientation": null,
+          "yaw_symmetry_period_rad": 1.5707963267948966
+        }
+      },
+      {
+        "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.878967",
+        "source": "recorded",
+        "device_id": "CP2L863000KL",
+        "frame_id": "camera_CP2L863000KL_color_optical_frame",
+        "device_stamp": 154906.878967,
+        "host_receive_stamp": 278437.025385762,
+        "clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "epoch": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "validity": "UNKNOWN",
+        "reason": "merged_or_partial_or_irregular_geometry",
+        "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.878967/5",
+        "color": "blue",
+        "camera_pose": null,
+        "size_m": null,
+        "size_source": "unknown",
+        "quality": null,
+        "covariance": null,
+        "visibility": "VISIBLE_CANDIDATE",
+        "b_extensions": {
+          "candidate_status": "AMBIGUOUS",
+          "top_surface_point_camera_m": null,
+          "top_surface_point_kind": null,
+          "model_center_camera_m": null,
+          "center_source": null,
+          "measured_top_span_m": [
+            0.02101864665746689,
+            0.05607583746314049
+          ],
+          "orientation": null,
+          "yaw_symmetry_period_rad": null
+        }
+      }
+    ],
+    "timing": {
+      "frame_stamp_s": 154906.878967,
+      "device_clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+      "color_device_stamp_s": 154906.878967,
+      "depth_device_stamp_s": 154906.878987,
+      "host_receive_stamp_s": 278437.025385762,
+      "host_clock_domain": "host_monotonic",
+      "host_boot_epoch": null,
+      "sdk_clock_observation": {
+        "schema_version": "c-orbbec-clock-observation-1",
+        "sdk_host_clock_type": "REALTIME",
+        "sdk_host_clock_domain": "host_realtime",
+        "host_bridge": {
+          "monotonic_before_s": 278437.025406288,
+          "monotonic_after_s": 278437.025409358,
+          "realtime_s": 1794127355.8595533,
+          "monotonic_raw_s": 278437.180011068
+        },
+        "bridge_bracket_s": 3.069988451898098e-06,
+        "frames": {
+          "color": {
+            "device_timestamp_us": 154906878967,
+            "system_timestamp_us": 1794127355858750,
+            "global_timestamp_us": 1794127355828352,
+            "global_available": true,
+            "global_host_monotonic_candidate_s": 278436.99420646037,
+            "sdk_receive_minus_global_s": 0.030398
+          },
+          "depth": {
+            "device_timestamp_us": 154906878987,
+            "system_timestamp_us": 1794127355846625,
+            "global_timestamp_us": 1794127355828373,
+            "global_available": true,
+            "global_host_monotonic_candidate_s": 278436.9942274412,
+            "sdk_receive_minus_global_s": 0.018252
+          }
+        },
+        "device_to_host_mapping_source": "SDK global timestamp fitter; raw readings retained",
+        "device_to_host_mapping_error_bound_s": null,
+        "timing_acceptance": "NOT_VALIDATED",
+        "approved": false,
+        "motion_enabled": false
+      },
+      "rgb_depth_delta_s": 2.0000006770715117e-05,
+      "exposure_reference": null,
+      "exposure_host_stamp_s": null,
+      "clock_error_bound_s": null,
+      "error_bound_evidence_ref": null,
+      "validity": "UNKNOWN",
+      "reason": "exposure_reference_and_clock_mapping_unvalidated",
+      "sdk_clock_unavailable_reason": null,
+      "capture_profile_hash": null,
+      "original_source": "real_measured",
+      "valid_depth_ratio": 0.9479030144167759,
+      "raw_intrinsics": {
+        "K": [
+          [
+            609.669189453125,
+            0.0,
+            644.880615234375
+          ],
+          [
+            0.0,
+            609.7700805664062,
+            395.0197448730469
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "distortion": {
+          "k1": -0.031556159257888794,
+          "k2": 0.036501653492450714,
+          "k3": -0.012785496190190315,
+          "k4": 0.0,
+          "k5": 0.0,
+          "k6": 0.0,
+          "p1": -0.0005816970369778574,
+          "p2": 0.0004935592296533287,
+          "model": "OBCameraDistortionModel.BROWN_CONRADY_K6"
+        },
+        "width": 1280,
+        "height": 800,
+        "extrinsics_available": false
+      }
+    },
+    "profile_hash": "99b8e713de95ab5659ef1f907b0ed2ce0ea16d2601c4bd8fca75c0aa84aa7203",
+    "control_ready": false,
+    "calibration_hash": null
+  },
+  {
+    "schema_version": "0.1",
+    "rgbd": {
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.945703",
+      "source": "recorded",
+      "device_id": "CP2L863000KL",
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "device_stamp": 154906.945703,
+      "host_receive_stamp": 278437.093106327,
+      "clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+      "epoch": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+      "validity": "VALID",
+      "reason": null,
+      "camera_sn": "CP2L863000KL",
+      "rgb_ref": "tests/fixtures/real/C_20261108_tabletop/camera/frame_001.npz#rgb",
+      "depth_ref": "tests/fixtures/real/C_20261108_tabletop/camera/frame_001.npz#depth_m",
+      "intrinsics_k": [
+        609.669189453125,
+        0.0,
+        69.880615234375,
+        0.0,
+        609.7700805664062,
+        -14.980255126953125,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "distortion_d": [],
+      "depth_scale_m_per_unit": 0.001,
+      "profile": "gemini335L_1280x800_15_rectified_crop575_410_545_280_C34",
+      "depth_registered_to_rgb": true,
+      "rgb_depth_delta_s": 2.0000006770715117e-05
+    },
+    "blocks": [
+      {
+        "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.945703",
+        "source": "recorded",
+        "device_id": "CP2L863000KL",
+        "frame_id": "camera_CP2L863000KL_color_optical_frame",
+        "device_stamp": 154906.945703,
+        "host_receive_stamp": 278437.093106327,
+        "clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "epoch": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "validity": "VALID",
+        "reason": "color_height_footprint_supported",
+        "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.945703/0",
+        "color": "red",
+        "camera_pose": null,
+        "size_m": [
+          0.05,
+          0.05,
+          0.05
+        ],
+        "size_source": "nominal_profile",
+        "quality": null,
+        "covariance": null,
+        "visibility": "VISIBLE_CANDIDATE",
+        "b_extensions": {
+          "candidate_status": "SINGLE_CUBE_CANDIDATE",
+          "top_surface_point_camera_m": [
+            -0.05618811771120505,
+            0.06709306263399906,
+            0.9642808791715256
+          ],
+          "top_surface_point_kind": "visible_top_center",
+          "model_center_camera_m": [
+            -0.056150561453000306,
+            0.08497564671784733,
+            0.9817511904455575
+          ],
+          "center_source": "top_center_minus_half_nominal_edge_along_plane_normal",
+          "measured_top_span_m": [
+            0.04720345512032509,
+            0.07125933468341827
+          ],
+          "orientation": null,
+          "yaw_symmetry_period_rad": 1.5707963267948966
+        }
+      },
+      {
+        "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.945703",
+        "source": "recorded",
+        "device_id": "CP2L863000KL",
+        "frame_id": "camera_CP2L863000KL_color_optical_frame",
+        "device_stamp": 154906.945703,
+        "host_receive_stamp": 278437.093106327,
+        "clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "epoch": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "validity": "VALID",
+        "reason": "color_height_footprint_supported",
+        "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.945703/1",
+        "color": "red",
+        "camera_pose": null,
+        "size_m": [
+          0.05,
+          0.05,
+          0.05
+        ],
+        "size_source": "nominal_profile",
+        "quality": null,
+        "covariance": null,
+        "visibility": "VISIBLE_CANDIDATE",
+        "b_extensions": {
+          "candidate_status": "SINGLE_CUBE_CANDIDATE",
+          "top_surface_point_camera_m": [
+            0.18316654959534626,
+            0.12920448731056355,
+            0.8991710726744992
+          ],
+          "top_surface_point_kind": "visible_top_center",
+          "model_center_camera_m": [
+            0.183204105853551,
+            0.14708707139441182,
+            0.9166413839485311
+          ],
+          "center_source": "top_center_minus_half_nominal_edge_along_plane_normal",
+          "measured_top_span_m": [
+            0.046845439821481705,
+            0.05593692883849144
+          ],
+          "orientation": null,
+          "yaw_symmetry_period_rad": 1.5707963267948966
+        }
+      },
+      {
+        "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.945703",
+        "source": "recorded",
+        "device_id": "CP2L863000KL",
+        "frame_id": "camera_CP2L863000KL_color_optical_frame",
+        "device_stamp": 154906.945703,
+        "host_receive_stamp": 278437.093106327,
+        "clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "epoch": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "validity": "UNKNOWN",
+        "reason": "merged_or_partial_or_irregular_geometry",
+        "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.945703/2",
+        "color": "red",
+        "camera_pose": null,
+        "size_m": null,
+        "size_source": "unknown",
+        "quality": null,
+        "covariance": null,
+        "visibility": "VISIBLE_CANDIDATE",
+        "b_extensions": {
+          "candidate_status": "AMBIGUOUS",
+          "top_surface_point_camera_m": null,
+          "top_surface_point_kind": null,
+          "model_center_camera_m": null,
+          "center_source": null,
+          "measured_top_span_m": [
+            0.02020096778869629,
+            0.05549395829439163
+          ],
+          "orientation": null,
+          "yaw_symmetry_period_rad": null
+        }
+      },
+      {
+        "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.945703",
+        "source": "recorded",
+        "device_id": "CP2L863000KL",
+        "frame_id": "camera_CP2L863000KL_color_optical_frame",
+        "device_stamp": 154906.945703,
+        "host_receive_stamp": 278437.093106327,
+        "clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "epoch": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "validity": "VALID",
+        "reason": "color_height_footprint_supported",
+        "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.945703/3",
+        "color": "yellow",
+        "camera_pose": null,
+        "size_m": [
+          0.05,
+          0.05,
+          0.05
+        ],
+        "size_source": "nominal_profile",
+        "quality": null,
+        "covariance": null,
+        "visibility": "VISIBLE_CANDIDATE",
+        "b_extensions": {
+          "candidate_status": "SINGLE_CUBE_CANDIDATE",
+          "top_surface_point_camera_m": [
+            -0.072526697409279,
+            0.17580337770162413,
+            0.8515271378952493
+          ],
+          "top_surface_point_kind": "visible_top_center",
+          "model_center_camera_m": [
+            -0.07248914115107426,
+            0.1936859617854724,
+            0.8689974491692811
+          ],
+          "center_source": "top_center_minus_half_nominal_edge_along_plane_normal",
+          "measured_top_span_m": [
+            0.04323776066303253,
+            0.04641963541507721
+          ],
+          "orientation": null,
+          "yaw_symmetry_period_rad": 1.5707963267948966
+        }
+      },
+      {
+        "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.945703",
+        "source": "recorded",
+        "device_id": "CP2L863000KL",
+        "frame_id": "camera_CP2L863000KL_color_optical_frame",
+        "device_stamp": 154906.945703,
+        "host_receive_stamp": 278437.093106327,
+        "clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "epoch": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "validity": "VALID",
+        "reason": "color_height_footprint_supported",
+        "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.945703/4",
+        "color": "yellow",
+        "camera_pose": null,
+        "size_m": [
+          0.05,
+          0.05,
+          0.05
+        ],
+        "size_source": "nominal_profile",
+        "quality": null,
+        "covariance": null,
+        "visibility": "VISIBLE_CANDIDATE",
+        "b_extensions": {
+          "candidate_status": "SINGLE_CUBE_CANDIDATE",
+          "top_surface_point_camera_m": [
+            -0.0014143350643672388,
+            0.10359116866253748,
+            0.9274010948997031
+          ],
+          "top_surface_point_kind": "visible_top_center",
+          "model_center_camera_m": [
+            -0.0013767788061624943,
+            0.12147375274638575,
+            0.944871406173735
+          ],
+          "center_source": "top_center_minus_half_nominal_edge_along_plane_normal",
+          "measured_top_span_m": [
+            0.04366319999098778,
+            0.045853063464164734
+          ],
+          "orientation": null,
+          "yaw_symmetry_period_rad": 1.5707963267948966
+        }
+      },
+      {
+        "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.945703",
+        "source": "recorded",
+        "device_id": "CP2L863000KL",
+        "frame_id": "camera_CP2L863000KL_color_optical_frame",
+        "device_stamp": 154906.945703,
+        "host_receive_stamp": 278437.093106327,
+        "clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "epoch": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "validity": "UNKNOWN",
+        "reason": "merged_or_partial_or_irregular_geometry",
+        "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154906.945703/5",
+        "color": "blue",
+        "camera_pose": null,
+        "size_m": null,
+        "size_source": "unknown",
+        "quality": null,
+        "covariance": null,
+        "visibility": "VISIBLE_CANDIDATE",
+        "b_extensions": {
+          "candidate_status": "AMBIGUOUS",
+          "top_surface_point_camera_m": null,
+          "top_surface_point_kind": null,
+          "model_center_camera_m": null,
+          "center_source": null,
+          "measured_top_span_m": [
+            0.022308027371764183,
+            0.056593798100948334
+          ],
+          "orientation": null,
+          "yaw_symmetry_period_rad": null
+        }
+      }
+    ],
+    "timing": {
+      "frame_stamp_s": 154906.945703,
+      "device_clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+      "color_device_stamp_s": 154906.945703,
+      "depth_device_stamp_s": 154906.945723,
+      "host_receive_stamp_s": 278437.093106327,
+      "host_clock_domain": "host_monotonic",
+      "host_boot_epoch": null,
+      "sdk_clock_observation": {
+        "schema_version": "c-orbbec-clock-observation-1",
+        "sdk_host_clock_type": "REALTIME",
+        "sdk_host_clock_domain": "host_realtime",
+        "host_bridge": {
+          "monotonic_before_s": 278437.093137933,
+          "monotonic_after_s": 278437.093146204,
+          "realtime_s": 1794127355.9272857,
+          "monotonic_raw_s": 278437.247747282
+        },
+        "bridge_bracket_s": 8.271017577499151e-06,
+        "frames": {
+          "color": {
+            "device_timestamp_us": 154906945703,
+            "system_timestamp_us": 1794127355925707,
+            "global_timestamp_us": 1794127355895089,
+            "global_available": true,
+            "global_host_monotonic_candidate_s": 278437.0609453083,
+            "sdk_receive_minus_global_s": 0.030618
+          },
+          "depth": {
+            "device_timestamp_us": 154906945723,
+            "system_timestamp_us": 1794127355913428,
+            "global_timestamp_us": 1794127355895109,
+            "global_available": true,
+            "global_host_monotonic_candidate_s": 278437.06096533546,
+            "sdk_receive_minus_global_s": 0.018319
+          }
+        },
+        "device_to_host_mapping_source": "SDK global timestamp fitter; raw readings retained",
+        "device_to_host_mapping_error_bound_s": null,
+        "timing_acceptance": "NOT_VALIDATED",
+        "approved": false,
+        "motion_enabled": false
+      },
+      "rgb_depth_delta_s": 2.0000006770715117e-05,
+      "exposure_reference": null,
+      "exposure_host_stamp_s": null,
+      "clock_error_bound_s": null,
+      "error_bound_evidence_ref": null,
+      "validity": "UNKNOWN",
+      "reason": "exposure_reference_and_clock_mapping_unvalidated",
+      "sdk_clock_unavailable_reason": null,
+      "capture_profile_hash": null,
+      "original_source": "real_measured",
+      "valid_depth_ratio": 0.9459501965923984,
+      "raw_intrinsics": {
+        "K": [
+          [
+            609.669189453125,
+            0.0,
+            644.880615234375
+          ],
+          [
+            0.0,
+            609.7700805664062,
+            395.0197448730469
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "distortion": {
+          "k1": -0.031556159257888794,
+          "k2": 0.036501653492450714,
+          "k3": -0.012785496190190315,
+          "k4": 0.0,
+          "k5": 0.0,
+          "k6": 0.0,
+          "p1": -0.0005816970369778574,
+          "p2": 0.0004935592296533287,
+          "model": "OBCameraDistortionModel.BROWN_CONRADY_K6"
+        },
+        "width": 1280,
+        "height": 800,
+        "extrinsics_available": false
+      }
+    },
+    "profile_hash": "99b8e713de95ab5659ef1f907b0ed2ce0ea16d2601c4bd8fca75c0aa84aa7203",
+    "control_ready": false,
+    "calibration_hash": null
+  },
+  {
+    "schema_version": "0.1",
+    "rgbd": {
+      "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154907.012439",
+      "source": "recorded",
+      "device_id": "CP2L863000KL",
+      "frame_id": "camera_CP2L863000KL_color_optical_frame",
+      "device_stamp": 154907.012439,
+      "host_receive_stamp": 278437.159954092,
+      "clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+      "epoch": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+      "validity": "VALID",
+      "reason": null,
+      "camera_sn": "CP2L863000KL",
+      "rgb_ref": "tests/fixtures/real/C_20261108_tabletop/camera/frame_002.npz#rgb",
+      "depth_ref": "tests/fixtures/real/C_20261108_tabletop/camera/frame_002.npz#depth_m",
+      "intrinsics_k": [
+        609.669189453125,
+        0.0,
+        69.880615234375,
+        0.0,
+        609.7700805664062,
+        -14.980255126953125,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "distortion_d": [],
+      "depth_scale_m_per_unit": 0.001,
+      "profile": "gemini335L_1280x800_15_rectified_crop575_410_545_280_C34",
+      "depth_registered_to_rgb": true,
+      "rgb_depth_delta_s": 1.999997766688466e-05
+    },
+    "blocks": [
+      {
+        "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154907.012439",
+        "source": "recorded",
+        "device_id": "CP2L863000KL",
+        "frame_id": "camera_CP2L863000KL_color_optical_frame",
+        "device_stamp": 154907.012439,
+        "host_receive_stamp": 278437.159954092,
+        "clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "epoch": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "validity": "VALID",
+        "reason": "color_height_footprint_supported",
+        "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154907.012439/0",
+        "color": "red",
+        "camera_pose": null,
+        "size_m": [
+          0.05,
+          0.05,
+          0.05
+        ],
+        "size_source": "nominal_profile",
+        "quality": null,
+        "covariance": null,
+        "visibility": "VISIBLE_CANDIDATE",
+        "b_extensions": {
+          "candidate_status": "SINGLE_CUBE_CANDIDATE",
+          "top_surface_point_camera_m": [
+            -0.055730302214123825,
+            0.06691530505582949,
+            0.9638932331150681
+          ],
+          "top_surface_point_kind": "visible_top_center",
+          "model_center_camera_m": [
+            -0.055688985490333104,
+            0.08479225778367395,
+            0.9813692982927548
+          ],
+          "center_source": "top_center_minus_half_nominal_edge_along_plane_normal",
+          "measured_top_span_m": [
+            0.046617116779088974,
+            0.07196987420320511
+          ],
+          "orientation": null,
+          "yaw_symmetry_period_rad": 1.5707963267948966
+        }
+      },
+      {
+        "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154907.012439",
+        "source": "recorded",
+        "device_id": "CP2L863000KL",
+        "frame_id": "camera_CP2L863000KL_color_optical_frame",
+        "device_stamp": 154907.012439,
+        "host_receive_stamp": 278437.159954092,
+        "clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "epoch": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "validity": "VALID",
+        "reason": "color_height_footprint_supported",
+        "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154907.012439/1",
+        "color": "red",
+        "camera_pose": null,
+        "size_m": [
+          0.05,
+          0.05,
+          0.05
+        ],
+        "size_source": "nominal_profile",
+        "quality": null,
+        "covariance": null,
+        "visibility": "VISIBLE_CANDIDATE",
+        "b_extensions": {
+          "candidate_status": "SINGLE_CUBE_CANDIDATE",
+          "top_surface_point_camera_m": [
+            0.18316608822286037,
+            0.12922251549996872,
+            0.8991486535815214
+          ],
+          "top_surface_point_kind": "visible_top_center",
+          "model_center_camera_m": [
+            0.1832074049466511,
+            0.1470994682278132,
+            0.916624718759208
+          ],
+          "center_source": "top_center_minus_half_nominal_edge_along_plane_normal",
+          "measured_top_span_m": [
+            0.04698518291115761,
+            0.054490961134433746
+          ],
+          "orientation": null,
+          "yaw_symmetry_period_rad": 1.5707963267948966
+        }
+      },
+      {
+        "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154907.012439",
+        "source": "recorded",
+        "device_id": "CP2L863000KL",
+        "frame_id": "camera_CP2L863000KL_color_optical_frame",
+        "device_stamp": 154907.012439,
+        "host_receive_stamp": 278437.159954092,
+        "clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "epoch": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "validity": "UNKNOWN",
+        "reason": "merged_or_partial_or_irregular_geometry",
+        "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154907.012439/2",
+        "color": "red",
+        "camera_pose": null,
+        "size_m": null,
+        "size_source": "unknown",
+        "quality": null,
+        "covariance": null,
+        "visibility": "VISIBLE_CANDIDATE",
+        "b_extensions": {
+          "candidate_status": "AMBIGUOUS",
+          "top_surface_point_camera_m": null,
+          "top_surface_point_kind": null,
+          "model_center_camera_m": null,
+          "center_source": null,
+          "measured_top_span_m": [
+            0.023762468248605728,
+            0.057323575019836426
+          ],
+          "orientation": null,
+          "yaw_symmetry_period_rad": null
+        }
+      },
+      {
+        "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154907.012439",
+        "source": "recorded",
+        "device_id": "CP2L863000KL",
+        "frame_id": "camera_CP2L863000KL_color_optical_frame",
+        "device_stamp": 154907.012439,
+        "host_receive_stamp": 278437.159954092,
+        "clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "epoch": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "validity": "VALID",
+        "reason": "color_height_footprint_supported",
+        "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154907.012439/3",
+        "color": "yellow",
+        "camera_pose": null,
+        "size_m": [
+          0.05,
+          0.05,
+          0.05
+        ],
+        "size_source": "nominal_profile",
+        "quality": null,
+        "covariance": null,
+        "visibility": "VISIBLE_CANDIDATE",
+        "b_extensions": {
+          "candidate_status": "SINGLE_CUBE_CANDIDATE",
+          "top_surface_point_camera_m": [
+            -0.07221156471050363,
+            0.17641470555001926,
+            0.8514064516487311
+          ],
+          "top_surface_point_kind": "visible_top_center",
+          "model_center_camera_m": [
+            -0.07217024798671291,
+            0.19429165827786374,
+            0.8688825168264177
+          ],
+          "center_source": "top_center_minus_half_nominal_edge_along_plane_normal",
+          "measured_top_span_m": [
+            0.044637709856033325,
+            0.04685123264789581
+          ],
+          "orientation": null,
+          "yaw_symmetry_period_rad": 1.5707963267948966
+        }
+      },
+      {
+        "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154907.012439",
+        "source": "recorded",
+        "device_id": "CP2L863000KL",
+        "frame_id": "camera_CP2L863000KL_color_optical_frame",
+        "device_stamp": 154907.012439,
+        "host_receive_stamp": 278437.159954092,
+        "clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "epoch": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "validity": "VALID",
+        "reason": "color_height_footprint_supported",
+        "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154907.012439/4",
+        "color": "yellow",
+        "camera_pose": null,
+        "size_m": [
+          0.05,
+          0.05,
+          0.05
+        ],
+        "size_source": "nominal_profile",
+        "quality": null,
+        "covariance": null,
+        "visibility": "VISIBLE_CANDIDATE",
+        "b_extensions": {
+          "candidate_status": "SINGLE_CUBE_CANDIDATE",
+          "top_surface_point_camera_m": [
+            -0.0005005647285782049,
+            0.10308694131632051,
+            0.9274956807170339
+          ],
+          "top_surface_point_kind": "visible_top_center",
+          "model_center_camera_m": [
+            -0.0004592480047874813,
+            0.12096389404416498,
+            0.9449717458947205
+          ],
+          "center_source": "top_center_minus_half_nominal_edge_along_plane_normal",
+          "measured_top_span_m": [
+            0.04193014279007912,
+            0.04494333639740944
+          ],
+          "orientation": null,
+          "yaw_symmetry_period_rad": 1.5707963267948966
+        }
+      },
+      {
+        "sample_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154907.012439",
+        "source": "recorded",
+        "device_id": "CP2L863000KL",
+        "frame_id": "camera_CP2L863000KL_color_optical_frame",
+        "device_stamp": 154907.012439,
+        "host_receive_stamp": 278437.159954092,
+        "clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "epoch": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+        "validity": "UNKNOWN",
+        "reason": "merged_or_partial_or_irregular_geometry",
+        "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25/154907.012439/5",
+        "color": "blue",
+        "camera_pose": null,
+        "size_m": null,
+        "size_source": "unknown",
+        "quality": null,
+        "covariance": null,
+        "visibility": "VISIBLE_CANDIDATE",
+        "b_extensions": {
+          "candidate_status": "AMBIGUOUS",
+          "top_surface_point_camera_m": null,
+          "top_surface_point_kind": null,
+          "model_center_camera_m": null,
+          "center_source": null,
+          "measured_top_span_m": [
+            0.022086752578616142,
+            0.05242302641272545
+          ],
+          "orientation": null,
+          "yaw_symmetry_period_rad": null
+        }
+      }
+    ],
+    "timing": {
+      "frame_stamp_s": 154907.012439,
+      "device_clock_domain": "orbbec_CP2L863000KL_73a081de108f431bbbedc21f8522ab25",
+      "color_device_stamp_s": 154907.012439,
+      "depth_device_stamp_s": 154907.012459,
+      "host_receive_stamp_s": 278437.159954092,
+      "host_clock_domain": "host_monotonic",
+      "host_boot_epoch": null,
+      "sdk_clock_observation": {
+        "schema_version": "c-orbbec-clock-observation-1",
+        "sdk_host_clock_type": "REALTIME",
+        "sdk_host_clock_domain": "host_realtime",
+        "host_bridge": {
+          "monotonic_before_s": 278437.159988722,
+          "monotonic_after_s": 278437.159997011,
+          "realtime_s": 1794127355.9941366,
+          "monotonic_raw_s": 278437.314597838
+        },
+        "bridge_bracket_s": 8.289003744721413e-06,
+        "frames": {
+          "color": {
+            "device_timestamp_us": 154907012439,
+            "system_timestamp_us": 1794127355992513,
+            "global_timestamp_us": 1794127355961826,
+            "global_available": true,
+            "global_host_monotonic_candidate_s": 278437.12768238067,
+            "sdk_receive_minus_global_s": 0.030687
+          },
+          "depth": {
+            "device_timestamp_us": 154907012459,
+            "system_timestamp_us": 1794127355980433,
+            "global_timestamp_us": 1794127355961846,
+            "global_available": true,
+            "global_host_monotonic_candidate_s": 278437.12770240783,
+            "sdk_receive_minus_global_s": 0.018587
+          }
+        },
+        "device_to_host_mapping_source": "SDK global timestamp fitter; raw readings retained",
+        "device_to_host_mapping_error_bound_s": null,
+        "timing_acceptance": "NOT_VALIDATED",
+        "approved": false,
+        "motion_enabled": false
+      },
+      "rgb_depth_delta_s": 1.999997766688466e-05,
+      "exposure_reference": null,
+      "exposure_host_stamp_s": null,
+      "clock_error_bound_s": null,
+      "error_bound_evidence_ref": null,
+      "validity": "UNKNOWN",
+      "reason": "exposure_reference_and_clock_mapping_unvalidated",
+      "sdk_clock_unavailable_reason": null,
+      "capture_profile_hash": null,
+      "original_source": "real_measured",
+      "valid_depth_ratio": 0.9491677588466579,
+      "raw_intrinsics": {
+        "K": [
+          [
+            609.669189453125,
+            0.0,
+            644.880615234375
+          ],
+          [
+            0.0,
+            609.7700805664062,
+            395.0197448730469
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "distortion": {
+          "k1": -0.031556159257888794,
+          "k2": 0.036501653492450714,
+          "k3": -0.012785496190190315,
+          "k4": 0.0,
+          "k5": 0.0,
+          "k6": 0.0,
+          "p1": -0.0005816970369778574,
+          "p2": 0.0004935592296533287,
+          "model": "OBCameraDistortionModel.BROWN_CONRADY_K6"
+        },
+        "width": 1280,
+        "height": 800,
+        "extrinsics_available": false
+      }
+    },
+    "profile_hash": "99b8e713de95ab5659ef1f907b0ed2ce0ea16d2601c4bd8fca75c0aa84aa7203",
+    "control_ready": false,
+    "calibration_hash": null
+  }
+]

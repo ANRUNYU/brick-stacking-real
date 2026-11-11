@@ -20,17 +20,24 @@ HandChannels = tuple[int, int, int, int, int, int]
 HandPercentChannels = tuple[float, float, float, float, float, float]
 
 
-class Sample(TypedDict):
+class _SampleIdentity(TypedDict):
     sample_id: str
     source: Source
     device_id: str
     frame_id: str
     device_stamp: float | None
-    host_receive_stamp: float
     clock_domain: str
     epoch: str
     validity: Validity
     reason: str | None
+
+
+class Sample(_SampleIdentity):
+    host_receive_stamp: float
+
+
+class _CameraSample(_SampleIdentity):
+    host_receive_stamp: float | None  # Legacy recordings may lack arrival metadata.
 
 
 class Pose(TypedDict):
@@ -66,19 +73,19 @@ class HandState(Sample):
     tactile_valid: bool
 
 
-class RGBDObservation(Sample):
+class RGBDObservation(_CameraSample):
     camera_sn: str
     rgb_ref: str
     depth_ref: str | None
     intrinsics_k: tuple[float, ...]
     distortion_d: tuple[float, ...]
-    depth_scale_m_per_unit: float
+    depth_scale_m_per_unit: float | None
     profile: str
     depth_registered_to_rgb: bool | None
     rgb_depth_delta_s: float | None
 
 
-class BlockObservation(Sample):
+class BlockObservation(_CameraSample):
     observation_id: str
     camera_pose: Pose | None
     color: str
@@ -87,6 +94,17 @@ class BlockObservation(Sample):
     quality: float | None
     covariance: tuple[float, ...] | None
     visibility: str
+    b_extensions: NotRequired[dict]
+
+
+class ObservationBundle(TypedDict):
+    schema_version: str
+    rgbd: RGBDObservation
+    blocks: list[BlockObservation]
+    profile_hash: str
+    timing: dict
+    control_ready: Literal[False]
+    calibration_hash: None
 
 
 class LocalizedBlock(Sample):
@@ -172,7 +190,7 @@ class PlanResult(TypedDict):
     valid_until_host_monotonic_s: float | None
 
 
-class VerificationEvidence(Sample):
+class VerificationEvidence(_CameraSample):
     object_id: str
     phase: str
     verdict: Verdict
@@ -183,6 +201,9 @@ class VerificationEvidence(Sample):
     config_hash: NotRequired[str]
     calibration_hash: NotRequired[str]
     scope: NotRequired[Literal["held", "position_only", "released_stable"]]
+    schema_version: NotRequired[str]
+    region_id: NotRequired[str]
+    supporting_observation_refs: NotRequired[tuple[str, ...]]
 
 
 class ExecutionResult(TypedDict):

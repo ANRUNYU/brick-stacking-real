@@ -1,0 +1,32 @@
+{
+  "scene": "single_red_sparse",
+  "result": "OBSERVED",
+  "observation_count": 12,
+  "published_all_single_red_valid": true,
+  "fixed_exposure": 100,
+  "fixed_gain": 16,
+  "online_metrics": {
+    "counts": {
+      "sessions": 1,
+      "accepted": 90,
+      "overwritten_pending": 78,
+      "published": 12
+    },
+    "latency_samples": 12,
+    "exposure_to_output_s": null,
+    "receive_to_output_s": {
+      "p50": 0.6357806565065403,
+      "p95": 1.0155780540691919,
+      "max": 1.281857346999459
+    },
+    "detection_s": {
+      "p50": 0.5418204150046222,
+      "p95": 0.6150941014988347,
+      "max": 0.6865698569454253
+    }
+  },
+  "suggested_latency_upper_bound_s": 1.281857346999459,
+  "suggested_freshness_gate_s_x2": 2.564,
+  "control_ready": false,
+  "exposure_to_output_s": null
+}

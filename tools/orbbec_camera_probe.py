@@ -87,6 +87,34 @@ def exposure_window_stable(samples):
     return bool(np.all(np.ptp(values,axis=0)<=np.maximum(2.,.03*np.median(values,axis=0))))
 
 
+def apply_fixed_color_exposure(sdk, device, *, exposure, gain=None):
+    """Disable color AE for one session. Values are device property units (not validated as µs)."""
+    if type(exposure) is not int or exposure <= 0:
+        raise ValueError("explicit positive color exposure required")
+    if gain is not None and (type(gain) is not int or gain <= 0):
+        raise ValueError("explicit positive color gain required")
+    prop = sdk.OBPropertyID
+    before = {
+        "auto_exposure": device.get_bool_property(prop.OB_PROP_COLOR_AUTO_EXPOSURE_BOOL),
+        "exposure": device.get_int_property(prop.OB_PROP_COLOR_EXPOSURE_INT),
+        "gain": device.get_int_property(prop.OB_PROP_COLOR_GAIN_INT),
+    }
+    device.set_bool_property(prop.OB_PROP_COLOR_AUTO_EXPOSURE_BOOL, False)
+    device.set_int_property(prop.OB_PROP_COLOR_EXPOSURE_INT, exposure)
+    if gain is not None:
+        device.set_int_property(prop.OB_PROP_COLOR_GAIN_INT, gain)
+    after = {
+        "auto_exposure": device.get_bool_property(prop.OB_PROP_COLOR_AUTO_EXPOSURE_BOOL),
+        "exposure": device.get_int_property(prop.OB_PROP_COLOR_EXPOSURE_INT),
+        "gain": device.get_int_property(prop.OB_PROP_COLOR_GAIN_INT),
+    }
+    if after["auto_exposure"] or after["exposure"] != exposure:
+        raise ValueError("fixed color exposure did not stick on device")
+    if gain is not None and after["gain"] != gain:
+        raise ValueError("fixed color gain did not stick on device")
+    return {"before": before, "after": after, "persistent_write": False}
+
+
 def choose_profile(profiles, formats, *, size=None, fps=None):
     candidates = []
     for i in range(profiles.get_count()):
@@ -104,7 +132,9 @@ def choose_profile(profiles, formats, *, size=None, fps=None):
                                          abs(p.get_fps()-15), formats.index(str(p.get_format()).split(".")[-1])))
 
 
-def capture(sdk, device, serial, output, report, *, count, seconds, max_skew_ms, size=None, fps=None,warmup_frames=30):
+def capture(sdk, device, serial, output, report, *, count, seconds, max_skew_ms, size=None,
+            fps=None, warmup_frames=30, on_frame=None, sdk_clock_type=None,
+            allow_unstable_warmup=False):
     import cv2
     import numpy as np
     pipe = sdk.Pipeline(device)
@@ -134,30 +164,52 @@ def capture(sdk, device, serial, output, report, *, count, seconds, max_skew_ms,
                                  "width": intr.width, "height": intr.height, "extrinsics_available": False}
         epoch = f"orbbec_{serial}_{uuid.uuid4().hex}"
         end = time.monotonic() + seconds
-        previous_stamp = -1.
+        previous_stamps = (-1., -1.)
         warmup = 0
+        captured = 0
+        missing = 0
         rgb_history=[]
         report['warmup_minimum_frames']=warmup_frames
         report['warmup_observations']=[]
-        while len(report["frames"]) < count and time.monotonic() < end:
+        while captured < count and time.monotonic() < end:
             frames = pipe.wait_for_frames(1000)
+            received = time.monotonic()
             if not frames:
+                report["wait_timeouts"] = report.get("wait_timeouts", 0) + 1
+                missing += 1
+                if on_frame is not None and missing >= 2:
+                    raise TimeoutError("Orbbec frames timed out")
                 continue
+            missing = 0
+            clocks, clock_error = None, None
+            if sdk_clock_type is not None:
+                if __package__:
+                    from .c_head_camera_probe import clock_anchor, frame_clocks
+                else:
+                    from c_head_camera_probe import clock_anchor, frame_clocks
+                try:
+                    original_color, original_depth = frames.get_color_frame(), frames.get_depth_frame()
+                    if original_color and original_depth:
+                        clocks = frame_clocks(original_color, original_depth, sdk_clock_type, clock_anchor())
+                except (AttributeError, RuntimeError, ValueError) as exc:
+                    clock_error = str(exc)
             aligned = align.process(frames)
             if not aligned:
+                report["incomplete_pairs"] = report.get("incomplete_pairs", 0) + 1
                 continue
             frames = aligned.as_frame_set()
             c, d = frames.get_color_frame(), frames.get_depth_frame()
             if not c or not d:
+                report["incomplete_pairs"] = report.get("incomplete_pairs", 0) + 1
                 continue
             warmup += 1
             ct, dt = c.get_timestamp_us()/1e6, d.get_timestamp_us()/1e6
             if abs(ct-dt)*1000 > max_skew_ms:
                 report["rejected_skew"] += 1
                 continue
-            if ct <= previous_stamp:
+            if ct <= previous_stamps[0] or dt <= previous_stamps[1]:
                 raise ValueError("camera timestamp repeated or reset")
-            previous_stamp = ct
+            previous_stamps = (ct, dt)
             w, h = c.get_width(), c.get_height()
             if (w, h) != (intr.width, intr.height):
                 raise ValueError("stream/intrinsic resolution mismatch")
@@ -166,11 +218,15 @@ def capture(sdk, device, serial, output, report, *, count, seconds, max_skew_ms,
             rgb_history.append(median_rgb)
             rgb_history=rgb_history[-5:]
             stable=exposure_window_stable(rgb_history)
-            if not report['frames']:
+            if not captured:
                 report['warmup_observations'].append({'stamp_s':ct,'median_rgb':median_rgb,'stable_window':stable})
-                if warmup<=warmup_frames or not stable:
+                if warmup <= warmup_frames:
                     continue
-                report['capture_started_after_rgb_stabilization']=True
+                if not stable and not allow_unstable_warmup:
+                    continue
+                report['capture_started_after_rgb_stabilization'] = bool(stable)
+                if not stable:
+                    report['warmup_unstable_override'] = True
             elif not stable:
                 report['exposure_changed_during_capture']=True
             if d.get_format() != sdk.OBFormat.Y16:
@@ -178,15 +234,26 @@ def capture(sdk, device, serial, output, report, *, count, seconds, max_skew_ms,
             raw = np.frombuffer(d.get_data(), np.uint16)
             if raw.size != d.get_width()*d.get_height():
                 raise ValueError("unexpected depth row stride/size")
-            dm = depth_to_metres(raw.reshape(d.get_height(),d.get_width()), d.get_depth_scale())
-            if not report["frames"]:
+            scale_mm = d.get_depth_scale()
+            dm = depth_to_metres(raw.reshape(d.get_height(),d.get_width()), scale_mm)
+            if not captured and on_frame is None:
                 cv2.imwrite(str(output/"color_raw.png"), cv2.cvtColor(rgb,cv2.COLOR_RGB2BGR))
             rgb, dm = rectify_pair(rgb, dm, k, distortion)
-            index = len(report["frames"])
+            index = captured
             name = f"frame_{index:03d}.npz"
             meta = {"camera_id": serial, "frame_id": f"camera_{serial}_color_optical_frame", "stamp_s": ct,
                     "clock_domain": epoch, "source": "real_measured", "registered": True,
-                    "rectified": True, "depth_unit": "m"}
+                    "rectified": True, "depth_unit": "m",
+                    "host_receive_stamp_s": received, "host_clock_domain": "process_monotonic",
+                    "depth_scale_mm": scale_mm, "rgb_device_stamp_s": ct, "depth_device_stamp_s": dt}
+            if clocks is not None:
+                meta["clock_observation"] = clocks
+            if clock_error is not None:
+                meta["clock_unavailable_reason"] = clock_error
+            captured += 1
+            if on_frame is not None:
+                on_frame(rgb, dm, k, meta, report)
+                continue
             np.savez_compressed(output/name, rgb=rgb, depth_m=dm, k=k, metadata=json.dumps(meta))
             valid = np.isfinite(dm) & (dm > 0)
             report["frames"].append({"file": name, "rgb_stamp_s": ct, "depth_stamp_s": dt,
@@ -199,7 +266,8 @@ def capture(sdk, device, serial, output, report, *, count, seconds, max_skew_ms,
                     lo, hi = np.percentile(dm[valid], [5,95])
                     viz[valid] = np.clip((dm[valid]-lo)/max(hi-lo,1e-6)*255,0,255).astype(np.uint8)
                 cv2.imwrite(str(output/"depth_preview.png"), cv2.applyColorMap(viz,cv2.COLORMAP_TURBO))
-        report["result"] = "CAPTURED" if len(report["frames"]) == count else "INCOMPLETE"
+        report["captured_pairs"] = captured
+        report["result"] = "CAPTURED" if captured == count else "INCOMPLETE"
         report["notice"] = "Capture is not depth accuracy, alignment accuracy or block-detection acceptance. Clock is per-camera; no arm/world transform."
     finally:
         if started:
@@ -221,11 +289,19 @@ def main(argv=None):
     p.add_argument('--height',type=int,help='exact native stream height; requires --width')
     p.add_argument('--fps',type=int,help='exact stream frame rate, no fallback')
     p.add_argument('--warmup-frames',type=int,default=30,help='minimum startup frames, then wait for stable RGB medians')
+    p.add_argument('--allow-unstable-warmup', action='store_true',
+                   help='diagnostic only: start capture after warmup frames even if RGB medians still flicker')
+    p.add_argument("--observe-profile", type=Path, help="run latest-pair tabletop detection during capture")
+    p.add_argument("--max-receive-age-s", type=float, help="diagnostic receive-to-output limit")
+    p.add_argument("--reconnects", type=int, default=0, help="bounded same-serial capture retries in observation mode")
+    p.add_argument("--fixed-color-exposure", type=int,
+                   help="disable color AE and set this device exposure unit for the session")
+    p.add_argument("--fixed-color-gain", type=int, help="optional fixed color gain with --fixed-color-exposure")
     p.add_argument("--output", type=Path, required=True)
     args = p.parse_args(argv)
     if args.output.exists():
         p.error("output exists; choose a fresh directory")
-    if not 1 <= args.frames <= 50 or not 1 <= args.seconds <= 60 or not 0 < args.max_skew_ms <= 100:
+    if not 1 <= args.frames <= (900 if args.observe_profile else 50) or not 1 <= args.seconds <= 60 or not 0 < args.max_skew_ms <= 100:
         p.error("invalid capture bounds")
     if args.capture and not args.serial:
         p.error("capture requires explicit serial number")
@@ -237,6 +313,18 @@ def main(argv=None):
         p.error('requested fps must be between 1 and 60')
     if not 5<=args.warmup_frames<=120:
         p.error('warmup frames must be between 5 and 120')
+    if args.observe_profile and (not args.capture or args.fps is None or args.width is None
+                                 or args.max_receive_age_s is None
+                                 or not 0 < args.max_receive_age_s <= 60):
+        p.error("observation mode requires capture, exact width/height/fps and a positive receive age")
+    if not 0 <= args.reconnects <= 3 or (args.reconnects and not args.observe_profile):
+        p.error("up to three retries are supported in observation mode")
+    if args.fixed_color_gain is not None and args.fixed_color_exposure is None:
+        p.error("--fixed-color-gain requires --fixed-color-exposure")
+    if args.fixed_color_exposure is not None and args.fixed_color_exposure <= 0:
+        p.error("--fixed-color-exposure must be positive")
+    if args.fixed_color_gain is not None and args.fixed_color_gain <= 0:
+        p.error("--fixed-color-gain must be positive")
     args.output.mkdir(parents=True)
     report = {"started_at": datetime.now(timezone.utc).isoformat(), "scope": "camera_only",
         "robot_motion_accessed": False, "can_accessed": False, "devices": [],
@@ -264,8 +352,51 @@ def main(argv=None):
                                   "firmware": info.get_firmware_version(), "connection": info.get_connection_type()}
             if report["selected"]["serial"] != args.serial:
                 raise ValueError("opened device serial does not match explicit requested serial")
-            capture(sdk,device,args.serial,args.output,report,count=args.frames,seconds=args.seconds,max_skew_ms=args.max_skew_ms,
-                    size=(args.width,args.height) if args.width is not None else None,fps=args.fps,warmup_frames=args.warmup_frames)
+            if args.fixed_color_exposure is not None:
+                report["color_exposure_lock"] = apply_fixed_color_exposure(
+                    sdk, device, exposure=args.fixed_color_exposure, gain=args.fixed_color_gain,
+                )
+            options = dict(count=args.frames, seconds=args.seconds, max_skew_ms=args.max_skew_ms,
+                           size=(args.width,args.height) if args.width is not None else None,
+                           fps=args.fps, warmup_frames=args.warmup_frames,
+                           allow_unstable_warmup=args.allow_unstable_warmup)
+            if args.observe_profile:
+                if __package__:
+                    from .online_tabletop_observation import observe
+                else:
+                    from online_tabletop_observation import observe
+                from brick_stacking.runtime.config_loader import load_config
+                profile = load_config(args.observe_profile)
+                if (profile["tabletop"]["camera_id"] != args.serial
+                        or profile["tabletop"]["image_size_wh"] != [args.width, args.height]):
+                    raise ValueError("requested serial/resolution differ from the observation profile")
+                try:
+                    sdk_clock_type = context.get_timestamp_clock_type()
+                except (AttributeError, RuntimeError) as exc:
+                    report["sdk_clock_unavailable_reason"] = str(exc)
+                    sdk_clock_type = None
+
+                def attempt(session, offer):
+                    # Re-enumerate on every attempt, retaining the exact camera identity.
+                    available = context.query_devices()
+                    selected = available.get_device_by_serial_number(args.serial)
+                    if selected.get_device_info().get_serial_number() != args.serial:
+                        raise ValueError("reopened camera serial mismatch")
+                    if args.fixed_color_exposure is not None:
+                        session["color_exposure_lock"] = apply_fixed_color_exposure(
+                            sdk, selected, exposure=args.fixed_color_exposure,
+                            gain=args.fixed_color_gain,
+                        )
+                    session["sdk_clock_unavailable_reason"] = report.get("sdk_clock_unavailable_reason")
+                    capture(sdk, selected, args.serial, args.output, session, **options,
+                            on_frame=offer, sdk_clock_type=sdk_clock_type)
+
+                del device  # Release the inventory handle before the sole streaming owner opens.
+                observe(args.output, report, profile, max_age_s=args.max_receive_age_s,
+                        max_skew_s=args.max_skew_ms / 1000, reconnects=args.reconnects,
+                        capture_attempt=attempt)
+            else:
+                capture(sdk, device, args.serial, args.output, report, **options)
         else:
             report["result"] = "INVENTORY" if report["devices"] else "NO_DEVICES"
     except Exception as exc:
@@ -273,7 +404,7 @@ def main(argv=None):
         report["result"] = "ERROR"
     (args.output/"camera_report.json").write_text(json.dumps(report,ensure_ascii=False,indent=2,default=str,allow_nan=False),encoding="utf-8")
     print(json.dumps(report,ensure_ascii=False,default=str,allow_nan=False))
-    return 0 if report["result"] in {"INVENTORY","CAPTURED"} and not report["cleanup_errors"] else 2
+    return 0 if report["result"] in {"INVENTORY","CAPTURED","OBSERVED"} and not report["cleanup_errors"] else 2
 
 
 if __name__ == "__main__":

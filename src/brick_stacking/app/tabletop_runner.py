@@ -12,6 +12,7 @@ from brick_stacking.runtime.config_loader import load_config
 from brick_stacking.runtime.run_recorder import RunRecorder
 from brick_stacking.vision.tabletop_segmentation import TabletopDetector
 from brick_stacking.vision.evaluation import evaluate_candidates
+from brick_stacking.vision.observation_exchange import CaptureContext, observation_exchange, profile_hash
 from brick_stacking.vision.scene_consistency import SceneConsistencyMonitor,static_sequence_acceptance
 
 
@@ -44,6 +45,7 @@ def main(argv=None):
     config=load_config(args.config)
     profile=config["tabletop"]
     detector=TabletopDetector(profile)
+    detector_hash = profile_hash(profile)
     monitor=SceneConsistencyMonitor(**profile['temporal']) if profile.get('temporal') else None
     labels=json.loads(args.labels.read_text(encoding="utf-8")) if args.labels else None
     if labels and profile.get('surface_mode','fixed_roi')!='automatic' and labels["image_size_wh"]!=profile["image_size_wh"]:
@@ -52,13 +54,23 @@ def main(argv=None):
     observations=[]
     try:
         for index,path in enumerate(args.recordings):
-            frame=RecordedCamera([path]).get_synced_rgbd()
+            frame, metadata = RecordedCamera.read_recording(path)
             if labels and labels['image_size_wh'] != [frame.rgb.shape[1],frame.rgb.shape[0]]:
                 raise ValueError('label/frame image dimensions mismatch')
             started=time.perf_counter()
             result=detector.detect(frame)
-            data={"recording":str(path),"processing_s":time.perf_counter()-started,"plane":asdict(result.plane),"diagnostics":result.diagnostics,"candidates":result.candidates,
+            detection_s = time.perf_counter() - started
+            report_path = Path(path).with_name("camera_report.json")
+            report = json.loads(report_path.read_text(encoding="utf-8")) if report_path.is_file() else None
+            context = CaptureContext.from_recording(
+                frame, metadata, image_ref=path, profile=Path(args.config).stem,
+                profile_hash=detector_hash, report=report,
+            )
+            data={"recording":str(path),"processing_s":detection_s,"plane":asdict(result.plane),"diagnostics":result.diagnostics,"candidates":result.candidates,
                 "accepted_color_counts":dict(Counter(c["color"] for c in result.candidates if c["status"]=="SINGLE_CUBE_CANDIDATE"))}
+            data["observation_bundle"] = observation_exchange(
+                frame, context, result, nominal_edge_m=profile["nominal_edge_m"], recorded=True,
+            )
             if monitor:
                 data['temporal']=monitor.update(frame,result)
             data['detection_s']=data['processing_s']

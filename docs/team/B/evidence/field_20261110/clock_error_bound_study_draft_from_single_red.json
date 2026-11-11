@@ -1,0 +1,47 @@
+{
+  "schema_version": "v-clock-error-bound-study-0.1",
+  "status": "PROVISIONAL_MAPPING_BOUND",
+  "source": "docs/team/B/evidence/field_20261110/single_red_observation_bundles.jsonl",
+  "control_ready": false,
+  "exposure_reference": "orbbec_color_global_timestamp_mapped_to_process_monotonic",
+  "n_rows": 12,
+  "n_usable": 12,
+  "host_boot_epochs": [
+    "f9016d4a-56d7-4a83-a8c2-3fa6d11f8153"
+  ],
+  "sdk_host_clock_types": [
+    "REALTIME"
+  ],
+  "receive_minus_exposure_s": {
+    "p50": 0.03064517569146119,
+    "p95": 0.030978846945799887,
+    "max": 0.031217527633998543,
+    "min": 0.030165994015987962,
+    "max_abs_dev_from_median": 0.0005723519425373524
+  },
+  "sdk_receive_minus_global_s": {
+    "p50": 0.030240000000000003,
+    "max": 0.030434,
+    "min": 0.02977
+  },
+  "exposure_candidate_to_output_s": {
+    "p50": 0.6661208134610206,
+    "p95": 1.046346211788477,
+    "max": 1.3126182181877084
+  },
+  "components_s": {
+    "half_bridge_bracket_s": 2.53249891102314e-06,
+    "half_rgb_depth_delta_s": 9.500014130026102e-06,
+    "half_fixed_color_exposure_s": 5e-05,
+    "mapping_jitter_vs_host_receive_s": 0.0005723519425373524
+  },
+  "safety_factor": 2.0,
+  "clock_error_bound_s": 0.0012687689111568034,
+  "notes": [
+    "exposure_host candidate = SDK color global \u2192 process_monotonic sandwich",
+    "bound covers bridge, RGB-D pair skew, half exposure, and lag jitter vs host receive",
+    "does not optically prove photon-arrival epoch; control_ready stays false",
+    "DRAFT only: 12-frame single-red session; accept into ObservationBundle timing.validity only after dedicated >=60s capture plus one reconnect"
+  ],
+  "acceptance": "NOT_YET_ACCEPTED_FOR_BUNDLE_TIMING"
+}

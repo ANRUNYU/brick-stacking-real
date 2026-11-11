@@ -1,0 +1,80 @@
+{
+  "schema_version": "m-field-reference-intake-1",
+  "date": "2026-11-10",
+  "source": "operator_response_in_project_chat",
+  "camera_mount_continuity": {
+    "status": "OPERATOR_CONFIRMED_UNCHANGED_RELATIVE_TO_ROBOT_BASE",
+    "since": "C35 calibration on 2026-11-08",
+    "operator_statement": "\u786e\u8ba4\u672a\u53d8\u5316",
+    "expected_camera_serial": "CP2L863000KL",
+    "current_device_serial_checked": true,
+    "does_not_prove_independent_calibration_accuracy": true,
+    "current_device_serial": "CP2L863000KL"
+  },
+  "calibration_candidate": {
+    "path": "calibration/candidates/C35_left_head_fit_only_user10mm_20261108.json",
+    "file_sha256": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
+    "independent_validation_accepted": false,
+    "current_session_binding": "config/observed/calibration_current_binding_c35_20261110.json"
+  },
+  "target_slot": {
+    "status": "OPERATOR_DEFINED_BLACK_CROSS_TABLE_CENTER",
+    "marker_description": "Fixed black table cross, approximately 20 x 20 mm; no separate placement grid or slot label",
+    "reference_frame": "table_black_cross_20mm",
+    "expected_point": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "point_kind": "table_surface_center",
+    "unit": "m",
+    "measurement_error_bound": null,
+    "black_cross_selected": true,
+    "axes": {
+      "x": "right",
+      "y": "toward robot",
+      "z": "table normal upward"
+    }
+  },
+  "target_association_confirmed": false,
+  "association_evidence_ref": null,
+  "control_ready": false,
+  "motion_enabled": false,
+  "permit": null,
+  "next_capture": "Empty-slot marker reference first, then manually placed red-cube contrast frames; no robot motion.",
+  "historical_red_reference": {
+    "point_m": [
+      0.172,
+      0.079,
+      0.05
+    ],
+    "frame": "table_black_cross_20mm",
+    "point_kind": "table projection of red top center plus measured height",
+    "estimated_error_m": 0.002,
+    "evidence_ref": "docs/team/B/evidence/field_20261110/independent_ruler_reference_v0.1.json",
+    "is_slot_expectation": false
+  },
+  "slot_definition_proposal": {
+    "status": "OPERATOR_ACCEPTED_NOMINAL_TARGET_DEFINITION_NOT_MEASURED",
+    "table_center_m": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "frame": "table_black_cross_20mm",
+    "nominal_cube_edge_m": 0.05,
+    "nominal_model_center_m": [
+      0.0,
+      0.0,
+      0.025
+    ],
+    "nominal_visible_top_center_m": [
+      0.0,
+      0.0,
+      0.05
+    ],
+    "camera_frame_expectations": null,
+    "measurement_error_bound_m": null,
+    "note": "Target definition proposal only, not measured or accepted camera/base pose."
+  }
+}

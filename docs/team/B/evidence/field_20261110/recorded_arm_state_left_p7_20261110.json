@@ -1,0 +1,86 @@
+{
+  "schema_version": "recorded-arm-state-0.1",
+  "kind": "recorded_arm_state",
+  "binding_schema": "arm-device-binding-0.1",
+  "binding_path": "E:/OneDrive/Desktop/brick-stacking-real/brick-stacking-real/config/observed/arm_device_binding_left_p7_20261110.json",
+  "historical_label": "operator_selected_left_P7_can2_61_to_67",
+  "evidence_refs": [
+    "config/observed/hardware_20261107.json#arms[left_arm]",
+    "docs/team/C/evidence/fixed_camera_C35_fit_inputs.json#arm_device_id",
+    "calibration/candidates/C35_left_head_fit_only_user10mm_20261108.json#arm_device_id"
+  ],
+  "arm_state": {
+    "sample_id": "c804995e6cbb46f4925360c61561fcd8",
+    "source": "recorded",
+    "device_id": "can2:61,62,63,64,65,66,67",
+    "frame_id": "left_arm_base",
+    "device_stamp": null,
+    "host_receive_stamp": 0.0,
+    "clock_domain": "host_monotonic",
+    "epoch": "recorded-binding/left/can2:61,62,63,64,65,66,67",
+    "validity": "INVALID",
+    "reason": "recorded config/history binding only; not a live ArmStateReader sample; CAN not opened",
+    "joint_names": [
+      "J1",
+      "J2",
+      "J3",
+      "J4",
+      "J5",
+      "J6",
+      "J7"
+    ],
+    "joint_bindings": {
+      "J1": {
+        "sdk_index": 0,
+        "device_joint_id": "61"
+      },
+      "J2": {
+        "sdk_index": 1,
+        "device_joint_id": "62"
+      },
+      "J3": {
+        "sdk_index": 2,
+        "device_joint_id": "63"
+      },
+      "J4": {
+        "sdk_index": 3,
+        "device_joint_id": "64"
+      },
+      "J5": {
+        "sdk_index": 4,
+        "device_joint_id": "65"
+      },
+      "J6": {
+        "sdk_index": 5,
+        "device_joint_id": "66"
+      },
+      "J7": {
+        "sdk_index": 6,
+        "device_joint_id": "67"
+      }
+    },
+    "q_rad": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "dq_rad_s": null,
+    "enabled": false,
+    "fault": null
+  },
+  "device_id": "can2:61,62,63,64,65,66,67",
+  "source": "recorded",
+  "fresh_live_read": false,
+  "can_opened": false,
+  "motion_enabled": false,
+  "control_ready": false,
+  "notes": [
+    "Host checklist accepts source=recorded for arm_state_device_id.",
+    "Live Permit still requires a fresh ArmState matching permit.device_id.",
+    "Camera SN and hand SN are never accepted as arm device_id."
+  ]
+}

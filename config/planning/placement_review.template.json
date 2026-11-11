@@ -1,0 +1,26 @@
+{
+  "schema_version": "placement-review-policy-draft-1",
+  "status": "UNCONFIGURED_NOT_FOR_EXECUTION",
+  "competition_duration_s": 300,
+  "motion_enabled": false,
+  "policy_id": null,
+  "xy_m": {"stop": null, "trigger": null, "acceptance": null},
+  "height_m": {"stop": null, "trigger": null, "acceptance": null},
+  "yaw_rad": {"stop": null, "trigger": null, "acceptance": null},
+  "max_push_step_m": null,
+  "max_total_push_m": null,
+  "max_attempts": null,
+  "max_correction_s": null,
+  "min_progress_m": null,
+  "max_observation_age_s": null,
+  "max_extra_views": null,
+  "time_estimates_source": null,
+  "push_response_model_id": null,
+  "notes": [
+    "All geometric/contact/time thresholds require measurement and review.",
+    "Existing frozen acceptance budgets must not be relaxed.",
+    "Time estimates include approach, contact, retract, settle and recheck.",
+    "Receive-to-output freshness is not an exposure latency bound.",
+    "A proposal never grants a permit or invokes a hardware adapter."
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "schema_version": "m-diagnostic-permit-eligibility-0.1",
+  "kind": "shadow_diagnostic",
+  "executable": false,
+  "live_permit": null,
+  "permit_eligible": true,
+  "evidence_gates_clear": true,
+  "vision_pre_grasp_ready": true,
+  "formal_grasp_entry_allowed": false,
+  "control_ready": false,
+  "motion_enabled": false,
+  "authority": {
+    "live_issuer": "D/M SafetyGate at execution (contracts.Permit; OfflineSafetyGate.check_step_evidence)",
+    "diagnostic_issuer": "pre_grasp_gates (unified V/M readiness on this branch)",
+    "not_authority_for": [
+      "arm.execute_trajectory",
+      "OfflineSafetyGate live step",
+      "control_ready",
+      "CAN / actuator enable"
+    ],
+    "required_live_fields": [
+      "device_id",
+      "trajectory_hash",
+      "config_hash",
+      "calibration_hash",
+      "scene_version",
+      "valid_until_host_monotonic_s"
+    ]
+  },
+  "context_present": {
+    "target_id": "m-first-red-01",
+    "slot_id": "m-first-placement-slot-01",
+    "region_id": "m-first-placement-region-01",
+    "reference_id": "table_black_cross_20mm",
+    "observation_id": "CP2L863000KL/orbbec_CP2L863000KL_cbb0aaa11c68403ba5950e78e4531938/45533.710743/0",
+    "frame_id": "camera_CP2L863000KL_color_optical_frame",
+    "calibration_hash": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
+    "config_hash_or_profile_hash": "c1d14c63e9090285ee957f8b4954710e5c4c52e385acc42e1cc3c8d0444b1a76",
+    "scene_version": "orbbec_CP2L863000KL_cbb0aaa11c68403ba5950e78e4531938",
+    "epoch": "orbbec_CP2L863000KL_cbb0aaa11c68403ba5950e78e4531938",
+    "clock_domain": "process_monotonic",
+    "camera_device_id": "CP2L863000KL",
+    "shadow_inspection_status": "SHADOW_INSPECTION_READY"
+  },
+  "live_permit_field_status": {
+    "device_id": {
+      "status": "PRESENT_FROM_RECORDED_OR_MOCK_ARM",
+      "detail": "ArmState.device_id from recorded binding (validity='INVALID'); does NOT count as live VALID for formal_grasp_entry_allowed",
+      "value": "can2:61,62,63,64,65,66,67",
+      "source": "recorded",
+      "validity": "INVALID",
+      "camera_device_id_seen": "CP2L863000KL"
+    },
+    "trajectory_hash": {
+      "status": "PRESENT_FROM_SHADOW_PLAN_BUNDLE",
+      "detail": "shadow PlanBundle trajectory_hash present for dry-run / diagnostic wiring; not H3 production PlanBundle (#20); still not a live Permit",
+      "value": "c28c3b72fadd2816b9034fa121ef4a875bf7ee1520973f4fe807f92f7f8c1a24",
+      "executable": false,
+      "h3_production_plan": false
+    },
+    "config_hash": {
+      "status": "PRESENT_FROM_SHADOW",
+      "value": "c1d14c63e9090285ee957f8b4954710e5c4c52e385acc42e1cc3c8d0444b1a76"
+    },
+    "calibration_hash": {
+      "status": "PRESENT",
+      "value": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461"
+    },
+    "scene_version": {
+      "status": "PRESENT",
+      "value": "orbbec_CP2L863000KL_cbb0aaa11c68403ba5950e78e4531938"
+    },
+    "valid_until_host_monotonic_s": {
+      "status": "MISSING_ISSUANCE_CLOCK",
+      "detail": "freshness window is set only by live SafetyGate at issuance"
+    }
+  },
+  "still_missing_for_live_permit": [
+    "live SafetyGate issuance (D/M authority at execution)",
+    "host/safety enable path for control_ready",
+    "actuator / arm power enable (operator)",
+    "fresh live VALID ArmState.device_id matching permit.device_id (recorded/mock \u2260 live)",
+    "valid_until_host_monotonic_s within OfflineSafetyGate freshness window"
+  ],
+  "proof": "shadow Inspection + evidence gates clear + shadow PlanBundle + recorded/mock arm device_id; still missing live VALID arm + live SafetyGate Permit + host/actuator enable before a live Permit can exist",
+  "inputs": {
+    "request_path": "docs/team/B/evidence/field_20261110/first_placement_request_assoc_handclear_overlay_20261110.json",
+    "shadow_path": "docs/team/B/evidence/field_20261110/_chain_test_20261111/live_s140_shadow_assoc_bound.json",
+    "plan_bundle_path": "docs/team/B/evidence/field_20261110/_chain_test_20261111/live_shadow_plan_bundle.json",
+    "arm_state_path": "docs/team/B/evidence/field_20261110/_chain_test_20261111/live_recorded_arm_state.json"
+  },
+  "usage": [
+    "Readiness may set permit_eligible=true when evidence_gates_clear.",
+    "Do NOT copy this object into contracts.Permit / StepEvidence.permit.",
+    "Shadow PlanBundle / recorded arm update diagnostic field status only.",
+    "Live permit remains null until host/safety + SafetyGate issue one."
+  ]
+}

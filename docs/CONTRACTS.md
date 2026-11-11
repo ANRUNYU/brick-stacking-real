@@ -30,7 +30,7 @@ B负责单次观测及短期关联线索；D拥有持久block_id、持有者和�
 
 ## 3. 建议方法
 A：read_state()、validate_trajectory()、execute_trajectory(trajectory, permit)、cancel(command_id)、get_execution_result()、request_stop(policy)。
-B：get_observation()、detect_blocks(observation)、verify(request)、replay(recording)。
+B：get_observation()、detect_blocks(observation)、verify(request)、replay(recording)。V 线门面见 `brick_stacking.vision.service`（`VisionSession.get_observation` / `detect_blocks` / `verify` / `replay`）；`control_ready` 在时钟误差界与标定 hash 就绪前保持 false。
 C：localize(observation, transforms)、plan_pick_place(request)、validate_plan(plan, context)。
 D手：read_hand_state()、execute_preset(preset, permit)、get_hand_result()、request_hand_stop(policy)。
 D流程：run(task_spec)、cancel(task_id)、get_task_state()。
@@ -48,3 +48,12 @@ permit不是安全硬件，不能替代物理急停或已验证的控制能力�
 M0固定：正常积木观测、无效深度观测、过期状态、7轴样例轨迹、不可达规划结果、正常执行、取消未确认、视觉UNKNOWN。
 D保存样例索引；A提供执行/反馈样例，B提供观测/复检样例，C提供几何/轨迹样例。每份Mock由其接口生产者维护。
 接口变更先改本文和样例，生产者+使用者审查；破坏性变更升级schema_version，在同一组PR更新调用方。不能只改自己模块后让别人追着适配。
+
+### V/M H0 草案观测与复检
+
+- `ObservationBundle` 以 `schema_version`、`profile_hash` 和采集会话关联现有 `RGBDObservation`、`BlockObservation`。旧录包缺主机接收时间或原始深度尺度时以 null 表示。已配准、去畸变的数据使用有效 K 与空 D，原始参数如有保存在 `timing.raw_intrinsics`。
+- 位置估计通过 `b_extensions` 交换，`camera_pose` 保持 null 直到可提供完整观测姿态。顶面采样或中心、模型块中心、实测跨度、标称尺寸、未知方向和未知协方差各自保留。该草案由 C/D 审查后冻结。
+- `clock_domain` 描述帧时间，主机接收时钟域单独存于 `timing.host_clock_domain`。SDK global 映射原始读数用于诊断，需另有曝光参考与误差界才能认可曝光时间。V 输出 `control_ready=false`。
+- `VerificationEvidence` 的 `observation_refs` 保留 FSM 前帧与最终帧引用，`supporting_observation_refs` 保存额外稳定帧。缺帧的 UNKNOWN 允许主机时间为 null。
+
+[V 线交接及 H0/H1/H4 样例](team/B/V_LINE_HANDOFF_20261110.md)

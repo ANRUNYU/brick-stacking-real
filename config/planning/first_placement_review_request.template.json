@@ -1,0 +1,53 @@
+{
+  "schema_version": "m-placement-target-request-draft-1",
+  "status": "TABLE_FRAME_TARGET_DEFINED_CAMERA_REFERENCE_PENDING",
+  "target_id": "m-first-red-01",
+  "slot_id": "m-first-placement-slot-01",
+  "region_id": "m-first-placement-region-01",
+  "expected_color": "red",
+  "target_association_confirmed": false,
+  "association_evidence_ref": null,
+  "reference_id": null,
+  "camera_id": "CP2L863000KL",
+  "camera_frame": "camera_CP2L863000KL_color_optical_frame",
+  "scene_version": null,
+  "epoch": null,
+  "profile_hash": null,
+  "calibration_hash": null,
+  "calibration_candidate": {
+    "path": "calibration/candidates/C35_left_head_fit_only_user10mm_20261108.json",
+    "status": "FIT_ONLY_NOT_AN_APPROVED_CURRENT_BINDING",
+    "file_sha256": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461"
+  },
+  "placement_review_reference": {
+    "point_kind": "visible_top_center",
+    "expected_point_camera_m": null,
+    "table_normal_camera": null,
+    "point_error_bound_m": null
+  },
+  "formal_verify_reference": {
+    "point_kind": "model_center",
+    "expected_center_camera_m": null,
+    "table_normal_camera": null,
+    "geometry_version": null
+  },
+  "post_place_evidence": {
+    "action_started_s": null,
+    "action_finished_s": null,
+    "released": null,
+    "min_stable_s": null,
+    "max_stable_shift_m": null,
+    "hand_clear": null,
+    "support_ok": null,
+    "neighbors_unchanged": null
+  },
+  "control_ready": false,
+  "motion_enabled": false,
+  "permit": null,
+  "notes": [
+    "Logical identifiers are a proposed naming contract, not association confirmation.",
+    "Camera-frame expectations live in first_placement_review_request.adopted.json after confirmed cross annotation.",
+    "Candidate file hash identifies bytes only; it does not approve calibration or fill historical bundles.",
+    "Top surface center and model center are different points; bind the chosen semantics explicitly."
+  ]
+}

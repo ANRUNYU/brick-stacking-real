@@ -102,8 +102,17 @@ class ArmStateReader:
                 except (TimeoutError, ValueError) as exc:
                     positions.append(None)
                     failures.append(f"{joint}: {exc}")
+            # J6/J7: Flash mode was verified at bind; no audited position READ.
+            # Never call MotorV2.read_initial_state / Rest from this reader.
+            from brick_stacking.arm.v2_wrist_readonly import FAILURE_REASON
+
             positions.extend((None, None))
-            failures.append("J6/J7: no audited read-only position query")
+            failures.append(FAILURE_REASON)
+            from brick_stacking.arm.arm_state_validity import assign_validity_from_joints
+
+            validity, reason = assign_validity_from_joints(
+                positions=positions, failures=failures
+            )
             return {
                 "sample_id": uuid4().hex,
                 "source": "real",
@@ -113,8 +122,8 @@ class ArmStateReader:
                 "host_receive_stamp": time.monotonic(),
                 "clock_domain": "host_monotonic",
                 "epoch": self._epoch,
-                "validity": "INVALID",
-                "reason": "; ".join(failures),
+                "validity": validity,
+                "reason": reason,
                 "joint_names": JOINTS,
                 "joint_bindings": {
                     joint: {"sdk_index": index, "device_joint_id": str(motor_id)}

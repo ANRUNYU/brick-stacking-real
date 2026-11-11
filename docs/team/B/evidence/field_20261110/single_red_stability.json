@@ -1,0 +1,51 @@
+{
+  "scene": "single_red_sparse_static",
+  "camera_id": "CP2L863000KL",
+  "frames": 12,
+  "all_single_valid_red": true,
+  "control_ready": false,
+  "clock_error_bound_s": null,
+  "exposure_to_output_s": null,
+  "fixed_color_exposure": 100,
+  "fixed_color_gain": 16,
+  "receive_to_output_s": {
+    "p50": 0.6357806565065403,
+    "p95": 1.0155780540691919,
+    "max": 1.281857346999459
+  },
+  "suggested_freshness_gate_s": 2.564,
+  "freshness_basis": "receive_to_output max * 2; not an exposure-clock bound",
+  "top_surface_repeatability_camera_m": {
+    "median_m": [
+      -0.008298321421357866,
+      0.23753543100571067,
+      0.7899158546613816
+    ],
+    "max_deviation_from_median_m": 0.0011212244376539837,
+    "p95_deviation_m": 0.0009718617445567252,
+    "std_m": [
+      0.0005700400363605787,
+      0.0002226217640927072,
+      0.0002662122018031466
+    ]
+  },
+  "model_center_repeatability_camera_m": {
+    "median_m": [
+      -0.008196219372278345,
+      0.25532698362329753,
+      0.8074790946558625
+    ],
+    "max_deviation_from_median_m": 0.0011278378549252571,
+    "p95_deviation_m": 0.0009680773689783961,
+    "std_m": [
+      0.0005711021450297476,
+      0.00022734601864451328,
+      0.0002693878416030865
+    ]
+  },
+  "measured_top_span_m_median": [
+    0.040809979662299156,
+    0.04149591363966465
+  ],
+  "note": "Camera-frame repeatability only. Not base-frame accuracy and not a 10mm acceptance claim."
+}

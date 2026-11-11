@@ -1,0 +1,33 @@
+{
+  "default": {
+    "formal_grasp_entry_allowed": false,
+    "control_ready": false,
+    "blocked_by": [
+      "j6_j7_readonly",
+      "awaiting_live_arm"
+    ],
+    "live_arm_via": null,
+    "live_permit_path_status": "software_exhausted_awaiting_live_arm"
+  },
+  "dual_rest_attest_with_rest_draft": {
+    "formal_grasp_entry_allowed": true,
+    "control_ready": false,
+    "blocked_by": [],
+    "live_arm_via": "rest_attested",
+    "dry_run_grasp_entry_ready": true,
+    "can_enter_formal_grasp": true,
+    "live_permit_path_status": "rest_attested_permit_validated",
+    "live_permit_executable": false,
+    "control_ready_missing": [
+      "operator_policy_attest_control_ready",
+      "reporter_hard_hold_no_large_motion_elevation"
+    ],
+    "how_to_open_gates": [
+      "--rest-state-capture / BRICK_STACKING_REST_STATE_CAPTURE",
+      "--attest-rest-for-pregrasp / BRICK_STACKING_ATTEST_REST_FOR_PREGRASP",
+      "structurally live VALID Rest draft as arm_state (Mock/shadow)",
+      "dry-run ready evidence chain (pre_grasp_gaps + plan_bundle + probe)"
+    ]
+  },
+  "note": "Rest draft here is Mock/synthetic for audit; real Rest risks wrist loss-of-hold"
+}

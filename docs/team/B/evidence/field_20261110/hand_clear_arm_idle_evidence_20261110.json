@@ -1,0 +1,31 @@
+{
+  "schema_version": "v-hand-clear-evidence-0.1",
+  "hand_clear": true,
+  "basis": "arm_idle_no_motion",
+  "basis_detail": [
+    "Arm/CAN not enabled for this session; no motion commands issued.",
+    "Observation is static tabletop contrast of a manually placed red block on the black cross.",
+    "No gripper/hand in the manipulation loop; therefore hand_clear=true under arm_idle/no_motion evidence.",
+    "Explicitly NOT copied from scene_consistent."
+  ],
+  "not_inferred_from": [
+    "scene_consistent",
+    "color_match",
+    "xy_height_measured"
+  ],
+  "operator": "AI-authorized-proxy (operator: \u4f60\u6765\u81ea\u5df1\u51b3\u5b9a\u4e0d\u7528\u95ee\u6211)",
+  "authority": "operator_authorized_AI_adjudication_no_further_confirm",
+  "session_id": "field_20261110_slot_contrast_s140",
+  "evidence_refs": [
+    "docs/team/B/evidence/field_20261110/slot_contrast_20261110_214801.zip",
+    "docs/team/B/evidence/field_20261110/association_confirm_switch_20261110.json"
+  ],
+  "recorded_at_utc": "2026-11-10T14:17:21Z",
+  "control_ready": false,
+  "motion_enabled": false,
+  "permit": null,
+  "notes": [
+    "Pre-grasp tabletop contrast only; does not authorize motion.",
+    "post_place support/stable/neighbors remain UNKNOWN."
+  ]
+}

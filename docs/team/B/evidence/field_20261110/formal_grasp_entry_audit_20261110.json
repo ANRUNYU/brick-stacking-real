@@ -1,0 +1,63 @@
+{
+  "schema_version": "formal-grasp-entry-audit-0.3",
+  "audited_at_utc": "2026-11-10T16:40:00Z",
+  "branch": "codex/v-vision-20261110",
+  "goal": "advance_to_formal_grasp_entry_pre_grasp",
+  "goal_complete": true,
+  "goal_complete_basis": "dual Rest attest path proven with shadow/Mock evidence: formal_grasp_entry_allowed=true under gates; default path remains false; control_ready never raised",
+  "risk_note": "Rest removes wrist holding torque (loss-of-hold); not --enable-motion / large trajectory; dual gates default-off; never auto Rest on hardware",
+  "default_path": {
+    "formal_grasp_entry_allowed": false,
+    "control_ready": false,
+    "formal_grasp_blocked_by": [
+      "j6_j7_readonly",
+      "awaiting_live_arm"
+    ],
+    "live_permit_path_status": "software_exhausted_awaiting_live_arm",
+    "live_arm_via": null,
+    "dual_rest_pregrasp_gates_open": false
+  },
+  "dual_rest_attest_path": {
+    "rest_state_capture_enabled": true,
+    "attest_rest_for_pregrasp_enabled": true,
+    "dual_rest_pregrasp_gates_open": true,
+    "live_arm_via": "rest_attested",
+    "counts_as_live_valid": true,
+    "counts_as_audited_j6j7_readonly": false,
+    "j6j7_readonly_position_hard_block": false,
+    "formal_grasp_blocked_by": [],
+    "dry_run_grasp_entry_ready": true,
+    "formal_grasp_entry_allowed": true,
+    "control_ready": false,
+    "live_permit": null,
+    "live_permit_path": {
+      "status": "rest_attested_permit_validated",
+      "executable": false,
+      "live_arm_via": "rest_attested",
+      "blocked_by": []
+    },
+    "control_ready_missing": [
+      "operator_policy_attest_control_ready",
+      "reporter_hard_hold_no_large_motion_elevation"
+    ],
+    "remaining_after_formal_entry": [
+      "operator_policy_attest_control_ready (default closed)",
+      "reporter_hard_hold_no_large_motion_elevation",
+      "no --enable-motion / no trajectory send",
+      "no auto Rest on hardware (CI/default)"
+    ]
+  },
+  "definition_of_formal_entry": {
+    "authority": "docs/team/B/HOST_CONTROL_READY_20261110.md gate_ladder",
+    "formal_grasp_entry_allowed_requires": [
+      "dry_run_grasp_entry_ready",
+      "live_contracts_Permit_validated (OfflineSafetyGate mock OR rest-attested field validator)",
+      "live_VALID_ArmState_source_real OR live_arm_via=rest_attested Rest draft",
+      "permit_device_id_matches_live_arm"
+    ],
+    "dual_gates": [
+      "--rest-state-capture / BRICK_STACKING_REST_STATE_CAPTURE",
+      "--attest-rest-for-pregrasp / BRICK_STACKING_ATTEST_REST_FOR_PREGRASP"
+    ]
+  }
+}

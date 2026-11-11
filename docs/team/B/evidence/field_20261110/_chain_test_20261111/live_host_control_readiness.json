@@ -1,0 +1,787 @@
+{
+  "schema_version": "host-control-readiness-0.2",
+  "control_ready": false,
+  "motion_enabled": false,
+  "formal_grasp_entry_allowed": false,
+  "formal_grasp_ready": false,
+  "dry_run_grasp_entry_ready": true,
+  "vision_pre_grasp_ready": true,
+  "only_operator_enable_remaining": false,
+  "needs_operator_physical_enable_now": false,
+  "needs_operator_physical_enable_before_real_motion": true,
+  "permit_eligible": true,
+  "live_permit": null,
+  "operator_policy_attest": {
+    "schema_version": "host-control-ready-policy-attest-0.1",
+    "attested": false,
+    "operator": null,
+    "evidence_ref": null,
+    "notes": "default unattested; control_ready stays false",
+    "control_ready": false,
+    "motion_enabled": false,
+    "path": null
+  },
+  "gate_ladder": {
+    "vision_pre_grasp_ready": true,
+    "dry_run_grasp_entry_ready": true,
+    "formal_grasp_entry_allowed": false,
+    "control_ready": false,
+    "control_ready_prerequisites_met": false,
+    "reporter_never_raises_control_ready": true,
+    "reporter_never_raises_motion_enabled": true,
+    "definitions": {
+      "vision_pre_grasp_ready": "Vision-side pre_grasp evidence gates clear (pre_grasp_gates.evidence_gates_clear). Not formal entry.",
+      "dry_run_grasp_entry_ready": "vision ready + diagnostic permit_eligible + PlanBundle trajectory_hash + ArmState.device_id (recorded/mock OK) + OfflineSafetyGate dry-run issuance fields complete and gate accepts draft under MockArm.",
+      "formal_grasp_entry_allowed": "dry_run_grasp_entry_ready + live contracts.Permit validated by OfflineSafetyGate against counts_as_live_valid ArmState (source=real + validity=VALID + seven finite q_rad). Recorded/mock/fixture arm and dry-run drafts do not count. Exception: dual Rest gates (--rest-state-capture + --attest-rest-for-pregrasp) + structurally live VALID Rest draft may arm via live_arm_via=rest_attested (\u2260 audited readonly).",
+      "control_ready": "Prerequisites: formal_grasp_entry_allowed + explicit operator_policy_attest (attested=true, default closed). THIS REPORTER ALWAYS reports control_ready=false (large-motion safety); elevation deferred to a dedicated host path."
+    },
+    "formal_grasp_entry_missing": [
+      "live_contracts_Permit_validated",
+      "live_VALID_ArmState_source_real"
+    ],
+    "formal_grasp_blocked_by": [
+      "j6_j7_readonly",
+      "awaiting_live_arm"
+    ],
+    "control_ready_missing": [
+      "formal_grasp_entry_allowed",
+      "operator_policy_attest_control_ready",
+      "reporter_hard_hold_no_large_motion_elevation"
+    ],
+    "can_enter_formal_grasp": false,
+    "operator_enable_required_now": false,
+    "live_valid_arm_gap": [
+      "live_valid_arm_state"
+    ],
+    "arm_feedback_source_kind": "recorded",
+    "counts_as_live_valid": false,
+    "structural_counts_as_live_valid": false,
+    "live_arm_via": null,
+    "rest_state_capture_draft": false,
+    "rest_state_capture_available": true,
+    "rest_state_capture_enabled": false,
+    "attest_rest_for_pregrasp_enabled": false,
+    "dual_rest_pregrasp_gates_open": false,
+    "blocked_unless_rest_attested": true,
+    "counts_as_audited_j6j7_readonly": false,
+    "j6j7_readonly_position_hard_block": true,
+    "j6j7_readonly_hard_block_id": "j6_j7_no_audited_readonly_position_query",
+    "live_permit_path_status": "software_exhausted_awaiting_live_arm"
+  },
+  "checklist": [
+    {
+      "id": "vision_pre_grasp_ready",
+      "status": "PASS",
+      "blocking": false,
+      "category": "software",
+      "detail": "vision_pre_grasp_ready=true in pre_grasp evidence",
+      "owner": "V / pre_grasp_gates"
+    },
+    {
+      "id": "permit_eligible_diagnostic",
+      "status": "PASS",
+      "blocking": false,
+      "category": "software",
+      "detail": "diagnostic permit_eligible=true (not a live Permit)",
+      "owner": "pre_grasp_gates diagnostic"
+    },
+    {
+      "id": "plan_bundle_trajectory_hash",
+      "status": "PASS",
+      "blocking": false,
+      "category": "software",
+      "detail": "trajectory_hash present: c28c3b72fadd2816b9034fa121ef4a875bf7ee1520973f4fe807f92f7f8c1a24",
+      "owner": "M planning"
+    },
+    {
+      "id": "arm_state_device_id",
+      "status": "PASS",
+      "blocking": false,
+      "category": "software",
+      "detail": "ArmState.device_id=can2:61,62,63,64,65,66,67 source=recorded validity=INVALID (recorded/mock \u2260 live VALID)",
+      "owner": "A / arm adapter"
+    },
+    {
+      "id": "live_valid_arm_state",
+      "status": "MISSING",
+      "blocking": true,
+      "category": "software",
+      "detail": "recorded ArmState/device_id binding present but does not count as live VALID (hard_block=j6_j7_no_audited_readonly_position_query); blockers=['source_is_real', 'validity_field_is_VALID', 'all_seven_q_rad_finite']",
+      "owner": "A / ArmStateReader"
+    },
+    {
+      "id": "rest_state_capture_gate",
+      "status": "POLICY_HOLD",
+      "blocking": false,
+      "category": "host_policy",
+      "detail": "rest_state_capture research gate available=True enabled=False attest_rest_for_pregrasp=False dual_gate_open=False blocked_unless_rest_attested=True; default both false; CI never auto Rest; loss-of-hold \u2260 trajectory; never raises control_ready",
+      "owner": "A / rest_state_capture"
+    },
+    {
+      "id": "attest_rest_for_pregrasp_gate",
+      "status": "POLICY_HOLD",
+      "blocking": false,
+      "category": "host_policy",
+      "detail": "attest_rest_for_pregrasp second gate enabled=False; dual_gate_open=False; live_arm_via=rest_attested only when dual open + structurally live VALID Rest draft; \u2260 audited readonly; never raises control_ready",
+      "owner": "A / rest_state_capture dual attest"
+    },
+    {
+      "id": "live_permit",
+      "status": "MISSING",
+      "blocking": true,
+      "category": "live_permit",
+      "detail": "contracts.Permit is null; only D/M SafetyGate may issue at execution. diagnostic field hints={device_id:PRESENT_FROM_RECORDED_OR_MOCK_ARM, trajectory_hash:PRESENT_FROM_SHADOW_PLAN_BUNDLE, config_hash:PRESENT_FROM_SHADOW, calibration_hash:PRESENT, scene_version:PRESENT, valid_until_host_monotonic_s:MISSING_ISSUANCE_CLOCK}",
+      "owner": "D/M SafetyGate"
+    },
+    {
+      "id": "dry_run_arm_disabled_path",
+      "status": "PROBED",
+      "blocking": false,
+      "category": "dry_run",
+      "detail": "OfflineSafetyGate+MockArm reachable; hardware_enabled=false; step_without_permit_rejected=True; issuance_fields_complete=True; plumbing_ok=True; still_missing_fields=[]; only_hw_policy_remaining=True",
+      "owner": "execution / OfflineSafetyGate"
+    },
+    {
+      "id": "dry_run_safety_gate_issuance",
+      "status": "PASS",
+      "blocking": false,
+      "category": "dry_run",
+      "detail": "dry-run issuance diagnostic executable=false; fields_complete=True; gate_accepts_draft=True; still_missing=[]; live_permit remains null",
+      "owner": "D/M OfflineSafetyGate.issue_dry_run_diagnostic"
+    },
+    {
+      "id": "host_monitor_enable_motion",
+      "status": "MISSING",
+      "blocking": true,
+      "category": "actuator_operator",
+      "detail": "no host_monitor snapshot; live motion_enabled requires --enable-motion + READY + ENABLE (this branch may lack host_monitor sources)",
+      "owner": "operator / host_monitor"
+    },
+    {
+      "id": "host_monitor_session_ready",
+      "status": "MISSING",
+      "blocking": true,
+      "category": "actuator_operator",
+      "detail": "session_open unknown (no host_monitor snapshot)",
+      "owner": "operator / host_monitor"
+    },
+    {
+      "id": "dry_run_grasp_entry_ready",
+      "status": "PASS",
+      "blocking": false,
+      "category": "dry_run",
+      "detail": "dry-run full chain ready",
+      "owner": "host_control_readiness gate ladder"
+    },
+    {
+      "id": "formal_grasp_entry_gate",
+      "status": "POLICY_HOLD",
+      "blocking": true,
+      "category": "live_permit",
+      "detail": "formal entry held: requires dry_run_grasp_entry_ready + validated live Permit + live VALID ArmState (source=real, validity=VALID); dry_run_ready=True, live_permit_valid=False, live_arm=False; blocked_by=['j6_j7_readonly', 'awaiting_live_arm']",
+      "owner": "host/safety gate ladder"
+    },
+    {
+      "id": "operator_policy_attest_control_ready",
+      "status": "POLICY_HOLD",
+      "blocking": true,
+      "category": "host_policy",
+      "detail": "operator_policy_attest closed (attested=false/missing); default-safe. Explicit --attested required before any future host path may consider control_ready; this reporter never raises it",
+      "owner": "operator / host_policy_attest"
+    },
+    {
+      "id": "host_policy_control_ready",
+      "status": "POLICY_HOLD",
+      "blocking": true,
+      "category": "host_policy",
+      "detail": "control_ready held false by reporter hard safety (no large-motion unlock). prerequisites_met=False (formal=False, attest=False); elevation deferred to dedicated host path after V+M\u2192main",
+      "owner": "host/safety (reporter never raises)"
+    },
+    {
+      "id": "host_policy_motion_enabled",
+      "status": "POLICY_HOLD",
+      "blocking": true,
+      "category": "host_policy",
+      "detail": "motion_enabled held false by default; live path needs host_monitor --enable-motion + READY/ENABLE; planning outputs stay false",
+      "owner": "host/safety (this checklist never enables)"
+    }
+  ],
+  "missing_software": [],
+  "missing_field_or_operator": [
+    "live_permit",
+    "host_monitor_enable_motion",
+    "host_monitor_session_ready",
+    "formal_grasp_entry_gate",
+    "operator_policy_attest_control_ready",
+    "host_policy_control_ready",
+    "host_policy_motion_enabled"
+  ],
+  "hard_blockers": [
+    {
+      "id": "live_valid_arm_state",
+      "status": "MISSING",
+      "category": "software",
+      "detail": "recorded ArmState/device_id binding present but does not count as live VALID (hard_block=j6_j7_no_audited_readonly_position_query); blockers=['source_is_real', 'validity_field_is_VALID', 'all_seven_q_rad_finite']",
+      "owner": "A / ArmStateReader"
+    },
+    {
+      "id": "live_permit",
+      "status": "MISSING",
+      "category": "live_permit",
+      "detail": "contracts.Permit is null; only D/M SafetyGate may issue at execution. diagnostic field hints={device_id:PRESENT_FROM_RECORDED_OR_MOCK_ARM, trajectory_hash:PRESENT_FROM_SHADOW_PLAN_BUNDLE, config_hash:PRESENT_FROM_SHADOW, calibration_hash:PRESENT, scene_version:PRESENT, valid_until_host_monotonic_s:MISSING_ISSUANCE_CLOCK}",
+      "owner": "D/M SafetyGate"
+    },
+    {
+      "id": "host_monitor_enable_motion",
+      "status": "MISSING",
+      "category": "actuator_operator",
+      "detail": "no host_monitor snapshot; live motion_enabled requires --enable-motion + READY + ENABLE (this branch may lack host_monitor sources)",
+      "owner": "operator / host_monitor"
+    },
+    {
+      "id": "host_monitor_session_ready",
+      "status": "MISSING",
+      "category": "actuator_operator",
+      "detail": "session_open unknown (no host_monitor snapshot)",
+      "owner": "operator / host_monitor"
+    },
+    {
+      "id": "formal_grasp_entry_gate",
+      "status": "POLICY_HOLD",
+      "category": "live_permit",
+      "detail": "formal entry held: requires dry_run_grasp_entry_ready + validated live Permit + live VALID ArmState (source=real, validity=VALID); dry_run_ready=True, live_permit_valid=False, live_arm=False; blocked_by=['j6_j7_readonly', 'awaiting_live_arm']",
+      "owner": "host/safety gate ladder"
+    },
+    {
+      "id": "operator_policy_attest_control_ready",
+      "status": "POLICY_HOLD",
+      "category": "host_policy",
+      "detail": "operator_policy_attest closed (attested=false/missing); default-safe. Explicit --attested required before any future host path may consider control_ready; this reporter never raises it",
+      "owner": "operator / host_policy_attest"
+    },
+    {
+      "id": "host_policy_control_ready",
+      "status": "POLICY_HOLD",
+      "category": "host_policy",
+      "detail": "control_ready held false by reporter hard safety (no large-motion unlock). prerequisites_met=False (formal=False, attest=False); elevation deferred to dedicated host path after V+M\u2192main",
+      "owner": "host/safety (reporter never raises)"
+    },
+    {
+      "id": "host_policy_motion_enabled",
+      "status": "POLICY_HOLD",
+      "category": "host_policy",
+      "detail": "motion_enabled held false by default; live path needs host_monitor --enable-motion + READY/ENABLE; planning outputs stay false",
+      "owner": "host/safety (this checklist never enables)"
+    }
+  ],
+  "formal_grasp_blocked_by": [
+    "j6_j7_readonly",
+    "awaiting_live_arm"
+  ],
+  "live_permit_path": {
+    "status": "software_exhausted_awaiting_live_arm",
+    "executable": false,
+    "live_permit": null,
+    "live_arm_via": null,
+    "counts_as_audited_j6j7_readonly": false,
+    "issuance_fields_complete_under_mock": true,
+    "gate_accepts_dry_run_draft": true,
+    "rest_attested_permit_draft_accepted": null,
+    "required_fields": [
+      "device_id",
+      "trajectory_hash",
+      "config_hash",
+      "calibration_hash",
+      "scene_version",
+      "valid_until_host_monotonic_s"
+    ],
+    "arm_state_dependency": "Permit.device_id must match counts_as_live_valid ArmState (source=real + validity=VALID + seven finite q_rad); default path: J6/J7 lack audited readonly position query; dual Rest attest may use live_arm_via=rest_attested",
+    "blocked_by": [
+      "j6_j7_readonly",
+      "awaiting_live_arm"
+    ],
+    "hard_block_id": "j6_j7_no_audited_readonly_position_query",
+    "rest_attested_permit": null,
+    "never_forges_live_permit": true,
+    "never_raises_control_ready": true
+  },
+  "dry_run_arm_disabled": {
+    "schema_version": "host-dry-run-arm-disabled-0.1",
+    "reachable": true,
+    "config_path": "E:/OneDrive/Desktop/brick-stacking-real/brick-stacking-real/config/offline_task.yaml",
+    "project": {
+      "dry_run": true,
+      "environment": "offline"
+    },
+    "offline_dry_run_config_ok": true,
+    "offline_gate_port_check_ok": true,
+    "offline_gate_port_check_error": null,
+    "mock_arm": {
+      "backend": "mock",
+      "hardware_enabled": false,
+      "device_id": "mock-arm-host-checklist"
+    },
+    "step_without_permit_rejected": true,
+    "step_without_permit_detail": "execution permit is unknown",
+    "issuance_diagnostic": {
+      "schema_version": "safety-gate-dry-run-issuance-0.1",
+      "kind": "dry_run_arm_disabled",
+      "executable": false,
+      "live_permit": null,
+      "control_ready": false,
+      "motion_enabled": false,
+      "formal_grasp_entry_allowed": false,
+      "issuance_attempted": true,
+      "issuance_fields_complete": true,
+      "only_hardware_enable_and_policy_remaining": true,
+      "blocked_by": [
+        "j6_j7_readonly",
+        "awaiting_live_arm"
+      ],
+      "live_permit_path_status": "software_exhausted_awaiting_live_arm",
+      "authority": {
+        "live_issuer": "D/M SafetyGate at execution (contracts.Permit)",
+        "dry_run_diagnostic_issuer": "OfflineSafetyGate.issue_dry_run_diagnostic",
+        "shadow_eligibility_issuer": "pre_grasp_gates (m-diagnostic-permit-eligibility-0.1)",
+        "not_authority_for": [
+          "formal_grasp_entry",
+          "control_ready",
+          "CAN / actuator enable",
+          "arm.execute_trajectory on live hardware"
+        ],
+        "required_live_fields": [
+          "device_id",
+          "trajectory_hash",
+          "config_hash",
+          "calibration_hash",
+          "scene_version",
+          "valid_until_host_monotonic_s"
+        ],
+        "arm_state_dependency": "live Permit.device_id must match counts_as_live_valid ArmState (source=real + validity=VALID + seven finite q_rad); OfflineSafetyGate.check_step_evidence also binds clock/epoch",
+        "hard_block_id": "j6_j7_no_audited_readonly_position_query"
+      },
+      "mock_arm": {
+        "backend": "mock",
+        "hardware_enabled": false,
+        "device_id": "mock-arm-host-checklist",
+        "clock_domain": "host_monotonic",
+        "epoch": "44f4c2c218894a6097abfcb80b75c621"
+      },
+      "field_status": {
+        "device_id": {
+          "status": "PRESENT_FROM_MOCK_ARM",
+          "detail": "MockArm ArmState.device_id (hardware_enabled=False); not live arm",
+          "value": "mock-arm-host-checklist"
+        },
+        "trajectory_hash": {
+          "status": "PRESENT_FROM_PLAN_BUNDLE",
+          "detail": "trajectory_hash supplied to dry-run issuer (not invented)",
+          "value": "c28c3b72fadd2816b9034fa121ef4a875bf7ee1520973f4fe807f92f7f8c1a24"
+        },
+        "config_hash": {
+          "status": "PRESENT",
+          "detail": "config_hash supplied to dry-run issuer",
+          "value": "c1d14c63e9090285ee957f8b4954710e5c4c52e385acc42e1cc3c8d0444b1a76"
+        },
+        "calibration_hash": {
+          "status": "PRESENT",
+          "detail": "calibration_hash supplied to dry-run issuer",
+          "value": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461"
+        },
+        "scene_version": {
+          "status": "PRESENT",
+          "detail": "scene_version supplied to dry-run issuer",
+          "value": "orbbec_CP2L863000KL_cbb0aaa11c68403ba5950e78e4531938"
+        },
+        "valid_until_host_monotonic_s": {
+          "status": "PRESENT_FROM_ISSUANCE_CLOCK",
+          "detail": "dry-run issuer sets valid_until = now + min(window, max_age_s); live path still requires live SafetyGate issuance clock",
+          "value": 42616.421
+        }
+      },
+      "still_missing_fields": [],
+      "still_missing_for_formal": [
+        "j6_j7_readonly",
+        "awaiting_live_arm",
+        "live SafetyGate issuance authority (formal contracts.Permit)",
+        "fresh VALID live ArmState (source=real + validity=VALID + seven finite q_rad; recorded/mock \u2260 live)",
+        "host/safety policy raise of control_ready",
+        "actuator / arm power enable before real motion"
+      ],
+      "draft_permit": {
+        "device_id": "mock-arm-host-checklist",
+        "trajectory_hash": "c28c3b72fadd2816b9034fa121ef4a875bf7ee1520973f4fe807f92f7f8c1a24",
+        "config_hash": "c1d14c63e9090285ee957f8b4954710e5c4c52e385acc42e1cc3c8d0444b1a76",
+        "calibration_hash": "a8711b804660ff8888e85e07b836bb336832ab04a31bf5337e7b64157a003461",
+        "scene_version": "orbbec_CP2L863000KL_cbb0aaa11c68403ba5950e78e4531938",
+        "valid_until_host_monotonic_s": 42616.421
+      },
+      "gate_accepts_draft": true,
+      "gate_accept_error": null,
+      "plumbing_self_check": {
+        "used_probe_trajectory_hash": true,
+        "probe_trajectory_hash": "dry-run-probe:safety-gate-plumbing-only",
+        "gate_accepts_complete_dry_run_permit": true,
+        "error": null,
+        "note": "Proves OfflineSafetyGate issuance\u2192check path under MockArm; probe hash is not a formal PlanBundle trajectory_hash"
+      },
+      "notes": [
+        "Dry-run draft is executable=false and must not be copied into live StepEvidence for formal grasp.",
+        "MockArm device_id / issuance clock are dry-run only; live VALID arm feedback still required for formal.",
+        "PlanBundle trajectory_hash must come from planning; this issuer never invents it.",
+        "blocked_by=j6_j7_readonly + awaiting_live_arm when Mock field path is at software ceiling."
+      ]
+    },
+    "control_ready": false,
+    "motion_enabled": false,
+    "commands_sent": 0,
+    "can_opened": false,
+    "usage": [
+      "Dry-run / arm-disabled path is OfflineSafetyGate + MockArm only.",
+      "Issuance diagnostic is executable=false; live_permit stays null.",
+      "This probe does not raise control_ready or invent a PlanBundle trajectory_hash.",
+      "host_monitor --enable-motion is a separate live host path (main branch)."
+    ]
+  },
+  "arm_feedback": {
+    "schema_version": "arm-state-validity-classification-0.1",
+    "present": true,
+    "source": "recorded",
+    "device_id": "can2:61,62,63,64,65,66,67",
+    "validity": "INVALID",
+    "reason": "recorded config/history binding only; not a live ArmStateReader sample; CAN not opened",
+    "source_kind": "recorded",
+    "device_id_ok": true,
+    "counts_as_recorded_binding": true,
+    "counts_as_mock_valid": false,
+    "counts_as_live_valid": false,
+    "condition_status": {
+      "source_is_real": "FAIL",
+      "validity_field_is_VALID": "FAIL",
+      "device_id_present": "PASS",
+      "joint_names_j1_through_j7": "PASS",
+      "all_seven_q_rad_finite": "FAIL",
+      "fault_is_none": "PASS",
+      "clock_domain_host_monotonic": "PASS",
+      "epoch_present": "PASS",
+      "host_receive_stamp_finite": "PASS"
+    },
+    "blockers": [
+      "source_is_real",
+      "validity_field_is_VALID",
+      "all_seven_q_rad_finite"
+    ],
+    "joint_completeness": {
+      "expected_joint_names": [
+        "J1",
+        "J2",
+        "J3",
+        "J4",
+        "J5",
+        "J6",
+        "J7"
+      ],
+      "joint_names_ok": true,
+      "finite_joints": [],
+      "missing_or_nonfinite_joints": [
+        "J1",
+        "J2",
+        "J3",
+        "J4",
+        "J5",
+        "J6",
+        "J7"
+      ],
+      "all_seven_finite": false
+    },
+    "arm_state_reader_live_hold": [
+      "J6/J7: no audited read-only position query (ArmStateReader leaves q_rad None)",
+      "validity remains INVALID until seven finite joint angles are available",
+      "Rest/raw V2 capture is not an audited read-only path and is not used here",
+      "candidate search 2026-11-11: no pending_protocol_audit position payload",
+      "external protocol search 2026-11-11: no Motorevo manual / Theta index"
+    ],
+    "j6j7_readonly_hard_block": {
+      "schema_version": "j6j7-readonly-position-hard-block-0.2",
+      "id": "j6_j7_no_audited_readonly_position_query",
+      "status": "HARD_BLOCK",
+      "audited_readonly_position_query_available": false,
+      "audited_readonly_position_query_bytes": null,
+      "audited_position_quantization": null,
+      "audited_safe_reads": [
+        "A7 J1\u2013J5 position READ: CAN id=motor_id, data=0x06 \u2192 float32 rad",
+        "MotorV2 Flash control-mode READ: id=0x600+motor_id, data=670b000000000476 \u2192 mode int (not angle)"
+      ],
+      "known_non_readonly_or_unaudited": [
+        "MotorV2.read_initial_state \u2192 Rest (FF\u00d77 + FD); changes wrist hold state",
+        "tools/host_monitor JointControl._read_angle_locked(J6/J7) \u2192 Rest via MotorV2",
+        "tools/c_left_wrist_rest_capture.py \u2192 explicit Rest (support + auth required)",
+        "raw V2 runtime feedback U16 position \u2014 quantization / COM Theta not audited",
+        "P7 construct / Flash mode write / enable / start_polling / set_angle",
+        "MotorV2 state cmds FC (Enter Motor) / FE (Set Zero) \u2014 enable or zero side effects",
+        "MotorV2 P-T-M control frame \u2014 applies PD target; requires Motor state + heartbeat"
+      ],
+      "failure_reason": "J6/J7: no audited read-only position query",
+      "arm_state_reader_live_hold": [
+        "J6/J7: no audited read-only position query (ArmStateReader leaves q_rad None)",
+        "validity remains INVALID until seven finite joint angles are available",
+        "Rest/raw V2 capture is not an audited read-only path and is not used here",
+        "candidate search 2026-11-11: no pending_protocol_audit position payload",
+        "external protocol search 2026-11-11: no Motorevo manual / Theta index"
+      ],
+      "counts_as_live_valid_reachable_via_readonly": false,
+      "allows_rest": false,
+      "allows_enable_motion": false,
+      "allows_large_joint_motion": false,
+      "enable_pending_protocol_audit": false,
+      "pending_protocol_audit": {
+        "enabled_by_default": false,
+        "enable_flag": "ENABLE_PENDING_PROTOCOL_AUDIT",
+        "position_query_bytes": null,
+        "reply_layout": null,
+        "quantization": null,
+        "counts_as_live_valid_when_enabled": false,
+        "reason_empty": "host motor_v2.py + in-repo docs/tools + 2026-11-11 external Web/local search expose no pure J6/J7 position query; Flash READ index map for live angle / COM Theta does not exist in SDK or public manuals"
+      },
+      "position_readonly_candidate_found": false,
+      "candidate_search": {
+        "schema_version": "j6j7-position-readonly-candidate-search-0.1",
+        "searched_at_utc": "2026-11-10T16:00:00Z",
+        "vendor_sdk_motor_v2_sha256": "6f45000ba0f7f049e0a23b7ddceb318154b9672a5181472ea899099ea3127aba",
+        "vendor_sdk_motor_v2_path": "/home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e/src/linkerbot/arm/p7/motor_v2.py",
+        "position_readonly_candidate_found": false,
+        "pending_protocol_audit_eligible_ids": [],
+        "enable_pending_protocol_audit": false,
+        "pending_protocol_audit": {
+          "enabled_by_default": false,
+          "enable_flag": "ENABLE_PENDING_PROTOCOL_AUDIT",
+          "position_query_bytes": null,
+          "reply_layout": null,
+          "quantization": null,
+          "counts_as_live_valid_when_enabled": false,
+          "reason_empty": "host motor_v2.py + in-repo docs/tools + 2026-11-11 external Web/local search expose no pure J6/J7 position query; Flash READ index map for live angle / COM Theta does not exist in SDK or public manuals"
+        },
+        "candidates": [
+          {
+            "id": "a7_cmd_0x06_on_v2_ids",
+            "sends_motion_rest_or_enable": false,
+            "evidence": "weak",
+            "verdict": "rejected_no_sdk_path",
+            "pending_protocol_audit_eligible": false,
+            "notes": "A7 SensorType.POSITION=0x06 is A7Motor-only; MotorV2 has no _read_register / 0x06 path; readonly probe never sends 0x06 to 66/67"
+          },
+          {
+            "id": "flash_control_mode_0x0b",
+            "sends_motion_rest_or_enable": false,
+            "evidence": "strong_audited",
+            "verdict": "rejected_not_angle",
+            "pending_protocol_audit_eligible": false,
+            "request_bytes_hex": "670b000000000476",
+            "notes": "Audited Flash READ returns mode int; not encoder angle"
+          },
+          {
+            "id": "flash_generic_read_unknown_theta_indices",
+            "sends_motion_rest_or_enable": false,
+            "evidence": "protocol_shape_only",
+            "verdict": "rejected_index_map_missing",
+            "pending_protocol_audit_eligible": false,
+            "notes": "motor_v2._read_flash_param(index) is a generic READ (cmd 0x04) but SDK only defines indices 0x00=SAVE and 0x0B=CONTROL_MODE; COM Theta MIN/MAX indices are named in comments without numbers \u2014 guessing forbidden; even correct indices yield range params, not live q_rad"
+          },
+          {
+            "id": "rest_ff7_fd_read_initial_state",
+            "sends_motion_rest_or_enable": true,
+            "evidence": "strong_sdk_and_field",
+            "verdict": "rejected_side_effect",
+            "pending_protocol_audit_eligible": false,
+            "request_bytes_hex": "fffffffffffffffd",
+            "notes": "Only SDK path that solicits angle without enable; loses hold"
+          },
+          {
+            "id": "enter_motor_fc_or_ptm_stream",
+            "sends_motion_rest_or_enable": true,
+            "evidence": "strong_sdk",
+            "verdict": "rejected_side_effect",
+            "pending_protocol_audit_eligible": false,
+            "notes": "FC enters Motor; P-T-M frames apply targets + need heartbeat"
+          },
+          {
+            "id": "passive_can_listen",
+            "sends_motion_rest_or_enable": false,
+            "evidence": "field_C21",
+            "verdict": "rejected_no_frames",
+            "pending_protocol_audit_eligible": false,
+            "notes": "3s passive window on 61\u201367 observed 0 frames when idle"
+          },
+          {
+            "id": "host_monitor_j6j7_read_angle",
+            "sends_motion_rest_or_enable": true,
+            "evidence": "strong_code",
+            "verdict": "rejected_side_effect",
+            "pending_protocol_audit_eligible": false,
+            "notes": "JointControl._read_angle_locked \u2192 MotorV2.read_initial_state Rest"
+          },
+          {
+            "id": "sdk_default_pm_12_5_u16_map",
+            "sends_motion_rest_or_enable": "depends_on_feed",
+            "evidence": "sdk_default_unverified",
+            "verdict": "rejected_quantization_unaudited",
+            "pending_protocol_audit_eligible": false,
+            "notes": "\u00b112.5 rad factory comment is not device readback; left_wrist_theta_ranges.json remains null/verified=false"
+          }
+        ],
+        "external_next_steps": [
+          "Obtain Motorevo CAN protocol manual (SDK cites \u00a76.3.2 for P-T-M packing) with: (a) any pure status/position query command that is not Rest/FC/FE/P-T-M target, exact 8-byte request + reply layout; OR written confirmation that no such query exists.",
+          "If Flash holds live/comm parameters: vendor Flash index map for CAN COM Theta MIN/MAX (and any live-position index if one exists) \u2014 do not brute-force indices on the arm.",
+          "Optional authorized scope/candump of one braced Rest vs one P-T-M heartbeat on a supported wrist to cross-check feedback layout only \u2014 still not a formal readonly API unless the manual names a side-effect-free query.",
+          "Public Motorevo product pages do not publish the protocol PDF; contact vendor (e.g. sales@mail.motorevo.cn) or LinkerBot for the drive manual matching this Flash/P-T-M stack."
+        ],
+        "external_protocol_search": {
+          "schema_version": "j6j7-external-protocol-search-0.1",
+          "searched_at_local": "2026-11-11T00:23:00+08:00",
+          "evidence_json": "docs/team/B/evidence/field_20261110/j6j7_external_protocol_search_20261111.json",
+          "motorevo_protocol_manual_found": false,
+          "flash_theta_index_map_found": false,
+          "pure_position_query_bytes_found": false,
+          "pending_protocol_audit_payload_landed": false,
+          "goal_complete": false,
+          "public_motor_v2_main_sha256": "6f45000ba0f7f049e0a23b7ddceb318154b9672a5181472ea899099ea3127aba",
+          "negative_conclusion": "Round 00:23: Motorevo-Studio EXE-only; public motor_v2 SHA now matches host pin but Flash still SAVE/CONTROL_MODE only \u2014 no pure query / Theta index; pending_protocol_audit stays empty/default-off."
+        },
+        "goal_software_only_completable": false,
+        "counts_as_live_valid_reachable_via_readonly": false,
+        "notes": [
+          "No in-repo / host-SDK / external-search pure J6/J7 position query; formal grasp remains blocked on j6_j7_readonly until vendor protocol lands.",
+          "Do not raise control_ready / forge live VALID / enable-motion.",
+          "Do not re-spin the same eight in-repo candidates; need vendor input."
+        ]
+      },
+      "external_protocol_search": {
+        "schema_version": "j6j7-external-protocol-search-0.1",
+        "searched_at_local": "2026-11-11T00:23:00+08:00",
+        "evidence_json": "docs/team/B/evidence/field_20261110/j6j7_external_protocol_search_20261111.json",
+        "motorevo_protocol_manual_found": false,
+        "flash_theta_index_map_found": false,
+        "pure_position_query_bytes_found": false,
+        "pending_protocol_audit_payload_landed": false,
+        "goal_complete": false,
+        "public_motor_v2_main_sha256": "6f45000ba0f7f049e0a23b7ddceb318154b9672a5181472ea899099ea3127aba",
+        "negative_conclusion": "Round 00:23: Motorevo-Studio EXE-only; public motor_v2 SHA now matches host pin but Flash still SAVE/CONTROL_MODE only \u2014 no pure query / Theta index; pending_protocol_audit stays empty/default-off."
+      },
+      "goal_complete": false,
+      "doc": "docs/team/B/J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md",
+      "notes": [
+        "Do not call MotorV2.read_initial_state from ArmStateReader.",
+        "Flash mode READ remains allowed for binding identity only.",
+        "Live VALID requires a future audited query; until then formal grasp stays blocked.",
+        "2026-11-11 candidate sweep + external Web/local search: zero pending position payloads; need Motorevo manual / Flash Theta index / capture auth."
+      ]
+    },
+    "notes": [
+      "recorded/mock VALID (or recorded binding) do not count as live VALID.",
+      "ArmStateReader readonly path currently cannot satisfy all_seven_q_rad_finite.",
+      "hard_block=j6_j7_no_audited_readonly_position_query",
+      "This classifier never raises control_ready or opens CAN."
+    ],
+    "control_ready": false,
+    "motion_enabled": false
+  },
+  "elevation_conditions": {
+    "vision_pre_grasp_ready": [
+      "evidence_gates_clear"
+    ],
+    "dry_run_grasp_entry_ready": [
+      "vision_pre_grasp_ready",
+      "permit_eligible_diagnostic",
+      "PlanBundle_trajectory_hash",
+      "ArmState_device_id_recorded_or_live",
+      "OfflineSafetyGate_dry_run_issuance_fields_complete",
+      "OfflineSafetyGate_gate_accepts_dry_run_draft"
+    ],
+    "formal_grasp_entry_allowed": [
+      "dry_run_grasp_entry_ready",
+      "live_contracts_Permit_validated_by_OfflineSafetyGate",
+      "live_VALID_ArmState_source_real",
+      "permit_device_id_matches_live_arm"
+    ],
+    "control_ready": [
+      "vision_pre_grasp_ready_or_evidence_gates_clear",
+      "live_contracts_Permit_from_SafetyGate",
+      "PlanBundle_trajectory_hash",
+      "fresh_live_VALID_ArmState_device_id_matching_permit",
+      "offline_dry_run_config_or_explicit_live_host_policy",
+      "operator_policy_attest_control_ready",
+      "host_policy_decision_to_raise_control_ready"
+    ],
+    "motion_enabled": [
+      "process_started_with_enable_motion",
+      "control_session_confirm_READY",
+      "joint_confirm_ENABLE",
+      "live_permit_and_control_ready_for_trajectory_path"
+    ],
+    "rest_state_capture": {
+      "schema_version": "rest-state-capture-gate-0.2",
+      "rest_state_capture_available": true,
+      "rest_state_capture_enabled": false,
+      "attest_rest_for_pregrasp_enabled": false,
+      "dual_gate_open": false,
+      "blocked_unless_rest_attested": true,
+      "default_enabled": false,
+      "default_attest_enabled": false,
+      "env_var": "BRICK_STACKING_REST_STATE_CAPTURE",
+      "attest_env_var": "BRICK_STACKING_ATTEST_REST_FOR_PREGRASP",
+      "live_arm_via_when_dual_and_valid_draft": null,
+      "ci_never_auto_rest": true,
+      "sends_rest_or_opens_can": false,
+      "loss_of_hold_not_large_trajectory": true,
+      "forbids_enable_motion_trajectory": true,
+      "raises_formal_grasp_entry_allowed": false,
+      "raises_control_ready": false,
+      "counts_as_audited_j6j7_readonly": false,
+      "notes": [
+        "Rest drops wrist hold; not --enable-motion / large trajectory.",
+        "Default false; CI and default paths never auto Rest on hardware.",
+        "Dual gate: --rest-state-capture + --attest-rest-for-pregrasp (or matching env). Only then may a structurally live VALID Rest draft arm formal ladder via live_arm_via=rest_attested.",
+        "Rest attested \u2260 audited J6/J7 readonly; never raises control_ready.",
+        "See docs/team/B/J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md."
+      ],
+      "code_refs": {
+        "gate": "src/brick_stacking/arm/rest_state_capture.py",
+        "hardware_capture": "tools/c_left_wrist_rest_capture.py",
+        "readonly_hard_block": "src/brick_stacking/arm/v2_wrist_readonly.py"
+      }
+    },
+    "rest_attested_permit": null,
+    "code_refs": {
+      "OfflineSafetyGate": "src/brick_stacking/execution/safety_gate.py",
+      "OfflineSafetyGate.issue_dry_run_diagnostic": "src/brick_stacking/execution/safety_gate.py",
+      "issue_rest_attested_permit_draft": "src/brick_stacking/execution/host_control_readiness.py",
+      "host_policy_attest": "src/brick_stacking/execution/host_policy_attest.py",
+      "OfflineExecutionManager": "src/brick_stacking/execution/execution_manager.py",
+      "MockArm.hardware_enabled": "src/brick_stacking/arm/adapter.py",
+      "ArmStateReader": "src/brick_stacking/arm/state.py",
+      "arm_state_validity": "src/brick_stacking/arm/arm_state_validity.py",
+      "v2_wrist_readonly_hard_block": "src/brick_stacking/arm/v2_wrist_readonly.py",
+      "rest_state_capture": "src/brick_stacking/arm/rest_state_capture.py",
+      "config_loader_offline_only": "src/brick_stacking/runtime/config_loader.py",
+      "ObservationBundle.control_ready": "Literal[False] in contracts",
+      "host_monitor_motion": "tools/host_monitor on main (--enable-motion)"
+    }
+  },
+  "notes": [
+    "Gate ladder: vision_pre_grasp_ready \u2192 dry_run_grasp_entry_ready \u2192 formal_grasp_entry_allowed \u2192 control_ready (attest-gated; reporter hard-hold).",
+    "dry_run_grasp_entry_ready may be true without live Permit or control_ready.",
+    "formal_grasp_entry_allowed requires validated live Permit + counts_as_live_valid (source=real AND validity=VALID AND seven finite q_rad).",
+    "recorded/mock ArmState.device_id \u2260 live VALID; see checklist live_valid_arm_state and arm_feedback (source_kind=recorded).",
+    "control_ready ALWAYS false in this reporter (large-motion safety). Attest switch defaults closed and is never auto-opened; even attested, elevation deferred.",
+    "motion_enabled ALWAYS false here; never unlocks host_monitor large-motion paths.",
+    "Never invents unattested live contracts.Permit or opens CAN.",
+    "Dry-run probe uses OfflineSafetyGate + MockArm (hardware_enabled=False).",
+    "ArmStateReader readonly path currently cannot satisfy all_seven_q_rad_finite (J6/J7).",
+    "default hard_block=j6_j7_no_audited_readonly_position_query (docs/team/B/J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md); no enable-motion / trajectory fallback; Rest dual gates default-off.",
+    "rest_state_capture_enabled=False; attest_rest_for_pregrasp_enabled=False; dual_rest_pregrasp_gates_open=False; live_arm_via=None; blocked_unless_rest_attested=True; dual gate + VALID Rest draft may bypass j6_j7_readonly for formal ladder via live_arm_via=rest_attested (\u2260 audited readonly); never raises control_ready.",
+    "formal_grasp_blocked_by=['j6_j7_readonly', 'awaiting_live_arm'].",
+    "live_permit_path.status=software_exhausted_awaiting_live_arm.",
+    "can_enter_formal_grasp=False; control_ready_prerequisites_met=False.",
+    "Dry-run SafetyGate issuance diagnostic attempted (fields_complete=True; still_missing_fields=[]; only_hw_policy_remaining=True; blocked_by=['j6_j7_readonly', 'awaiting_live_arm']; live_permit_path_status=software_exhausted_awaiting_live_arm)."
+  ]
+}

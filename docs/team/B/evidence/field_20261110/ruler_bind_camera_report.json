@@ -1,0 +1,219 @@
+{
+  "started_at": "2026-11-10T06:41:03.590328+00:00",
+  "scope": "camera_only",
+  "robot_motion_accessed": false,
+  "can_accessed": false,
+  "devices": [
+    {
+      "serial": "CP2L863000KL",
+      "name": "Orbbec Gemini 335L",
+      "uid": "2-3.4.3-61"
+    },
+    {
+      "serial": "AY6M86300GH",
+      "name": "Orbbec Gemini2",
+      "uid": "2-3.4.4-62"
+    },
+    {
+      "serial": "AY6M8630086",
+      "name": "Orbbec Gemini2",
+      "uid": "2-3.4.2-63"
+    }
+  ],
+  "frames": [
+    {
+      "file": "frame_000.npz",
+      "rgb_stamp_s": 320419.03706,
+      "depth_stamp_s": 320419.037079,
+      "skew_ms": 0.01899997005239129,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.8870182291666666,
+      "median_depth_m": 2.246999979019165
+    },
+    {
+      "file": "frame_001.npz",
+      "rgb_stamp_s": 320419.103796,
+      "depth_stamp_s": 320419.103815,
+      "skew_ms": 0.01899997005239129,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.8820540364583334,
+      "median_depth_m": 2.246000051498413
+    },
+    {
+      "file": "frame_002.npz",
+      "rgb_stamp_s": 320419.170532,
+      "depth_stamp_s": 320419.170551,
+      "skew_ms": 0.01899997005239129,
+      "depth_scale_mm": 1.0,
+      "valid_depth_ratio": 0.8844759114583334,
+      "median_depth_m": 2.259000062942505
+    }
+  ],
+  "rejected_skew": 0,
+  "errors": [],
+  "cleanup_errors": [],
+  "result": "CAPTURED",
+  "binding_version": "2.1.3",
+  "sdk_version": "2.10.6",
+  "selected": {
+    "serial": "CP2L863000KL",
+    "name": "Orbbec Gemini 335L",
+    "firmware": "1.4.60",
+    "connection": "USB3.2"
+  },
+  "color_exposure_lock": {
+    "before": {
+      "auto_exposure": false,
+      "exposure": 100,
+      "gain": 16
+    },
+    "after": {
+      "auto_exposure": false,
+      "exposure": 100,
+      "gain": 16
+    },
+    "persistent_write": false
+  },
+  "requested_profiles": {
+    "size_wh": [
+      640,
+      480
+    ],
+    "fps": 15,
+    "explicit_request_has_no_fallback": true
+  },
+  "profiles": {
+    "color": {
+      "width": 640,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.RGB"
+    },
+    "depth": {
+      "width": 640,
+      "height": 480,
+      "fps": 15,
+      "format": "OBFormat.Y16"
+    }
+  },
+  "calibration": {
+    "K": [
+      [
+        368.1024169921875,
+        0.0,
+        322.947021484375
+      ],
+      [
+        0.0,
+        368.163330078125,
+        237.29510498046875
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "distortion": {
+      "k1": -0.031556159257888794,
+      "k2": 0.036501653492450714,
+      "k3": -0.012785496190190315,
+      "k4": 0.0,
+      "k5": 0.0,
+      "k6": 0.0,
+      "p1": -0.0005816970369778574,
+      "p2": 0.0004935592296533287,
+      "model": "OBCameraDistortionModel.BROWN_CONRADY_K6"
+    },
+    "width": 640,
+    "height": 480,
+    "extrinsics_available": false
+  },
+  "warmup_minimum_frames": 8,
+  "warmup_observations": [
+    {
+      "stamp_s": 320418.503172,
+      "median_rgb": [
+        255.0,
+        255.0,
+        255.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 320418.569908,
+      "median_rgb": [
+        255.0,
+        254.0,
+        255.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 320418.636644,
+      "median_rgb": [
+        255.0,
+        255.0,
+        255.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 320418.70338,
+      "median_rgb": [
+        255.0,
+        254.0,
+        255.0
+      ],
+      "stable_window": false
+    },
+    {
+      "stamp_s": 320418.770116,
+      "median_rgb": [
+        255.0,
+        255.0,
+        255.0
+      ],
+      "stable_window": true
+    },
+    {
+      "stamp_s": 320418.836852,
+      "median_rgb": [
+        255.0,
+        255.0,
+        255.0
+      ],
+      "stable_window": true
+    },
+    {
+      "stamp_s": 320418.903588,
+      "median_rgb": [
+        255.0,
+        254.0,
+        255.0
+      ],
+      "stable_window": true
+    },
+    {
+      "stamp_s": 320418.970324,
+      "median_rgb": [
+        255.0,
+        254.0,
+        255.0
+      ],
+      "stable_window": true
+    },
+    {
+      "stamp_s": 320419.03706,
+      "median_rgb": [
+        255.0,
+        254.0,
+        255.0
+      ],
+      "stable_window": true
+    }
+  ],
+  "capture_started_after_rgb_stabilization": true,
+  "captured_pairs": 3,
+  "notice": "Capture is not depth accuracy, alignment accuracy or block-detection acceptance. Clock is per-camera; no arm/world transform."
+}

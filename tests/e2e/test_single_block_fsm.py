@@ -10,6 +10,7 @@ from brick_stacking.models.scene_state import SceneBlock, Slot, SlotState
 from brick_stacking.models.task_state import TaskStage
 from brick_stacking.runtime.config_loader import load_config
 from brick_stacking.scene.scene_manager import SceneManager
+from brick_stacking.verification.visual_transition import VerificationRequest, VisualSample, verify
 
 
 DEVICE = "single-block-fixture"
@@ -162,6 +163,51 @@ def test_consumes_pick_and_place_evidence(scenario):
     assert fsm.run().stage == TaskStage.DONE
     assert manager.states["slot-1"] == SlotState.PLACED_VERIFIED
     assert [row["phase"] for name, row in events if name == "visual_verification"] == ["PICK", "PLACE"]
+
+
+@pytest.mark.parametrize("occluded", [False, True])
+def test_v_verification_producer_drives_mock_fsm(scenario, occluded):
+    def verification_for(*, phase, block_id, slot, before, after, scene_version,
+                         config_hash, calibration_hash):
+        region = "gripper" if phase == "PICK" else slot.slot_id
+        request = VerificationRequest(
+            phase, block_id, region, slot.required_color, scene_version, config_hash, calibration_hash,
+            "mock-geometry", after.clock_domain, after.epoch, .5, "mock",
+            expected_center_camera_m=slot.center_m, table_normal_camera=(0., 0., 1.),
+            action_started_s=before.stamp_s, action_finished_s=after.stamp_s - .2,
+            min_stable_s=.05, max_stable_shift_m=.004,
+        )
+
+        def visual_sample(scene, region):
+            target = next(block for block in scene.blocks if block.object_id == block_id)
+            return VisualSample(
+                block_id, scene.observation_id, f"mock-image:{scene.observation_id}",
+                "mock-camera", "mock-optical", scene.stamp_s, scene.clock_domain, scene.epoch,
+                "mock", scene_version, config_hash, calibration_hash, "mock-geometry", True,
+                region, "VISIBLE", target.color, target.center_m,
+            )
+
+        previous = visual_sample(before, "supply")
+        current = visual_sample(after, region)
+        if phase == "PICK":
+            frames = (replace(current, held=True),)
+        else:
+            first = replace(current, released=True, stamp_s=after.stamp_s - .1,
+                            observation_id="mock-stability-frame", image_ref="mock-image:stability")
+            last = replace(current, released=True, visibility="OCCLUDED" if occluded else "VISIBLE")
+            frames = (first, last)
+        return verify(request, before=previous, after=frames, now_s=after.stamp_s)
+
+    fsm, _, manager, events, _ = scenario(verification_for=verification_for)
+    result = fsm.run()
+    verified = [row["phase"] for name, row in events if name == "visual_verification"]
+    if occluded:
+        assert result.stage == TaskStage.SAFE_HALT and "UNKNOWN" in result.reason
+        assert not manager.occupants and verified == ["PICK"]
+    else:
+        assert result.stage == TaskStage.DONE, result.reason
+        assert manager.states["slot-1"] == SlotState.PLACED_VERIFIED
+        assert verified == ["PICK", "PLACE"]
 
 
 @pytest.mark.parametrize(("phase", "override", "reason"), [

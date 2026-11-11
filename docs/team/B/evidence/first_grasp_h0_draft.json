@@ -1,0 +1,112 @@
+{
+  "status": "BOTH_ACK_BUDGETS_CONTROL_READY_FALSE",
+  "schema_version": "0.1",
+  "plan_path": "docs/THREE_TRACK_GRASP_DEV_PLAN.md",
+  "plan_sha256_utf8_lf": "bc30f3198e5dbaf8beb6cd4b7b4d59d83a5702938ad52cbf5e4fdbe9f562e5ff",
+  "plan_section": "0.2",
+  "acks": {
+    "V": {
+      "status": "ACK",
+      "date": "2026-11-10",
+      "note": "Accept §0.2 budgets without relaxation; control_ready stays false until clock bound + calibration hash + H2 rules.",
+      "branch": "codex/v-vision-20261110",
+      "tip": "9408685"
+    },
+    "M": {
+      "status": "ACK",
+      "date": "2026-11-10",
+      "note": "ACK §0.2 and ObservationBundle semantics via PR #21 / issue #16; C35 fit-only offline localize done; independent ruler was missing then, now provided under field_independent_ruler; control_ready stays false.",
+      "branch": "codex/m-h0-c35-20261110",
+      "pr": 21
+    }
+  },
+  "vision_profile": {
+    "path": "config/vision_profiles/head_replacement_candidate.yaml",
+    "tabletop_sha256": "99b8e713de95ab5659ef1f907b0ed2ce0ea16d2601c4bd8fca75c0aa84aa7203",
+    "status": "candidate_only",
+    "native_image_size_wh": [
+      640,
+      480
+    ],
+    "head_camera_id": "CP2L863000KL",
+    "nominal_edge_m": 0.05
+  },
+  "budget_m": {
+    "camera_fit_max": 0.01,
+    "camera_independent_validation_max": 0.01,
+    "top_center_planar_max": 0.01,
+    "top_center_table_height_max": 0.008,
+    "cartesian_arrival_max": 0.01,
+    "placement_planar_max": 0.015
+  },
+  "placement_color_match_required": true,
+  "observed_exposure_latency_upper_bound_s": 1.328,
+  "field_receive_to_output_s": {
+    "scene": "single_red_sparse_20261110",
+    "p50": 0.636,
+    "p95": 1.016,
+    "max": 1.282,
+    "basis": "host receive to observation output; superseded diagnostically by clock mapping study for exposure path"
+  },
+  "field_exposure_to_output_s": {
+    "scene": "clock_mapping_20261110_two_sessions",
+    "p50": 0.688,
+    "max": 1.328,
+    "basis": "SDK color global→process_monotonic candidate to observation output",
+    "evidence": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json"
+  },
+  "freshness_gate_s": 2.656,
+  "freshness_gate_status": "diagnostic_exposure_max_x2_pending_h0_freeze",
+  "clock_error_bound_s": 0.0016864349552430213,
+  "clock_error_bound_evidence_ref": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+  "clock_error_bound_status": "ACCEPTED_FOR_OBSERVATION_TIMING",
+  "clock_error_bound_study_s": {
+    "value": 0.0016864349552430213,
+    "status": "ACCEPTED_FOR_OBSERVATION_TIMING",
+    "evidence": "docs/team/B/evidence/field_20261110/clock_error_bound_study_v0.1.json",
+    "note": "fills ObservationBundle.timing when evidence file is present; control_ready stays false"
+  },
+  "calibration_hash": null,
+  "control_ready": false,
+  "golden": {
+    "h1_recorded": "tests/fixtures/vision_exchange/c_recording_bundles_v0.1.json",
+    "h1_status": "tests/fixtures/vision_exchange/synthetic_status_v0.1.json",
+    "h4_mock": "tests/fixtures/vision_exchange/verification_v0.1.json",
+    "fixture_index": "tests/fixtures/vision_exchange/FIXTURE_INDEX.json",
+    "replay_latency_diagnostic": "docs/team/B/evidence/c_recording_replay_latency_v0.1.json",
+    "field_single_red": "docs/team/B/evidence/field_20261110/single_red_stability.json",
+    "field_independent_ruler": "docs/team/B/evidence/field_20261110/independent_ruler_reference_v0.1.json",
+    "field_verify_handoff_index": "docs/team/B/evidence/field_20261110/verify_handoff_index_v0.1.json",
+    "frame_id_note": "docs/team/B/FRAME_ID_HEAD_VS_C35.md"
+  },
+  "api": {
+    "module": "brick_stacking.vision.service",
+    "methods": [
+      "get_observation",
+      "detect_blocks",
+      "verify",
+      "replay"
+    ]
+  },
+  "recorded_fixture": {
+    "index": "tests/fixtures/real/C_20261108_tabletop/sample_manifest.json",
+    "status": "recorded_development_not_independent",
+    "inputs": [
+      {
+        "path": "tests/fixtures/real/C_20261108_tabletop/camera/frame_000.npz",
+        "sha256": "b0f60a8849d3a6045925fa9c810a35fddfe049434b545678b11e639a7a5eaa83",
+        "original_sha256": "a72e04f2702e143321fb73adfa9de5a75a915c69e829a5c5ece4a7bdcbde2e21"
+      },
+      {
+        "path": "tests/fixtures/real/C_20261108_tabletop/camera/frame_001.npz",
+        "sha256": "fda75f34b06c1aa179c0653ec9ed9fe518fedc1f576b234e4dc42b38b3d97e1d",
+        "original_sha256": "b394e7aa6566df026c1fd12c3928862c3de68eeccfaa21ea0247dbf732ec9762"
+      },
+      {
+        "path": "tests/fixtures/real/C_20261108_tabletop/camera/frame_002.npz",
+        "sha256": "6c117234d44962398636624072cce8e42a2dda7285d1942d302e9ea19e65e979",
+        "original_sha256": "dc288f3f0bd0e2207b3b93514077090b02dc041c9c44574eb713ac9bd1cf7a2e"
+      }
+    ]
+  }
+}
