@@ -9,10 +9,20 @@ plan / refuse report. Full PlanBundle live execution is intentionally absent.
 """
 from __future__ import annotations
 
+import math
+from pathlib import Path
 from typing import Any, Mapping, Sequence
+
+import yaml
+
+from brick_stacking.hardware.urdf_inspection import (
+    declared_revolute_limits,
+    target_within_declared_limits,
+)
 
 SCHEMA = "t1-bounded-live-runner-0.1"
 SHORT_COMBO_SCHEMA = "t1-bounded-short-combo-0.1"
+URDF_JOINT_SPACE_SCHEMA = "t1-urdf-joint-space-dry-plan-0.1"
 DEFAULT_MOTION_ENABLED = False
 DEFAULT_CONTROL_READY = False
 MAX_SINGLE_JOINT_STEP_RAD = 0.05  # hard cap for any future enable path
@@ -20,6 +30,23 @@ MAX_SHORT_COMBO_STEPS = 8
 MAX_SHORT_COMBO_STEP_DEG = 1.0  # live/host_monitor soft cap for short combo
 ALLOWED_JOINTS_FIRST_PASS = ("J1", "J2", "J3", "J4", "J5")  # wrist later
 ALLOWED_SHORT_COMBO_JOINTS = (1, 2, 3, 4, 5)  # wrist MOVE still forbidden here
+LOCKED_P7_LEFT_URDF = Path("config/models/p7_left/p7__left.urdf")
+LOCKED_P7_LEFT_LIMITS = Path("config/planning/p7_left_joint_limits_urdf_declared.yaml")
+EXPECTED_P7_LEFT_URDF_SHA256 = (
+    "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce"
+)
+
+
+def _load_limits_config(path: str | Path) -> dict[str, Any]:
+    """Local loader to avoid importing the full PlanBundle stack."""
+    data = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise ValueError("joint limits config must be a mapping")
+    if not data.get("model_version") or not data.get("source"):
+        raise ValueError("joint limits require model_version and source")
+    if data.get("source") not in ("synthetic", "recorded", "real"):
+        raise ValueError("joint limits source must be synthetic|recorded|real")
+    return data
 
 
 def _mapping(value: Any) -> dict[str, Any]:
@@ -316,12 +343,144 @@ def build_t1_short_combo_dry_plan(
     }
 
 
+def _rest_j1_j5_seeds(rest_capture: Mapping[str, Any]) -> dict[str, float]:
+    received = rest_capture.get("received") or rest_capture.get("received_positions") or []
+    seeds: dict[str, float] = {}
+    name_by_id = {61: "J1", 62: "J2", 63: "J3", 64: "J4", 65: "J5"}
+    for row in received:
+        if not isinstance(row, Mapping):
+            continue
+        mid = row.get("motor_id")
+        if mid in name_by_id and row.get("position_sdk_rad") is not None:
+            seeds[name_by_id[int(mid)]] = float(row["position_sdk_rad"])
+    return seeds
+
+
+def build_t1_urdf_joint_space_dry_plan(
+    *,
+    rest_capture: Mapping[str, Any],
+    urdf_path: str | Path | None = None,
+    limits_config_path: str | Path | None = None,
+    joints: Sequence[int] = (1, 2, 3),
+    step_deg: float = 1.0,
+    prerequisites: Mapping[str, Any] | None = None,
+    repo_root: str | Path | None = None,
+) -> dict[str, Any]:
+    """Joint-space empty dry-plan gated by locked URDF declared limits.
+
+    Still **not** H3 / PlanBundle / FK-IK live wiring. Default non-executable;
+    never raises ``control_ready``. Wrist MOVE remains forbidden.
+    """
+    root = Path(repo_root) if repo_root is not None else Path.cwd()
+    urdf = Path(urdf_path) if urdf_path is not None else root / LOCKED_P7_LEFT_URDF
+    limits_path = (
+        Path(limits_config_path)
+        if limits_config_path is not None
+        else root / LOCKED_P7_LEFT_LIMITS
+    )
+    prereq = (
+        dict(prerequisites)
+        if prerequisites is not None
+        else evaluate_t1_prerequisites(rest_capture=rest_capture, urdf_available=True)
+    )
+    declared = declared_revolute_limits(urdf)
+    if declared["urdf_sha256"] != EXPECTED_P7_LEFT_URDF_SHA256:
+        raise ValueError(
+            "locked p7__left.urdf sha256 mismatch; refuse silent model swap"
+        )
+    limits_cfg = _load_limits_config(limits_path)
+    if limits_cfg.get("urdf_sha256") and limits_cfg["urdf_sha256"] != declared["urdf_sha256"]:
+        raise ValueError("limits config urdf_sha256 does not match locked URDF")
+    if list(limits_cfg.get("lower_rad") or []) != declared["lower_rad"]:
+        raise ValueError("limits config lower_rad diverges from URDF declared")
+    if list(limits_cfg.get("upper_rad") or []) != declared["upper_rad"]:
+        raise ValueError("limits config upper_rad diverges from URDF declared")
+
+    seeds = _rest_j1_j5_seeds(rest_capture)
+    waypoints = default_short_combo_waypoints(joints=joints, step_deg=step_deg)
+    step_rad = math.radians(float(step_deg))
+    checked: list[dict[str, Any]] = []
+    for index, raw in enumerate(waypoints):
+        joint = int(raw["joint"])
+        name = f"J{joint}"
+        if name not in seeds:
+            raise ValueError(f"Rest capture missing SDK angle for {name}")
+        start = seeds[name]
+        direction = int(raw["direction"])
+        target = start + direction * step_rad
+        idx0 = joint - 1
+        inside = target_within_declared_limits(
+            idx0,
+            target,
+            lower_rad=declared["lower_rad"],
+            upper_rad=declared["upper_rad"],
+        )
+        if not inside:
+            raise ValueError(
+                f"waypoint[{index}] {name} target {target} outside URDF declared limits"
+            )
+        checked.append(
+            {
+                "index": index,
+                "joint": joint,
+                "joint_name": name,
+                "phase": raw["phase"],
+                "direction": direction,
+                "step_deg": float(step_deg),
+                "start_rad": start,
+                "target_rad": target,
+                "within_urdf_declared_limits": True,
+                "limit_lower_rad": declared["lower_rad"][idx0],
+                "limit_upper_rad": declared["upper_rad"][idx0],
+            }
+        )
+
+    refuse_reason = "live_motion_disabled_by_skeleton"
+    if not prereq.get("subset_dry_plan_allowed"):
+        refuse_reason = "prerequisites_blocked:" + ",".join(prereq.get("blocked_by") or [])
+
+    return {
+        "schema_version": URDF_JOINT_SPACE_SCHEMA,
+        "kind": "t1_urdf_joint_space_empty_dry_plan",
+        "executable": False,
+        "motion_enabled": False,
+        "control_ready": False,
+        "not_h3_plan_bundle": True,
+        "not_synthetic_limits": True,
+        "limits_source": "vendor_urdf_declared",
+        "urdf_relpath": str(urdf.as_posix()),
+        "urdf_sha256": declared["urdf_sha256"],
+        "limits_config_relpath": str(limits_path.as_posix()),
+        "limits_model_version": limits_cfg.get("model_version"),
+        "hardware_match_verified": False,
+        "wrist_j6_j7_commanded_move": False,
+        "waypoint_count": len(checked),
+        "waypoints": checked,
+        "refuse_reason": refuse_reason,
+        "prerequisites": prereq,
+        "provenance": {
+            "trajectory_kind": "joint_space_urdf_limit_gated_sequence",
+            "not_h3_plan_bundle": True,
+            "not_synthetic_fk_ik_bundle": True,
+            "replaces_synthetic_pm_2_5_for_dry_plan_gating": True,
+            "fk_ik_live_wiring": "not_claimed",
+            "wrist_theta_verified": False,
+        },
+        "next_hardware_step": (
+            "optional explicit host_monitor short combo only; still T1 empty, "
+            "no block, no H3 PlanBundle"
+        ),
+    }
+
+
 def summarize_t1_status(
     *,
     rest_capture: Mapping[str, Any] | None = None,
     rest_draft_attempt: Mapping[str, Any] | None = None,
     range_profile: Mapping[str, Any] | None = None,
     urdf_available: bool = False,
+    include_urdf_joint_space_dry_plan: bool = False,
+    repo_root: str | Path | None = None,
 ) -> dict[str, Any]:
     """Compact status blob for LIVE_GATE / evidence."""
     prereq = evaluate_t1_prerequisites(
@@ -332,16 +491,24 @@ def summarize_t1_status(
     )
     dry = None
     short_combo = None
+    urdf_js = None
     if rest_capture and prereq.get("subset_dry_plan_allowed"):
         dry = build_t1_bounded_dry_plan(rest_capture=rest_capture, prerequisites=prereq)
         short_combo = build_t1_short_combo_dry_plan(
             rest_capture=rest_capture, prerequisites=prereq
         )
+        if include_urdf_joint_space_dry_plan:
+            urdf_js = build_t1_urdf_joint_space_dry_plan(
+                rest_capture=rest_capture,
+                prerequisites={**prereq, "urdf_available": True},
+                repo_root=repo_root,
+            )
     return {
         "schema_version": SCHEMA,
         "prerequisites": prereq,
         "dry_plan": dry,
         "short_combo_dry_plan": short_combo,
+        "urdf_joint_space_dry_plan": urdf_js,
         "live_executor_present": False,
         "software_plan_bundle_not_live_trajectory": True,
     }

@@ -1,0 +1,28 @@
+{
+  "schema_version": "wrist-theta-flash-search-0.1",
+  "searched_at_local": "2026-11-11T09:51:16+08:00",
+  "goal": "Find audited COM Theta / Flash index map for left wrist 66/67; never mark ±12.5 verified=true",
+  "readonly": true,
+  "motion": false,
+  "host": "10.157.173.135",
+  "sdk_pin": "linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e",
+  "motor_v2_sha256": "6f45000ba0f7f049e0a23b7ddceb318154b9672a5181472ea899099ea3127aba",
+  "flash_index_defs_found": [
+    "_FLASH_INDEX_SAVE = 0x00",
+    "_FLASH_INDEX_CONTROL_MODE = 0x0B"
+  ],
+  "com_theta_min_max_flash_indices_found": false,
+  "sdk_default_theta_map_rad": [-12.5, 12.5],
+  "sdk_default_may_mark_verified": false,
+  "host_home_motorevo_manual_found": false,
+  "public_web_protocol_pdf_found": false,
+  "public_web_note": "Motorevo product pages / Flowntro profiles / Motorevo-Studio releases expose no Flash COM Theta index map or CAN protocol PDF with MIN/MAX indices.",
+  "left_wrist_theta_ranges_verified": false,
+  "unique_external_dependency": "Motorevo/LinkerBot drive protocol manual (or vendor Flash index map) naming CAN COM Theta MIN/MAX indices — and preferably any side-effect-free position query — matching this MotorV2 Flash/P-T-M stack. Contact e.g. sales@mail.motorevo.cn or LinkerBot; do not brute-force Flash indices on the arm.",
+  "gap_status": "GAP_REMAINS",
+  "related": [
+    "src/brick_stacking/arm/v2_wrist_readonly.py",
+    "calibration/measurement_templates/left_wrist_theta_ranges.json",
+    "docs/team/B/J6J7_READONLY_POSITION_HARD_BLOCK_20261110.md"
+  ]
+}
