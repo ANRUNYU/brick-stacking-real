@@ -1,0 +1,57 @@
+{
+  "source_commit": "7d25b2a",
+  "request_sha256": "80a3b91c9b01eabb7ce6d00118f5d6e92addbcaff8ceb869f832f86f3cf4f9ee",
+  "wrist_path_file_sha256": "41de7cbba99b68bc06939c0ed58e29652c08050493a13b07478678b333a67dab",
+  "table_height_m": -0.5158477902172576,
+  "segments": [
+    {
+      "from": "hang",
+      "to": "grasp_ready",
+      "points": 20,
+      "duration_s": 31.167660633517215,
+      "endpoint_error_mm": 0.011604357783744051,
+      "endpoint_orientation_error_rad": 7.086130047700267e-06,
+      "level_l8_clearance_lower_bound_mm": 198.51672120662212,
+      "certified_l8_speed_upper_bound_m_s": 0.01998001998002003,
+      "vertical_lift_mm": 13.972626259854238,
+      "max_end_joint_difference_to_teach_seed_rad": 0.1551362824690603
+    },
+    {
+      "from": "grasp_ready",
+      "to": "handoff_ready",
+      "points": 52,
+      "duration_s": 97.91512768098738,
+      "endpoint_error_mm": 0.13434278887896675,
+      "endpoint_orientation_error_rad": 0.0003488556293473352,
+      "level_l8_clearance_lower_bound_mm": 228.2657045053696,
+      "certified_l8_speed_upper_bound_m_s": 0.019980019980020046,
+      "vertical_lift_mm": 31.99809814867183,
+      "max_end_joint_difference_to_teach_seed_rad": 0.5014548108680623
+    }
+  ],
+  "h_checker": {
+    "schema_version": "wrist-path-check-0.1",
+    "ok": true,
+    "issues": [],
+    "arrival_reports": [
+      {
+        "to": "grasp_ready",
+        "error_m": 1.160435778374405e-05,
+        "limit_m": 0.01,
+        "ok": true
+      },
+      {
+        "to": "handoff_ready",
+        "error_m": 0.00013434278887896676,
+        "limit_m": 0.01,
+        "ok": true
+      }
+    ],
+    "motion_enabled": false,
+    "live_authorized": false
+  },
+  "full_collision": "UNKNOWN",
+  "motion_enabled": false,
+  "executable": false,
+  "control_ready": false
+}

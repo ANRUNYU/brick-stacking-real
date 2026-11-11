@@ -5,3 +5,5 @@ docs/design_sources/handoff_20261107/** -text
 docs/design_history/BRICK_STACKING_REAL_ROBOT_DESIGN_v0.2_original_20261105.md -text
 # Recorded fixture hashes describe exact bytes on both Windows and Linux.
 tests/fixtures/real/C_20261108_tabletop/** -text
+# Preserve the accepted mid 0.2 wrist-path SHA-256 on checkout.
+docs/team/P/evidence/wrist_path_field_mid_0.2.json text eol=lf
