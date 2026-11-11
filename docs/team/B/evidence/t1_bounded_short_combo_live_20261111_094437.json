@@ -1,0 +1,1803 @@
+{
+  "schema_version": "t1-bounded-short-combo-live-0.1",
+  "authorization_ref": "chat-20261111-operator-continue-t1-bounded",
+  "stamp_local": "20261111_094436",
+  "stamp_utc": "2026-11-11T01:44:36.672330+00:00",
+  "block_present": false,
+  "control_ready": false,
+  "base_url": "http://127.0.0.1:8088",
+  "waypoints": [
+    {
+      "index": 0,
+      "joint": 1,
+      "step_deg": 1.0,
+      "direction": 1,
+      "phase": "outbound"
+    },
+    {
+      "index": 1,
+      "joint": 2,
+      "step_deg": 1.0,
+      "direction": 1,
+      "phase": "outbound"
+    },
+    {
+      "index": 2,
+      "joint": 3,
+      "step_deg": 1.0,
+      "direction": 1,
+      "phase": "outbound"
+    },
+    {
+      "index": 3,
+      "joint": 3,
+      "step_deg": 1.0,
+      "direction": -1,
+      "phase": "return"
+    },
+    {
+      "index": 4,
+      "joint": 2,
+      "step_deg": 1.0,
+      "direction": -1,
+      "phase": "return"
+    },
+    {
+      "index": 5,
+      "joint": 1,
+      "step_deg": 1.0,
+      "direction": -1,
+      "phase": "return"
+    }
+  ],
+  "step_deg_max": 1.0,
+  "notes": [
+    "T1 short combo empty run only: no block, no T2.",
+    "control_ready stays false; wrist ranges not marked verified.",
+    "Joint-space host_monitor sequence with fail-stop; not H3 PlanBundle.",
+    "Outbound then return near start (direction +1 then -1).",
+    "Optional J6 ENABLE-only hold recover (no MOVE)."
+  ],
+  "provenance": {
+    "trajectory_kind": "joint_space_host_monitor_sequence",
+    "not_h3_plan_bundle": true,
+    "not_synthetic_fk_ik_bundle": true,
+    "urdf_role": "soft_limits_inside_host_monitor_joint_control_only",
+    "fk_ik_live_wiring": "not_claimed"
+  },
+  "steps": [
+    {
+      "name": "pre_state",
+      "ok": true
+    },
+    {
+      "name": "session_open",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": null,
+        "plan": null,
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "j6_prepare",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 6,
+        "plan": {
+          "joint": 6,
+          "motor_id": 66,
+          "kind": "V2",
+          "start_rad": -0.05016403448538931,
+          "target_rad": -0.032710741965446016,
+          "start_deg": -2.874187459361524,
+          "target_deg": -1.874187459361524,
+          "step_deg": 0.9999999999999998,
+          "enabled": false,
+          "moved": false,
+          "limits_rad": [
+            -1.59,
+            1.59
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "j6_enable_hold_recover",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 6,
+        "plan": {
+          "joint": 6,
+          "motor_id": 66,
+          "kind": "V2",
+          "start_rad": -0.05359731441214599,
+          "target_rad": -0.0361440218922027,
+          "start_deg": -3.070899909051666,
+          "target_deg": -2.070899909051666,
+          "step_deg": 0.9999999999999998,
+          "enabled": true,
+          "moved": false,
+          "limits_rad": [
+            -1.59,
+            1.59
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "j6_release",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": null,
+        "plan": null,
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp0_j1_outbound_prepare",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 1,
+        "plan": {
+          "joint": 1,
+          "motor_id": 61,
+          "kind": "V1",
+          "start_rad": -0.01625060848891735,
+          "target_rad": 0.0012026840310259447,
+          "start_deg": -0.9310912809344324,
+          "target_deg": 0.06890871906556759,
+          "step_deg": 1.0,
+          "enabled": false,
+          "moved": false,
+          "limits_rad": [
+            -2.91,
+            2.91
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp0_j1_outbound_enable",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 1,
+        "plan": {
+          "joint": 1,
+          "motor_id": 61,
+          "kind": "V1",
+          "start_rad": -0.01649029366672039,
+          "target_rad": 0.0009629988532229052,
+          "start_deg": -0.9448242300343893,
+          "target_deg": 0.0551757699656107,
+          "step_deg": 1.0,
+          "enabled": true,
+          "moved": false,
+          "limits_rad": [
+            -2.91,
+            2.91
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp0_j1_outbound_move",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "actual_rad": 0.0009827065514400601,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 1,
+        "plan": {
+          "joint": 1,
+          "motor_id": 61,
+          "kind": "V1",
+          "start_rad": -0.01649029366672039,
+          "target_rad": 0.0009629988532229052,
+          "start_deg": -0.9448242300343893,
+          "target_deg": 0.0551757699656107,
+          "step_deg": 1.0,
+          "enabled": true,
+          "moved": true,
+          "limits_rad": [
+            -2.91,
+            2.91
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp0_j1_outbound_release",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": null,
+        "plan": null,
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp1_j2_outbound_prepare",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 2,
+        "plan": {
+          "joint": 2,
+          "motor_id": 62,
+          "kind": "V1",
+          "start_rad": 0.028138961642980576,
+          "target_rad": 0.04559225416292387,
+          "start_deg": 1.6122437420232958,
+          "target_deg": 2.6122437420232956,
+          "step_deg": 0.9999999999999998,
+          "enabled": false,
+          "moved": false,
+          "limits_rad": [
+            -3.2,
+            0.07
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp1_j2_outbound_enable",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 2,
+        "plan": {
+          "joint": 2,
+          "motor_id": 62,
+          "kind": "V1",
+          "start_rad": 0.028067056089639664,
+          "target_rad": 0.045520348609582956,
+          "start_deg": 1.6081238572933088,
+          "target_deg": 2.6081238572933083,
+          "step_deg": 0.9999999999999998,
+          "enabled": true,
+          "moved": false,
+          "limits_rad": [
+            -3.2,
+            0.07
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp1_j2_outbound_move",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "actual_rad": 0.04551608860492706,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 2,
+        "plan": {
+          "joint": 2,
+          "motor_id": 62,
+          "kind": "V1",
+          "start_rad": 0.028067056089639664,
+          "target_rad": 0.045520348609582956,
+          "start_deg": 1.6081238572933088,
+          "target_deg": 2.6081238572933083,
+          "step_deg": 0.9999999999999998,
+          "enabled": true,
+          "moved": true,
+          "limits_rad": [
+            -3.2,
+            0.07
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp1_j2_outbound_release",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": null,
+        "plan": null,
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp2_j3_outbound_prepare",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 3,
+        "plan": {
+          "joint": 3,
+          "motor_id": 63,
+          "kind": "V1",
+          "start_rad": 0.06728211045265198,
+          "target_rad": 0.08473540297259527,
+          "start_deg": 3.8549809656699994,
+          "target_deg": 4.854980965669999,
+          "step_deg": 0.9999999999999998,
+          "enabled": false,
+          "moved": false,
+          "limits_rad": [
+            -2.69,
+            2.69
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp2_j3_outbound_enable",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 3,
+        "plan": {
+          "joint": 3,
+          "motor_id": 63,
+          "kind": "V1",
+          "start_rad": 0.06727144867181778,
+          "target_rad": 0.08472474119176107,
+          "start_deg": 3.854370090626106,
+          "target_deg": 4.854370090626106,
+          "step_deg": 0.9999999999999998,
+          "enabled": true,
+          "moved": false,
+          "limits_rad": [
+            -2.69,
+            2.69
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp2_j3_outbound_move",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "actual_rad": 0.08475244045257568,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 3,
+        "plan": {
+          "joint": 3,
+          "motor_id": 63,
+          "kind": "V1",
+          "start_rad": 0.06727144867181778,
+          "target_rad": 0.08472474119176107,
+          "start_deg": 3.854370090626106,
+          "target_deg": 4.854370090626106,
+          "step_deg": 0.9999999999999998,
+          "enabled": true,
+          "moved": true,
+          "limits_rad": [
+            -2.69,
+            2.69
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp2_j3_outbound_release",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": null,
+        "plan": null,
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp3_j3_return_prepare",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 3,
+        "plan": {
+          "joint": 3,
+          "motor_id": 63,
+          "kind": "V1",
+          "start_rad": 0.08472047746181488,
+          "target_rad": 0.06726718494187159,
+          "start_deg": 4.854125796895206,
+          "target_deg": 3.854125796895206,
+          "step_deg": -0.9999999999999998,
+          "enabled": false,
+          "moved": false,
+          "limits_rad": [
+            -2.69,
+            2.69
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp3_j3_return_enable",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 3,
+        "plan": {
+          "joint": 3,
+          "motor_id": 63,
+          "kind": "V1",
+          "start_rad": 0.0824514701962471,
+          "target_rad": 0.06499817767630381,
+          "start_deg": 4.724121256893652,
+          "target_deg": 3.7241212568936524,
+          "step_deg": -0.9999999999999998,
+          "enabled": true,
+          "moved": false,
+          "limits_rad": [
+            -2.69,
+            2.69
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp3_j3_return_move",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "actual_rad": 0.0649704784154892,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 3,
+        "plan": {
+          "joint": 3,
+          "motor_id": 63,
+          "kind": "V1",
+          "start_rad": 0.0824514701962471,
+          "target_rad": 0.06499817767630381,
+          "start_deg": 4.724121256893652,
+          "target_deg": 3.7241212568936524,
+          "step_deg": -0.9999999999999998,
+          "enabled": true,
+          "moved": true,
+          "limits_rad": [
+            -2.69,
+            2.69
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp3_j3_return_release",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": null,
+        "plan": null,
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp4_j2_return_prepare",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 2,
+        "plan": {
+          "joint": 2,
+          "motor_id": 62,
+          "kind": "V1",
+          "start_rad": 0.04297542944550514,
+          "target_rad": 0.025522136925561847,
+          "start_deg": 2.4623107299896883,
+          "target_deg": 1.4623107299896883,
+          "step_deg": -1.0,
+          "enabled": false,
+          "moved": false,
+          "limits_rad": [
+            -3.2,
+            0.07
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp4_j2_return_enable",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 2,
+        "plan": {
+          "joint": 2,
+          "motor_id": 62,
+          "kind": "V1",
+          "start_rad": 0.04297542944550514,
+          "target_rad": 0.025522136925561847,
+          "start_deg": 2.4623107299896883,
+          "target_deg": 1.4623107299896883,
+          "step_deg": -1.0,
+          "enabled": true,
+          "moved": false,
+          "limits_rad": [
+            -3.2,
+            0.07
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp4_j2_return_move",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "actual_rad": 0.025550367310643196,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 2,
+        "plan": {
+          "joint": 2,
+          "motor_id": 62,
+          "kind": "V1",
+          "start_rad": 0.04297542944550514,
+          "target_rad": 0.025522136925561847,
+          "start_deg": 2.4623107299896883,
+          "target_deg": 1.4623107299896883,
+          "step_deg": -1.0,
+          "enabled": true,
+          "moved": true,
+          "limits_rad": [
+            -3.2,
+            0.07
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp4_j2_return_release",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": null,
+        "plan": null,
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp5_j1_return_prepare",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 1,
+        "plan": {
+          "joint": 1,
+          "motor_id": 61,
+          "kind": "V1",
+          "start_rad": -0.0026844663079828024,
+          "target_rad": -0.020137758827926098,
+          "start_deg": -0.1538085896924808,
+          "target_deg": -1.1538085896924808,
+          "step_deg": -1.0,
+          "enabled": false,
+          "moved": false,
+          "limits_rad": [
+            -2.91,
+            2.91
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp5_j1_return_enable",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 1,
+        "plan": {
+          "joint": 1,
+          "motor_id": 61,
+          "kind": "V1",
+          "start_rad": -0.002660498023033142,
+          "target_rad": -0.020113790542976438,
+          "start_deg": -0.15243530812269832,
+          "target_deg": -1.1524353081226983,
+          "step_deg": -1.0,
+          "enabled": true,
+          "moved": false,
+          "limits_rad": [
+            -2.91,
+            2.91
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp5_j1_return_move",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "actual_rad": -0.018983013927936554,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 1,
+        "plan": {
+          "joint": 1,
+          "motor_id": 61,
+          "kind": "V1",
+          "start_rad": -0.002660498023033142,
+          "target_rad": -0.020113790542976438,
+          "start_deg": -0.15243530812269832,
+          "target_deg": -1.1524353081226983,
+          "step_deg": -1.0,
+          "enabled": true,
+          "moved": true,
+          "limits_rad": [
+            -2.91,
+            2.91
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "wp5_j1_return_release",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": null,
+        "plan": null,
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "session_close",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "motion_process_enabled": true,
+        "session_open": false,
+        "busy": false,
+        "active_joint": null,
+        "plan": null,
+        "last_error": null,
+        "notice": "open control session with confirm=READY before moving",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    }
+  ],
+  "waypoint_results": [
+    {
+      "index": 0,
+      "joint": 1,
+      "phase": "outbound",
+      "step_deg": 1.0,
+      "direction": 1,
+      "plan": {
+        "joint": 1,
+        "motor_id": 61,
+        "kind": "V1",
+        "start_rad": -0.01649029366672039,
+        "target_rad": 0.0009629988532229052,
+        "start_deg": -0.9448242300343893,
+        "target_deg": 0.0551757699656107,
+        "step_deg": 1.0,
+        "enabled": true,
+        "moved": false,
+        "limits_rad": [
+          -2.91,
+          2.91
+        ]
+      },
+      "actual_rad": 0.0009827065514400601,
+      "abs_error_rad": 1.9707698217154984e-05,
+      "pos_err_tol_rad": 0.012,
+      "within_tol": true
+    },
+    {
+      "index": 1,
+      "joint": 2,
+      "phase": "outbound",
+      "step_deg": 1.0,
+      "direction": 1,
+      "plan": {
+        "joint": 2,
+        "motor_id": 62,
+        "kind": "V1",
+        "start_rad": 0.028067056089639664,
+        "target_rad": 0.045520348609582956,
+        "start_deg": 1.6081238572933088,
+        "target_deg": 2.6081238572933083,
+        "step_deg": 0.9999999999999998,
+        "enabled": true,
+        "moved": false,
+        "limits_rad": [
+          -3.2,
+          0.07
+        ]
+      },
+      "actual_rad": 0.04551608860492706,
+      "abs_error_rad": 4.260004655892713e-06,
+      "pos_err_tol_rad": 0.012,
+      "within_tol": true
+    },
+    {
+      "index": 2,
+      "joint": 3,
+      "phase": "outbound",
+      "step_deg": 1.0,
+      "direction": 1,
+      "plan": {
+        "joint": 3,
+        "motor_id": 63,
+        "kind": "V1",
+        "start_rad": 0.06727144867181778,
+        "target_rad": 0.08472474119176107,
+        "start_deg": 3.854370090626106,
+        "target_deg": 4.854370090626106,
+        "step_deg": 0.9999999999999998,
+        "enabled": true,
+        "moved": false,
+        "limits_rad": [
+          -2.69,
+          2.69
+        ]
+      },
+      "actual_rad": 0.08475244045257568,
+      "abs_error_rad": 2.7699260814612048e-05,
+      "pos_err_tol_rad": 0.012,
+      "within_tol": true
+    },
+    {
+      "index": 3,
+      "joint": 3,
+      "phase": "return",
+      "step_deg": 1.0,
+      "direction": -1,
+      "plan": {
+        "joint": 3,
+        "motor_id": 63,
+        "kind": "V1",
+        "start_rad": 0.0824514701962471,
+        "target_rad": 0.06499817767630381,
+        "start_deg": 4.724121256893652,
+        "target_deg": 3.7241212568936524,
+        "step_deg": -0.9999999999999998,
+        "enabled": true,
+        "moved": false,
+        "limits_rad": [
+          -2.69,
+          2.69
+        ]
+      },
+      "actual_rad": 0.0649704784154892,
+      "abs_error_rad": 2.7699260814612048e-05,
+      "pos_err_tol_rad": 0.012,
+      "within_tol": true
+    },
+    {
+      "index": 4,
+      "joint": 2,
+      "phase": "return",
+      "step_deg": 1.0,
+      "direction": -1,
+      "plan": {
+        "joint": 2,
+        "motor_id": 62,
+        "kind": "V1",
+        "start_rad": 0.04297542944550514,
+        "target_rad": 0.025522136925561847,
+        "start_deg": 2.4623107299896883,
+        "target_deg": 1.4623107299896883,
+        "step_deg": -1.0,
+        "enabled": true,
+        "moved": false,
+        "limits_rad": [
+          -3.2,
+          0.07
+        ]
+      },
+      "actual_rad": 0.025550367310643196,
+      "abs_error_rad": 2.823038508134937e-05,
+      "pos_err_tol_rad": 0.012,
+      "within_tol": true
+    },
+    {
+      "index": 5,
+      "joint": 1,
+      "phase": "return",
+      "step_deg": 1.0,
+      "direction": -1,
+      "plan": {
+        "joint": 1,
+        "motor_id": 61,
+        "kind": "V1",
+        "start_rad": -0.002660498023033142,
+        "target_rad": -0.020113790542976438,
+        "start_deg": -0.15243530812269832,
+        "target_deg": -1.1524353081226983,
+        "step_deg": -1.0,
+        "enabled": true,
+        "moved": false,
+        "limits_rad": [
+          -2.91,
+          2.91
+        ]
+      },
+      "actual_rad": -0.018983013927936554,
+      "abs_error_rad": 0.0011307766150398836,
+      "pos_err_tol_rad": 0.012,
+      "within_tol": true
+    }
+  ],
+  "verdict": "PASS",
+  "pre_health": {
+    "ok": true,
+    "service": "brick-stacking-host-monitor",
+    "started_at": "2026-11-10T11:53:15Z",
+    "motion_enabled": true,
+    "camera_held": false,
+    "control_session": false,
+    "scope": "camera_joint_monitor_optional_single_joint_control",
+    "_http_code": 200
+  },
+  "pre_control": {
+    "motion_process_enabled": true,
+    "session_open": false,
+    "busy": false,
+    "active_joint": null,
+    "plan": null,
+    "last_error": null,
+    "notice": "open control session with confirm=READY before moving",
+    "defaults": {
+      "step_deg": {
+        "1": 2.86,
+        "2": 2.86,
+        "3": 2.86,
+        "4": 2.86,
+        "5": 2.86,
+        "6": 5.0,
+        "7": 5.0
+      },
+      "max_step_deg": {
+        "1": 5.0,
+        "2": 5.0,
+        "3": 5.0,
+        "4": 5.0,
+        "5": 5.0,
+        "6": 5.0,
+        "7": 5.0
+      },
+      "iface": "can2"
+    },
+    "_http_code": 200
+  },
+  "pre_state": {
+    "arms_left": {
+      "role": "left",
+      "channel": "can2",
+      "joint_names": [
+        "J1",
+        "J2",
+        "J3",
+        "J4",
+        "J5",
+        "J6",
+        "J7"
+      ],
+      "q_rad": [
+        -0.01629854552447796,
+        0.028234833851456642,
+        0.06727144867181778,
+        -0.021518342196941376,
+        -1.3599486351013184,
+        null,
+        null
+      ],
+      "q_deg": [
+        -0.9338378707544238,
+        1.6177368149415727,
+        3.854370090626106,
+        -1.2329101900030086,
+        -77.91931714588239,
+        null,
+        null
+      ],
+      "validity": "INVALID",
+      "reason": "J6/J7: no audited read-only position query",
+      "stamp_s": 512557.76738835,
+      "source": "real",
+      "error": null
+    },
+    "control": {
+      "motion_process_enabled": true,
+      "session_open": false,
+      "busy": false,
+      "active_joint": null,
+      "plan": null,
+      "last_error": null,
+      "notice": "open control session with confirm=READY before moving",
+      "defaults": {
+        "step_deg": {
+          "1": 2.86,
+          "2": 2.86,
+          "3": 2.86,
+          "4": 2.86,
+          "5": 2.86,
+          "6": 5.0,
+          "7": 5.0
+        },
+        "max_step_deg": {
+          "1": 5.0,
+          "2": 5.0,
+          "3": 5.0,
+          "4": 5.0,
+          "5": 5.0,
+          "6": 5.0,
+          "7": 5.0
+        },
+        "iface": "can2"
+      }
+    },
+    "meta": {
+      "mode": "real",
+      "serial": "CP2L863000KL",
+      "arms": "left",
+      "motion_enabled": true,
+      "camera_held": false,
+      "notice": "camera released; re-acquire when preview needed",
+      "camera_selected": {
+        "serial": "CP2L863000KL",
+        "name": "Orbbec Gemini 335L",
+        "firmware": "1.4.60"
+      }
+    }
+  },
+  "post_state": {
+    "arms_left": {
+      "role": "left",
+      "channel": "can2",
+      "joint_names": [
+        "J1",
+        "J2",
+        "J3",
+        "J4",
+        "J5",
+        "J6",
+        "J7"
+      ],
+      "q_rad": [
+        -0.01629854552447796,
+        0.028234833851456642,
+        0.06727144867181778,
+        -0.021518342196941376,
+        -1.3599486351013184,
+        null,
+        null
+      ],
+      "q_deg": [
+        -0.9338378707544238,
+        1.6177368149415727,
+        3.854370090626106,
+        -1.2329101900030086,
+        -77.91931714588239,
+        null,
+        null
+      ],
+      "validity": "INVALID",
+      "reason": "J6/J7: no audited read-only position query",
+      "stamp_s": 512557.76738835,
+      "source": "real",
+      "error": null
+    },
+    "control": {
+      "motion_process_enabled": true,
+      "session_open": false,
+      "busy": false,
+      "active_joint": null,
+      "plan": null,
+      "last_error": null,
+      "notice": "open control session with confirm=READY before moving",
+      "defaults": {
+        "step_deg": {
+          "1": 2.86,
+          "2": 2.86,
+          "3": 2.86,
+          "4": 2.86,
+          "5": 2.86,
+          "6": 5.0,
+          "7": 5.0
+        },
+        "max_step_deg": {
+          "1": 5.0,
+          "2": 5.0,
+          "3": 5.0,
+          "4": 5.0,
+          "5": 5.0,
+          "6": 5.0,
+          "7": 5.0
+        },
+        "iface": "can2"
+      }
+    }
+  },
+  "t1_subset": "short_combo_out_and_back_joint_space",
+  "host_evidence_path": "/home/qwer/brick-stacking-real/docs/team/B/evidence/t1_bounded_short_combo_live_20261111_094437.json"
+}

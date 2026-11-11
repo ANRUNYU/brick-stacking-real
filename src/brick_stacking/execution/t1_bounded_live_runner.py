@@ -12,10 +12,14 @@ from __future__ import annotations
 from typing import Any, Mapping, Sequence
 
 SCHEMA = "t1-bounded-live-runner-0.1"
+SHORT_COMBO_SCHEMA = "t1-bounded-short-combo-0.1"
 DEFAULT_MOTION_ENABLED = False
 DEFAULT_CONTROL_READY = False
 MAX_SINGLE_JOINT_STEP_RAD = 0.05  # hard cap for any future enable path
+MAX_SHORT_COMBO_STEPS = 8
+MAX_SHORT_COMBO_STEP_DEG = 1.0  # live/host_monitor soft cap for short combo
 ALLOWED_JOINTS_FIRST_PASS = ("J1", "J2", "J3", "J4", "J5")  # wrist later
+ALLOWED_SHORT_COMBO_JOINTS = (1, 2, 3, 4, 5)  # wrist MOVE still forbidden here
 
 
 def _mapping(value: Any) -> dict[str, Any]:
@@ -174,6 +178,144 @@ def build_t1_bounded_dry_plan(
     }
 
 
+def default_short_combo_waypoints(
+    *,
+    joints: Sequence[int] = (1, 2, 3),
+    step_deg: float = 1.0,
+) -> list[dict[str, Any]]:
+    """Build outbound then return waypoints (one joint at a time).
+
+    Example with joints=(1,2,3): J1+ → J2+ → J3+ → J3− → J2− → J1−.
+    """
+    step = float(step_deg)
+    if not (0.0 < step <= MAX_SHORT_COMBO_STEP_DEG):
+        raise ValueError(f"step_deg must be in (0, {MAX_SHORT_COMBO_STEP_DEG}]")
+    ordered = [int(j) for j in joints]
+    if not ordered:
+        raise ValueError("joints must be non-empty")
+    if len(ordered) > MAX_SHORT_COMBO_STEPS // 2:
+        raise ValueError(
+            f"at most {MAX_SHORT_COMBO_STEPS // 2} joints for out-and-back "
+            f"(hard cap {MAX_SHORT_COMBO_STEPS} steps)"
+        )
+    for joint in ordered:
+        if joint not in ALLOWED_SHORT_COMBO_JOINTS:
+            raise ValueError(
+                f"short-combo joint must be one of {ALLOWED_SHORT_COMBO_JOINTS}"
+            )
+    waypoints: list[dict[str, Any]] = []
+    for joint in ordered:
+        waypoints.append(
+            {
+                "joint": joint,
+                "step_deg": step,
+                "direction": 1,
+                "phase": "outbound",
+            }
+        )
+    for joint in reversed(ordered):
+        waypoints.append(
+            {
+                "joint": joint,
+                "step_deg": step,
+                "direction": -1,
+                "phase": "return",
+            }
+        )
+    return waypoints
+
+
+def build_t1_short_combo_dry_plan(
+    *,
+    waypoints: Sequence[Mapping[str, Any]] | None = None,
+    joints: Sequence[int] = (1, 2, 3),
+    step_deg: float = 1.0,
+    rest_capture: Mapping[str, Any] | None = None,
+    prerequisites: Mapping[str, Any] | None = None,
+    motion_enabled: bool = False,
+    authorization_ref: str | None = None,
+) -> dict[str, Any]:
+    """Emit a non-executable short combo empty-run plan (default motion OFF).
+
+    This is intentionally *not* a synthetic H3 / PlanBundle trajectory. Live
+    motion requires a separate explicit enable path (host_monitor runner).
+    """
+    prereq = (
+        dict(prerequisites)
+        if prerequisites is not None
+        else evaluate_t1_prerequisites(rest_capture=rest_capture)
+    )
+    pts = (
+        [dict(p) for p in waypoints]
+        if waypoints is not None
+        else default_short_combo_waypoints(joints=joints, step_deg=step_deg)
+    )
+    if not pts:
+        raise ValueError("waypoints must be non-empty")
+    if len(pts) > MAX_SHORT_COMBO_STEPS:
+        raise ValueError(f"at most {MAX_SHORT_COMBO_STEPS} waypoints")
+
+    normalized: list[dict[str, Any]] = []
+    for index, raw in enumerate(pts):
+        joint = int(raw["joint"])
+        if joint not in ALLOWED_SHORT_COMBO_JOINTS:
+            raise ValueError(
+                f"waypoint[{index}] joint must be one of {ALLOWED_SHORT_COMBO_JOINTS}"
+            )
+        step = float(raw.get("step_deg", step_deg))
+        if not (0.0 < step <= MAX_SHORT_COMBO_STEP_DEG):
+            raise ValueError(
+                f"waypoint[{index}] step_deg must be in (0, {MAX_SHORT_COMBO_STEP_DEG}]"
+            )
+        direction = int(raw.get("direction", 1))
+        if direction not in (-1, 0, 1):
+            raise ValueError(f"waypoint[{index}] direction must be -1, 0, or 1")
+        normalized.append(
+            {
+                "index": index,
+                "joint": joint,
+                "step_deg": step,
+                "direction": direction,
+                "phase": str(raw.get("phase") or "unspecified"),
+            }
+        )
+
+    refuse_reason = None
+    if motion_enabled:
+        refuse_reason = "motion_enabled_refused_by_default_skeleton"
+    if prereq.get("live_motion_allowed") is not True:
+        refuse_reason = refuse_reason or "live_motion_disabled_by_skeleton"
+
+    return {
+        "schema_version": SHORT_COMBO_SCHEMA,
+        "kind": "t1_short_combo_empty_dry_plan",
+        "executable": False,
+        "motion_enabled": False,
+        "control_ready": False,
+        "authorization_ref": authorization_ref,
+        "waypoints": normalized,
+        "waypoint_count": len(normalized),
+        "max_waypoints": MAX_SHORT_COMBO_STEPS,
+        "max_step_deg": MAX_SHORT_COMBO_STEP_DEG,
+        "wrist_j6_j7_commanded_move": False,
+        "block_present": False,
+        "fail_stop": True,
+        "provenance": {
+            "trajectory_kind": "joint_space_host_monitor_sequence",
+            "not_h3_plan_bundle": True,
+            "not_synthetic_fk_ik_bundle": True,
+            "urdf_role": "soft_limits_inside_host_monitor_joint_control_only",
+            "fk_ik_live_wiring": "not_claimed",
+        },
+        "refuse_reason": refuse_reason,
+        "prerequisites": prereq,
+        "next_hardware_step": (
+            "tools/t1_bounded_short_combo_runner.py with explicit "
+            "--enable-live-motion on host_monitor; still T1 empty, no block"
+        ),
+    }
+
+
 def summarize_t1_status(
     *,
     rest_capture: Mapping[str, Any] | None = None,
@@ -189,12 +331,17 @@ def summarize_t1_status(
         urdf_available=urdf_available,
     )
     dry = None
+    short_combo = None
     if rest_capture and prereq.get("subset_dry_plan_allowed"):
         dry = build_t1_bounded_dry_plan(rest_capture=rest_capture, prerequisites=prereq)
+        short_combo = build_t1_short_combo_dry_plan(
+            rest_capture=rest_capture, prerequisites=prereq
+        )
     return {
         "schema_version": SCHEMA,
         "prerequisites": prereq,
         "dry_plan": dry,
+        "short_combo_dry_plan": short_combo,
         "live_executor_present": False,
         "software_plan_bundle_not_live_trajectory": True,
     }
