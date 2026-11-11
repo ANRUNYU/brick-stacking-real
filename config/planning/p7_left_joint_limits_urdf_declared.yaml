@@ -1,0 +1,25 @@
+# Joint limits extracted from locked vendor p7__left.urdf declared <limit>.
+# NOT hardware-measured; NOT Flash COM Theta; NOT H3 PlanBundle.
+schema_version: m-single-block-joint-limits-0.1
+model_version: p7-left-urdf-declared-233a0fd9
+source: recorded
+provenance: vendor_urdf_declared_limits
+urdf_relpath: config/models/p7_left/p7__left.urdf
+urdf_sha256: 233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce
+hardware_match_verified: false
+joint_names: [J1, J2, J3, J4, J5, J6, J7]
+urdf_joint_names: [L1_Joint, L2_Joint, L3_Joint, L4_Joint, L5_Joint, L6_Joint, L7_Joint]
+# Declared lower/upper from URDF (rad).
+lower_rad: [-2.91, -0.07, -2.69, -2.05, -2.69, -1.59, -1.59]
+upper_rad: [2.91, 3.2, 2.69, 2.05, 2.69, 1.59, 1.59]
+# Declared velocity from URDF; accel not present → conservative synthetic-safe fill
+# for offline joint-space dry-plan only (not live H3).
+velocity_rad_s: [10.47, 10.47, 9.1, 9.1, 9.1, 7.33, 7.33]
+acceleration_rad_s2: [2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0]
+seed_rad: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+seed_source: synthetic_zero_placeholder_overridden_by_rest_when_available
+notes:
+  - "Replace synthetic ±2.5 bounds for joint-space dry-plan gating only."
+  - "L6/L7 ±1.59 are URDF declared; do NOT mark left_wrist_theta_ranges verified."
+  - "Not H3 / not PlanBundle live executor / not control_ready elevation."
+  - "Accel values are planning fillers; URDF has no acceleration attribute."

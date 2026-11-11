@@ -1,0 +1,148 @@
+{
+  "schema_version": "t1-urdf-joint-space-dry-plan-evidence-0.1",
+  "generated_by": "tools/t1_urdf_joint_space_dry_plan.py",
+  "rest_capture_path": "E:/OneDrive/Desktop/brick-stacking-real/brick-stacking-real/docs/team/B/evidence/left_supported_rest_20261111_011818.json",
+  "live_motion_run": false,
+  "control_ready": false,
+  "not_h3": true,
+  "plan": {
+    "schema_version": "t1-urdf-joint-space-dry-plan-0.1",
+    "kind": "t1_urdf_joint_space_empty_dry_plan",
+    "executable": false,
+    "motion_enabled": false,
+    "control_ready": false,
+    "not_h3_plan_bundle": true,
+    "not_synthetic_limits": true,
+    "limits_source": "vendor_urdf_declared",
+    "urdf_relpath": "E:/OneDrive/Desktop/brick-stacking-real/brick-stacking-real/config/models/p7_left/p7__left.urdf",
+    "urdf_sha256": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+    "limits_config_relpath": "E:/OneDrive/Desktop/brick-stacking-real/brick-stacking-real/config/planning/p7_left_joint_limits_urdf_declared.yaml",
+    "limits_model_version": "p7-left-urdf-declared-233a0fd9",
+    "hardware_match_verified": false,
+    "wrist_j6_j7_commanded_move": false,
+    "waypoint_count": 6,
+    "waypoints": [
+      {
+        "index": 0,
+        "joint": 1,
+        "joint_name": "J1",
+        "phase": "outbound",
+        "direction": 1,
+        "step_deg": 1.0,
+        "start_rad": 0.005440838169306517,
+        "target_rad": 0.022894130689249812,
+        "within_urdf_declared_limits": true,
+        "limit_lower_rad": -2.91,
+        "limit_upper_rad": 2.91
+      },
+      {
+        "index": 1,
+        "joint": 2,
+        "joint_name": "J2",
+        "phase": "outbound",
+        "direction": 1,
+        "step_deg": 1.0,
+        "start_rad": 0.028114991262555122,
+        "target_rad": 0.045568283782498414,
+        "within_urdf_declared_limits": true,
+        "limit_lower_rad": -0.07,
+        "limit_upper_rad": 3.2
+      },
+      {
+        "index": 2,
+        "joint": 3,
+        "joint_name": "J3",
+        "phase": "outbound",
+        "direction": 1,
+        "step_deg": 1.0,
+        "start_rad": 0.009342369623482227,
+        "target_rad": 0.026795662143425523,
+        "within_urdf_declared_limits": true,
+        "limit_lower_rad": -2.69,
+        "limit_upper_rad": 2.69
+      },
+      {
+        "index": 3,
+        "joint": 3,
+        "joint_name": "J3",
+        "phase": "return",
+        "direction": -1,
+        "step_deg": 1.0,
+        "start_rad": 0.009342369623482227,
+        "target_rad": -0.008110922896461068,
+        "within_urdf_declared_limits": true,
+        "limit_lower_rad": -2.69,
+        "limit_upper_rad": 2.69
+      },
+      {
+        "index": 4,
+        "joint": 2,
+        "joint_name": "J2",
+        "phase": "return",
+        "direction": -1,
+        "step_deg": 1.0,
+        "start_rad": 0.028114991262555122,
+        "target_rad": 0.010661698742611827,
+        "within_urdf_declared_limits": true,
+        "limit_lower_rad": -0.07,
+        "limit_upper_rad": 3.2
+      },
+      {
+        "index": 5,
+        "joint": 1,
+        "joint_name": "J1",
+        "phase": "return",
+        "direction": -1,
+        "step_deg": 1.0,
+        "start_rad": 0.005440838169306517,
+        "target_rad": -0.012012454350636779,
+        "within_urdf_declared_limits": true,
+        "limit_lower_rad": -2.91,
+        "limit_upper_rad": 2.91
+      }
+    ],
+    "refuse_reason": "live_motion_disabled_by_skeleton",
+    "prerequisites": {
+      "schema_version": "t1-bounded-live-runner-0.1",
+      "t1_level": "empty_run_no_block",
+      "subset": "rest_then_optional_single_joint_or_short_traj",
+      "rest_capture_ok": true,
+      "j1_j5_sdk_ok": true,
+      "wrist_range_audited": false,
+      "rest_draft_pass": false,
+      "urdf_available": true,
+      "block_present": false,
+      "motion_enabled": false,
+      "control_ready": false,
+      "default_motion_enabled": false,
+      "default_control_ready": false,
+      "subset_dry_plan_allowed": true,
+      "live_motion_allowed": false,
+      "full_plan_bundle_live_executor": false,
+      "blocked_by": [
+        "j6_j7_range_profile_unverified",
+        "rest_draft_not_pass"
+      ],
+      "notes": [
+        "Prefer Rest→low-speed single-joint/short empty path over synthetic PlanBundle.",
+        "Skeleton refuses --enable-motion / control_ready elevation.",
+        "J6/J7 audited range still required before wrist motion or audited rest-draft PASS.",
+        "host_monitor single-joint --enable-motion remains a separate, explicit path."
+      ]
+    },
+    "provenance": {
+      "trajectory_kind": "joint_space_urdf_limit_gated_sequence",
+      "not_h3_plan_bundle": true,
+      "not_synthetic_fk_ik_bundle": true,
+      "replaces_synthetic_pm_2_5_for_dry_plan_gating": true,
+      "fk_ik_live_wiring": "not_claimed",
+      "wrist_theta_verified": false
+    },
+    "next_hardware_step": "optional explicit host_monitor short combo only; still T1 empty, no block, no H3 PlanBundle"
+  },
+  "notes": [
+    "Offline only; uses locked p7__left.urdf declared limits instead of synthetic ±2.5.",
+    "Does not claim FK/IK live wiring or wrist theta verified.",
+    "T1 joint-space subset; not whole PlanBundle empty run."
+  ]
+}

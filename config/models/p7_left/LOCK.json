@@ -1,0 +1,25 @@
+{
+  "schema_version": "p7-left-urdf-lock-0.1",
+  "locked_at_local": "2026-11-11T09:52:00+08:00",
+  "robot": "lkls73_arm_left",
+  "urdf_relpath": "config/models/p7_left/p7__left.urdf",
+  "urdf_sha256": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+  "bytes": 5331,
+  "host_source_path": "/home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e/src/linkerbot/arm/kinetix/urdf/p7__left.urdf",
+  "host_sha256_match": true,
+  "prior_audit_ref": "docs/team/C/evidence/left_p7_declared_model_audit.json",
+  "evidence_snippet_ref": "docs/team/B/evidence/host_sdk_snippets_20261111/p7__left.urdf",
+  "hardware_match_verified": false,
+  "mesh_strategy": {
+    "required_for_joint_space_dry_plan": false,
+    "urdf_contains_mesh_or_collision_tags": false,
+    "note": "Kinematics-only vendor URDF; joint-space dry-plan uses declared <limit> only. Collision STL remain under artifacts per C16 and are not vendored here."
+  },
+  "limits_config_relpath": "config/planning/p7_left_joint_limits_urdf_declared.yaml",
+  "not_h3_plan_bundle": true,
+  "notes": [
+    "Declared model limits are not audited drive Flash COM Theta maps.",
+    "Do not treat URDF L6/L7 ±1.59 as verified left_wrist_theta_ranges.",
+    "FK/IK live wiring still not claimed."
+  ]
+}

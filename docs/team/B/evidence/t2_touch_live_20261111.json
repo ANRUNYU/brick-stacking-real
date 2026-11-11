@@ -1,0 +1,42 @@
+{
+  "status": "SAFE_HALT",
+  "authorization_ref": "chat-20261111-t2-block-ready-touch",
+  "error": "plan_move_l: IK failed to converge (pose=x=0.5139403043107877 y=0.05574590060924958 z=-0.32222413696366375 rx=-0.016811697973640904 ry=-0.745892405206201 rz=-1.5746545104077798)",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/qwer/t2_touch_live.py\", line 106, in main\n    arm.move_l(\n  File \"/home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e/src/linkerbot/arm/p7/p7.py\", line 46, in wrapper\n    return method(self, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e/src/linkerbot/arm/p7/p7.py\", line 454, in move_l\n    raise e\n  File \"/home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e/src/linkerbot/arm/p7/p7.py\", line 438, in move_l\n    for wp in list(\n              ^^^^^\n  File \"/home/qwer/linkerbot-p7-unpack/linkerbot-python-sdk-927290b8e27f9e2df3cc5b0a0776c36e2fb5175e/src/linkerbot/arm/kinetix/kinetix.py\", line 640, in plan_move_l\n    raise RuntimeError(f\"plan_move_l: IK failed to converge (pose={pose})\")\nRuntimeError: plan_move_l: IK failed to converge (pose=x=0.5139403043107877 y=0.05574590060924958 z=-0.32222413696366375 rx=-0.016811697973640904 ry=-0.745892405206201 rz=-1.5746545104077798)\n",
+  "events": [
+    {
+      "stage": "HOVER",
+      "pose": {
+        "x": 0.5137513597644595,
+        "y": 0.05620608551875733,
+        "z": -0.32261389018175324,
+        "rx": -0.0157618408429806,
+        "ry": -0.7646535764268688,
+        "rz": -1.5737803631733684
+      },
+      "q": [
+        -1.0301400423049927,
+        0.01378185860812664,
+        1.59146249294281,
+        -0.035473305732011795,
+        -0.031297467648983,
+        0.012779430838483208,
+        -0.26455329213397505
+      ]
+    },
+    {
+      "stage": "HAND_OPEN",
+      "cmd": [
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0
+      ]
+    }
+  ],
+  "control_ready": false,
+  "pid": 457136,
+  "recorded_at_utc": "2026-11-11T02:53:23.676151+00:00"
+}

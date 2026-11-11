@@ -1,6 +1,6 @@
 # 两线开发计划：至首次完整单块抓放
 
-**状态**：开发规划（2026-11-10，修订为 V / M 两线）  
+**状态**：开发规划（2026-11-10，修订为 V / M 两线；**2026-11-11** M 内人员分工见 §3.8）  
 **范围**：单臂、头相机主观测、单色单块 pick → lift → place → verify。不含十块阶梯、双臂、腕相机主定位。  
 **前置入口**：[PROJECT_PLAN.md](PROJECT_PLAN.md)、[CONTRACTS.md](CONTRACTS.md)、[VISION_WORKFLOW.md](VISION_WORKFLOW.md)、标定交接 [team/C/HANDOFF_20261109_CALIBRATION_COMPLETE.md](team/C/HANDOFF_20261109_CALIBRATION_COMPLETE.md)。  
 **目标切片**：供料区 1 块（建议红）→ 一层目标槽 1 个；通过后方可扩展十块。
@@ -195,6 +195,21 @@ RGB-D + BlockDetection (camera)          ← V
 - [ ] 基座系对尺 ≤ §0.2；PlanBundle + 避桌面单测通过。
 - [ ] Mock e2e 绿；真机 port 契约测试绿。
 - [ ] T1 记录完整；T4/T5 仅在 §0.2 全满足后勾选。
+
+### 3.8 人员分工（2026-11-11）
+
+人员交接已收成手腕目标，见 [TWO_LINE_WRIST_PLAN_20261111.md](TWO_LINE_WRIST_PLAN_20261111.md)。下表保留为当天的中间约定；字段、手指是否进路径、中间关键帧归谁，以该文件为准。误差门仍是本节 §0.2 与 §3.4。
+
+M 仍是一条技术线（先可审计路径包，再经 Gate 执行）。人员拆开：
+
+| 谁 | 负责 | 交付物 |
+|----|------|--------|
+| **本侧** | 机械臂位置标定；O6 抓取预设与路点挂载 | 命名位姿包（坐标系、完整位姿、七轴种子、可达接近方向）+ 手动作表 |
+| **协作者** | 用其选定的开源 7 轴运动算法连接这些位姿 | 离线路径（关节或笛卡尔路点 + 种子）；真机使能仍走本仓 Gate |
+
+交接契约见 [team/B/POSE_HANDOFF_FOR_PATH_20261111.md](team/B/POSE_HANDOFF_FOR_PATH_20261111.md)，方向说明见 [team/B/MOTION_STACK_DIRECTION_20261111.md](team/B/MOTION_STACK_DIRECTION_20261111.md)。
+
+顺序固定：本侧先交出标定位姿包与手动作挂点 → 协作者离线出路径 → 空跑/dry-run → 再谈真机。`control_ready` 默认仍 false。下探路径由协作者算法生成；官方 SDK 留作读姿态与日后关节下发适配。
 
 ---
 
