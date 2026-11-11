@@ -1,0 +1,599 @@
+{
+  "schema_version": "t1-bounded-single-joint-live-0.1",
+  "authorization_ref": "chat-20261111-operator-continue-t1-bounded",
+  "host": "10.157.173.135",
+  "stamp_local": "20261111_093412",
+  "stamp_utc": "2026-11-11T01:34:12.955131+00:00",
+  "block_present": false,
+  "notes": [
+    "T1 subset only: no block, no T2, control_ready stays false.",
+    "Wrist recover: J6 ENABLE-only (no MOVE).",
+    "Empty run: J1 step_deg=1.0 within host_monitor soft max.",
+    "Fail-stop: no blind retry."
+  ],
+  "steps": [
+    {
+      "name": "pre_state",
+      "ok": true
+    },
+    {
+      "name": "session_open",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": null,
+        "plan": null,
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "j6_prepare",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 6,
+        "plan": {
+          "joint": 6,
+          "motor_id": 66,
+          "kind": "V2",
+          "start_rad": -0.07953765163652982,
+          "target_rad": -0.062084359116586524,
+          "start_deg": -4.557171751154963,
+          "target_deg": -3.557171751154964,
+          "step_deg": 0.9999999999999998,
+          "enabled": false,
+          "moved": false,
+          "limits_rad": [
+            -1.59,
+            1.59
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "j6_enable_hold_recover",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 6,
+        "plan": {
+          "joint": 6,
+          "motor_id": 66,
+          "kind": "V2",
+          "start_rad": -0.07839322499427759,
+          "target_rad": -0.060939932474334296,
+          "start_deg": -4.491600934591583,
+          "target_deg": -3.4916009345915833,
+          "step_deg": 0.9999999999999998,
+          "enabled": true,
+          "moved": false,
+          "limits_rad": [
+            -1.59,
+            1.59
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "j6_release",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": null,
+        "plan": null,
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "j1_prepare",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 1,
+        "plan": {
+          "joint": 1,
+          "motor_id": 61,
+          "kind": "V1",
+          "start_rad": -0.03444266319274902,
+          "target_rad": -0.016989370672805728,
+          "start_deg": -1.9734192361351042,
+          "target_deg": -0.9734192361351041,
+          "step_deg": 1.0,
+          "enabled": false,
+          "moved": false,
+          "limits_rad": [
+            -2.91,
+            2.91
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "j1_enable",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 1,
+        "plan": {
+          "joint": 1,
+          "motor_id": 61,
+          "kind": "V1",
+          "start_rad": -0.03441869467496872,
+          "target_rad": -0.016965402155025424,
+          "start_deg": -1.9720459412251083,
+          "target_deg": -0.9720459412251083,
+          "step_deg": 1.0,
+          "enabled": true,
+          "moved": false,
+          "limits_rad": [
+            -2.91,
+            2.91
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "j1_move",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "actual_rad": -0.016993630677461624,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": 1,
+        "plan": {
+          "joint": 1,
+          "motor_id": 61,
+          "kind": "V1",
+          "start_rad": -0.03441869467496872,
+          "target_rad": -0.016965402155025424,
+          "start_deg": -1.9720459412251083,
+          "target_deg": -0.9720459412251083,
+          "step_deg": 1.0,
+          "enabled": true,
+          "moved": true,
+          "limits_rad": [
+            -2.91,
+            2.91
+          ]
+        },
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "j1_release",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "motion_process_enabled": true,
+        "session_open": true,
+        "busy": false,
+        "active_joint": null,
+        "plan": null,
+        "last_error": null,
+        "notice": "control session open; one joint at a time",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    },
+    {
+      "name": "session_close",
+      "ok": true,
+      "result": {
+        "ok": true,
+        "changed": true,
+        "motion_process_enabled": true,
+        "session_open": false,
+        "busy": false,
+        "active_joint": null,
+        "plan": null,
+        "last_error": null,
+        "notice": "open control session with confirm=READY before moving",
+        "defaults": {
+          "step_deg": {
+            "1": 2.86,
+            "2": 2.86,
+            "3": 2.86,
+            "4": 2.86,
+            "5": 2.86,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "max_step_deg": {
+            "1": 5.0,
+            "2": 5.0,
+            "3": 5.0,
+            "4": 5.0,
+            "5": 5.0,
+            "6": 5.0,
+            "7": 5.0
+          },
+          "iface": "can2"
+        },
+        "_http_code": 200
+      }
+    }
+  ],
+  "verdict": "PASS",
+  "pre_state": {
+    "health_motion_enabled": true,
+    "arms_left": {
+      "role": "left",
+      "channel": "can2",
+      "joint_names": [
+        "J1",
+        "J2",
+        "J3",
+        "J4",
+        "J5",
+        "J6",
+        "J7"
+      ],
+      "q_rad": [
+        -0.03456250578165054,
+        0.028810076415538788,
+        0.034269556403160095,
+        0.021976403892040253,
+        -1.390958309173584,
+        null,
+        null
+      ],
+      "q_deg": [
+        -1.9802857106850826,
+        1.6506957860597635,
+        1.9635009476865992,
+        1.2591551918887824,
+        -79.69604059429946,
+        null,
+        null
+      ],
+      "validity": "INVALID",
+      "reason": "J6/J7: no audited read-only position query",
+      "stamp_s": 511933.303762942,
+      "source": "real",
+      "error": null
+    },
+    "control": {
+      "motion_process_enabled": true,
+      "session_open": false,
+      "busy": false,
+      "active_joint": null,
+      "plan": null,
+      "last_error": null,
+      "notice": "open control session with confirm=READY before moving",
+      "defaults": {
+        "step_deg": {
+          "1": 2.86,
+          "2": 2.86,
+          "3": 2.86,
+          "4": 2.86,
+          "5": 2.86,
+          "6": 5.0,
+          "7": 5.0
+        },
+        "max_step_deg": {
+          "1": 5.0,
+          "2": 5.0,
+          "3": 5.0,
+          "4": 5.0,
+          "5": 5.0,
+          "6": 5.0,
+          "7": 5.0
+        },
+        "iface": "can2"
+      }
+    },
+    "meta": {
+      "mode": "real",
+      "serial": "CP2L863000KL",
+      "arms": "left",
+      "motion_enabled": true,
+      "camera_held": false,
+      "notice": "camera released; re-acquire when preview needed",
+      "camera_selected": {
+        "serial": "CP2L863000KL",
+        "name": "Orbbec Gemini 335L",
+        "firmware": "1.4.60"
+      }
+    }
+  },
+  "j1_plan": {
+    "joint": 1,
+    "motor_id": 61,
+    "kind": "V1",
+    "start_rad": -0.03444266319274902,
+    "target_rad": -0.016989370672805728,
+    "start_deg": -1.9734192361351042,
+    "target_deg": -0.9734192361351041,
+    "step_deg": 1.0,
+    "enabled": false,
+    "moved": false,
+    "limits_rad": [
+      -2.91,
+      2.91
+    ]
+  },
+  "j1_actual_rad": -0.016993630677461624,
+  "post_state": {
+    "arms_left": {
+      "role": "left",
+      "channel": "can2",
+      "joint_names": [
+        "J1",
+        "J2",
+        "J3",
+        "J4",
+        "J5",
+        "J6",
+        "J7"
+      ],
+      "q_rad": [
+        -0.016634104773402214,
+        0.028546422719955444,
+        0.03424825146794319,
+        0.02160356193780899,
+        -1.3909690380096436,
+        null,
+        null
+      ],
+      "q_deg": [
+        -0.9530639994943635,
+        1.635589542049811,
+        1.962280264815871,
+        1.2377929214859213,
+        -79.69665531132476,
+        null,
+        null
+      ],
+      "validity": "INVALID",
+      "reason": "J6/J7: no audited read-only position query",
+      "stamp_s": 511938.906046787,
+      "source": "real",
+      "error": null
+    },
+    "control": {
+      "motion_process_enabled": true,
+      "session_open": false,
+      "busy": false,
+      "active_joint": null,
+      "plan": null,
+      "last_error": null,
+      "notice": "open control session with confirm=READY before moving",
+      "defaults": {
+        "step_deg": {
+          "1": 2.86,
+          "2": 2.86,
+          "3": 2.86,
+          "4": 2.86,
+          "5": 2.86,
+          "6": 5.0,
+          "7": 5.0
+        },
+        "max_step_deg": {
+          "1": 5.0,
+          "2": 5.0,
+          "3": 5.0,
+          "4": 5.0,
+          "5": 5.0,
+          "6": 5.0,
+          "7": 5.0
+        },
+        "iface": "can2"
+      }
+    }
+  },
+  "j1_abs_error_rad": 4.260004655896182e-06,
+  "j1_pos_err_tol_rad": 0.012,
+  "j1_within_tol": true,
+  "t1_subset": "single_joint_empty_j1_pass_after_j6_enable_recover"
+}
