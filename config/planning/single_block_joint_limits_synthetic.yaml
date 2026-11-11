@@ -1,0 +1,21 @@
+# Synthetic joint limits for offline single-block PlanBundle / Mock replay.
+# NOT measured hardware limits. Missing model_version / source → refuse package.
+schema_version: m-single-block-joint-limits-0.1
+model_version: synthetic-single-block-limits-v1
+source: synthetic
+joint_names: [J1, J2, J3, J4, J5, J6, J7]
+# Wide synthetic bounds so tabletop lateral waypoints remain IK-solvable
+# against the synthetic tabletop FK used for software closed-loop tests.
+lower_rad: [-2.5, -2.5, -2.5, -2.5, -2.5, -2.5, -2.5]
+upper_rad: [2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5]
+velocity_rad_s: [0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4]
+acceleration_rad_s2: [0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8]
+# Seed for offline planning (not recorded all-null arm state).
+seed_rad: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+seed_source: synthetic
+# Metres of TCP translation per radian for J1/J2/J3 of synthetic FK.
+fk_lever_m_per_rad: 0.5
+notes:
+  - "Refuse PlanBundle if model_version or source is absent."
+  - "Do not treat these bounds as live P7 URDF / CAN limits."
+  - "Production path must supply URDF FK + audited limits before live T1."

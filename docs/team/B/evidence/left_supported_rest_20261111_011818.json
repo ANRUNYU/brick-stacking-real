@@ -1,0 +1,150 @@
+{
+  "schema_version": "c-left-supported-rest-1",
+  "source": "real",
+  "arm_role": "left",
+  "interface": "can2",
+  "clock_domain": "host_monotonic",
+  "epoch": "linux_boot:f9016d4a-56d7-4a83-a8c2-3fa6d11f8153",
+  "capture_id": "16521757-15bb-45f7-b804-cdf6a0228cb4",
+  "authorization_ref": "chat-20261111-wrist-supported-rest",
+  "physically_supported_confirmed": true,
+  "transmitted": [
+    {
+      "motor_id": 66,
+      "arbitration_id": 1602,
+      "data_hex": "670b000000000476",
+      "kind": "mode_read",
+      "host_send_monotonic_s": 510978.847342715
+    },
+    {
+      "motor_id": 67,
+      "arbitration_id": 1603,
+      "data_hex": "670b000000000476",
+      "kind": "mode_read",
+      "host_send_monotonic_s": 510978.84816164
+    },
+    {
+      "motor_id": 66,
+      "arbitration_id": 66,
+      "data_hex": "fffffffffffffffd",
+      "kind": "rest",
+      "host_send_monotonic_s": 510978.848911496
+    },
+    {
+      "motor_id": 67,
+      "arbitration_id": 67,
+      "data_hex": "fffffffffffffffd",
+      "kind": "rest",
+      "host_send_monotonic_s": 510978.849534054
+    },
+    {
+      "motor_id": 61,
+      "arbitration_id": 61,
+      "data_hex": "06",
+      "kind": "angle_read",
+      "host_send_monotonic_s": 510978.850228326
+    },
+    {
+      "motor_id": 62,
+      "arbitration_id": 62,
+      "data_hex": "06",
+      "kind": "angle_read",
+      "host_send_monotonic_s": 510978.850812968
+    },
+    {
+      "motor_id": 63,
+      "arbitration_id": 63,
+      "data_hex": "06",
+      "kind": "angle_read",
+      "host_send_monotonic_s": 510978.851444305
+    },
+    {
+      "motor_id": 64,
+      "arbitration_id": 64,
+      "data_hex": "06",
+      "kind": "angle_read",
+      "host_send_monotonic_s": 510978.852053399
+    },
+    {
+      "motor_id": 65,
+      "arbitration_id": 65,
+      "data_hex": "06",
+      "kind": "angle_read",
+      "host_send_monotonic_s": 510978.852648389
+    }
+  ],
+  "received": [
+    {
+      "motor_id": 66,
+      "raw_hex": "420b0200000000ff",
+      "control_mode": 2,
+      "position_sdk_rad": null,
+      "notice": "Flash mode READ; not runtime angle/state",
+      "host_receive_monotonic_s": 510978.848157537
+    },
+    {
+      "motor_id": 67,
+      "raw_hex": "430b0200000000ff",
+      "control_mode": 2,
+      "position_sdk_rad": null,
+      "notice": "Flash mode READ; not runtime angle/state",
+      "host_receive_monotonic_s": 510978.848908794
+    },
+    {
+      "motor_id": 66,
+      "raw_hex": "007f6e8007ff001e",
+      "status": 0,
+      "fault": 0,
+      "position_sdk_rad": null,
+      "notice": "raw V2 feedback; quantization not verified",
+      "host_receive_monotonic_s": 510978.849530666,
+      "position_raw_u16": 32622,
+      "velocity_raw_u12": 2048
+    },
+    {
+      "motor_id": 67,
+      "raw_hex": "00819b7ff8030017",
+      "status": 0,
+      "fault": 0,
+      "position_sdk_rad": null,
+      "notice": "raw V2 feedback; quantization not verified",
+      "host_receive_monotonic_s": 510978.850225191,
+      "position_raw_u16": 33179,
+      "velocity_raw_u12": 2047
+    },
+    {
+      "motor_id": 61,
+      "raw_hex": "060f49b23b",
+      "position_sdk_rad": 0.005440838169306517,
+      "host_receive_monotonic_s": 510978.850811194
+    },
+    {
+      "motor_id": 62,
+      "raw_hex": "066951e63c",
+      "position_sdk_rad": 0.028114991262555122,
+      "host_receive_monotonic_s": 510978.851443267
+    },
+    {
+      "motor_id": 63,
+      "raw_hex": "06bd10193c",
+      "position_sdk_rad": 0.009342369623482227,
+      "host_receive_monotonic_s": 510978.852052684
+    },
+    {
+      "motor_id": 64,
+      "raw_hex": "0668452ebd",
+      "position_sdk_rad": -0.04254665970802307,
+      "host_receive_monotonic_s": 510978.852647783
+    },
+    {
+      "motor_id": 65,
+      "raw_hex": "06460bb2bf",
+      "position_sdk_rad": -1.3909690380096436,
+      "host_receive_monotonic_s": 510978.853204006
+    }
+  ],
+  "calibration_sample_valid": false,
+  "status": "RAW_SEVEN_AXIS_CAPTURED",
+  "warning": "Rest removes holding; no automatic re-enable or restore",
+  "stamp_semantics": "host receive/dequeue time, not device sample time"
+}
