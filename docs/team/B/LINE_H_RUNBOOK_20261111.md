@@ -41,6 +41,21 @@ python tools/h_build_wrist_target.py <grasp_relative.json> <poses.json> <wrist_t
 
 `poses.json` 含 `base_block` / `base_cross`，可选 `hang`。输出 `executable=false`。把文件交给线 P（#30）。
 
+临时中继（当前块当 mid，尚无十字放置）：示教齐 `hang` / `preshape_at_block` / `close_at_block` / `handoff_ready` 后：
+
+```powershell
+$env:PYTHONPATH='src'
+python tools/h_build_provisional_handoff_target.py `
+  docs/team/B/evidence/line_h/teach_hang_20261111.json `
+  docs/team/B/evidence/line_h/teach_preshape_20261111.json `
+  docs/team/B/evidence/line_h/teach_close_20261111.json `
+  docs/team/B/evidence/line_h/teach_handoff_ready_20261111.json `
+  docs/team/B/evidence/line_h/wrist_target_provisional_handoff_20261111.json `
+  --pack-version field-provisional-handoff-hand-0.1
+```
+
+输出仍 `executable=false`；`targets` 为 `hang` / `grasp_ready` / `handoff_ready`。
+
 ## #31 校验路径后授权抓放
 
 ```powershell

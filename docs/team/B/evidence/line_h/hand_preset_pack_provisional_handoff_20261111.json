@@ -1,0 +1,142 @@
+{
+  "schema_version": "hand-preset-pack-0.1",
+  "pack_version": "field-provisional-handoff-hand-0.1",
+  "role": "left",
+  "finger_strategy": "three_finger",
+  "approved_for_motion": false,
+  "notes": [
+    "frozen_from_teach_provisional_handoff",
+    "three_finger_not_c49"
+  ],
+  "presets": {
+    "open": {
+      "role": "left",
+      "name": "open",
+      "preset_version": "field-provisional-handoff-hand-0.1/open",
+      "channel_names": [
+        "thumb_flex",
+        "thumb_abd",
+        "index",
+        "middle",
+        "ring",
+        "pinky"
+      ],
+      "position": {
+        "unit": "percent",
+        "values": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ]
+      },
+      "speed": {
+        "unit": "percent",
+        "values": [
+          20.0,
+          20.0,
+          20.0,
+          20.0,
+          20.0,
+          20.0
+        ]
+      },
+      "geometry_assumptions": [
+        "three_finger_thumb_index_middle",
+        "ring_pinky_explicit_percent_required",
+        "not_c49_two_finger"
+      ],
+      "applicable_objects": [
+        "50mm_cube"
+      ]
+    },
+    "preshape": {
+      "role": "left",
+      "name": "preshape",
+      "preset_version": "field-provisional-handoff-hand-0.1/preshape",
+      "channel_names": [
+        "thumb_flex",
+        "thumb_abd",
+        "index",
+        "middle",
+        "ring",
+        "pinky"
+      ],
+      "position": {
+        "unit": "percent",
+        "values": [
+          65.09803921568627,
+          31.764705882352942,
+          65.09803921568627,
+          60.0,
+          0.0,
+          0.0
+        ]
+      },
+      "speed": {
+        "unit": "percent",
+        "values": [
+          20.0,
+          20.0,
+          20.0,
+          20.0,
+          20.0,
+          20.0
+        ]
+      },
+      "geometry_assumptions": [
+        "three_finger_thumb_index_middle",
+        "ring_pinky_explicit_percent_required",
+        "not_c49_two_finger"
+      ],
+      "applicable_objects": [
+        "50mm_cube"
+      ]
+    },
+    "close": {
+      "role": "left",
+      "name": "close",
+      "preset_version": "field-provisional-handoff-hand-0.1/close",
+      "channel_names": [
+        "thumb_flex",
+        "thumb_abd",
+        "index",
+        "middle",
+        "ring",
+        "pinky"
+      ],
+      "position": {
+        "unit": "percent",
+        "values": [
+          60.3921568627451,
+          31.764705882352942,
+          60.3921568627451,
+          56.07843137254902,
+          0.0,
+          0.0
+        ]
+      },
+      "speed": {
+        "unit": "percent",
+        "values": [
+          20.0,
+          20.0,
+          20.0,
+          20.0,
+          20.0,
+          20.0
+        ]
+      },
+      "geometry_assumptions": [
+        "three_finger_thumb_index_middle",
+        "ring_pinky_explicit_percent_required",
+        "not_c49_two_finger"
+      ],
+      "applicable_objects": [
+        "50mm_cube"
+      ]
+    }
+  }
+}

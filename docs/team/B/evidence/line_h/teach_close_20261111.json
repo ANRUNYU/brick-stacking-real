@@ -1,0 +1,82 @@
+{
+  "schema_version": "line-h-teach-sample-0.1",
+  "sample_id": "close_field_20261111",
+  "phase": "close_at_block",
+  "side": "left",
+  "iface": "can2",
+  "enabled_during_record": false,
+  "motion_commanded": false,
+  "joint_names": [
+    "J1",
+    "J2",
+    "J3",
+    "J4",
+    "J5",
+    "J6",
+    "J7"
+  ],
+  "q_rad": [
+    -0.7317567467689514,
+    -0.09728793799877167,
+    0.8250792622566223,
+    -0.6035681962966919,
+    1.0064085721969604,
+    0.30079346913862715,
+    -0.20351720454718958
+  ],
+  "seed_provenance": [
+    "sdk_audited",
+    "sdk_audited",
+    "sdk_audited",
+    "sdk_audited",
+    "sdk_audited",
+    "sdk_report_not_audited",
+    "sdk_report_not_audited"
+  ],
+  "flange_pose": {
+    "parent_frame": "L_arm_root",
+    "child_frame": "L8_Link",
+    "translation_m": [
+      0.4589721082166644,
+      -0.09764724966397804,
+      -0.32443450205976065
+    ],
+    "quaternion_xyzw": [
+      0.4792136265288191,
+      0.11608256128777503,
+      0.778173197136727,
+      -0.38900593102415826
+    ],
+    "rpy_extrinsic_zyx_rad": [
+      -2.0197217889638654,
+      -0.9902005643202216,
+      -0.3579339924931362
+    ]
+  },
+  "hand": {
+    "channel_names": [
+      "thumb_flex",
+      "thumb_abd",
+      "index",
+      "middle",
+      "ring",
+      "pinky"
+    ],
+    "unit": "percent",
+    "values": [
+      60.3921568627451,
+      31.764705882352942,
+      60.3921568627451,
+      56.07843137254902,
+      0.0,
+      0.0
+    ]
+  },
+  "notes": [
+    "recorded_at_host_monotonic=529840.723646882",
+    "operator_closed_via_hand_teach_ui; arm hand-held; no move commanded",
+    "provisional middle/handoff scene: current block+arm pose is grasp reference",
+    "block_pose_base deferred for later operator-remembered middle coordinates"
+  ],
+  "hand_source": "hand_teach_api_/api/state"
+}

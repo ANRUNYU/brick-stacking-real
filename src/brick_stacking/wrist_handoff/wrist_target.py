@@ -100,8 +100,10 @@ def build_wrist_target(
     if urdf_sha256 != LOCKED_URDF_SHA256:
         raise ValueError("urdf_sha256 must match config/models/p7_left/LOCK.json")
     names = [t["name"] if isinstance(t, Mapping) and "name" in t else None for t in targets]
-    if "grasp_ready" not in names or "place_ready" not in names:
-        raise ValueError("targets must include grasp_ready and place_ready")
+    if "grasp_ready" not in names:
+        raise ValueError("targets must include grasp_ready")
+    if "place_ready" not in names and "handoff_ready" not in names:
+        raise ValueError("targets must include place_ready or handoff_ready")
     built = []
     for raw in targets:
         if not isinstance(raw, Mapping) or "name" not in raw:

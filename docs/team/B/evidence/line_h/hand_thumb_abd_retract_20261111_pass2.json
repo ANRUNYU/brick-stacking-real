@@ -1,0 +1,31 @@
+{
+  "schema_version": "line-h-hand-only-0.1",
+  "authorization_ref": "chat-20261111-operator-restore-hand-via-dashboard-ref",
+  "pass": 2,
+  "before_percent": [
+    99.6078431372549,
+    44.705882352941174,
+    99.6078431372549,
+    99.6078431372549,
+    99.6078431372549,
+    99.6078431372549
+  ],
+  "after_percent": [
+    99.6078431372549,
+    44.705882352941174,
+    99.6078431372549,
+    99.6078431372549,
+    99.6078431372549,
+    99.6078431372549
+  ],
+  "target_percent": [
+    100.0,
+    45.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0
+  ],
+  "status": "COMMAND_SENT_FEEDBACK_READ",
+  "thumb_abd_error": 0.29411764705882604
+}

@@ -9,7 +9,10 @@ import numpy as np
 import pytest
 
 from brick_stacking.localization.rigid_transforms import RigidTransform
-from brick_stacking.wrist_handoff.freeze_from_teach import freeze_grasp_relative_from_teach
+from brick_stacking.wrist_handoff.freeze_from_teach import (
+    freeze_grasp_relative_from_teach,
+    freeze_provisional_handoff_wrist_target_from_teach,
+)
 from brick_stacking.wrist_handoff.table_board import build_table_board, check_table_height, compose_base_board_from_camera
 from brick_stacking.wrist_handoff.wrist_path_check import check_wrist_path
 from brick_stacking.wrist_handoff.wrist_target import (
@@ -54,6 +57,29 @@ def test_freeze_and_wrist_target_roundtrip():
     assert target["executable"] is False
     grasp = next(t for t in target["targets"] if t["name"] == "grasp_ready")
     assert grasp["translation_m"] == pytest.approx([0.50, 0.05, -0.30], abs=1e-9)
+
+
+def test_provisional_handoff_wrist_target_from_field_teach():
+    root = Path("docs/team/B/evidence/line_h")
+    samples = [
+        json.loads((root / name).read_text(encoding="utf-8"))
+        for name in (
+            "teach_hang_20261111.json",
+            "teach_preshape_20261111.json",
+            "teach_close_20261111.json",
+            "teach_handoff_ready_20261111.json",
+        )
+    ]
+    out = freeze_provisional_handoff_wrist_target_from_teach(
+        samples=samples,
+        pack_version="field-provisional-handoff-hand-0.1",
+    )
+    assert [t["name"] for t in out["targets"]] == ["hang", "grasp_ready", "handoff_ready"]
+    assert out["executable"] is False
+    assert out["handoff_provisional"] is True
+    assert out["hand_preset_pack"]["finger_strategy"] == "three_finger"
+    handoff = next(t for t in out["targets"] if t["name"] == "handoff_ready")
+    assert handoff["translation_m"][0] == pytest.approx(0.30157143747225434, abs=1e-9)
 
 
 def test_table_board_height_gate():

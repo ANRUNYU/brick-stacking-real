@@ -29,7 +29,14 @@ def build_teach_sample(
     motion_commanded: bool = False,
     notes: Sequence[str] = (),
 ) -> dict[str, Any]:
-    if phase not in ("preshape_at_block", "close_at_block", "place_ready_at_cross", "hang", "open"):
+    if phase not in (
+        "preshape_at_block",
+        "close_at_block",
+        "place_ready_at_cross",
+        "handoff_ready",
+        "hang",
+        "open",
+    ):
         raise ValueError(f"unsupported teach phase: {phase}")
     if motion_commanded:
         raise ValueError("teach samples must be recorded with motion_commanded=false")
