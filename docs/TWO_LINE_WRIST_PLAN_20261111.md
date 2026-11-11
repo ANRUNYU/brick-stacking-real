@@ -150,14 +150,16 @@ T_L_arm_root_L8   = T_L_arm_root_cross · inverse(T_L8_cross)     # place_ready
 
 线 P 可以用样例文件先把读取和逆解接上。第一份真实 `grasp_ready` 要等线 H 在块上示教完成。贴块的路径在那之前不做。
 
-| 步 | 线 | 完成时有什么 |
-|---|---|---|
-| 1 | H | 固定红块上确认三指准备角与闭合：闭合后和微抬后块仍在指间正中。冻结 `T_L8_block`、`T_L8_cross` 和预设版本 |
-| 2 | H | 发出 `executable=false` 的 `wrist-target`，含 `grasp_ready` 与 `place_ready`，种子带每轴来源 |
-| 3 | P | 交回 `wrist-path`。水平段满足 80 mm 净空，闭合后的侧移发生在竖直抬起之后。逆解失败则退回，不改目标 |
-| 4 | H | 另一次授权下，固定块低速抓起、放到十字、松开。到位按 10 mm 门核对。未授权不把样例或悬停记录当指令 |
-| 5 | H | 棋盘格入口：挪动桌子后只重算 `table-board`，用原相对姿态重发 `wrist-target`。桌面高度与约定值之差大于 8 mm 则不发 |
-| 6 | H | 木块改位置：头相机更新块的位置；姿态仍用冻结的相对关系。块的转角不是 90° 的倍数时，在目标的四元数里反映，路径格式不变 |
+进度按 GitHub Epic **#27** 与下表 issue 推进（合入 `main` 后）：
+
+| 步 | 线 | Issue | 完成时有什么 |
+|---|---|---|---|
+| 1 | H | [#28](https://github.com/ANRUNYU/brick-stacking-real/issues/28) | 固定红块上确认三指准备角与闭合：闭合后和微抬后块仍在指间正中。冻结 `T_L8_block`、`T_L8_cross` 和预设版本 |
+| 2 | H | [#29](https://github.com/ANRUNYU/brick-stacking-real/issues/29) | 发出 `executable=false` 的 `wrist-target`，含 `grasp_ready` 与 `place_ready`，种子带每轴来源 |
+| 3 | P | [#30](https://github.com/ANRUNYU/brick-stacking-real/issues/30) | 交回 `wrist-path`。水平段满足 80 mm 净空，闭合后的侧移发生在竖直抬起之后。逆解失败则退回，不改目标 |
+| 4 | H | [#31](https://github.com/ANRUNYU/brick-stacking-real/issues/31) | 另一次授权下，固定块低速抓起、放到十字、松开。到位按 10 mm 门核对。未授权不把样例或悬停记录当指令 |
+| 5 | H | [#32](https://github.com/ANRUNYU/brick-stacking-real/issues/32) | 棋盘格入口：挪动桌子后只重算 `table-board`，用原相对姿态重发 `wrist-target`。桌面高度与约定值之差大于 8 mm 则不发 |
+| 6 | H | [#33](https://github.com/ANRUNYU/brick-stacking-real/issues/33) | 木块改位置：头相机更新块的位置；姿态仍用冻结的相对关系。块的转角不是 90° 的倍数时，在目标的四元数里反映，路径格式不变 |
 
 第 4 步之前不进入不固定位置。第 5 步的入口在第 1 步就要按「桌子位姿是输入」来存相对关系，避免把今天的基座系坐标写成常数。
 
