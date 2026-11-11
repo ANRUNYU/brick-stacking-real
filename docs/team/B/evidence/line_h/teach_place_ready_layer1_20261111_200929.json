@@ -1,0 +1,96 @@
+{
+  "schema_version": "line-h-teach-sample-0.1",
+  "sample_id": "place_ready_layer1_20261111_200929",
+  "phase": "place_ready_layer1",
+  "side": "left",
+  "iface": "can2",
+  "enabled_during_record": false,
+  "motion_commanded": false,
+  "joint_names": [
+    "J1",
+    "J2",
+    "J3",
+    "J4",
+    "J5",
+    "J6",
+    "J7"
+  ],
+  "q_rad": [
+    0.05572664365172386,
+    -0.021212078630924225,
+    0.020378507673740387,
+    -1.4170254468917847,
+    1.7038264274597168,
+    -0.07381551842526868,
+    -0.087167162584878
+  ],
+  "seed_provenance": [
+    "sdk_audited",
+    "sdk_audited",
+    "sdk_audited",
+    "sdk_audited",
+    "sdk_audited",
+    "sdk_report_not_audited",
+    "sdk_report_not_audited"
+  ],
+  "flange_pose": {
+    "parent_frame": "L_arm_root",
+    "child_frame": "L8_Link",
+    "translation_m": [
+      0.2984501532582364,
+      0.03674811925303481,
+      -0.3562676726410724
+    ],
+    "quaternion_xyzw": [
+      0.4200004643809478,
+      -0.41743428017537293,
+      -0.620510842169813,
+      0.5141152851296741
+    ],
+    "rpy_extrinsic_zyx_rad": [
+      -1.6901548162224285,
+      0.09214132076550992,
+      1.2661362383937305
+    ]
+  },
+  "hand": {
+    "channel_names": [
+      "thumb_flex",
+      "thumb_abd",
+      "index",
+      "middle",
+      "ring",
+      "pinky"
+    ],
+    "unit": "percent",
+    "values": [
+      60.3921568627451,
+      31.372549019607842,
+      60.3921568627451,
+      56.07843137254902,
+      0.0,
+      0.0
+    ]
+  },
+  "notes": [
+    "recorded_at_local_monotonic=39329.609",
+    "operator manually posed place_ready_layer1 while supporting the arm",
+    "near-end red-heavy row place-ready re-teach; prior far-end teach kept as contrast only",
+    "read-only record only; no Rest/enable/move commanded",
+    "not mid_box_cross; not legacy place_ready_at_cross; not handoff_ready",
+    "pyramid layer-1 arbitrary place-ready (4R+3Y+2B+1G rule); no wrist-target emit this round",
+    "flange_pose is locked-URDF FK of taught seed (not SDK quaternion/FK)",
+    "hand preset left as currently commanded; not changed to release in this record",
+    "J2_rad=-0.021212078630924225; urdf_lower=-0.07; within_urdf=True",
+    "urdf_sha256=233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+    "hand_source=hand_teach_api_/api/state",
+    "contrast_ref=docs/team/B/evidence/line_h/teach_place_ready_layer1_20261111_193108.json"
+  ],
+  "hand_source": "hand_teach_api_/api/state",
+  "urdf_j2_lower_rad": -0.07,
+  "j2_within_urdf": true,
+  "urdf_sha256": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+  "executable": false,
+  "control_ready": false,
+  "motion_enabled": false
+}
