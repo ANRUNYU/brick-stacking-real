@@ -112,9 +112,12 @@ def urdf_fk_adapter(
     *,
     base_frame: str = "L_arm_root",
     tip_frame: str = "L8_Link",
+    tip_to_tcp: RigidTransform | None = None,
 ) -> Callable:
     """Wrap urdf_forward_kinematics for J1..J7 vectors (mapped to L*_Joint)."""
     path = Path(urdf_path)
+    if tip_to_tcp is None or (tip_to_tcp.target_frame, tip_to_tcp.source_frame) != (tip_frame, "tcp"):
+        raise ValueError("explicit T_tip_tcp required for URDF TCP kinematics")
 
     def fk(q):
         q = np.asarray(q, float)
@@ -124,11 +127,7 @@ def urdf_fk_adapter(
         pose, _report = urdf_forward_kinematics(
             path, positions, base_frame=base_frame, tip_frame=tip_frame,
         )
-        # Re-label tip as tcp for IK frame match against lateral targets.
-        return RigidTransform(
-            pose.target_frame, "tcp", pose.matrix, pose.source,
-            pose.calibration_id, approved=False,
-        )
+        return pose.compose(tip_to_tcp)
 
     return fk
 
@@ -147,28 +146,23 @@ def _c_trajectory_to_contract(plan_result: dict[str, Any]) -> dict[str, Any]:
         raise ValueError("trajectory joint names must be J1..J7")
     hold_s = 0.05
     points = [{"time_from_start_s": 0.0, "q_rad": tuple(float(v) for v in waypoints[0])}]
-    seg_by_end = {
-        tuple(np.round(seg["end_rad"], 10)): float(seg["start_s"] + seg["duration_s"])
-        for seg in traj["segments"]
-    }
+    segments = iter(traj["segments"])
     t = 0.0
     for prev, curr in zip(waypoints, waypoints[1:]):
-        curr_key = tuple(np.round(curr, 10))
-        if np.allclose(prev, curr, atol=1e-12):
-            t = t + hold_s
-        elif curr_key in seg_by_end and seg_by_end[curr_key] > t:
-            t = seg_by_end[curr_key]
+        if np.array_equal(prev, curr):
+            duration = hold_s
         else:
-            delta = np.max(np.abs(np.asarray(curr) - np.asarray(prev)))
-            t = t + max(hold_s, float(delta) * 2.0)
-        points.append({
-            "time_from_start_s": t,
-            "q_rad": tuple(float(v) for v in curr),
-        })
-    # Ensure strictly increasing times.
-    for i in range(1, len(points)):
-        if points[i]["time_from_start_s"] <= points[i - 1]["time_from_start_s"]:
-            points[i]["time_from_start_s"] = points[i - 1]["time_from_start_s"] + hold_s
+            segment = next(segments, None)
+            if (segment is None or not np.array_equal(segment["start_rad"], prev)
+                    or not np.array_equal(segment["end_rad"], curr)):
+                raise ValueError("trajectory segment does not match the IK waypoint pair")
+            duration = float(segment["duration_s"])
+            if not np.isfinite(duration) or duration <= 0:
+                raise ValueError("invalid trajectory segment duration")
+        t += duration
+        points.append({"time_from_start_s": t, "q_rad": tuple(float(v) for v in curr)})
+    if next(segments, None) is not None:
+        raise ValueError("unexpected remaining trajectory segments")
     return validate_trajectory({"joint_names": JOINT_NAMES, "points": tuple(points)})
 
 def _default_ik_settings() -> dict[str, Any]:

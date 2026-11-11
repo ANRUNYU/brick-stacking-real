@@ -64,6 +64,24 @@ def test_expired_observation_safe_halt():
     assert bundle["dispatch_allowed"] is False
 
 
+def test_urdf_tip_requires_explicit_tcp():
+    from brick_stacking.planning.single_block_plan_bundle import urdf_fk_adapter
+    with pytest.raises(ValueError, match="T_tip_tcp"):
+        urdf_fk_adapter("arm.urdf")
+
+
+def test_repeated_endpoints_preserve_each_segment_duration():
+    from brick_stacking.arm.adapter import JOINT_NAMES
+    from brick_stacking.planning.single_block_plan_bundle import _c_trajectory_to_contract
+    a, b = [0.] * 7, [.1] * 7
+    segments = [dict(start_rad=u, end_rad=v, duration_s=t)
+                for u, v, t in [(a, b, 2.), (b, a, 3.), (a, b, 4.)]]
+    plan = dict(trajectory=dict(segments=segments, joint_names=JOINT_NAMES),
+                joint_waypoints_rad=[a, b, b, a, b])
+    times = [p["time_from_start_s"] for p in _c_trajectory_to_contract(plan)["points"]]
+    assert times == pytest.approx([0, 2, 2.05, 5.05, 9.05])
+
+
 def test_clearance_failure_safe_halt():
     from brick_stacking.planning.lateral_approach import load_approach_config
 

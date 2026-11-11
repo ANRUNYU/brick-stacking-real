@@ -91,3 +91,22 @@ python tools/t1_rest_draft_and_status.py \
 ## 本会话明确不做
 
 十块、改生产 HSV 默认、提交 slot junk、O6 真机预设、伪造 live Permit、抬 `control_ready`、把 fit-only / SDK ±12.5 标成可下发或 verified。
+
+### 主线 S140 对接复现
+
+在已安装本项目的 Python 环境，从仓库根目录运行以下命令。
+
+```bash
+field=docs/team/B/evidence/field_20261110/_chain_test_20261111
+python tools/replay_single_block_handoff.py --readiness "$field/live_pre_grasp_readiness.json" --shadow "$field/live_shadow_plan_bundle.json" --output single_block_review.json
+```
+
+正常退出码为 0，报告状态为 `MOCK_DONE`。现场记录提供目标、槽位、观测、时钟域和标定候选身份。供料点、桌面高度、关节种子、TCP 和验证反馈仍来自离线模板。报告分别保存相机观测帧和合成规划帧，以及 shadow 和单块轨迹的哈希。上下文或哈希不一致时，命令返回非零并给出原因。
+
+| 待验收项 | 下一份需要提交的证据 |
+|---|---|
+| 七轴起点（#18） | 同一左臂的 J1–J7 实测值、单位、采样时刻、时钟域、设备标识与驱动读数方式。记录文件仅供重放。J6/J7 获取方法需由硬件负责人确认。 |
+| C35 定位（#17） | 在已测量的基座参考系中保留独立检查点，逐点比较同一物理点，附测量误差、残差和标定哈希。黑十字系与基座间的变换须有独立来源。 |
+| 抓放路径（#20） | 绑定实际供料点、槽位、抓型、法兰至 TCP 变换、起点、实测限位及场景。提交覆盖整条轨迹、臂、手、载荷、另一臂和桌面的碰撞结果，注明最小间隙及对应轨迹哈希。 |
+| 实机顺序（#18/#19） | 各级记录起止状态、轨迹哈希、现场授权、反馈及停机原因。T2 起另记录 O6 预设和抓持反馈；T4 保存带目标关联的放置前后复检证据。 |
+

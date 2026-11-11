@@ -81,13 +81,19 @@ def _bundle_contract_trajectory(bundle: dict[str, Any]) -> dict[str, Any]:
     traj = bundle.get("trajectory")
     if not traj or not traj.get("points"):
         raise ValueError("PlanBundle missing trajectory points")
-    return validate_trajectory({
+    full = validate_trajectory({
         "joint_names": traj["joint_names"],
         "points": tuple(
             {"time_from_start_s": p["time_from_start_s"], "q_rad": tuple(p["q_rad"])}
             for p in traj["points"]
         ),
     })
+
+
+    digest = trajectory_hash(full)
+    if digest != bundle.get("trajectory_hash") or digest != traj.get("hash"):
+        raise ValueError("single-block trajectory hash mismatch")
+    return full
 
 
 def _phase_point_index(bundle: dict[str, Any], phase: str) -> int:
@@ -196,9 +202,9 @@ def run_single_block_mock_replay(
     hand: MockHand | None = None,
     block_id: str = "block-1",
     slot_id: str | None = None,
-    place_center_m: Sequence[float] = (0.0, 0.0, 0.025),
-    pick_center_m: Sequence[float] = (0.15, 0.0, 0.025),
-    frame_id: str = "L_arm_root",
+    place_center_m: Sequence[float] | None = None,
+    pick_center_m: Sequence[float] | None = None,
+    frame_id: str | None = None,
     placement_tolerance_m: float = 0.015,
     visual_verdict_pick: str = "PASS",
     visual_verdict_place: str = "PASS",
@@ -234,18 +240,31 @@ def run_single_block_mock_replay(
 
     if bundle.get("schema_version") != "m-single-block-plan-bundle-0.1":
         return halt("unsupported PlanBundle schema")
-    if bundle.get("executable") is True:
+    if bundle.get("executable") is not False:
         return halt("refusing executable=true package on mock software path")
-    if bundle.get("motion_enabled") is True:
+    if bundle.get("motion_enabled") is not False:
         return halt("refusing motion_enabled=true package on mock software path")
     if bundle.get("status") == "SAFE_HALT" or not bundle.get("trajectory_hash"):
         return halt(bundle.get("reason") or "PlanBundle not dispatchable")
     if bundle.get("collision_summary", {}).get("table_clearance") != "PASS":
         return halt("table clearance not PASS; refusing dispatch")
-    if bundle.get("collision_summary", {}).get("full_collision") == "PASS":
-        return halt("forged full_collision=PASS rejected")
+    if any(bundle.get(key) is not False for key in ("control_ready", "dispatch_allowed", "h3_production_plan")):
+        return halt("unexpected authority flags in mock bundle")
+    if bundle.get("collision_summary", {}).get("full_collision") != "UNKNOWN":
+        return halt("unexpected full_collision verdict in mock bundle")
 
-    slot_id = slot_id or (bundle.get("identity") or {}).get("slot_id") or "slot-1"
+    identity = bundle["identity"]
+    poses = bundle["poses"]
+    if (slot_id is not None and slot_id != identity["slot_id"]
+            or frame_id is not None and frame_id != poses["frame"]
+            or identity["frame_id"] != poses["frame"]
+            or place_center_m is not None and tuple(place_center_m) != tuple(poses["place_center_m"])
+            or pick_center_m is not None and tuple(pick_center_m) != tuple(poses["pick_center_m"])):
+        return halt("replay context differs from plan")
+    slot_id = identity["slot_id"]
+    frame_id = poses["frame"]
+    place_center_m = poses["place_center_m"]
+    pick_center_m = poses["pick_center_m"]
     slot = Slot(slot_id, 0, "red", tuple(place_center_m), frame_id, ())
     _block = SceneBlock(block_id, "red", tuple(pick_center_m), frame_id)
     manager = SceneManager((slot,))
