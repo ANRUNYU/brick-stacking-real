@@ -1,0 +1,39 @@
+{
+  "schema": "preshape-relative-offline-candidate-1",
+  "phase": "preshape_at_block",
+  "parent_frame": "L8_Link",
+  "child_frame": "block",
+  "input_commit": "0d646fb7b226856111f0803b828daf69910ec4f0",
+  "sample": "left-preshape-20261112-100523",
+  "source_frame": "frame_005",
+  "source_frame_sha256": "08239c0af0800907655377ee551fd12dbc3c9f0e085525ed6852ea3f2c0311e8",
+  "selection": "observed center nearest componentwise median of ten centers",
+  "T_L8_block": {
+    "translation_m": [
+      0.05571322549910787,
+      -0.13875575986880107,
+      -0.11237120730546357
+    ],
+    "quaternion_xyzw": [
+      -0.4268661120146377,
+      0.31850015454470065,
+      0.6725886315979113,
+      0.5137776820899853
+    ],
+    "rpy_extrinsic_zyx_rad": [
+      1.8221265523860823,
+      1.1231933352817554,
+      -0.023544822955633708
+    ]
+  },
+  "control_ready": false,
+  "executable": false,
+  "field_validation": "pending independent teach",
+  "block_yaw": "base-axis convention, not measured",
+  "offline_ab_predicted_wrist_delta_mm": [
+    12.347003713210015,
+    101.1001087357204,
+    -7.579010229886995
+  ],
+  "offline_ab_delta_length_mm": 102.13286387413818
+}

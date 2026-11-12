@@ -1,0 +1,316 @@
+{
+  "mode": "archived_replay",
+  "utc": "2026-11-12T08:14:03.002298+00:00",
+  "control_ready": false,
+  "motion_commanded": false,
+  "plan": {
+    "observation": "frame_006.npz",
+    "target_base_L8": [
+      [
+        -0.1249788607669266,
+        0.48000091616394047,
+        -0.8683198747254253,
+        0.31945882586506386
+      ],
+      [
+        -0.9758373914288073,
+        -0.21756353129669356,
+        0.020186513793444577,
+        -0.02575699718711361
+      ],
+      [
+        -0.17922519312535684,
+        0.8498618889746086,
+        0.4955936841987479,
+        -0.32209923628401016
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "seed": [
+      -0.0511726438999176,
+      -0.004673847928643227,
+      0.33557960391044617,
+      -1.4567917585372925,
+      1.7294782400131226,
+      0.2161058976119623,
+      -0.49725337605859465
+    ],
+    "waypoints": [
+      {
+        "phase": "lift",
+        "ik": {
+          "schema_version": "c-ik-1",
+          "ik": "PASS",
+          "reason": "CONVERGED",
+          "joint_names": [
+            "L1_Joint",
+            "L2_Joint",
+            "L3_Joint",
+            "L4_Joint",
+            "L5_Joint",
+            "L6_Joint",
+            "L7_Joint"
+          ],
+          "positions_rad": [
+            -0.05222604602243845,
+            6.838718146583069e-05,
+            0.33645528088009824,
+            -1.4933002884493123,
+            1.732352805326517,
+            0.21083823989016684,
+            -0.533355593075347
+          ],
+          "position_error_m": 0.00017728266299482418,
+          "rotation_error_rad": 0.0002909781074964233,
+          "iterations": 1,
+          "model_version": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+          "trajectory": "NOT_GENERATED",
+          "full_collision": "UNKNOWN",
+          "motion_enabled": false,
+          "scope": "local solve against caller FK only"
+        },
+        "achieved_xyz_m": [
+          0.3196396112672358,
+          -0.021074891292541687,
+          -0.31244080112106515
+        ],
+        "min_sampled_flange_clearance_m": 0.2069201410615523
+      },
+      {
+        "phase": "lift",
+        "ik": {
+          "schema_version": "c-ik-1",
+          "ik": "PASS",
+          "reason": "CONVERGED",
+          "joint_names": [
+            "L1_Joint",
+            "L2_Joint",
+            "L3_Joint",
+            "L4_Joint",
+            "L5_Joint",
+            "L6_Joint",
+            "L7_Joint"
+          ],
+          "positions_rad": [
+            -0.05512264888928284,
+            0.0043984497614115246,
+            0.33695664894438543,
+            -1.5278656776553126,
+            1.7347784506629105,
+            0.2052106730537504,
+            -0.5695624776992702
+          ],
+          "position_error_m": 0.00017745951102752277,
+          "rotation_error_rad": 0.0002948859766756697,
+          "iterations": 1,
+          "model_version": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+          "trajectory": "NOT_GENERATED",
+          "full_collision": "UNKNOWN",
+          "motion_enabled": false,
+          "scope": "local solve against caller FK only"
+        },
+        "achieved_xyz_m": [
+          0.32035556890250033,
+          -0.020461230544078793,
+          -0.3024570954679903
+        ],
+        "min_sampled_flange_clearance_m": 0.2169331093941513
+      },
+      {
+        "phase": "lift",
+        "ik": {
+          "schema_version": "c-ik-1",
+          "ik": "PASS",
+          "reason": "CONVERGED",
+          "joint_names": [
+            "L1_Joint",
+            "L2_Joint",
+            "L3_Joint",
+            "L4_Joint",
+            "L5_Joint",
+            "L6_Joint",
+            "L7_Joint"
+          ],
+          "positions_rad": [
+            -0.05923453658589501,
+            0.00840740316975257,
+            0.3371841945373444,
+            -1.5611231897881328,
+            1.7368854482732705,
+            0.1993906611079168,
+            -0.6056361342670104
+          ],
+          "position_error_m": 0.00017748500530117997,
+          "rotation_error_rad": 0.0002956555605588466,
+          "iterations": 1,
+          "model_version": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+          "trajectory": "NOT_GENERATED",
+          "full_collision": "UNKNOWN",
+          "motion_enabled": false,
+          "scope": "local solve against caller FK only"
+        },
+        "achieved_xyz_m": [
+          0.32107180359229853,
+          -0.01984765814634255,
+          -0.292473345129039
+        ],
+        "min_sampled_flange_clearance_m": 0.22696124737380932
+      },
+      {
+        "phase": "transfer",
+        "ik": {
+          "schema_version": "c-ik-1",
+          "ik": "PASS",
+          "reason": "CONVERGED",
+          "joint_names": [
+            "L1_Joint",
+            "L2_Joint",
+            "L3_Joint",
+            "L4_Joint",
+            "L5_Joint",
+            "L6_Joint",
+            "L7_Joint"
+          ],
+          "positions_rad": [
+            -0.06300506214167297,
+            -0.0013401637714913015,
+            0.34306070722632276,
+            -1.55565872558604,
+            1.7444712606889115,
+            0.20397744930509848,
+            -0.6119493105955155
+          ],
+          "position_error_m": 3.222194945988508e-05,
+          "rotation_error_rad": 0.00014930829084044752,
+          "iterations": 1,
+          "model_version": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+          "trajectory": "NOT_GENERATED",
+          "full_collision": "UNKNOWN",
+          "motion_enabled": false,
+          "scope": "local solve against caller FK only"
+        },
+        "achieved_xyz_m": [
+          0.32159033622945343,
+          -0.02392996265496568,
+          -0.29220118622101243
+        ],
+        "min_sampled_flange_clearance_m": 0.2369894442136853
+      },
+      {
+        "phase": "descend",
+        "ik": {
+          "schema_version": "c-ik-1",
+          "ik": "PASS",
+          "reason": "CONVERGED",
+          "joint_names": [
+            "L1_Joint",
+            "L2_Joint",
+            "L3_Joint",
+            "L4_Joint",
+            "L5_Joint",
+            "L6_Joint",
+            "L7_Joint"
+          ],
+          "positions_rad": [
+            -0.0559617484445164,
+            -0.006915560119760201,
+            0.3427103305906678,
+            -1.5068917669103707,
+            1.7412673623222328,
+            0.2129528137215984,
+            -0.5585987649419855
+          ],
+          "position_error_m": 0.00041916011553842265,
+          "rotation_error_rad": 0.000527154230970351,
+          "iterations": 1,
+          "model_version": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+          "trajectory": "NOT_GENERATED",
+          "full_collision": "UNKNOWN",
+          "motion_enabled": false,
+          "scope": "local solve against caller FK only"
+        },
+        "achieved_xyz_m": [
+          0.3201125440839298,
+          -0.02479801609770711,
+          -0.30714547004334875
+        ],
+        "min_sampled_flange_clearance_m": 0.22201144960771055
+      },
+      {
+        "phase": "descend",
+        "ik": {
+          "schema_version": "c-ik-1",
+          "ik": "PASS",
+          "reason": "CONVERGED",
+          "joint_names": [
+            "L1_Joint",
+            "L2_Joint",
+            "L3_Joint",
+            "L4_Joint",
+            "L5_Joint",
+            "L6_Joint",
+            "L7_Joint"
+          ],
+          "positions_rad": [
+            -0.05294373056770049,
+            -0.01356888825391615,
+            0.3414902607857547,
+            -1.4537728236701726,
+            1.7368951464590978,
+            0.22137672947036516,
+            -0.5042652108169611
+          ],
+          "position_error_m": 0.0004271473143362707,
+          "rotation_error_rad": 0.0005264365924423813,
+          "iterations": 1,
+          "model_version": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+          "trajectory": "NOT_GENERATED",
+          "full_collision": "UNKNOWN",
+          "motion_enabled": false,
+          "scope": "local solve against caller FK only"
+        },
+        "achieved_xyz_m": [
+          0.3190353545516149,
+          -0.025715978497984945,
+          -0.32206123178463597
+        ],
+        "min_sampled_flange_clearance_m": 0.20702869744903418
+      }
+    ],
+    "status": "MODEL_PATH_ONLY",
+    "control_ready": false,
+    "full_collision": "UNKNOWN"
+  },
+  "projected_wrist_pixels": [
+    [
+      231,
+      401
+    ],
+    [
+      230,
+      398
+    ],
+    [
+      228,
+      395
+    ],
+    [
+      231,
+      394
+    ],
+    [
+      233,
+      399
+    ],
+    [
+      235,
+      403
+    ]
+  ],
+  "status": "REVIEW_ONLY"
+}
