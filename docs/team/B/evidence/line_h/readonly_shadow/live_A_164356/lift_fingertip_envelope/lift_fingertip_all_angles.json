@@ -1,0 +1,399 @@
+{
+  "schema": "h-shadow-lift-fingertip-envelope-0.2",
+  "issue": "#36",
+  "frame": "frame_009.npz",
+  "source_sha256_lf": {
+    "offline_replay.json": "6c8b7d4b94a0b838d624666a5cd0d6354d3a8f0b0c69adeb85bb34d970f4861e",
+    "robot_side_table_edge/robot_side_edge_report.json": "7f971d0c2fcd77c9adfa4e819b4676b6dbb3145e050210ea6130665553628063",
+    "lift_part_proximity/lift_part_proximity.json": "a25a77f583571597b04bafbcadf03994a7e5c49c15a77e4c1a261ac78d49a568"
+  },
+  "arm_samples": 9,
+  "hand_pose_count": 65,
+  "hand_pose_method": "all 2^6 URDF actuated limit corners plus audit synthetics [0]*6 and [0.4,0.2,0.6,0.6,0.6,0.6]; NOT live_A or can1 probe angles",
+  "actuated_limits": {
+    "lh_thumb_cmc_yaw": {
+      "lower": 0.0,
+      "upper": 1.36
+    },
+    "lh_thumb_cmc_pitch": {
+      "lower": 0.0,
+      "upper": 0.58
+    },
+    "lh_index_mcp_pitch": {
+      "lower": 0.0,
+      "upper": 1.6
+    },
+    "lh_middle_mcp_pitch": {
+      "lower": 0.0,
+      "upper": 1.6
+    },
+    "lh_ring_mcp_pitch": {
+      "lower": 0.0,
+      "upper": 1.6
+    },
+    "lh_pinky_mcp_pitch": {
+      "lower": 0.0,
+      "upper": 1.6
+    }
+  },
+  "per_link": {
+    "lh_thumb_metacarpals_base2": {
+      "sample": 4,
+      "hand_pose_index": 64,
+      "hand_actuated_rad": {
+        "lh_thumb_cmc_yaw": 0.4,
+        "lh_thumb_cmc_pitch": 0.2,
+        "lh_index_mcp_pitch": 0.6,
+        "lh_middle_mcp_pitch": 0.6,
+        "lh_ring_mcp_pitch": 0.6,
+        "lh_pinky_mcp_pitch": 0.6
+      },
+      "link": "lh_thumb_metacarpals_base2",
+      "distal": false,
+      "signed_perpendicular_m": -0.30257232606061246,
+      "height_at_this_vertex_m": -0.113664422032754,
+      "vertex_base_m": [
+        -0.014644564587136435,
+        0.0774088196458256,
+        -0.6275033602806486
+      ]
+    },
+    "lh_thumb_metacarpals": {
+      "sample": 4,
+      "hand_pose_index": 16,
+      "hand_actuated_rad": {
+        "lh_thumb_cmc_yaw": 0.0,
+        "lh_thumb_cmc_pitch": 0.58,
+        "lh_index_mcp_pitch": 0.0,
+        "lh_middle_mcp_pitch": 0.0,
+        "lh_ring_mcp_pitch": 0.0,
+        "lh_pinky_mcp_pitch": 0.0
+      },
+      "link": "lh_thumb_metacarpals",
+      "distal": false,
+      "signed_perpendicular_m": -0.30368374760439226,
+      "height_at_this_vertex_m": -0.12268546949223784,
+      "vertex_base_m": [
+        -0.01784467558405311,
+        0.06747104642059246,
+        -0.6357356945192402
+      ]
+    },
+    "lh_thumb_distal": {
+      "sample": 4,
+      "hand_pose_index": 16,
+      "hand_actuated_rad": {
+        "lh_thumb_cmc_yaw": 0.0,
+        "lh_thumb_cmc_pitch": 0.58,
+        "lh_index_mcp_pitch": 0.0,
+        "lh_middle_mcp_pitch": 0.0,
+        "lh_ring_mcp_pitch": 0.0,
+        "lh_pinky_mcp_pitch": 0.0
+      },
+      "link": "lh_thumb_distal",
+      "distal": true,
+      "signed_perpendicular_m": -0.3157662136587102,
+      "height_at_this_vertex_m": -0.1841996809351368,
+      "vertex_base_m": [
+        -0.03465705262189419,
+        0.06127994535438981,
+        -0.6959728578003833
+      ]
+    },
+    "lh_index_proximal": {
+      "sample": 4,
+      "hand_pose_index": 0,
+      "hand_actuated_rad": {
+        "lh_thumb_cmc_yaw": 0.0,
+        "lh_thumb_cmc_pitch": 0.0,
+        "lh_index_mcp_pitch": 0.0,
+        "lh_middle_mcp_pitch": 0.0,
+        "lh_ring_mcp_pitch": 0.0,
+        "lh_pinky_mcp_pitch": 0.0
+      },
+      "link": "lh_index_proximal",
+      "distal": false,
+      "signed_perpendicular_m": -0.2954879531595799,
+      "height_at_this_vertex_m": -0.19596943360046173,
+      "vertex_base_m": [
+        -0.012630493526725312,
+        0.07569631300179767,
+        -0.7101909853245036
+      ]
+    },
+    "lh_index_distal": {
+      "sample": 4,
+      "hand_pose_index": 0,
+      "hand_actuated_rad": {
+        "lh_thumb_cmc_yaw": 0.0,
+        "lh_thumb_cmc_pitch": 0.0,
+        "lh_index_mcp_pitch": 0.0,
+        "lh_middle_mcp_pitch": 0.0,
+        "lh_ring_mcp_pitch": 0.0,
+        "lh_pinky_mcp_pitch": 0.0
+      },
+      "link": "lh_index_distal",
+      "distal": true,
+      "signed_perpendicular_m": -0.29848458598343747,
+      "height_at_this_vertex_m": -0.2214846750963564,
+      "vertex_base_m": [
+        -0.017324906870558973,
+        0.07469673899771348,
+        -0.7354293908432779
+      ]
+    },
+    "lh_middle_proximal": {
+      "sample": 4,
+      "hand_pose_index": 0,
+      "hand_actuated_rad": {
+        "lh_thumb_cmc_yaw": 0.0,
+        "lh_thumb_cmc_pitch": 0.0,
+        "lh_index_mcp_pitch": 0.0,
+        "lh_middle_mcp_pitch": 0.0,
+        "lh_ring_mcp_pitch": 0.0,
+        "lh_pinky_mcp_pitch": 0.0
+      },
+      "link": "lh_middle_proximal",
+      "distal": false,
+      "signed_perpendicular_m": -0.29370528224720527,
+      "height_at_this_vertex_m": -0.1989166180807259,
+      "vertex_base_m": [
+        -0.008223132190234104,
+        0.09361070098613232,
+        -0.7145473037602211
+      ]
+    },
+    "lh_middle_distal": {
+      "sample": 4,
+      "hand_pose_index": 0,
+      "hand_actuated_rad": {
+        "lh_thumb_cmc_yaw": 0.0,
+        "lh_thumb_cmc_pitch": 0.0,
+        "lh_index_mcp_pitch": 0.0,
+        "lh_middle_mcp_pitch": 0.0,
+        "lh_ring_mcp_pitch": 0.0,
+        "lh_pinky_mcp_pitch": 0.0
+      },
+      "link": "lh_middle_distal",
+      "distal": true,
+      "signed_perpendicular_m": -0.29669541563866897,
+      "height_at_this_vertex_m": -0.22439301499128098,
+      "vertex_base_m": [
+        -0.012702921161930947,
+        0.09393651827909323,
+        -0.7398423450099042
+      ]
+    },
+    "lh_ring_proximal": {
+      "sample": 4,
+      "hand_pose_index": 0,
+      "hand_actuated_rad": {
+        "lh_thumb_cmc_yaw": 0.0,
+        "lh_thumb_cmc_pitch": 0.0,
+        "lh_index_mcp_pitch": 0.0,
+        "lh_middle_mcp_pitch": 0.0,
+        "lh_ring_mcp_pitch": 0.0,
+        "lh_pinky_mcp_pitch": 0.0
+      },
+      "link": "lh_ring_proximal",
+      "distal": false,
+      "signed_perpendicular_m": -0.29377690559339575,
+      "height_at_this_vertex_m": -0.19384876626151082,
+      "vertex_base_m": [
+        -0.0052172112501092695,
+        0.11150519957833782,
+        -0.7107568055224193
+      ]
+    },
+    "lh_ring_distal": {
+      "sample": 4,
+      "hand_pose_index": 0,
+      "hand_actuated_rad": {
+        "lh_thumb_cmc_yaw": 0.0,
+        "lh_thumb_cmc_pitch": 0.0,
+        "lh_index_mcp_pitch": 0.0,
+        "lh_middle_mcp_pitch": 0.0,
+        "lh_ring_mcp_pitch": 0.0,
+        "lh_pinky_mcp_pitch": 0.0
+      },
+      "link": "lh_ring_distal",
+      "distal": true,
+      "signed_perpendicular_m": -0.2967552630825395,
+      "height_at_this_vertex_m": -0.21921626889959592,
+      "vertex_base_m": [
+        -0.009472958641281792,
+        0.11315599515289934,
+        -0.7360387608676064
+      ]
+    },
+    "lh_pinky_proximal": {
+      "sample": 4,
+      "hand_pose_index": 0,
+      "hand_actuated_rad": {
+        "lh_thumb_cmc_yaw": 0.0,
+        "lh_thumb_cmc_pitch": 0.0,
+        "lh_index_mcp_pitch": 0.0,
+        "lh_middle_mcp_pitch": 0.0,
+        "lh_ring_mcp_pitch": 0.0,
+        "lh_pinky_mcp_pitch": 0.0
+      },
+      "link": "lh_pinky_proximal",
+      "distal": false,
+      "signed_perpendicular_m": -0.2946435418085494,
+      "height_at_this_vertex_m": -0.1866724959940961,
+      "vertex_base_m": [
+        -0.002935208159155272,
+        0.12910533630279405,
+        -0.7047810839428097
+      ]
+    },
+    "lh_pinky_distal": {
+      "sample": 4,
+      "hand_pose_index": 0,
+      "hand_actuated_rad": {
+        "lh_thumb_cmc_yaw": 0.0,
+        "lh_thumb_cmc_pitch": 0.0,
+        "lh_index_mcp_pitch": 0.0,
+        "lh_middle_mcp_pitch": 0.0,
+        "lh_ring_mcp_pitch": 0.0,
+        "lh_pinky_mcp_pitch": 0.0
+      },
+      "link": "lh_pinky_distal",
+      "distal": true,
+      "signed_perpendicular_m": -0.2976111328983119,
+      "height_at_this_vertex_m": -0.21192862789393999,
+      "vertex_base_m": [
+        -0.007036667937213202,
+        0.13163741069680526,
+        -0.7300155921590336
+      ]
+    }
+  },
+  "closest_overall": {
+    "sample": 4,
+    "hand_pose_index": 0,
+    "hand_actuated_rad": {
+      "lh_thumb_cmc_yaw": 0.0,
+      "lh_thumb_cmc_pitch": 0.0,
+      "lh_index_mcp_pitch": 0.0,
+      "lh_middle_mcp_pitch": 0.0,
+      "lh_ring_mcp_pitch": 0.0,
+      "lh_pinky_mcp_pitch": 0.0
+    },
+    "link": "lh_middle_proximal",
+    "distal": false,
+    "signed_perpendicular_m": -0.29370528224720527,
+    "height_at_this_vertex_m": -0.1989166180807259,
+    "vertex_base_m": [
+      -0.008223132190234104,
+      0.09361070098613232,
+      -0.7145473037602211
+    ]
+  },
+  "closest_distal_signed_m": -0.29669541563866897,
+  "all_envelope_meshes_outside": true,
+  "modeled_interpolation": {
+    "method": "nearest arm sample plus global revolute lever-arm bound; hand pose held fixed within each evaluation",
+    "assumption": "joint-linear arm seed to first IK; only the listed fixed hand poses",
+    "lever_arm_bound_m": 1.3716496360174255,
+    "half_step_joint_l1_rad": 0.06017692223658988,
+    "displacement_bound_m": 0.08254165348246743,
+    "max_signed_upper_bound_m": -0.21116362876473782,
+    "covered_envelope_outside_fitted_halfplane": true
+  },
+  "all_hand_angles": {
+    "method": "sphere at each finger base joint; downstream translation lengths plus mesh radius",
+    "arm_model": "joint-linear seed to first IK; nearest arm sample bounds anchor displacement",
+    "per_link": {
+      "lh_thumb_metacarpals_base2": {
+        "sample": 4,
+        "radius_m": 0.015874563607183034,
+        "sample_upper_m": -0.2926878644171962,
+        "arm_anchor_displacement_bound_m": 0.04260634272385135,
+        "interpolation_upper_m": -0.25008152169334485
+      },
+      "lh_thumb_metacarpals": {
+        "sample": 4,
+        "radius_m": 0.06907006063863598,
+        "sample_upper_m": -0.23949236738574325,
+        "arm_anchor_displacement_bound_m": 0.04260634272385135,
+        "interpolation_upper_m": -0.1968860246618919
+      },
+      "lh_thumb_distal": {
+        "sample": 4,
+        "radius_m": 0.10744629756096509,
+        "sample_upper_m": -0.20111613046341414,
+        "arm_anchor_displacement_bound_m": 0.04260634272385135,
+        "interpolation_upper_m": -0.15850978773956279
+      },
+      "lh_index_proximal": {
+        "sample": 4,
+        "radius_m": 0.04135327913260326,
+        "sample_upper_m": -0.26435753097470027,
+        "arm_anchor_displacement_bound_m": 0.04633189561093966,
+        "interpolation_upper_m": -0.21802563536376063
+      },
+      "lh_index_distal": {
+        "sample": 4,
+        "radius_m": 0.07733098443843531,
+        "sample_upper_m": -0.22837982566886825,
+        "arm_anchor_displacement_bound_m": 0.04633189561093966,
+        "interpolation_upper_m": -0.18204793005792858
+      },
+      "lh_middle_proximal": {
+        "sample": 4,
+        "radius_m": 0.04135327913260326,
+        "sample_upper_m": -0.26258567553503437,
+        "arm_anchor_displacement_bound_m": 0.04640223628667902,
+        "interpolation_upper_m": -0.21618343924835534
+      },
+      "lh_middle_distal": {
+        "sample": 4,
+        "radius_m": 0.07733098443843531,
+        "sample_upper_m": -0.22660797022920234,
+        "arm_anchor_displacement_bound_m": 0.04640223628667902,
+        "interpolation_upper_m": -0.18020573394252332
+      },
+      "lh_ring_proximal": {
+        "sample": 4,
+        "radius_m": 0.04135327913260326,
+        "sample_upper_m": -0.2626704693465644,
+        "arm_anchor_displacement_bound_m": 0.04619168568766185,
+        "interpolation_upper_m": -0.21647878365890255
+      },
+      "lh_ring_distal": {
+        "sample": 4,
+        "radius_m": 0.07733098443843531,
+        "sample_upper_m": -0.22669276404073238,
+        "arm_anchor_displacement_bound_m": 0.04619168568766185,
+        "interpolation_upper_m": -0.18050107835307053
+      },
+      "lh_pinky_proximal": {
+        "sample": 4,
+        "radius_m": 0.04135327913260326,
+        "sample_upper_m": -0.26354717643492653,
+        "arm_anchor_displacement_bound_m": 0.04604831026136006,
+        "interpolation_upper_m": -0.21749886617356648
+      },
+      "lh_pinky_distal": {
+        "sample": 4,
+        "radius_m": 0.07733098443843531,
+        "sample_upper_m": -0.2275694711290945,
+        "arm_anchor_displacement_bound_m": 0.04604831026136006,
+        "interpolation_upper_m": -0.18152116086773445
+      }
+    },
+    "max_signed_upper_m": -0.15850978773956279,
+    "outside": true
+  },
+  "can_mapping_working_assumption": "left O6 SN on can1 (see o6_can_readonly_probe_20261112_193239.json)",
+  "live_A_hand_angles": "UNKNOWN_NOT_RECORDED",
+  "raw_to_rad": "MISSING",
+  "scope": "live_A first lift only; sampled poses and separate all-angle enclosing spheres",
+  "table": "depth-fitted near-edge half-plane; finite board and uncertainty unmeasured",
+  "whole_robot_sweep": "UNKNOWN",
+  "planner_status": "REJECT_TABLE",
+  "approved_for_motion": false,
+  "control_ready": false,
+  "motion_commanded": false
+}

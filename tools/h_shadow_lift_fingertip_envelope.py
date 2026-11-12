@@ -1,9 +1,9 @@
 """Offline A/164356: conservative O6 finger-mesh envelope vs fitted near-edge half-plane.
 
 Does NOT bind live_A hand angles (none recorded; raw/percent→rad missing).
-Samples manufacturer URDF actuated-joint limit corners and two synthetic rad poses
-from the O6 FCL audit, attached to the same nine first-lift arm samples as the
-57df5f0 rigid palm/arm mesh audit. Labels whole-robot sweep still UNKNOWN.
+Replays sampled poses and independently bounds all finger rotations using a
+per-link enclosing sphere at the first finger joint. The arm follows the same
+joint-linear first lift as the 57df5f0 rigid palm/arm mesh audit.
 """
 from __future__ import annotations
 
@@ -112,6 +112,45 @@ def hand_pose_grid(limits: list[tuple[str, float, float]]) -> list[dict[str, flo
     return uniq
 
 
+def finger_spheres(hand_urdf: Path, meshes: dict, lock: dict) -> dict:
+    """Enclose each link at every rotation about its joints, including interval interiors."""
+    root = ET.parse(hand_urdf).getroot()
+    joints = {j.find("child").get("link"): j for j in root.findall("joint")}
+    entries = {m["link"]: m["path"] for m in lock["meshes"]}
+    spheres = {}
+    for name, vertices in meshes.items():
+        collision, = root.findall(f"link[@name='{name}']/collision")
+        mesh = collision.find("geometry/mesh")
+        origin = collision.find("origin")
+        if (mesh is None or mesh.get("filename") != entries[name]
+                or mesh.get("scale", "1 1 1").split() != ["1", "1", "1"]
+                or (origin is not None and any(float(v) for k in ("xyz", "rpy")
+                                               for v in origin.get(k, "0 0 0").split()))):
+            raise ValueError(f"unsupported collision binding: {name}")
+        radius = float(np.linalg.norm(vertices, axis=1).max())
+        child = name
+        visited = set()
+        while child not in visited:
+            visited.add(child)
+            joint = joints[child]
+            if joint.get("type") not in ("revolute", "fixed"):
+                raise ValueError(f"unbounded translation at {child}")
+            xyz = np.array(joint.find("origin").get("xyz").split(), dtype=float)
+            if xyz.shape != (3,) or not np.isfinite(xyz).all():
+                raise ValueError(f"invalid joint translation at {child}")
+            parent = joint.find("parent").get("link")
+            if parent == "lh_hand_base_link":
+                # The first joint origin is fixed in palm coordinates. Every subsequent
+                # rotated displacement has constant length, regardless of mimic coupling.
+                spheres[name] = (xyz, radius)
+                break
+            radius += float(np.linalg.norm(xyz))
+            child = parent
+        else:
+            raise ValueError(f"cycle in hand chain: {name}")
+    return spheres
+
+
 def evaluate(args: argparse.Namespace) -> dict:
     edge = load(args.field / "robot_side_table_edge/robot_side_edge_report.json")
     poses = load(args.field / "lift_part_proximity/lift_part_proximity.json")
@@ -165,6 +204,7 @@ def evaluate(args: argparse.Namespace) -> dict:
     finger_meshes = load_finger_meshes(args.hand, hand_lock)
     limits = actuated_limits(hand_urdf)
     hand_qs = hand_pose_grid(limits)
+    spheres = finger_spheres(hand_urdf, finger_meshes, hand_lock)
     fixed = RigidTransform(
         "L8_Link",
         "lh_hand_base_link",
@@ -195,6 +235,9 @@ def evaluate(args: argparse.Namespace) -> dict:
     )
     max_half_step = float(np.abs(np.diff(joints, axis=0)).sum(axis=1).max() / 2)
     displacement_bound = float(lever * max_half_step)
+    palm_lever = sum(np.linalg.norm(t) for t in translations) + np.linalg.norm(fixed.matrix[:3, 3])
+    sphere_bounds = {}
+    local_poses = [hand_link_poses(hand_urdf, hq, base_frame="lh_hand_base_link") for hq in hand_qs]
 
     maxima: dict = {}
     global_best = None
@@ -222,23 +265,29 @@ def evaluate(args: argparse.Namespace) -> dict:
         if not np.allclose(arm["L8_Link"].matrix[:3, 3], refs["L8_Link"], atol=1e-6, rtol=0):
             raise ValueError(f"L8 FK mismatch at sample {idx}")
 
-        for hq_i, hq in enumerate(hand_qs):
-            hand = hand_link_poses(hand_urdf, hq, base_frame="lh_hand_base_link")
-            hand["lh_hand_base_link"] = RigidTransform(
-                "lh_hand_base_link",
-                "lh_hand_base_link",
-                np.eye(4),
-                "synthetic",
-            )
-            world = attach_tool_poses(arm["L8_Link"], fixed, hand)
-            palm = world["lh_hand_base_link"].matrix
-            if not np.allclose(palm[:3, 3], refs["lh_hand_base_link"], atol=1e-6, rtol=0):
-                raise ValueError(f"palm FK mismatch at sample {idx}")
+        palm = arm["L8_Link"].matrix @ fixed.matrix
+        if not np.allclose(palm[:3, 3], refs["lh_hand_base_link"], atol=1e-6, rtol=0):
+            raise ValueError(f"palm FK mismatch at sample {idx}")
+        sample_caps = {}
+        for name, (anchor, radius) in spheres.items():
+            anchor_base = palm[:3, :3] @ anchor + palm[:3, 3]
+            cap = float((anchor_base - center) @ axis + radius)
+            sample_caps[name] = cap
+            if name not in sphere_bounds or cap > sphere_bounds[name]["sample_upper_m"]:
+                extra = float((palm_lever + np.linalg.norm(anchor)) * max_half_step)
+                sphere_bounds[name] = dict(sample=idx, radius_m=radius, sample_upper_m=cap,
+                                           arm_anchor_displacement_bound_m=extra,
+                                           interpolation_upper_m=cap + extra)
+
+        for hq_i, (hq, local) in enumerate(zip(hand_qs, local_poses, strict=True)):
+            world = attach_tool_poses(arm["L8_Link"], fixed, local)
 
             for name, xyz in finger_meshes.items():
                 T = world[name].matrix
                 signed = xyz @ (T[:3, :3].T @ axis) + (T[:3, 3] - center) @ axis
                 k = int(np.argmax(signed))
+                if signed[k] > sample_caps[name] + 1e-10:
+                    raise ValueError(f"sampled vertex outside enclosing bound: {idx}/{name}")
                 point = T[:3, :3] @ xyz[k] + T[:3, 3]
                 height = float((point - center) @ normal)
                 cand = dict(
@@ -276,7 +325,7 @@ def evaluate(args: argparse.Namespace) -> dict:
         for name in sources
     }
     return dict(
-        schema="h-shadow-lift-fingertip-envelope-0.1",
+        schema="h-shadow-lift-fingertip-envelope-0.2",
         issue="#36",
         frame=edge["frame"],
         source_sha256_lf=source_sha256_lf,
@@ -295,17 +344,22 @@ def evaluate(args: argparse.Namespace) -> dict:
         ),
         modeled_interpolation=dict(
             method="nearest arm sample plus global revolute lever-arm bound; hand pose held fixed within each evaluation",
-            assumption="joint-linear arm seed→first IK; hand covers URDF limit envelope not hardware pose",
+            assumption="joint-linear arm seed to first IK; only the listed fixed hand poses",
             lever_arm_bound_m=float(lever),
             half_step_joint_l1_rad=max_half_step,
             displacement_bound_m=displacement_bound,
             max_signed_upper_bound_m=bound,
             covered_envelope_outside_fitted_halfplane=bound < 0,
         ),
+        all_hand_angles=dict(method="sphere at each finger base joint; downstream translation lengths plus mesh radius",
+                             arm_model="joint-linear seed to first IK; nearest arm sample bounds anchor displacement",
+                             per_link=sphere_bounds,
+                             max_signed_upper_m=max(row["interpolation_upper_m"] for row in sphere_bounds.values()),
+                             outside=all(row["interpolation_upper_m"] < 0 for row in sphere_bounds.values())),
         can_mapping_working_assumption="left O6 SN on can1 (see o6_can_readonly_probe_20261112_193239.json)",
         live_A_hand_angles="UNKNOWN_NOT_RECORDED",
         raw_to_rad="MISSING",
-        scope="A first lift only; conservative O6 finger collision meshes at URDF limit envelope",
+        scope="live_A first lift only; sampled poses and separate all-angle enclosing spheres",
         table="depth-fitted near-edge half-plane; finite board and uncertainty unmeasured",
         whole_robot_sweep="UNKNOWN",
         planner_status=plan["status"],
@@ -331,6 +385,8 @@ if __name__ == "__main__":
         result["all_envelope_meshes_outside"],
         "closest_mm=",
         round(result["closest_overall"]["signed_perpendicular_m"] * 1000, 1),
-        "bound_mm=",
+        "sampled_pose_upper_mm=",
         round(result["modeled_interpolation"]["max_signed_upper_bound_m"] * 1000, 1),
+        "all_angles_upper_mm=",
+        round(result["all_hand_angles"]["max_signed_upper_m"] * 1000, 1),
     )
