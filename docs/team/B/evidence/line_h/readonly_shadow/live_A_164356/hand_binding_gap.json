@@ -51,12 +51,22 @@
     "resolution": "RESOLVED_WORKING_ASSUMPTION — left O6 SN LHO6-04-322-L-Z-1-D on can1; do not use can0 for left"
   },
   "fingertip_binding": {
-    "status": "BLOCKED",
-    "reason": "live_A has no hand angles; now-probe angles are not sampling-time; percent/raw→URDF rad mapping still missing for O6 collision FK",
+    "status": "BLOCKED_FOR_CONTEMPORANEOUS",
+    "reason": "live_A has no hand angles; now-probe angles are not sampling-time; percent/raw→URDF rad mapping still missing",
+    "conservative_envelope": {
+      "status": "DONE",
+      "evidence": "docs/team/B/evidence/line_h/readonly_shadow/live_A_164356/lift_fingertip_envelope/lift_fingertip_envelope.json",
+      "tool": "tools/h_shadow_lift_fingertip_envelope.py",
+      "hand_poses": 65,
+      "closest_finger_link": "lh_middle_proximal",
+      "signed_perpendicular_m": -0.29372691088156287,
+      "interpolation_upper_bound_m": -0.2111515122531816,
+      "all_envelope_outside_fitted_edge": true,
+      "note": "URDF limit corners + audit synthetics; still farther outside than L5 shell (−254.1 mm)"
+    },
     "allowed_next_steps": [
-      "if sampling-time pose must be exact: operator-attested archive of angles at A layout (no brick move) or re-shadow with hand probe — outside current no-recapture offline scope",
-      "offline alternative: conservative fingertip/palm envelope over teach presets + joint limits, labeled non-contemporaneous",
-      "do not bind left-preshape or now-probe angles onto live_A seven-axis as if simultaneous"
+      "optional: operator-attested sampling-time O6 angles if a tighter contemporaneous claim is required",
+      "do not treat envelope or can1-now probe as live_A simultaneous bind"
     ]
   },
   "mesh_edge_context_57df5f0": {
