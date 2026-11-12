@@ -37,17 +37,26 @@
   "can_mapping_status": {
     "code_default_hand_teach": "can1",
     "observed_in_left_preshape_teach": "can1",
-    "field_operator_historical_claim": "can0 (unverified for live_A_164356; not recorded in that snapshot)",
-    "live_A_164356_bus_at_capture": "unknown — Hand Teach not running; no O6 read in shadow snapshot",
-    "resolution": "UNRESOLVED — do not bind fingertips to live_A until a contemporaneous O6 read with interface+serial is archived"
+    "hardware_interfaces_doc": "can1=left O6 / can0=right O6",
+    "field_operator_historical_claim": "can0 — CONTRADICTED by 2026-11-12T19:32:39+08:00 SocketCAN probe (left SN only on can1)",
+    "readonly_probe_now": {
+      "evidence": "docs/team/B/evidence/line_h/readonly_shadow/live_A_164356/o6_can_readonly_probe_20261112_193239.json",
+      "left_o6_interface": "can1",
+      "left_serial": "LHO6-04-322-L-Z-1-D",
+      "can0_left_id_response": "timeout",
+      "angles_raw_now": [254, 63, 254, 254, 0, 0],
+      "contemporaneous_with_live_A": false
+    },
+    "live_A_164356_bus_at_capture": "not logged in snapshot; resolved working assumption for left SN = can1 (doc+teach+now probe agree)",
+    "resolution": "RESOLVED_WORKING_ASSUMPTION — left O6 SN LHO6-04-322-L-Z-1-D on can1; do not use can0 for left"
   },
   "fingertip_binding": {
     "status": "BLOCKED",
-    "reason": "live_A has no hand angles; borrowing left-preshape teach would mix sessions and arm poses",
+    "reason": "live_A has no hand angles; now-probe angles are not sampling-time; percent/raw→URDF rad mapping still missing for O6 collision FK",
     "allowed_next_steps": [
-      "stationary read-only: open left O6 on the verified field interface, record angles_percent + serial + interface next to live_A arm q (no motion)",
-      "or re-run shadow snapshot with explicit hand probe after can0/can1 is confirmed",
-      "conservative fingertip envelope covering all teach presets remains an alternative if binding is refused"
+      "if sampling-time pose must be exact: operator-attested archive of angles at A layout (no brick move) or re-shadow with hand probe — outside current no-recapture offline scope",
+      "offline alternative: conservative fingertip/palm envelope over teach presets + joint limits, labeled non-contemporaneous",
+      "do not bind left-preshape or now-probe angles onto live_A seven-axis as if simultaneous"
     ]
   },
   "mesh_edge_context_57df5f0": {
