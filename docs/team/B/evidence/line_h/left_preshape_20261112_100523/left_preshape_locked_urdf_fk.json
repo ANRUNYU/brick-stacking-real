@@ -1,0 +1,101 @@
+{
+  "sample_id": "left-preshape-20261112-100523",
+  "phase": "preshape_at_block",
+  "side": "left",
+  "interface": "can2",
+  "read_utc": "2026-11-12T02:35:13.734667+00:00",
+  "input_path": "docs/team/B/evidence/line_h/left_preshape_20261112_100523/left_preshape_q.json",
+  "input_sha256": "a53d0261b80a5bd60f8967fb4d471d485841cb0eb497e2da05f156144ed7ce63",
+  "joint_unit": "rad",
+  "joint_names": [
+    "J1",
+    "J2",
+    "J3",
+    "J4",
+    "J5",
+    "J6",
+    "J7"
+  ],
+  "q_rad": [
+    -0.0511726438999176,
+    -0.004673847928643227,
+    0.33557960391044617,
+    -1.4567917585372925,
+    1.7294782400131226,
+    0.2161058976119623,
+    -0.49725337605859465
+  ],
+  "urdf_joint_mapping": {
+    "J1": "L1_Joint",
+    "J2": "L2_Joint",
+    "J3": "L3_Joint",
+    "J4": "L4_Joint",
+    "J5": "L5_Joint",
+    "J6": "L6_Joint",
+    "J7": "L7_Joint"
+  },
+  "input_to_urdf_sign": {
+    "J1": 1,
+    "J2": 1,
+    "J3": 1,
+    "J4": 1,
+    "J5": 1,
+    "J6": 1,
+    "J7": 1
+  },
+  "motor_ids": {
+    "J1": 61,
+    "J2": 62,
+    "J3": 63,
+    "J4": 64,
+    "J5": 65,
+    "J6": 66,
+    "J7": 67
+  },
+  "joint_provenance": {
+    "J1": "sdk_audited",
+    "J2": "sdk_audited",
+    "J3": "sdk_audited",
+    "J4": "sdk_audited",
+    "J5": "sdk_audited",
+    "J6": "sdk_report_not_audited",
+    "J7": "sdk_report_not_audited"
+  },
+  "joint_source_audit": "docs/team/B/evidence/line_h/left_preshape_20261112_100523/left_preshape_joint_source_audit.md",
+  "urdf_path": "config/models/p7_left/p7__left.urdf",
+  "urdf_lock_path": "config/models/p7_left/LOCK.json",
+  "urdf_sha256": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+  "fk_function": "brick_stacking.localization.urdf_chain.urdf_forward_kinematics",
+  "parent_frame": "L_arm_root",
+  "child_frame": "L8_Link",
+  "terminal_fixed_joint": "L8_Joint",
+  "translation_unit": "m",
+  "T_base_L8_teach": [
+    [
+      -0.12400898084375715,
+      0.4766069581188217,
+      -0.8703261343558608,
+      0.3191006140903376
+    ],
+    [
+      -0.9758643187174825,
+      -0.2174636786272578,
+      0.019959457206157213,
+      -0.021698005599919593
+    ],
+    [
+      -0.1797515065977372,
+      0.8517953721115326,
+      0.4920711736377363,
+      -0.3224213712907774
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "hardware_match_verified": false,
+  "motion_enabled": false
+}
