@@ -1,0 +1,76 @@
+{
+  "schema_version": "fixed-red-block-local-check-draft-0.1",
+  "status": "DRAFT_AWAITING_PLANNING_SIGNOFF",
+  "executable": false,
+  "motion_enabled": false,
+  "control_ready": false,
+  "live_authorized": false,
+  "scope": "固定红块局部闭合、微抬、保持。左臂左手，无侧移、无转运、无放置到十字。",
+  "start": {
+    "sample_id": "left-preshape-20261112-100523",
+    "semantics": "preshape_at_block，将触未触，离线参考",
+    "q_ref": "docs/team/B/evidence/line_h/left_preshape_20261112_100523/left_preshape_q.json",
+    "q_sha256": "a53d0261b80a5bd60f8967fb4d471d485841cb0eb497e2da05f156144ed7ce63",
+    "fk_ref": "docs/team/B/evidence/line_h/left_preshape_20261112_100523/left_preshape_locked_urdf_fk.json",
+    "fk_sha256": "187467a932918a27a97f9663072a3c774e371935fc020a4a8faba9b0e04e481f",
+    "block_visual_reference": "docs/team/B/evidence/line_h/left_preshape_20261112_100523/rgbd/color_rectified.png",
+    "urdf_sha256": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+    "parent_frame": "L_arm_root",
+    "child_frame": "L8_Link",
+    "joint_unit": "rad",
+    "J6": "sdk_report_not_audited",
+    "J7": "sdk_report_not_audited",
+    "proposed_max_abs_joint_delta_rad": 0.015,
+    "proposed_max_l8_translation_delta_m": 0.002,
+    "proposed_max_l8_rotation_delta_deg": 2.0,
+    "proposed_settled_observation_s": 0.5,
+    "start_binding_rule": "差值门限只用于拒绝明显不符的起点。规划须复核实际起点与批准路径首点的衔接，起点改变须重绑并复核局部路径。"
+  },
+  "lift": {
+    "height_m": 0.01,
+    "planned_ascent_s": 4.0,
+    "hold_s": 2.0,
+    "proposed_max_tcp_speed_m_s": 0.02,
+    "direction": "桌面向上的法线，保持 L8 旋转。现场核对桌面法线与竖直方向一致，若有差异先复审。",
+    "offline_table_ref": "docs/team/B/evidence/line_h/table_board_field_mid_20261111.json",
+    "offline_table_sha256": "32713bc41f0ae38d828639117a737ef0b37e92d377dc26c694c1e75d048d413b",
+    "offline_table_status": "FIT_ONLY",
+    "field_table_version": null,
+    "field_up_normal_in_L_arm_root": null,
+    "field_block_pose_or_layout_binding": null
+  },
+  "hand": {
+    "owner": "H",
+    "preshape_preset_version": null,
+    "close_preset_version": null,
+    "proposed_close_speed_percent": 10.0,
+    "speed_semantics": "Hand Teach 速度百分比，H 确认预设、速度及闭合超时",
+    "close_timeout_s": null,
+    "tactile_evidence": "UNAVAILABLE",
+    "offline_hand_commands": false
+  },
+  "field_sequence_after_new_authorization": [
+    "现场核对新鲜且完整的左臂七轴、锁定 FK 腕姿、固定红块位置/朝向、桌面向上法线与所有版本。两次读数与目视确认停稳，超差停下复审。",
+    "操作员与看臂人确认 preshape 已在核对的起点停稳、三指将触未触，工作区无人手。",
+    "臂保持静止，由 H 按冻结预设闭合。",
+    "对照闭合前后的块角点与桌面标记，确认块未被推走、未转动、仍居指间。异常或看不清即停止。",
+    "按已复核局部路径沿桌面向上法线微抬 10 mm，保持腕姿，无侧移。",
+    "在顶点保持 2 s，保存能看到块底及指间相对位置的连续视觉记录。",
+    "视觉核对块底离桌，整段保持无下滑、转动或人手支撑。遮挡或证据不清记为未判定。",
+    "正常结束时由现场负责人执行规划预审并签字选定的受控落回或现场安全结束方案。"
+  ],
+  "failure_response": {
+    "triggers": "起点/版本不符、反馈缺失或超时、推块、滑移、转动、未离桌、遮挡、腕姿或路径超差、干涉、人员进入工作区或看臂/急停条件丢失",
+    "action": "立即中止本次尝试，活动中的动作按已验收的现场停止机制处理，记录失败阶段和证据。异常运动、即将碰撞或人员危险时由现场人员使用已有实体急停。由现场负责人按预审处置，禁止自动重试、盲退、落回或张手。",
+    "normal_end_option": null,
+    "reviewed_end_or_recovery_ref": null
+  },
+  "authorization": {
+    "planning_signoff_ref": null,
+    "new_oral_authorization_ref": null,
+    "estop_confirmed": false,
+    "named_arm_spotter_confirmed": false,
+    "local_offline_check_ref": "docs/team/B/evidence/line_h/red_block_micro_lift_offline_20261112.md",
+    "checklist_ref": "docs/team/B/evidence/line_h/red_block_micro_lift_signoff_20261112.md"
+  }
+}
