@@ -1,0 +1,91 @@
+{
+  "mode": "archived_replay",
+  "utc": "2026-11-12T08:52:14.628619+00:00",
+  "control_ready": false,
+  "motion_commanded": false,
+  "plan": {
+    "observation": "frame_009.npz",
+    "target_base_L8": [
+      [
+        -0.124341923459906,
+        0.4777721230949786,
+        -0.8696395140882266,
+        0.33682372939423094
+      ],
+      [
+        -0.9757974840459688,
+        -0.21777072043225162,
+        0.019879221613910078,
+        -0.042859588745830374
+      ],
+      [
+        -0.1798842855833931,
+        0.8510638705266099,
+        0.49328686591517684,
+        -0.32048638517922845
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "seed": [
+      0.005009406246244907,
+      0.084225133061409,
+      0.09198535233736038,
+      -0.0240643247961998,
+      1.6429893970489502,
+      -0.10013733119706991,
+      -0.13866636148622824
+    ],
+    "waypoints": [
+      {
+        "phase": "lift",
+        "ik": {
+          "schema_version": "c-ik-1",
+          "ik": "PASS",
+          "reason": "CONVERGED",
+          "joint_names": [
+            "L1_Joint",
+            "L2_Joint",
+            "L3_Joint",
+            "L4_Joint",
+            "L5_Joint",
+            "L6_Joint",
+            "L7_Joint"
+          ],
+          "positions_rad": [
+            0.2181778886290438,
+            0.10775837702482426,
+            0.06905167022875187,
+            -0.46010467044193404,
+            1.6192024760326298,
+            -0.12039266110606112,
+            -0.3617791122457975
+          ],
+          "position_error_m": 3.21803676616948e-05,
+          "rotation_error_rad": 0.00011473930730121856,
+          "iterations": 5,
+          "model_version": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+          "trajectory": "NOT_GENERATED",
+          "full_collision": "UNKNOWN",
+          "motion_enabled": false,
+          "scope": "local solve against caller FK only"
+        },
+        "achieved_xyz_m": [
+          -0.0023001084939773334,
+          0.09945189976679907,
+          -0.5910879696570842
+        ],
+        "min_sampled_flange_clearance_m": -0.09020650309007927
+      }
+    ],
+    "status": "REJECT_TABLE",
+    "control_ready": false,
+    "full_collision": "UNKNOWN"
+  },
+  "status": "INCOMPLETE",
+  "reason": "REJECT_TABLE"
+}

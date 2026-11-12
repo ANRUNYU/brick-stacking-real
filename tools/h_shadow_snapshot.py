@@ -12,7 +12,7 @@ from h_shadow_path import plan, load, root
 
 evidence = root / "docs/team/B/evidence/line_h"
 sys.path.insert(0,str(evidence/"left_preshape_20261112_100523_review"))
-from replay_red_localizer import localize
+from h_shadow_localizer import localize
 
 def read_arm(python):
     output = subprocess.check_output([python, str(root/"tools/h_shadow_read_angles.py")], text=True)
