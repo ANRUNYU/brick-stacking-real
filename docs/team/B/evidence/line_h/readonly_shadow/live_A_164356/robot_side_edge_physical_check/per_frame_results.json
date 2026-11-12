@@ -1,0 +1,4695 @@
+{
+  "frames": [
+    {
+      "frame": "frame_000.npz",
+      "frame_sha256": "9d597be7de33cc437be35653fcc06a8d44e26031b0c13e2c5e2c9b0a29e6caf6",
+      "observation": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/readonly_shadow/live_A_164356/table_reject_overlay/frame_000_localize.json",
+      "n_edge_samples": 37,
+      "n_support_break": 37,
+      "n_fov_exit": 0,
+      "edge_mean_base_m": [
+        0.275814310234634,
+        -0.061894436157601034,
+        -0.5248384096466348
+      ],
+      "edge_dir_base": [
+        -0.15152489163808053,
+        -0.9859353875253508,
+        0.07050970741184703
+      ],
+      "inward_base": [
+        0.9930818622539447,
+        -0.09945606190040132,
+        -0.062425208157449064
+      ],
+      "t_support_min_m": -0.1802543632258139,
+      "t_support_max_m": 0.1803004342694327,
+      "support_length_m": 0.3605547974952466,
+      "edge_meta": [
+        {
+          "lateral_m": -0.18,
+          "reason": "support_break",
+          "u": 170,
+          "v": 463,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.16999999999999998,
+          "reason": "support_break",
+          "u": 176,
+          "v": 463,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.16,
+          "reason": "support_break",
+          "u": 181,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.15,
+          "reason": "support_break",
+          "u": 186,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.13999999999999999,
+          "reason": "support_break",
+          "u": 192,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.13,
+          "reason": "support_break",
+          "u": 197,
+          "v": 464,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.12,
+          "reason": "support_break",
+          "u": 202,
+          "v": 464,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.10999999999999999,
+          "reason": "support_break",
+          "u": 208,
+          "v": 463,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.09999999999999999,
+          "reason": "support_break",
+          "u": 213,
+          "v": 463,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.09,
+          "reason": "support_break",
+          "u": 219,
+          "v": 462,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.07999999999999999,
+          "reason": "support_break",
+          "u": 224,
+          "v": 462,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.06999999999999999,
+          "reason": "support_break",
+          "u": 230,
+          "v": 461,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.06,
+          "reason": "support_break",
+          "u": 235,
+          "v": 461,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.04999999999999999,
+          "reason": "support_break",
+          "u": 241,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.03999999999999998,
+          "reason": "support_break",
+          "u": 246,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.03,
+          "reason": "support_break",
+          "u": 251,
+          "v": 459,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.01999999999999999,
+          "reason": "support_break",
+          "u": 257,
+          "v": 462,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": -0.009999999999999981,
+          "reason": "support_break",
+          "u": 262,
+          "v": 459,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": 0.0,
+          "reason": "support_break",
+          "u": 267,
+          "v": 461,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.010000000000000009,
+          "reason": "support_break",
+          "u": 273,
+          "v": 461,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.020000000000000018,
+          "reason": "support_break",
+          "u": 278,
+          "v": 460,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.03,
+          "reason": "support_break",
+          "u": 284,
+          "v": 460,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.04000000000000001,
+          "reason": "support_break",
+          "u": 289,
+          "v": 462,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.05000000000000002,
+          "reason": "support_break",
+          "u": 294,
+          "v": 462,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.06,
+          "reason": "support_break",
+          "u": 300,
+          "v": 461,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.07,
+          "reason": "support_break",
+          "u": 305,
+          "v": 461,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.08000000000000002,
+          "reason": "support_break",
+          "u": 311,
+          "v": 460,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.09000000000000002,
+          "reason": "support_break",
+          "u": 316,
+          "v": 460,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.10000000000000003,
+          "reason": "support_break",
+          "u": 321,
+          "v": 459,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.10999999999999999,
+          "reason": "support_break",
+          "u": 327,
+          "v": 459,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.12,
+          "reason": "support_break",
+          "u": 332,
+          "v": 458,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.13,
+          "reason": "support_break",
+          "u": 337,
+          "v": 458,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.14,
+          "reason": "support_break",
+          "u": 343,
+          "v": 458,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.15000000000000002,
+          "reason": "support_break",
+          "u": 348,
+          "v": 460,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.16000000000000003,
+          "reason": "support_break",
+          "u": 354,
+          "v": 460,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.17000000000000004,
+          "reason": "support_break",
+          "u": 359,
+          "v": 459,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.18,
+          "reason": "support_break",
+          "u": 364,
+          "v": 459,
+          "walk_m": 0.095
+        }
+      ],
+      "probes": [
+        {
+          "id": "P0",
+          "u": 170,
+          "v_fit": 463,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 51.616729736328125,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              170,
+              463
+            ],
+            "rgb_edge_uv": [
+              171,
+              459
+            ],
+            "offset_toward_robot_px": -4.5,
+            "offset_toward_robot_m": -0.008374028173779306,
+            "grad": 89.0,
+            "m_per_px_at_fit": 0.0018608951497287344,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              170,
+              463
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P1",
+          "u": 219,
+          "v_fit": 462,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 53.80058670043945,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              219,
+              462
+            ],
+            "rgb_edge_uv": [
+              219,
+              459
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.006532149225940725,
+            "grad": 84.0,
+            "m_per_px_at_fit": 0.0018663283502687784,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              219,
+              462
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P2",
+          "u": 267,
+          "v_fit": 461,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 50.1984748840332,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              267,
+              461
+            ],
+            "rgb_edge_uv": [
+              267,
+              458
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.0065416578936200774,
+            "grad": 95.0,
+            "m_per_px_at_fit": 0.0018690451124628792,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              267,
+              461
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P3",
+          "u": 316,
+          "v_fit": 460,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 48.79456329345703,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              316,
+              460
+            ],
+            "rgb_edge_uv": [
+              316,
+              457
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.0065131330240505705,
+            "grad": 101.0,
+            "m_per_px_at_fit": 0.0018608951497287344,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              316,
+              460
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P4",
+          "u": 364,
+          "v_fit": 459,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 48.08405685424805,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              364,
+              459
+            ],
+            "rgb_edge_uv": [
+              364,
+              456
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.006551165994565154,
+            "grad": 95.0,
+            "m_per_px_at_fit": 0.0018717617127329011,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              364,
+              459
+            ],
+            "n_samples": 51
+          }
+        }
+      ]
+    },
+    {
+      "frame": "frame_001.npz",
+      "frame_sha256": "40e288a17db3ce91c553bf546e0e3d534781d4e32614932b9019fd0fafa13d03",
+      "observation": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/readonly_shadow/live_A_164356/table_reject_overlay/frame_001_localize.json",
+      "n_edge_samples": 37,
+      "n_support_break": 37,
+      "n_fov_exit": 0,
+      "edge_mean_base_m": [
+        0.27666836938073974,
+        -0.06289425610404187,
+        -0.5247673593048783
+      ],
+      "edge_dir_base": [
+        -0.14690362481823022,
+        -0.9866554960039919,
+        0.07021579039205768
+      ],
+      "inward_base": [
+        0.9927512995749633,
+        -0.10246903377333341,
+        -0.06280887126657257
+      ],
+      "t_support_min_m": -0.18015440293652693,
+      "t_support_max_m": 0.180147761409007,
+      "support_length_m": 0.36030216434553397,
+      "edge_meta": [
+        {
+          "lateral_m": -0.18,
+          "reason": "support_break",
+          "u": 170,
+          "v": 464,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.16999999999999998,
+          "reason": "support_break",
+          "u": 176,
+          "v": 463,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.16,
+          "reason": "support_break",
+          "u": 181,
+          "v": 463,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.15,
+          "reason": "support_break",
+          "u": 187,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.13999999999999999,
+          "reason": "support_break",
+          "u": 192,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.13,
+          "reason": "support_break",
+          "u": 198,
+          "v": 461,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.12,
+          "reason": "support_break",
+          "u": 203,
+          "v": 461,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.10999999999999999,
+          "reason": "support_break",
+          "u": 209,
+          "v": 461,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.09999999999999999,
+          "reason": "support_break",
+          "u": 214,
+          "v": 463,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.09,
+          "reason": "support_break",
+          "u": 220,
+          "v": 460,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.07999999999999999,
+          "reason": "support_break",
+          "u": 225,
+          "v": 462,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.06999999999999999,
+          "reason": "support_break",
+          "u": 230,
+          "v": 462,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.06,
+          "reason": "support_break",
+          "u": 236,
+          "v": 461,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.04999999999999999,
+          "reason": "support_break",
+          "u": 241,
+          "v": 461,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.03999999999999998,
+          "reason": "support_break",
+          "u": 246,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.03,
+          "reason": "support_break",
+          "u": 252,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.01999999999999999,
+          "reason": "support_break",
+          "u": 257,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.009999999999999981,
+          "reason": "support_break",
+          "u": 263,
+          "v": 459,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": 0.0,
+          "reason": "support_break",
+          "u": 268,
+          "v": 462,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.010000000000000009,
+          "reason": "support_break",
+          "u": 273,
+          "v": 461,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.020000000000000018,
+          "reason": "support_break",
+          "u": 279,
+          "v": 461,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.03,
+          "reason": "support_break",
+          "u": 284,
+          "v": 460,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.04000000000000001,
+          "reason": "support_break",
+          "u": 289,
+          "v": 460,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.05000000000000002,
+          "reason": "support_break",
+          "u": 295,
+          "v": 462,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.06,
+          "reason": "support_break",
+          "u": 300,
+          "v": 459,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.07,
+          "reason": "support_break",
+          "u": 306,
+          "v": 459,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.08000000000000002,
+          "reason": "support_break",
+          "u": 311,
+          "v": 458,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.09000000000000002,
+          "reason": "support_break",
+          "u": 316,
+          "v": 461,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.10000000000000003,
+          "reason": "support_break",
+          "u": 322,
+          "v": 457,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.10999999999999999,
+          "reason": "support_break",
+          "u": 327,
+          "v": 457,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.12,
+          "reason": "support_break",
+          "u": 333,
+          "v": 459,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.13,
+          "reason": "support_break",
+          "u": 338,
+          "v": 459,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.14,
+          "reason": "support_break",
+          "u": 343,
+          "v": 458,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.15000000000000002,
+          "reason": "support_break",
+          "u": 349,
+          "v": 458,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.16000000000000003,
+          "reason": "support_break",
+          "u": 354,
+          "v": 458,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.17000000000000004,
+          "reason": "support_break",
+          "u": 359,
+          "v": 457,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.18,
+          "reason": "support_break",
+          "u": 365,
+          "v": 457,
+          "walk_m": 0.09
+        }
+      ],
+      "probes": [
+        {
+          "id": "P0",
+          "u": 170,
+          "v_fit": 464,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 39.6495361328125,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              170,
+              464
+            ],
+            "rgb_edge_uv": [
+              171,
+              459
+            ],
+            "offset_toward_robot_px": -5.5,
+            "offset_toward_robot_m": -0.01023492332350804,
+            "grad": 70.0,
+            "m_per_px_at_fit": 0.0018608951497287344,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              170,
+              464
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P1",
+          "u": 220,
+          "v_fit": 460,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 42.00081253051758,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              220,
+              460
+            ],
+            "rgb_edge_uv": [
+              220,
+              458
+            ],
+            "offset_toward_robot_px": -2.5,
+            "offset_toward_robot_m": -0.004672612781157198,
+            "grad": 65.0,
+            "m_per_px_at_fit": 0.0018690451124628792,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              220,
+              460
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P2",
+          "u": 268,
+          "v_fit": 462,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 37.571346282958984,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              268,
+              462
+            ],
+            "rgb_edge_uv": [
+              268,
+              458
+            ],
+            "offset_toward_robot_px": -4.5,
+            "offset_toward_robot_m": -0.008410703006082957,
+            "grad": 58.0,
+            "m_per_px_at_fit": 0.0018690451124628792,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              268,
+              462
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P3",
+          "u": 316,
+          "v_fit": 461,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 37.934669494628906,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              316,
+              461
+            ],
+            "rgb_edge_uv": [
+              316,
+              457
+            ],
+            "offset_toward_robot_px": -4.5,
+            "offset_toward_robot_m": -0.008374028173779306,
+            "grad": 78.0,
+            "m_per_px_at_fit": 0.0018608951497287344,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              316,
+              461
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P4",
+          "u": 365,
+          "v_fit": 457,
+          "profile_class": {
+            "label": "physical_rim_candidate",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 37.585235595703125,
+            "reason": "interior on-plane support ends toward robot; RGB neighborhood gradient recorded"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              365,
+              457
+            ],
+            "rgb_edge_uv": [
+              365,
+              456
+            ],
+            "offset_toward_robot_px": -1.5,
+            "offset_toward_robot_m": -0.002807642569099352,
+            "grad": 65.0,
+            "m_per_px_at_fit": 0.0018717617127329011,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              365,
+              457
+            ],
+            "n_samples": 51
+          }
+        }
+      ]
+    },
+    {
+      "frame": "frame_002.npz",
+      "frame_sha256": "32030e1efec18258b0cb6429ed5126ab4f33dce95f7a543a967affa0b95916a5",
+      "observation": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/readonly_shadow/live_A_164356/table_reject_overlay/frame_002_localize.json",
+      "n_edge_samples": 37,
+      "n_support_break": 37,
+      "n_fov_exit": 0,
+      "edge_mean_base_m": [
+        0.2759333479550948,
+        -0.06252263041145477,
+        -0.5248429640511032
+      ],
+      "edge_dir_base": [
+        -0.15325978627146694,
+        -0.985651111184939,
+        0.07073418503043123
+      ],
+      "inward_base": [
+        0.9929082853157806,
+        -0.10121140268883647,
+        -0.06236496546166522
+      ],
+      "t_support_min_m": -0.18027739772936274,
+      "t_support_max_m": 0.1802773977293627,
+      "support_length_m": 0.36055479545872543,
+      "edge_meta": [
+        {
+          "lateral_m": -0.18,
+          "reason": "support_break",
+          "u": 170,
+          "v": 463,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.16999999999999998,
+          "reason": "support_break",
+          "u": 176,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.16,
+          "reason": "support_break",
+          "u": 181,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.15,
+          "reason": "support_break",
+          "u": 187,
+          "v": 461,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.13999999999999999,
+          "reason": "support_break",
+          "u": 192,
+          "v": 464,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.13,
+          "reason": "support_break",
+          "u": 197,
+          "v": 464,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.12,
+          "reason": "support_break",
+          "u": 203,
+          "v": 463,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.10999999999999999,
+          "reason": "support_break",
+          "u": 208,
+          "v": 463,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.09999999999999999,
+          "reason": "support_break",
+          "u": 214,
+          "v": 462,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.09,
+          "reason": "support_break",
+          "u": 219,
+          "v": 462,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.07999999999999999,
+          "reason": "support_break",
+          "u": 225,
+          "v": 461,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.06999999999999999,
+          "reason": "support_break",
+          "u": 230,
+          "v": 461,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.06,
+          "reason": "support_break",
+          "u": 235,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.04999999999999999,
+          "reason": "support_break",
+          "u": 241,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.03999999999999998,
+          "reason": "support_break",
+          "u": 246,
+          "v": 459,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.03,
+          "reason": "support_break",
+          "u": 252,
+          "v": 459,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.01999999999999999,
+          "reason": "support_break",
+          "u": 257,
+          "v": 462,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": -0.009999999999999981,
+          "reason": "support_break",
+          "u": 262,
+          "v": 458,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": 0.0,
+          "reason": "support_break",
+          "u": 268,
+          "v": 461,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.010000000000000009,
+          "reason": "support_break",
+          "u": 273,
+          "v": 460,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.020000000000000018,
+          "reason": "support_break",
+          "u": 279,
+          "v": 460,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.03,
+          "reason": "support_break",
+          "u": 284,
+          "v": 462,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.04000000000000001,
+          "reason": "support_break",
+          "u": 289,
+          "v": 462,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.05000000000000002,
+          "reason": "support_break",
+          "u": 295,
+          "v": 461,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.06,
+          "reason": "support_break",
+          "u": 300,
+          "v": 461,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.07,
+          "reason": "support_break",
+          "u": 306,
+          "v": 461,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.08000000000000002,
+          "reason": "support_break",
+          "u": 311,
+          "v": 460,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.09000000000000002,
+          "reason": "support_break",
+          "u": 316,
+          "v": 460,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.10000000000000003,
+          "reason": "support_break",
+          "u": 322,
+          "v": 459,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.10999999999999999,
+          "reason": "support_break",
+          "u": 327,
+          "v": 459,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.12,
+          "reason": "support_break",
+          "u": 333,
+          "v": 461,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.13,
+          "reason": "support_break",
+          "u": 338,
+          "v": 458,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.14,
+          "reason": "support_break",
+          "u": 343,
+          "v": 460,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.15000000000000002,
+          "reason": "support_break",
+          "u": 348,
+          "v": 457,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.16000000000000003,
+          "reason": "support_break",
+          "u": 354,
+          "v": 459,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.17000000000000004,
+          "reason": "support_break",
+          "u": 359,
+          "v": 459,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.18,
+          "reason": "support_break",
+          "u": 365,
+          "v": 459,
+          "walk_m": 0.095
+        }
+      ],
+      "probes": [
+        {
+          "id": "P0",
+          "u": 170,
+          "v_fit": 463,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 52.46013259887695,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              170,
+              463
+            ],
+            "rgb_edge_uv": [
+              171,
+              459
+            ],
+            "offset_toward_robot_px": -4.5,
+            "offset_toward_robot_m": -0.008361803472564206,
+            "grad": 91.0,
+            "m_per_px_at_fit": 0.0018581785494587125,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              170,
+              463
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P1",
+          "u": 219,
+          "v_fit": 462,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 55.242923736572266,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              219,
+              462
+            ],
+            "rgb_edge_uv": [
+              219,
+              459
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.0065416578936200774,
+            "grad": 82.0,
+            "m_per_px_at_fit": 0.0018690451124628792,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              219,
+              462
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P2",
+          "u": 268,
+          "v_fit": 461,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 51.425498962402344,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              268,
+              461
+            ],
+            "rgb_edge_uv": [
+              268,
+              458
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.0065416578936200774,
+            "grad": 93.0,
+            "m_per_px_at_fit": 0.0018690451124628792,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              268,
+              461
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P3",
+          "u": 316,
+          "v_fit": 460,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 50.324554443359375,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              316,
+              460
+            ],
+            "rgb_edge_uv": [
+              316,
+              457
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.0065226411249956475,
+            "grad": 106.0,
+            "m_per_px_at_fit": 0.0018636117499987565,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              316,
+              460
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P4",
+          "u": 365,
+          "v_fit": 459,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 49.491302490234375,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              365,
+              459
+            ],
+            "rgb_edge_uv": [
+              365,
+              456
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.006551165994565154,
+            "grad": 97.0,
+            "m_per_px_at_fit": 0.0018717617127329011,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              365,
+              459
+            ],
+            "n_samples": 51
+          }
+        }
+      ]
+    },
+    {
+      "frame": "frame_003.npz",
+      "frame_sha256": "e9d301bbf6a39ef6a72d8bd889be981aa7f6c7e5c1da9e9093e021583d7b409a",
+      "observation": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/readonly_shadow/live_A_164356/table_reject_overlay/frame_003_localize.json",
+      "n_edge_samples": 37,
+      "n_support_break": 37,
+      "n_fov_exit": 0,
+      "edge_mean_base_m": [
+        0.2756765936897915,
+        -0.06290883865017267,
+        -0.5247903419973211
+      ],
+      "edge_dir_base": [
+        -0.1566294969295362,
+        -0.9851021017221365,
+        0.07100035122610197
+      ],
+      "inward_base": [
+        0.9928100214329105,
+        -0.10237192498681721,
+        -0.06203426727928126
+      ],
+      "t_support_min_m": -0.18030034124764752,
+      "t_support_max_m": 0.1802524539580475,
+      "support_length_m": 0.36055279520569505,
+      "edge_meta": [
+        {
+          "lateral_m": -0.18,
+          "reason": "support_break",
+          "u": 171,
+          "v": 463,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.16999999999999998,
+          "reason": "support_break",
+          "u": 176,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.16,
+          "reason": "support_break",
+          "u": 182,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.15,
+          "reason": "support_break",
+          "u": 187,
+          "v": 461,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.13999999999999999,
+          "reason": "support_break",
+          "u": 193,
+          "v": 461,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.13,
+          "reason": "support_break",
+          "u": 198,
+          "v": 463,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.12,
+          "reason": "support_break",
+          "u": 203,
+          "v": 463,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.10999999999999999,
+          "reason": "support_break",
+          "u": 209,
+          "v": 462,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.09999999999999999,
+          "reason": "support_break",
+          "u": 214,
+          "v": 462,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.09,
+          "reason": "support_break",
+          "u": 219,
+          "v": 462,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.07999999999999999,
+          "reason": "support_break",
+          "u": 225,
+          "v": 461,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.06999999999999999,
+          "reason": "support_break",
+          "u": 230,
+          "v": 461,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.06,
+          "reason": "support_break",
+          "u": 236,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.04999999999999999,
+          "reason": "support_break",
+          "u": 241,
+          "v": 463,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": -0.03999999999999998,
+          "reason": "support_break",
+          "u": 246,
+          "v": 462,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": -0.03,
+          "reason": "support_break",
+          "u": 252,
+          "v": 459,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.01999999999999999,
+          "reason": "support_break",
+          "u": 257,
+          "v": 461,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": -0.009999999999999981,
+          "reason": "support_break",
+          "u": 263,
+          "v": 461,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.0,
+          "reason": "support_break",
+          "u": 268,
+          "v": 461,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.010000000000000009,
+          "reason": "support_break",
+          "u": 273,
+          "v": 460,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.020000000000000018,
+          "reason": "support_break",
+          "u": 279,
+          "v": 460,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.03,
+          "reason": "support_break",
+          "u": 284,
+          "v": 462,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.04000000000000001,
+          "reason": "support_break",
+          "u": 290,
+          "v": 462,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.05000000000000002,
+          "reason": "support_break",
+          "u": 295,
+          "v": 461,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.06,
+          "reason": "support_break",
+          "u": 300,
+          "v": 461,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.07,
+          "reason": "support_break",
+          "u": 306,
+          "v": 460,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.08000000000000002,
+          "reason": "support_break",
+          "u": 311,
+          "v": 460,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.09000000000000002,
+          "reason": "support_break",
+          "u": 316,
+          "v": 460,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.10000000000000003,
+          "reason": "support_break",
+          "u": 322,
+          "v": 459,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.10999999999999999,
+          "reason": "support_break",
+          "u": 327,
+          "v": 459,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.12,
+          "reason": "support_break",
+          "u": 333,
+          "v": 461,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.13,
+          "reason": "support_break",
+          "u": 338,
+          "v": 458,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.14,
+          "reason": "support_break",
+          "u": 344,
+          "v": 460,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.15000000000000002,
+          "reason": "support_break",
+          "u": 349,
+          "v": 460,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.16000000000000003,
+          "reason": "support_break",
+          "u": 354,
+          "v": 459,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.17000000000000004,
+          "reason": "support_break",
+          "u": 360,
+          "v": 459,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.18,
+          "reason": "support_break",
+          "u": 365,
+          "v": 459,
+          "walk_m": 0.095
+        }
+      ],
+      "probes": [
+        {
+          "id": "P0",
+          "u": 171,
+          "v_fit": 463,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 52.03292465209961,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              171,
+              463
+            ],
+            "rgb_edge_uv": [
+              172,
+              459
+            ],
+            "offset_toward_robot_px": -4.5,
+            "offset_toward_robot_m": -0.008361803472564206,
+            "grad": 90.0,
+            "m_per_px_at_fit": 0.0018581785494587125,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              171,
+              463
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P1",
+          "u": 219,
+          "v_fit": 462,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 53.51668930053711,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              219,
+              462
+            ],
+            "rgb_edge_uv": [
+              219,
+              459
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.0065226411249956475,
+            "grad": 85.0,
+            "m_per_px_at_fit": 0.0018636117499987565,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              219,
+              462
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P2",
+          "u": 268,
+          "v_fit": 461,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 50.80350875854492,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              268,
+              461
+            ],
+            "rgb_edge_uv": [
+              268,
+              458
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.006551165994565154,
+            "grad": 87.0,
+            "m_per_px_at_fit": 0.0018717617127329011,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              268,
+              461
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P3",
+          "u": 316,
+          "v_fit": 460,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 49.219276428222656,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              316,
+              460
+            ],
+            "rgb_edge_uv": [
+              316,
+              457
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.0065226411249956475,
+            "grad": 107.0,
+            "m_per_px_at_fit": 0.0018636117499987565,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              316,
+              460
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P4",
+          "u": 365,
+          "v_fit": 459,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 49.10452651977539,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              365,
+              459
+            ],
+            "rgb_edge_uv": [
+              365,
+              456
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.006551165994565154,
+            "grad": 99.0,
+            "m_per_px_at_fit": 0.0018717617127329011,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              365,
+              459
+            ],
+            "n_samples": 51
+          }
+        }
+      ]
+    },
+    {
+      "frame": "frame_004.npz",
+      "frame_sha256": "e272d1b01db9269f1a7edbab905c771beffed2bf8782c70a52728fd496192f64",
+      "observation": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/readonly_shadow/live_A_164356/table_reject_overlay/frame_004_localize.json",
+      "n_edge_samples": 37,
+      "n_support_break": 37,
+      "n_fov_exit": 0,
+      "edge_mean_base_m": [
+        0.27616499834071606,
+        -0.06328688403633556,
+        -0.5247609766475989
+      ],
+      "edge_dir_base": [
+        -0.14746123090066782,
+        -0.9865558558276293,
+        0.07044663734681673
+      ],
+      "inward_base": [
+        0.9926698139886353,
+        -0.10349792454099044,
+        -0.062408493103710196
+      ],
+      "t_support_min_m": -0.1801747287573526,
+      "t_support_max_m": 0.18012868928664255,
+      "support_length_m": 0.3603034180439951,
+      "edge_meta": [
+        {
+          "lateral_m": -0.18,
+          "reason": "support_break",
+          "u": 171,
+          "v": 464,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.16999999999999998,
+          "reason": "support_break",
+          "u": 176,
+          "v": 463,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.16,
+          "reason": "support_break",
+          "u": 182,
+          "v": 463,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.15,
+          "reason": "support_break",
+          "u": 187,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.13999999999999999,
+          "reason": "support_break",
+          "u": 193,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.13,
+          "reason": "support_break",
+          "u": 198,
+          "v": 461,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.12,
+          "reason": "support_break",
+          "u": 204,
+          "v": 461,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.10999999999999999,
+          "reason": "support_break",
+          "u": 209,
+          "v": 464,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.09999999999999999,
+          "reason": "support_break",
+          "u": 214,
+          "v": 463,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.09,
+          "reason": "support_break",
+          "u": 219,
+          "v": 463,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.07999999999999999,
+          "reason": "support_break",
+          "u": 225,
+          "v": 462,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.06999999999999999,
+          "reason": "support_break",
+          "u": 230,
+          "v": 462,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.06,
+          "reason": "support_break",
+          "u": 236,
+          "v": 461,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.04999999999999999,
+          "reason": "support_break",
+          "u": 241,
+          "v": 461,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.03999999999999998,
+          "reason": "support_break",
+          "u": 247,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.03,
+          "reason": "support_break",
+          "u": 252,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.01999999999999999,
+          "reason": "support_break",
+          "u": 257,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.009999999999999981,
+          "reason": "support_break",
+          "u": 263,
+          "v": 459,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": 0.0,
+          "reason": "support_break",
+          "u": 268,
+          "v": 462,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.010000000000000009,
+          "reason": "support_break",
+          "u": 274,
+          "v": 461,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.020000000000000018,
+          "reason": "support_break",
+          "u": 279,
+          "v": 461,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.03,
+          "reason": "support_break",
+          "u": 284,
+          "v": 460,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.04000000000000001,
+          "reason": "support_break",
+          "u": 290,
+          "v": 460,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.05000000000000002,
+          "reason": "support_break",
+          "u": 295,
+          "v": 459,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.06,
+          "reason": "support_break",
+          "u": 300,
+          "v": 459,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.07,
+          "reason": "support_break",
+          "u": 306,
+          "v": 459,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.08000000000000002,
+          "reason": "support_break",
+          "u": 311,
+          "v": 458,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.09000000000000002,
+          "reason": "support_break",
+          "u": 317,
+          "v": 461,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.10000000000000003,
+          "reason": "support_break",
+          "u": 322,
+          "v": 460,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.10999999999999999,
+          "reason": "support_break",
+          "u": 327,
+          "v": 460,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.12,
+          "reason": "support_break",
+          "u": 333,
+          "v": 459,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.13,
+          "reason": "support_break",
+          "u": 338,
+          "v": 459,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.14,
+          "reason": "support_break",
+          "u": 344,
+          "v": 459,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.15000000000000002,
+          "reason": "support_break",
+          "u": 349,
+          "v": 458,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.16000000000000003,
+          "reason": "support_break",
+          "u": 354,
+          "v": 458,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.17000000000000004,
+          "reason": "support_break",
+          "u": 360,
+          "v": 457,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.18,
+          "reason": "support_break",
+          "u": 365,
+          "v": 457,
+          "walk_m": 0.09
+        }
+      ],
+      "probes": [
+        {
+          "id": "P0",
+          "u": 171,
+          "v_fit": 464,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 39.65053176879883,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              171,
+              464
+            ],
+            "rgb_edge_uv": [
+              172,
+              459
+            ],
+            "offset_toward_robot_px": -5.5,
+            "offset_toward_robot_m": -0.01023492332350804,
+            "grad": 70.0,
+            "m_per_px_at_fit": 0.0018608951497287344,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              171,
+              464
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P1",
+          "u": 219,
+          "v_fit": 463,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 40.172088623046875,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              219,
+              463
+            ],
+            "rgb_edge_uv": [
+              219,
+              459
+            ],
+            "offset_toward_robot_px": -4.5,
+            "offset_toward_robot_m": -0.008410703006082957,
+            "grad": 60.0,
+            "m_per_px_at_fit": 0.0018690451124628792,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              219,
+              463
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P2",
+          "u": 268,
+          "v_fit": 462,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 37.253257751464844,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              268,
+              462
+            ],
+            "rgb_edge_uv": [
+              268,
+              458
+            ],
+            "offset_toward_robot_px": -4.5,
+            "offset_toward_robot_m": -0.008422927707298055,
+            "grad": 61.0,
+            "m_per_px_at_fit": 0.0018717617127329011,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              268,
+              462
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P3",
+          "u": 317,
+          "v_fit": 461,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 37.545963287353516,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              317,
+              461
+            ],
+            "rgb_edge_uv": [
+              317,
+              457
+            ],
+            "offset_toward_robot_px": -4.5,
+            "offset_toward_robot_m": -0.008398477576209503,
+            "grad": 75.0,
+            "m_per_px_at_fit": 0.0018663283502687784,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              317,
+              461
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P4",
+          "u": 365,
+          "v_fit": 457,
+          "profile_class": {
+            "label": "physical_rim_candidate",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 37.91313171386719,
+            "reason": "interior on-plane support ends toward robot; RGB neighborhood gradient recorded"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              365,
+              457
+            ],
+            "rgb_edge_uv": [
+              365,
+              456
+            ],
+            "offset_toward_robot_px": -1.5,
+            "offset_toward_robot_m": -0.002807642569099352,
+            "grad": 65.0,
+            "m_per_px_at_fit": 0.0018717617127329011,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              365,
+              457
+            ],
+            "n_samples": 51
+          }
+        }
+      ]
+    },
+    {
+      "frame": "frame_005.npz",
+      "frame_sha256": "26ff69388a1be1792cf446b79110ed5817c843f1ec0eac4ddbfb31c3af7e813c",
+      "observation": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/readonly_shadow/live_A_164356/table_reject_overlay/frame_005_localize.json",
+      "n_edge_samples": 37,
+      "n_support_break": 37,
+      "n_fov_exit": 0,
+      "edge_mean_base_m": [
+        0.2780821945696545,
+        -0.062480131069427215,
+        -0.5249765511603782
+      ],
+      "edge_dir_base": [
+        -0.14933931894631863,
+        -0.9862872422406682,
+        0.07025128902694387
+      ],
+      "inward_base": [
+        0.9929377143495794,
+        -0.1008150571473582,
+        -0.06253814575607401
+      ],
+      "t_support_min_m": -0.18011881916701702,
+      "t_support_max_m": 0.180435413572139,
+      "support_length_m": 0.360554232739156,
+      "edge_meta": [
+        {
+          "lateral_m": -0.18,
+          "reason": "support_break",
+          "u": 170,
+          "v": 463,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.16999999999999998,
+          "reason": "support_break",
+          "u": 176,
+          "v": 463,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.16,
+          "reason": "support_break",
+          "u": 181,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.15,
+          "reason": "support_break",
+          "u": 187,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.13999999999999999,
+          "reason": "support_break",
+          "u": 192,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.13,
+          "reason": "support_break",
+          "u": 197,
+          "v": 464,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.12,
+          "reason": "support_break",
+          "u": 203,
+          "v": 461,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.10999999999999999,
+          "reason": "support_break",
+          "u": 208,
+          "v": 463,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.09999999999999999,
+          "reason": "support_break",
+          "u": 214,
+          "v": 463,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.09,
+          "reason": "support_break",
+          "u": 219,
+          "v": 462,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.07999999999999999,
+          "reason": "support_break",
+          "u": 224,
+          "v": 462,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.06999999999999999,
+          "reason": "support_break",
+          "u": 230,
+          "v": 461,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.06,
+          "reason": "support_break",
+          "u": 235,
+          "v": 461,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.04999999999999999,
+          "reason": "support_break",
+          "u": 241,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.03999999999999998,
+          "reason": "support_break",
+          "u": 246,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.03,
+          "reason": "support_break",
+          "u": 252,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.01999999999999999,
+          "reason": "support_break",
+          "u": 257,
+          "v": 462,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": -0.009999999999999981,
+          "reason": "support_break",
+          "u": 262,
+          "v": 459,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": 0.0,
+          "reason": "support_break",
+          "u": 268,
+          "v": 461,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.010000000000000009,
+          "reason": "support_break",
+          "u": 273,
+          "v": 461,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.020000000000000018,
+          "reason": "support_break",
+          "u": 279,
+          "v": 415,
+          "walk_m": 0.005000000000000001
+        },
+        {
+          "lateral_m": 0.03,
+          "reason": "support_break",
+          "u": 284,
+          "v": 460,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.04000000000000001,
+          "reason": "support_break",
+          "u": 289,
+          "v": 462,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.05000000000000002,
+          "reason": "support_break",
+          "u": 295,
+          "v": 462,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.06,
+          "reason": "support_break",
+          "u": 300,
+          "v": 461,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.07,
+          "reason": "support_break",
+          "u": 305,
+          "v": 458,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.08000000000000002,
+          "reason": "support_break",
+          "u": 311,
+          "v": 458,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.09000000000000002,
+          "reason": "support_break",
+          "u": 316,
+          "v": 460,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.10000000000000003,
+          "reason": "support_break",
+          "u": 322,
+          "v": 460,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.10999999999999999,
+          "reason": "support_break",
+          "u": 327,
+          "v": 459,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.12,
+          "reason": "support_break",
+          "u": 332,
+          "v": 459,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.13,
+          "reason": "support_break",
+          "u": 338,
+          "v": 458,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.14,
+          "reason": "support_break",
+          "u": 343,
+          "v": 461,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.15000000000000002,
+          "reason": "support_break",
+          "u": 349,
+          "v": 460,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.16000000000000003,
+          "reason": "support_break",
+          "u": 354,
+          "v": 457,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.17000000000000004,
+          "reason": "support_break",
+          "u": 359,
+          "v": 459,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.18,
+          "reason": "support_break",
+          "u": 365,
+          "v": 459,
+          "walk_m": 0.095
+        }
+      ],
+      "probes": [
+        {
+          "id": "P0",
+          "u": 170,
+          "v_fit": 463,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 51.973636627197266,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              170,
+              463
+            ],
+            "rgb_edge_uv": [
+              171,
+              459
+            ],
+            "offset_toward_robot_px": -4.5,
+            "offset_toward_robot_m": -0.008361803472564206,
+            "grad": 88.0,
+            "m_per_px_at_fit": 0.0018581785494587125,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              170,
+              463
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P1",
+          "u": 219,
+          "v_fit": 462,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 54.258426666259766,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              219,
+              462
+            ],
+            "rgb_edge_uv": [
+              219,
+              459
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.006532149225940725,
+            "grad": 84.0,
+            "m_per_px_at_fit": 0.0018663283502687784,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              219,
+              462
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P2",
+          "u": 268,
+          "v_fit": 461,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 50.13211441040039,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              268,
+              461
+            ],
+            "rgb_edge_uv": [
+              268,
+              458
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.0065416578936200774,
+            "grad": 85.0,
+            "m_per_px_at_fit": 0.0018690451124628792,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              268,
+              461
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P3",
+          "u": 316,
+          "v_fit": 460,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 48.532291412353516,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              316,
+              460
+            ],
+            "rgb_edge_uv": [
+              316,
+              457
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.0065226411249956475,
+            "grad": 105.0,
+            "m_per_px_at_fit": 0.0018636117499987565,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              316,
+              460
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P4",
+          "u": 365,
+          "v_fit": 459,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 48.58182907104492,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              365,
+              459
+            ],
+            "rgb_edge_uv": [
+              365,
+              456
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.006551165994565154,
+            "grad": 97.0,
+            "m_per_px_at_fit": 0.0018717617127329011,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              365,
+              459
+            ],
+            "n_samples": 51
+          }
+        }
+      ]
+    },
+    {
+      "frame": "frame_006.npz",
+      "frame_sha256": "47ea02b1a30b05db3fe16214872a8507cd626f362e7f7d53df5b94827601a870",
+      "observation": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/readonly_shadow/live_A_164356/table_reject_overlay/frame_006_localize.json",
+      "n_edge_samples": 37,
+      "n_support_break": 37,
+      "n_fov_exit": 0,
+      "edge_mean_base_m": [
+        0.2778124463630211,
+        -0.0626981343196274,
+        -0.524908433113701
+      ],
+      "edge_dir_base": [
+        -0.15637516207749344,
+        -0.9851500607522018,
+        0.07089546166836688
+      ],
+      "inward_base": [
+        0.9929007052837181,
+        -0.10122497331502017,
+        -0.06246354316294126
+      ],
+      "t_support_min_m": -0.18016227128579418,
+      "t_support_max_m": 0.18038919086030358,
+      "support_length_m": 0.3605514621460978,
+      "edge_meta": [
+        {
+          "lateral_m": -0.18,
+          "reason": "support_break",
+          "u": 170,
+          "v": 463,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.16999999999999998,
+          "reason": "support_break",
+          "u": 176,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.16,
+          "reason": "support_break",
+          "u": 181,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.15,
+          "reason": "support_break",
+          "u": 187,
+          "v": 461,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.13999999999999999,
+          "reason": "support_break",
+          "u": 192,
+          "v": 461,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.13,
+          "reason": "support_break",
+          "u": 198,
+          "v": 461,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.12,
+          "reason": "support_break",
+          "u": 203,
+          "v": 463,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.10999999999999999,
+          "reason": "support_break",
+          "u": 208,
+          "v": 463,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.09999999999999999,
+          "reason": "support_break",
+          "u": 214,
+          "v": 462,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.09,
+          "reason": "support_break",
+          "u": 219,
+          "v": 462,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.07999999999999999,
+          "reason": "support_break",
+          "u": 225,
+          "v": 461,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.06999999999999999,
+          "reason": "support_break",
+          "u": 230,
+          "v": 461,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.06,
+          "reason": "support_break",
+          "u": 235,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.04999999999999999,
+          "reason": "support_break",
+          "u": 241,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.03999999999999998,
+          "reason": "support_break",
+          "u": 246,
+          "v": 459,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.03,
+          "reason": "support_break",
+          "u": 251,
+          "v": 462,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": -0.01999999999999999,
+          "reason": "support_break",
+          "u": 257,
+          "v": 462,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": -0.009999999999999981,
+          "reason": "support_break",
+          "u": 262,
+          "v": 461,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.0,
+          "reason": "support_break",
+          "u": 268,
+          "v": 461,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.010000000000000009,
+          "reason": "support_break",
+          "u": 273,
+          "v": 460,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.020000000000000018,
+          "reason": "support_break",
+          "u": 279,
+          "v": 415,
+          "walk_m": 0.005000000000000001
+        },
+        {
+          "lateral_m": 0.03,
+          "reason": "support_break",
+          "u": 284,
+          "v": 462,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.04000000000000001,
+          "reason": "support_break",
+          "u": 289,
+          "v": 462,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.05000000000000002,
+          "reason": "support_break",
+          "u": 295,
+          "v": 461,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.06,
+          "reason": "support_break",
+          "u": 300,
+          "v": 461,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.07,
+          "reason": "support_break",
+          "u": 306,
+          "v": 461,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.08000000000000002,
+          "reason": "support_break",
+          "u": 311,
+          "v": 460,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.09000000000000002,
+          "reason": "support_break",
+          "u": 316,
+          "v": 460,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.10000000000000003,
+          "reason": "support_break",
+          "u": 322,
+          "v": 459,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.10999999999999999,
+          "reason": "support_break",
+          "u": 327,
+          "v": 459,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.12,
+          "reason": "support_break",
+          "u": 333,
+          "v": 461,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.13,
+          "reason": "support_break",
+          "u": 338,
+          "v": 461,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.14,
+          "reason": "support_break",
+          "u": 343,
+          "v": 460,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.15000000000000002,
+          "reason": "support_break",
+          "u": 349,
+          "v": 460,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.16000000000000003,
+          "reason": "support_break",
+          "u": 354,
+          "v": 459,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.17000000000000004,
+          "reason": "support_break",
+          "u": 359,
+          "v": 459,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.18,
+          "reason": "support_break",
+          "u": 365,
+          "v": 459,
+          "walk_m": 0.095
+        }
+      ],
+      "probes": [
+        {
+          "id": "P0",
+          "u": 170,
+          "v_fit": 463,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 53.23849868774414,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              170,
+              463
+            ],
+            "rgb_edge_uv": [
+              171,
+              459
+            ],
+            "offset_toward_robot_px": -4.5,
+            "offset_toward_robot_m": -0.008374028173779306,
+            "grad": 91.0,
+            "m_per_px_at_fit": 0.0018608951497287344,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              170,
+              463
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P1",
+          "u": 219,
+          "v_fit": 462,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 56.454586029052734,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              219,
+              462
+            ],
+            "rgb_edge_uv": [
+              219,
+              459
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.0065416578936200774,
+            "grad": 91.0,
+            "m_per_px_at_fit": 0.0018690451124628792,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              219,
+              462
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P2",
+          "u": 268,
+          "v_fit": 461,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 52.0506706237793,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              268,
+              461
+            ],
+            "rgb_edge_uv": [
+              268,
+              458
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.0065416578936200774,
+            "grad": 91.0,
+            "m_per_px_at_fit": 0.0018690451124628792,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              268,
+              461
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P3",
+          "u": 316,
+          "v_fit": 460,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 50.85602951049805,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              316,
+              460
+            ],
+            "rgb_edge_uv": [
+              316,
+              457
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.0065036249231054935,
+            "grad": 107.0,
+            "m_per_px_at_fit": 0.0018581785494587125,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              316,
+              460
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P4",
+          "u": 365,
+          "v_fit": 459,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 50.59546661376953,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              365,
+              459
+            ],
+            "rgb_edge_uv": [
+              365,
+              456
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.006551165994565154,
+            "grad": 103.0,
+            "m_per_px_at_fit": 0.0018717617127329011,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              365,
+              459
+            ],
+            "n_samples": 51
+          }
+        }
+      ]
+    },
+    {
+      "frame": "frame_007.npz",
+      "frame_sha256": "5ba3bb175474f940881c402b8339e48edba71edba25c523e4ad73c52a2f79717",
+      "observation": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/readonly_shadow/live_A_164356/table_reject_overlay/frame_007_localize.json",
+      "n_edge_samples": 37,
+      "n_support_break": 37,
+      "n_fov_exit": 0,
+      "edge_mean_base_m": [
+        0.2760825273520166,
+        -0.06351312111179845,
+        -0.5248159000395232
+      ],
+      "edge_dir_base": [
+        -0.14924606433532617,
+        -0.9862869650778701,
+        0.07045306805171793
+      ],
+      "inward_base": [
+        0.9926171535619427,
+        -0.10431826407337175,
+        -0.06187799475827522
+      ],
+      "t_support_min_m": -0.18018059813654855,
+      "t_support_max_m": 0.18012025440863608,
+      "support_length_m": 0.3603008525451846,
+      "edge_meta": [
+        {
+          "lateral_m": -0.18,
+          "reason": "support_break",
+          "u": 171,
+          "v": 463,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.16999999999999998,
+          "reason": "support_break",
+          "u": 176,
+          "v": 463,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.16,
+          "reason": "support_break",
+          "u": 182,
+          "v": 463,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.15,
+          "reason": "support_break",
+          "u": 187,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.13999999999999999,
+          "reason": "support_break",
+          "u": 193,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.13,
+          "reason": "support_break",
+          "u": 198,
+          "v": 461,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.12,
+          "reason": "support_break",
+          "u": 204,
+          "v": 461,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.10999999999999999,
+          "reason": "support_break",
+          "u": 209,
+          "v": 463,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.09999999999999999,
+          "reason": "support_break",
+          "u": 214,
+          "v": 463,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.09,
+          "reason": "support_break",
+          "u": 220,
+          "v": 463,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.07999999999999999,
+          "reason": "support_break",
+          "u": 225,
+          "v": 462,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.06999999999999999,
+          "reason": "support_break",
+          "u": 230,
+          "v": 462,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.06,
+          "reason": "support_break",
+          "u": 236,
+          "v": 461,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.04999999999999999,
+          "reason": "support_break",
+          "u": 241,
+          "v": 461,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.03999999999999998,
+          "reason": "support_break",
+          "u": 247,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.03,
+          "reason": "support_break",
+          "u": 252,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.01999999999999999,
+          "reason": "support_break",
+          "u": 258,
+          "v": 459,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.009999999999999981,
+          "reason": "support_break",
+          "u": 263,
+          "v": 459,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": 0.0,
+          "reason": "support_break",
+          "u": 268,
+          "v": 462,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.010000000000000009,
+          "reason": "support_break",
+          "u": 274,
+          "v": 461,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.020000000000000018,
+          "reason": "support_break",
+          "u": 279,
+          "v": 461,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.03,
+          "reason": "support_break",
+          "u": 284,
+          "v": 460,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.04000000000000001,
+          "reason": "support_break",
+          "u": 290,
+          "v": 460,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.05000000000000002,
+          "reason": "support_break",
+          "u": 295,
+          "v": 459,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.06,
+          "reason": "support_break",
+          "u": 301,
+          "v": 459,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.07,
+          "reason": "support_break",
+          "u": 306,
+          "v": 459,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.08000000000000002,
+          "reason": "support_break",
+          "u": 311,
+          "v": 461,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.09000000000000002,
+          "reason": "support_break",
+          "u": 317,
+          "v": 461,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.10000000000000003,
+          "reason": "support_break",
+          "u": 322,
+          "v": 460,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.10999999999999999,
+          "reason": "support_break",
+          "u": 328,
+          "v": 460,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.12,
+          "reason": "support_break",
+          "u": 333,
+          "v": 459,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.13,
+          "reason": "support_break",
+          "u": 338,
+          "v": 459,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.14,
+          "reason": "support_break",
+          "u": 344,
+          "v": 459,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.15000000000000002,
+          "reason": "support_break",
+          "u": 349,
+          "v": 458,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.16000000000000003,
+          "reason": "support_break",
+          "u": 354,
+          "v": 458,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.17000000000000004,
+          "reason": "support_break",
+          "u": 360,
+          "v": 457,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.18,
+          "reason": "support_break",
+          "u": 365,
+          "v": 457,
+          "walk_m": 0.09
+        }
+      ],
+      "probes": [
+        {
+          "id": "P0",
+          "u": 171,
+          "v_fit": 463,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 38.1097412109375,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              171,
+              463
+            ],
+            "rgb_edge_uv": [
+              172,
+              459
+            ],
+            "offset_toward_robot_px": -4.5,
+            "offset_toward_robot_m": -0.008361803472564206,
+            "grad": 71.0,
+            "m_per_px_at_fit": 0.0018581785494587125,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              171,
+              463
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P1",
+          "u": 220,
+          "v_fit": 463,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 40.46839141845703,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              220,
+              463
+            ],
+            "rgb_edge_uv": [
+              221,
+              458
+            ],
+            "offset_toward_robot_px": -5.5,
+            "offset_toward_robot_m": -0.010264805926478281,
+            "grad": 58.0,
+            "m_per_px_at_fit": 0.0018663283502687784,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              220,
+              463
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P2",
+          "u": 268,
+          "v_fit": 462,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 37.584442138671875,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              268,
+              462
+            ],
+            "rgb_edge_uv": [
+              268,
+              458
+            ],
+            "offset_toward_robot_px": -4.5,
+            "offset_toward_robot_m": -0.008422927707298055,
+            "grad": 65.0,
+            "m_per_px_at_fit": 0.0018717617127329011,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              268,
+              462
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P3",
+          "u": 317,
+          "v_fit": 461,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 38.00209045410156,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              317,
+              461
+            ],
+            "rgb_edge_uv": [
+              317,
+              457
+            ],
+            "offset_toward_robot_px": -4.5,
+            "offset_toward_robot_m": -0.008410703006082957,
+            "grad": 79.0,
+            "m_per_px_at_fit": 0.0018690451124628792,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              317,
+              461
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P4",
+          "u": 365,
+          "v_fit": 457,
+          "profile_class": {
+            "label": "physical_rim_candidate",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 37.32223892211914,
+            "reason": "interior on-plane support ends toward robot; RGB neighborhood gradient recorded"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              365,
+              457
+            ],
+            "rgb_edge_uv": [
+              365,
+              456
+            ],
+            "offset_toward_robot_px": -1.5,
+            "offset_toward_robot_m": -0.002807642569099352,
+            "grad": 67.0,
+            "m_per_px_at_fit": 0.0018717617127329011,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              365,
+              457
+            ],
+            "n_samples": 51
+          }
+        }
+      ]
+    },
+    {
+      "frame": "frame_008.npz",
+      "frame_sha256": "ffb3ef087ac1e8e997de68f9bce1620b3c7628aa0921bbfaa23d1ba223fb99a7",
+      "observation": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/readonly_shadow/live_A_164356/table_reject_overlay/frame_008_localize.json",
+      "n_edge_samples": 37,
+      "n_support_break": 37,
+      "n_fov_exit": 0,
+      "edge_mean_base_m": [
+        0.2756419059026712,
+        -0.06202661759478349,
+        -0.5248039029048559
+      ],
+      "edge_dir_base": [
+        -0.15276883962818974,
+        -0.985740780999445,
+        0.07054639830112434
+      ],
+      "inward_base": [
+        0.9930225968213217,
+        -0.10000762373884525,
+        -0.06248677777216966
+      ],
+      "t_support_min_m": -0.1803160515228916,
+      "t_support_max_m": 0.18023830890961587,
+      "support_length_m": 0.36055436043250744,
+      "edge_meta": [
+        {
+          "lateral_m": -0.18,
+          "reason": "support_break",
+          "u": 170,
+          "v": 463,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.16999999999999998,
+          "reason": "support_break",
+          "u": 176,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.16,
+          "reason": "support_break",
+          "u": 181,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.15,
+          "reason": "support_break",
+          "u": 186,
+          "v": 464,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.13999999999999999,
+          "reason": "support_break",
+          "u": 192,
+          "v": 464,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.13,
+          "reason": "support_break",
+          "u": 197,
+          "v": 464,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.12,
+          "reason": "support_break",
+          "u": 203,
+          "v": 463,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.10999999999999999,
+          "reason": "support_break",
+          "u": 208,
+          "v": 463,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.09999999999999999,
+          "reason": "support_break",
+          "u": 213,
+          "v": 462,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.09,
+          "reason": "support_break",
+          "u": 219,
+          "v": 462,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.07999999999999999,
+          "reason": "support_break",
+          "u": 224,
+          "v": 461,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.06999999999999999,
+          "reason": "support_break",
+          "u": 230,
+          "v": 461,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.06,
+          "reason": "support_break",
+          "u": 235,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.04999999999999999,
+          "reason": "support_break",
+          "u": 241,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.03999999999999998,
+          "reason": "support_break",
+          "u": 246,
+          "v": 462,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": -0.03,
+          "reason": "support_break",
+          "u": 251,
+          "v": 459,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.01999999999999999,
+          "reason": "support_break",
+          "u": 257,
+          "v": 461,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": -0.009999999999999981,
+          "reason": "support_break",
+          "u": 262,
+          "v": 461,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.0,
+          "reason": "support_break",
+          "u": 268,
+          "v": 460,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.010000000000000009,
+          "reason": "support_break",
+          "u": 273,
+          "v": 460,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.020000000000000018,
+          "reason": "support_break",
+          "u": 278,
+          "v": 460,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.03,
+          "reason": "support_break",
+          "u": 284,
+          "v": 462,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.04000000000000001,
+          "reason": "support_break",
+          "u": 289,
+          "v": 462,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.05000000000000002,
+          "reason": "support_break",
+          "u": 294,
+          "v": 461,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.06,
+          "reason": "support_break",
+          "u": 300,
+          "v": 461,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.07,
+          "reason": "support_break",
+          "u": 305,
+          "v": 460,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.08000000000000002,
+          "reason": "support_break",
+          "u": 311,
+          "v": 460,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.09000000000000002,
+          "reason": "support_break",
+          "u": 316,
+          "v": 459,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.10000000000000003,
+          "reason": "support_break",
+          "u": 321,
+          "v": 459,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.10999999999999999,
+          "reason": "support_break",
+          "u": 327,
+          "v": 461,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.12,
+          "reason": "support_break",
+          "u": 332,
+          "v": 461,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.13,
+          "reason": "support_break",
+          "u": 337,
+          "v": 458,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.14,
+          "reason": "support_break",
+          "u": 343,
+          "v": 460,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.15000000000000002,
+          "reason": "support_break",
+          "u": 348,
+          "v": 460,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.16000000000000003,
+          "reason": "support_break",
+          "u": 354,
+          "v": 459,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.17000000000000004,
+          "reason": "support_break",
+          "u": 359,
+          "v": 459,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.18,
+          "reason": "support_break",
+          "u": 364,
+          "v": 458,
+          "walk_m": 0.095
+        }
+      ],
+      "probes": [
+        {
+          "id": "P0",
+          "u": 170,
+          "v_fit": 463,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 50.10420227050781,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              170,
+              463
+            ],
+            "rgb_edge_uv": [
+              171,
+              459
+            ],
+            "offset_toward_robot_px": -4.5,
+            "offset_toward_robot_m": -0.008361803472564206,
+            "grad": 86.0,
+            "m_per_px_at_fit": 0.0018581785494587125,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              170,
+              463
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P1",
+          "u": 219,
+          "v_fit": 462,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 52.46601104736328,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              219,
+              462
+            ],
+            "rgb_edge_uv": [
+              219,
+              459
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.0065416578936200774,
+            "grad": 86.0,
+            "m_per_px_at_fit": 0.0018690451124628792,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              219,
+              462
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P2",
+          "u": 268,
+          "v_fit": 460,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 48.72163009643555,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              268,
+              460
+            ],
+            "rgb_edge_uv": [
+              268,
+              458
+            ],
+            "offset_toward_robot_px": -2.5,
+            "offset_toward_robot_m": -0.004665820875671946,
+            "grad": 80.0,
+            "m_per_px_at_fit": 0.0018663283502687784,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              268,
+              460
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P3",
+          "u": 316,
+          "v_fit": 459,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 48.179378509521484,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              316,
+              459
+            ],
+            "rgb_edge_uv": [
+              316,
+              457
+            ],
+            "offset_toward_robot_px": -2.5,
+            "offset_toward_robot_m": -0.004652237874321836,
+            "grad": 105.0,
+            "m_per_px_at_fit": 0.0018608951497287344,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              316,
+              459
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P4",
+          "u": 364,
+          "v_fit": 458,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 48.465415954589844,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              364,
+              458
+            ],
+            "rgb_edge_uv": [
+              364,
+              456
+            ],
+            "offset_toward_robot_px": -2.5,
+            "offset_toward_robot_m": -0.004686195782507308,
+            "grad": 93.0,
+            "m_per_px_at_fit": 0.0018744783130029232,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              364,
+              458
+            ],
+            "n_samples": 51
+          }
+        }
+      ]
+    },
+    {
+      "frame": "frame_009.npz",
+      "frame_sha256": "d6a7cd02084790364ce974f444c60713b95f2350be94019cc1b93945343c64a1",
+      "observation": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/readonly_shadow/live_A_164356/table_reject_overlay/frame_009_localize.json",
+      "n_edge_samples": 37,
+      "n_support_break": 37,
+      "n_fov_exit": 0,
+      "edge_mean_base_m": [
+        0.27606298725248113,
+        -0.06236598480681106,
+        -0.524884203363717
+      ],
+      "edge_dir_base": [
+        -0.1530210279230449,
+        -0.9856923840596833,
+        0.07067594371575618
+      ],
+      "inward_base": [
+        0.9929582365752482,
+        -0.10073252993910978,
+        -0.0623449904117396
+      ],
+      "t_support_min_m": -0.1802233613576935,
+      "t_support_max_m": 0.18033130985889206,
+      "support_length_m": 0.3605546712165856,
+      "edge_meta": [
+        {
+          "lateral_m": -0.18,
+          "reason": "support_break",
+          "u": 170,
+          "v": 463,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.16999999999999998,
+          "reason": "support_break",
+          "u": 176,
+          "v": 463,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.16,
+          "reason": "support_break",
+          "u": 181,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.15,
+          "reason": "support_break",
+          "u": 187,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.13999999999999999,
+          "reason": "support_break",
+          "u": 192,
+          "v": 462,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.13,
+          "reason": "support_break",
+          "u": 198,
+          "v": 461,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.12,
+          "reason": "support_break",
+          "u": 203,
+          "v": 461,
+          "walk_m": 0.075
+        },
+        {
+          "lateral_m": -0.10999999999999999,
+          "reason": "support_break",
+          "u": 208,
+          "v": 463,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.09999999999999999,
+          "reason": "support_break",
+          "u": 214,
+          "v": 463,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.09,
+          "reason": "support_break",
+          "u": 219,
+          "v": 462,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.07999999999999999,
+          "reason": "support_break",
+          "u": 224,
+          "v": 462,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.06999999999999999,
+          "reason": "support_break",
+          "u": 230,
+          "v": 461,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.06,
+          "reason": "support_break",
+          "u": 235,
+          "v": 461,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.04999999999999999,
+          "reason": "support_break",
+          "u": 241,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.03999999999999998,
+          "reason": "support_break",
+          "u": 246,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.03,
+          "reason": "support_break",
+          "u": 252,
+          "v": 460,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": -0.01999999999999999,
+          "reason": "support_break",
+          "u": 257,
+          "v": 462,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": -0.009999999999999981,
+          "reason": "support_break",
+          "u": 262,
+          "v": 459,
+          "walk_m": 0.08
+        },
+        {
+          "lateral_m": 0.0,
+          "reason": "support_break",
+          "u": 268,
+          "v": 461,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.010000000000000009,
+          "reason": "support_break",
+          "u": 273,
+          "v": 461,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.020000000000000018,
+          "reason": "support_break",
+          "u": 278,
+          "v": 460,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.03,
+          "reason": "support_break",
+          "u": 284,
+          "v": 460,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.04000000000000001,
+          "reason": "support_break",
+          "u": 289,
+          "v": 462,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.05000000000000002,
+          "reason": "support_break",
+          "u": 295,
+          "v": 462,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.06,
+          "reason": "support_break",
+          "u": 300,
+          "v": 461,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.07,
+          "reason": "support_break",
+          "u": 305,
+          "v": 458,
+          "walk_m": 0.085
+        },
+        {
+          "lateral_m": 0.08000000000000002,
+          "reason": "support_break",
+          "u": 311,
+          "v": 461,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.09000000000000002,
+          "reason": "support_break",
+          "u": 316,
+          "v": 460,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.10000000000000003,
+          "reason": "support_break",
+          "u": 322,
+          "v": 460,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.10999999999999999,
+          "reason": "support_break",
+          "u": 327,
+          "v": 459,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.12,
+          "reason": "support_break",
+          "u": 332,
+          "v": 459,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.13,
+          "reason": "support_break",
+          "u": 338,
+          "v": 458,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.14,
+          "reason": "support_break",
+          "u": 343,
+          "v": 458,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.15000000000000002,
+          "reason": "support_break",
+          "u": 349,
+          "v": 460,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.16000000000000003,
+          "reason": "support_break",
+          "u": 354,
+          "v": 457,
+          "walk_m": 0.09
+        },
+        {
+          "lateral_m": 0.17000000000000004,
+          "reason": "support_break",
+          "u": 359,
+          "v": 459,
+          "walk_m": 0.095
+        },
+        {
+          "lateral_m": 0.18,
+          "reason": "support_break",
+          "u": 365,
+          "v": 459,
+          "walk_m": 0.095
+        }
+      ],
+      "probes": [
+        {
+          "id": "P0",
+          "u": 170,
+          "v_fit": 463,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 54.03147506713867,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              170,
+              463
+            ],
+            "rgb_edge_uv": [
+              171,
+              459
+            ],
+            "offset_toward_robot_px": -4.5,
+            "offset_toward_robot_m": -0.008374028173779306,
+            "grad": 90.0,
+            "m_per_px_at_fit": 0.0018608951497287344,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              170,
+              463
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P1",
+          "u": 219,
+          "v_fit": 462,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 56.544376373291016,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              219,
+              462
+            ],
+            "rgb_edge_uv": [
+              219,
+              459
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.006532149225940725,
+            "grad": 85.0,
+            "m_per_px_at_fit": 0.0018663283502687784,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              219,
+              462
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P2",
+          "u": 268,
+          "v_fit": 461,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 52.88725662231445,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              268,
+              461
+            ],
+            "rgb_edge_uv": [
+              268,
+              458
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.0065416578936200774,
+            "grad": 101.0,
+            "m_per_px_at_fit": 0.0018690451124628792,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              268,
+              461
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P3",
+          "u": 316,
+          "v_fit": 460,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 51.94969940185547,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              316,
+              460
+            ],
+            "rgb_edge_uv": [
+              316,
+              457
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.0065226411249956475,
+            "grad": 110.0,
+            "m_per_px_at_fit": 0.0018636117499987565,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              316,
+              460
+            ],
+            "n_samples": 51
+          }
+        },
+        {
+          "id": "P4",
+          "u": 365,
+          "v_fit": 459,
+          "profile_class": {
+            "label": "physical_rim_partial_rgb",
+            "interior_on_plane_frac": 1.0,
+            "exterior_on_plane_frac": 0.0,
+            "exterior_view": "background_farther",
+            "rgb_grad_mean": 51.7715950012207,
+            "reason": "on-plane support ends toward robot; exterior depth mostly missing (not enough alone); strong RGB intensity edge co-located"
+          },
+          "independent_rgb_offset": {
+            "ok": true,
+            "fit_uv": [
+              365,
+              459
+            ],
+            "rgb_edge_uv": [
+              365,
+              456
+            ],
+            "offset_toward_robot_px": -3.5,
+            "offset_toward_robot_m": -0.006551165994565154,
+            "grad": 107.0,
+            "m_per_px_at_fit": 0.0018717617127329011,
+            "sign_convention": "positive_offset_px = RGB intensity edge is further toward robot than fitted support-break pixel (fit sits board-inward of RGB rim)"
+          },
+          "profile_summary": {
+            "edge_uv": [
+              365,
+              459
+            ],
+            "n_samples": 51
+          }
+        }
+      ]
+    }
+  ],
+  "failures": []
+}
