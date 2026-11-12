@@ -1,0 +1,159 @@
+{
+  "schema_version": "line-h-red-block-localize-top-review-0.2",
+  "created_utc": "2026-11-12T13:15:51.549443+00:00",
+  "source_capture": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/issue37_scene_20261112_205857/field/rgbd",
+  "source_frame": "frame_005.npz",
+  "camera_id": "CP2L863000KL",
+  "camera_frame": "camera_CP2L863000KL_color_optical_frame",
+  "base_frame": "L_arm_root",
+  "child_frame": "block",
+  "edge_m": 0.05,
+  "detection": {
+    "area_px": 974,
+    "centroid_uv": [
+      259.5420944558522,
+      415.4240246406571
+    ],
+    "bbox_xywh": [
+      244,
+      397,
+      32,
+      36
+    ],
+    "method": "single red component + measured tabletop-relative top footprint",
+    "top_pixel_uv": [
+      258.89054291360037,
+      410.82444244980434
+    ],
+    "top_depth_median_m": 0.6980000138282776,
+    "n_mask_pixels": 974
+  },
+  "top_fit": {
+    "height_m": 0.05060241699234324,
+    "support_points": 631,
+    "footprint_m": [
+      0.049845412373542786,
+      0.04579343646764755
+    ],
+    "support_depth_median_m": 0.6990000009536743
+  },
+  "table_plane_camera": {
+    "n_points": 42940,
+    "unfiltered_p95_m": 0.006756325226773413,
+    "support_fraction": 0.9894237194405401,
+    "upward_normal_camera": [
+      -0.008415329859299334,
+      -0.7126919401723234,
+      -0.7014266751676674
+    ],
+    "residual_p95_m": 0.003651641101271836
+  },
+  "top_center_camera_m": [
+    -0.12165468294924245,
+    0.32950864953078485,
+    0.6990921735192862
+  ],
+  "model_center_camera_m": [
+    -0.12144429970275997,
+    0.3473259480350929,
+    0.7166278403984779
+  ],
+  "top_center_base_m": [
+    0.3521127437182996,
+    -0.05334554127408097,
+    -0.47996286791043513
+  ],
+  "model_center_base_m": [
+    0.3504111575120447,
+    -0.05486830013493382,
+    -0.5048583656928531
+  ],
+  "pose_camera": {
+    "parent_frame": "camera_CP2L863000KL_color_optical_frame",
+    "child_frame": "block",
+    "translation_m": [
+      -0.12144429970276013,
+      0.34732594803509304,
+      0.7166278403984762
+    ],
+    "quaternion_xyzw": [
+      -0.5930935459855066,
+      0.706366323725991,
+      -0.29294856791443036,
+      -0.2519281623261891
+    ],
+    "rpy_extrinsic_zyx_rad": [
+      -1.8116460264357435,
+      -0.7801681503284014,
+      -2.9790534361207284
+    ]
+  },
+  "pose_base_c35": {
+    "parent_frame": "L_arm_root",
+    "child_frame": "block",
+    "translation_m": [
+      0.3504111575120447,
+      -0.05486830013493382,
+      -0.5048583656928531
+    ],
+    "quaternion_xyzw": [
+      -0.030522502055369508,
+      0.03403558755069295,
+      -0.0010399391818383984,
+      0.9989538899142729
+    ],
+    "rpy_extrinsic_zyx_rad": [
+      -0.004165039885079423,
+      0.0679888495197347,
+      -0.06123156773274094
+    ]
+  },
+  "base_block": {
+    "parent_frame": "L_arm_root",
+    "child_frame": "block",
+    "translation_m": [
+      0.3504111575120447,
+      -0.05486830013493382,
+      -0.5048583656928531
+    ],
+    "quaternion_xyzw": [
+      -0.030522502055369508,
+      0.03403558755069295,
+      -0.0010399391818383984,
+      0.9989538899142729
+    ],
+    "rpy_extrinsic_zyx_rad": [
+      -0.004165039885079423,
+      0.0679888495197347,
+      -0.06123156773274094
+    ]
+  },
+  "calibration": {
+    "path": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/calibration/candidates/C35_left_head_fit_only_user10mm_20261108.json",
+    "sha256": "2339af8daa000ef986b68b3faa6e26a63c91b74c563c78e1ccbcb39590e28a62",
+    "accuracy_claim": "FIT_ONLY",
+    "approved": false
+  },
+  "K": [
+    [
+      368.1024169921875,
+      0.0,
+      322.947021484375
+    ],
+    [
+      0.0,
+      368.163330078125,
+      237.29510498046875
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "overlay_png": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/issue37_scene_20261112_205857/localized/frame_005_overlay.png",
+  "control_ready": false,
+  "motion_enabled": false,
+  "executable": false,
+  "result": "RED_BLOCK_LOCALIZED_C35_FIT_ONLY"
+}

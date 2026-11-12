@@ -1,0 +1,50 @@
+{
+  "schema": "wrist-path-start-precheck-0.1",
+  "path": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/P/evidence/wrist_path_layer1_grasp_to_place_20261111_215245.json",
+  "path_sha256_lf": "349adb65352c820dc13ece77da26b575b269ab31af821244ec60e426758d16a3",
+  "urdf": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/config/models/p7_left/p7__left.urdf",
+  "urdf_sha256_lf": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+  "locked_urdf_sha256": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+  "urdf_lock_ok": true,
+  "player_commit_file": "d0425f19d5a99f1495fe9be21c805af65aa6c981",
+  "target_xyz_m": [
+    0.4370406043,
+    0.0356843632,
+    -0.3190154659
+  ],
+  "threshold_m": 0.01,
+  "motion_commanded": false,
+  "motion_enabled": false,
+  "enable_called": false,
+  "interface": "can2",
+  "backend": "linkerbot.P7 same as play_wrist_path_left",
+  "source_scene": "issue37_scene_20261112_205857",
+  "q_rad": [
+    0.0049614692106842995,
+    0.08420116454362869,
+    0.09199599921703339,
+    -0.024032365530729294,
+    1.642967939376831,
+    -0.2584496833752965,
+    0.14400701915007197
+  ],
+  "tip_xyz_m": [
+    0.0064573762240281015,
+    0.0792485504511428,
+    -0.6042516756997321
+  ],
+  "error_m": 0.5183236923893156,
+  "error_mm": 518.3236923893156,
+  "within_10mm": false,
+  "grasp_ready_seed_q_rad": [
+    -0.44852158427238464,
+    -0.05181979015469551,
+    -0.02720685489475727,
+    -0.9839635491371155,
+    1.7451908588409424,
+    -0.07190814068818163,
+    -0.3992141603723205
+  ],
+  "can2_released": true,
+  "note": "Refreshed from stationary scene capture; J6/J7 differ from 20:14 precheck"
+}

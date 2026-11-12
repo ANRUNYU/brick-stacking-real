@@ -1,0 +1,961 @@
+{
+  "schema": "h-issue37-scene-packet-0.1",
+  "issue": "#37",
+  "motion_commanded": false,
+  "motion_enabled": false,
+  "control_ready": false,
+  "scene_ready": false,
+  "capture_summary": {
+    "utc": "2026-11-12T12:58:58.048278+00:00",
+    "motion_commanded": false,
+    "control_ready": false,
+    "scene_ready": false,
+    "camera": "CP2L863000KL",
+    "left_arm": "can2",
+    "right_arm": "can3",
+    "left_hand": "can1",
+    "errors": [],
+    "hand_info": {
+      "serial_number": "LHO6-04-322-L-Z-1-D",
+      "pcb_version": {
+        "major": 3,
+        "minor": 0,
+        "patch": 0
+      },
+      "firmware_version": {
+        "major": 3,
+        "minor": 0,
+        "patch": 4
+      },
+      "mechanical_version": {
+        "major": 4,
+        "minor": 0,
+        "patch": 0
+      },
+      "timestamp": 1794488338.286645
+    },
+    "capture_status": "CAPTURED_FOR_REVIEW"
+  },
+  "field_dir": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/issue37_scene_20261112_205857/field",
+  "n_rgbd_frames": 10,
+  "n_feedback_samples": 68,
+  "calibration_sha256": "2339af8daa000ef986b68b3faa6e26a63c91b74c563c78e1ccbcb39590e28a62",
+  "urdf_sha256_lf": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+  "request_sha256_lf": "59a21ab40174ed2af5d0adf4fcaed24242c895945df7b4d1d49ae49443494738",
+  "planning_endpoints": {
+    "start": {
+      "q_rad": [
+        0.0049614692106842995,
+        0.08420116454362869,
+        0.09199599921703339,
+        -0.024032365530729294,
+        1.642967939376831,
+        -0.2584496833752965,
+        0.14400701915007197
+      ],
+      "xyz_m": [
+        0.0064573762240281015,
+        0.0792485504511428,
+        -0.6042516756997321
+      ],
+      "note": "most recent frame's nearest host feedback (not the 20:14 precheck)"
+    },
+    "request_start_q_rad": [
+      0.0049614692106842995,
+      0.08417719602584839,
+      0.09194274246692657,
+      -0.024032365530729294,
+      1.6430213451385498,
+      -0.12989242389562783,
+      -0.13866636148622824
+    ],
+    "start_q_delta_vs_request": [
+      0.0,
+      2.3968517780303955e-05,
+      5.3256750106811523e-05,
+      0.0,
+      -5.340576171875e-05,
+      -0.12855725947966867,
+      0.2826733806363002
+    ],
+    "goal": {
+      "q_rad": [
+        -0.44852158427238464,
+        -0.05181979015469551,
+        -0.02720685489475727,
+        -0.9839635491371155,
+        1.7451908588409424,
+        -0.07190814068818163,
+        -0.3992141603723205
+      ],
+      "T_base_L8": [
+        [
+          -0.09310053483421951,
+          0.5093489752982758,
+          -0.8555091535314973,
+          0.43704060430410385
+        ],
+        [
+          -0.9902375578123582,
+          -0.13689431336575447,
+          0.02625882834277206,
+          0.03568436322969936
+        ],
+        [
+          -0.10373943084188789,
+          0.8496020058419795,
+          0.5171214191637067,
+          -0.319015465944929
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  },
+  "most_recent_frame_left_xyz_m": [
+    0.0064573762240281015,
+    0.0792485504511428,
+    -0.6042516756997321
+  ],
+  "most_recent_frame_goal_distance_m": 0.5183236923655039,
+  "max_nearest_host_offset_ms": 37.871258915401995,
+  "max_rgbd_skew_ms": 0.019000013708136976,
+  "median_red_model_center_base_m": [
+    0.350680249961385,
+    -0.055130167387263125,
+    -0.5048621428871961
+  ],
+  "frames": [
+    {
+      "frame": "frame_000.npz",
+      "localize": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/issue37_scene_20261112_205857/localized/frame_000.json",
+      "localize_result": "RED_BLOCK_LOCALIZED_C35_FIT_ONLY",
+      "red_model_center_base_m": [
+        0.35173732834587085,
+        -0.056502876629958676,
+        -0.504832046371654
+      ],
+      "red_top_center_base_m": [
+        0.353456492405363,
+        -0.05498517737043872,
+        -0.47993744728080295
+      ],
+      "table_plane_camera": {
+        "n_points": 43350,
+        "unfiltered_p95_m": 0.006477987068855745,
+        "support_fraction": 0.9830823657474601,
+        "upward_normal_camera": [
+          -0.008337905021514179,
+          -0.7132031793573637,
+          -0.7009077716036543
+        ],
+        "residual_p95_m": 0.0036230076791719536
+      },
+      "visible_support": {
+        "n_plane_points": 43350,
+        "residual_p95_m": 0.0036230076791719536,
+        "support_fraction": 0.9830823657474601,
+        "brick_bbox_xywh": [
+          246,
+          398,
+          30,
+          30
+        ],
+        "brick_touches_image_border": false,
+        "brick_near_bottom_fov": true,
+        "touches_image_border": true,
+        "top_fit_height_m": 0.05052740962563927,
+        "note": "brick FOV flags only; full desk polygon still UNKNOWN without robot-side edge re-fit"
+      },
+      "host_receive_stamp_s": 639423.699957768,
+      "rgbd_skew_ms": 0.018999999156221747,
+      "nearest_feedback_offset_s": 0.035721465945243835,
+      "left_q_rad": [
+        0.005009406246244907,
+        0.08410529047250748,
+        0.09196404367685318,
+        -0.024043019860982895,
+        1.6430000066757202,
+        -0.2584496833752965,
+        0.14400701915007197
+      ],
+      "left_xyz_m": [
+        0.006431801858054018,
+        0.07919054580632676,
+        -0.6042539347569589
+      ],
+      "goal_distance_m": 0.5183413091358273,
+      "right_q_rad": [
+        0.0057284594513475895,
+        0.002540655666962266,
+        1.456525444984436,
+        -0.018514534458518028,
+        -1.3718476295471191,
+        -0.18558785381856957,
+        -0.2790493629358366
+      ],
+      "hand": {
+        "values": [
+          99.6078431372549,
+          24.705882352941178,
+          99.6078431372549,
+          99.6078431372549,
+          0.0,
+          0.0
+        ],
+        "sdk_timestamp_s": 1794488342.4993489,
+        "host_end_s": 639423.665228971,
+        "unit": "sdk_percent_not_urdf_rad"
+      }
+    },
+    {
+      "frame": "frame_001.npz",
+      "localize": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/issue37_scene_20261112_205857/localized/frame_001.json",
+      "localize_result": "RED_BLOCK_LOCALIZED_C35_FIT_ONLY",
+      "red_model_center_base_m": [
+        0.35024960519723897,
+        -0.0552341759072952,
+        -0.5048185371614449
+      ],
+      "red_top_center_base_m": [
+        0.35194795260299233,
+        -0.05371262048835719,
+        -0.47992274464149337
+      ],
+      "table_plane_camera": {
+        "n_points": 42932,
+        "unfiltered_p95_m": 0.006751656433477124,
+        "support_fraction": 0.9888748128527006,
+        "upward_normal_camera": [
+          -0.008345254135284504,
+          -0.7126083871840536,
+          -0.7015123970738932
+        ],
+        "residual_p95_m": 0.003638546615199454
+      },
+      "visible_support": {
+        "n_plane_points": 42932,
+        "residual_p95_m": 0.003638546615199454,
+        "support_fraction": 0.9888748128527006,
+        "brick_bbox_xywh": [
+          244,
+          397,
+          32,
+          36
+        ],
+        "brick_touches_image_border": false,
+        "brick_near_bottom_fov": true,
+        "touches_image_border": true,
+        "top_fit_height_m": 0.05059091122216304,
+        "note": "brick FOV flags only; full desk polygon still UNKNOWN without robot-side edge re-fit"
+      },
+      "host_receive_stamp_s": 639423.809333463,
+      "rgbd_skew_ms": 0.019000013708136976,
+      "nearest_feedback_offset_s": 0.017029337002895772,
+      "left_q_rad": [
+        0.0049614692106842995,
+        0.084225133061409,
+        0.09198535233736038,
+        -0.02401106059551239,
+        1.6429893970489502,
+        -0.2584496833752965,
+        0.14400701915007197
+      ],
+      "left_xyz_m": [
+        0.006450310226124633,
+        0.07926373863779719,
+        -0.6042513458325818
+      ],
+      "goal_distance_m": 0.5183306574865161,
+      "right_q_rad": [
+        0.005632585845887661,
+        0.0024687503464519978,
+        1.4565467834472656,
+        -0.01858910173177719,
+        -1.3718262910842896,
+        -0.18558785381856957,
+        -0.2790493629358366
+      ],
+      "hand": {
+        "values": [
+          99.6078431372549,
+          24.705882352941178,
+          99.6078431372549,
+          99.6078431372549,
+          0.0,
+          0.0
+        ],
+        "sdk_timestamp_s": 1794488342.6613588,
+        "host_end_s": 639423.827237521,
+        "unit": "sdk_percent_not_urdf_rad"
+      }
+    },
+    {
+      "frame": "frame_002.npz",
+      "localize": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/issue37_scene_20261112_205857/localized/frame_002.json",
+      "localize_result": "RED_BLOCK_LOCALIZED_C35_FIT_ONLY",
+      "red_model_center_base_m": [
+        0.3497582700041996,
+        -0.054746000172746376,
+        -0.5048765290687538
+      ],
+      "red_top_center_base_m": [
+        0.35146098046142304,
+        -0.053229099450555394,
+        -0.47998075052503525
+      ],
+      "table_plane_camera": {
+        "n_points": 42984,
+        "unfiltered_p95_m": 0.006745314501358999,
+        "support_fraction": 0.9899357453766611,
+        "upward_normal_camera": [
+          -0.008191802485950615,
+          -0.7127523199760216,
+          -0.7013679667199166
+        ],
+        "residual_p95_m": 0.0036638923322187726
+      },
+      "visible_support": {
+        "n_plane_points": 42984,
+        "residual_p95_m": 0.0036638923322187726,
+        "support_fraction": 0.9899357453766611,
+        "brick_bbox_xywh": [
+          244,
+          397,
+          32,
+          36
+        ],
+        "brick_touches_image_border": false,
+        "brick_near_bottom_fov": true,
+        "touches_image_border": true,
+        "top_fit_height_m": 0.05055877891594572,
+        "note": "brick FOV flags only; full desk polygon still UNKNOWN without robot-side edge re-fit"
+      },
+      "host_receive_stamp_s": 639423.871125047,
+      "rgbd_skew_ms": 0.018999999156221747,
+      "nearest_feedback_offset_s": 0.03626069100573659,
+      "left_q_rad": [
+        0.0049375006929039955,
+        0.084225133061409,
+        0.09194274246692657,
+        -0.024053672328591347,
+        1.6430000066757202,
+        -0.2584496833752965,
+        0.14400701915007197
+      ],
+      "left_xyz_m": [
+        0.006479276789053186,
+        0.07926283600973885,
+        -0.6042508270237398
+      ],
+      "goal_distance_m": 0.5183062330814892,
+      "right_q_rad": [
+        0.0057044909335672855,
+        0.0024687503464519978,
+        1.456536054611206,
+        -0.01857844926416874,
+        -1.37181556224823,
+        -0.18558785381856957,
+        -0.2790493629358366
+      ],
+      "hand": {
+        "values": [
+          99.6078431372549,
+          24.705882352941178,
+          99.6078431372549,
+          99.6078431372549,
+          0.0,
+          0.0
+        ],
+        "sdk_timestamp_s": 1794488342.7422867,
+        "host_end_s": 639423.908168715,
+        "unit": "sdk_percent_not_urdf_rad"
+      }
+    },
+    {
+      "frame": "frame_003.npz",
+      "localize": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/issue37_scene_20261112_205857/localized/frame_003.json",
+      "localize_result": "RED_BLOCK_LOCALIZED_C35_FIT_ONLY",
+      "red_model_center_base_m": [
+        0.35079744666034096,
+        -0.056633783153894814,
+        -0.5050616586440597
+      ],
+      "red_top_center_base_m": [
+        0.35250760716380514,
+        -0.055112719018644875,
+        -0.48016664478688637
+      ],
+      "table_plane_camera": {
+        "n_points": 43358,
+        "unfiltered_p95_m": 0.006402194642872925,
+        "support_fraction": 0.9834199006554923,
+        "upward_normal_camera": [
+          -0.00840809828385361,
+          -0.7129374954456126,
+          -0.7011771755205571
+        ],
+        "residual_p95_m": 0.0036092915228176175
+      },
+      "visible_support": {
+        "n_plane_points": 43358,
+        "residual_p95_m": 0.0036092915228176175,
+        "support_fraction": 0.9834199006554923,
+        "brick_bbox_xywh": [
+          246,
+          398,
+          30,
+          31
+        ],
+        "brick_touches_image_border": false,
+        "brick_near_bottom_fov": true,
+        "touches_image_border": true,
+        "top_fit_height_m": 0.05031305679046126,
+        "note": "brick FOV flags only; full desk polygon still UNKNOWN without robot-side edge re-fit"
+      },
+      "host_receive_stamp_s": 639423.932962942,
+      "rgbd_skew_ms": 0.018999999156221747,
+      "nearest_feedback_offset_s": 0.025577204069122672,
+      "left_q_rad": [
+        0.0049375006929039955,
+        0.084225133061409,
+        0.09194274246692657,
+        -0.024053672328591347,
+        1.6430000066757202,
+        -0.2584496833752965,
+        0.14400701915007197
+      ],
+      "left_xyz_m": [
+        0.006479276789053186,
+        0.07926283600973885,
+        -0.6042508270237398
+      ],
+      "goal_distance_m": 0.5183062330814892,
+      "right_q_rad": [
+        0.0057044909335672855,
+        0.0024687503464519978,
+        1.456536054611206,
+        -0.01857844926416874,
+        -1.37181556224823,
+        -0.18558785381856957,
+        -0.2790493629358366
+      ],
+      "hand": {
+        "values": [
+          99.6078431372549,
+          24.705882352941178,
+          99.6078431372549,
+          99.6078431372549,
+          0.0,
+          0.0
+        ],
+        "sdk_timestamp_s": 1794488342.7422867,
+        "host_end_s": 639423.908168715,
+        "unit": "sdk_percent_not_urdf_rad"
+      }
+    },
+    {
+      "frame": "frame_004.npz",
+      "localize": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/issue37_scene_20261112_205857/localized/frame_004.json",
+      "localize_result": "RED_BLOCK_LOCALIZED_C35_FIT_ONLY",
+      "red_model_center_base_m": [
+        0.3510378486272711,
+        -0.05502615886723105,
+        -0.5047051942089071
+      ],
+      "red_top_center_base_m": [
+        0.3527435901032338,
+        -0.05350294847464197,
+        -0.4798100084068873
+      ],
+      "table_plane_camera": {
+        "n_points": 42952,
+        "unfiltered_p95_m": 0.006726098518002592,
+        "support_fraction": 0.9894266430167469,
+        "upward_normal_camera": [
+          -0.00846209228847742,
+          -0.7128045835343075,
+          -0.7013116416305833
+        ],
+        "residual_p95_m": 0.003626750052259355
+      },
+      "visible_support": {
+        "n_plane_points": 42952,
+        "residual_p95_m": 0.003626750052259355,
+        "support_fraction": 0.9894266430167469,
+        "brick_bbox_xywh": [
+          244,
+          397,
+          32,
+          36
+        ],
+        "brick_touches_image_border": false,
+        "brick_near_bottom_fov": true,
+        "touches_image_border": true,
+        "top_fit_height_m": 0.05075848341300022,
+        "note": "brick FOV flags only; full desk polygon still UNKNOWN without robot-side edge re-fit"
+      },
+      "host_receive_stamp_s": 639424.002138392,
+      "rgbd_skew_ms": 0.018999999156221747,
+      "nearest_feedback_offset_s": 0.01382946700323373,
+      "left_q_rad": [
+        0.004985437728464603,
+        0.08417719602584839,
+        0.09194274246692657,
+        -0.024021713063120842,
+        1.6430000066757202,
+        -0.2584496833752965,
+        0.14400701915007197
+      ],
+      "left_xyz_m": [
+        0.0064401600394765335,
+        0.07923483651550357,
+        -0.6042524128851092
+      ],
+      "goal_distance_m": 0.5183372475754247,
+      "right_q_rad": [
+        0.005656554363667965,
+        0.0024927188642323017,
+        1.4565467834472656,
+        -0.018557142466306686,
+        -1.3718369007110596,
+        -0.18558785381856957,
+        -0.2790493629358366
+      ],
+      "hand": {
+        "values": [
+          99.6078431372549,
+          24.705882352941178,
+          99.6078431372549,
+          99.6078431372549,
+          0.0,
+          0.0
+        ],
+        "sdk_timestamp_s": 1794488342.8233225,
+        "host_end_s": 639423.989201266,
+        "unit": "sdk_percent_not_urdf_rad"
+      }
+    },
+    {
+      "frame": "frame_005.npz",
+      "localize": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/issue37_scene_20261112_205857/localized/frame_005.json",
+      "localize_result": "RED_BLOCK_LOCALIZED_C35_FIT_ONLY",
+      "red_model_center_base_m": [
+        0.3504111575120447,
+        -0.05486830013493382,
+        -0.5048583656928531
+      ],
+      "red_top_center_base_m": [
+        0.3521127437182996,
+        -0.05334554127408097,
+        -0.47996286791043513
+      ],
+      "table_plane_camera": {
+        "n_points": 42940,
+        "unfiltered_p95_m": 0.006756325226773413,
+        "support_fraction": 0.9894237194405401,
+        "upward_normal_camera": [
+          -0.008415329859299334,
+          -0.7126919401723234,
+          -0.7014266751676674
+        ],
+        "residual_p95_m": 0.003651641101271836
+      },
+      "visible_support": {
+        "n_plane_points": 42940,
+        "residual_p95_m": 0.003651641101271836,
+        "support_fraction": 0.9894237194405401,
+        "brick_bbox_xywh": [
+          244,
+          397,
+          32,
+          36
+        ],
+        "brick_touches_image_border": false,
+        "brick_near_bottom_fov": true,
+        "touches_image_border": true,
+        "top_fit_height_m": 0.05060241699234324,
+        "note": "brick FOV flags only; full desk polygon still UNKNOWN without robot-side edge re-fit"
+      },
+      "host_receive_stamp_s": 639424.063818226,
+      "rgbd_skew_ms": 0.018999999156221747,
+      "nearest_feedback_offset_s": 0.0055224250536412,
+      "left_q_rad": [
+        0.0049614692106842995,
+        0.08415322750806808,
+        0.09195338934659958,
+        -0.023989755660295486,
+        1.642967939376831,
+        -0.2584496833752965,
+        0.14400701915007197
+      ],
+      "left_xyz_m": [
+        0.006445107597814742,
+        0.07922127505104304,
+        -0.6042530090814797
+      ],
+      "goal_distance_m": 0.5183323263016217,
+      "right_q_rad": [
+        0.005680522881448269,
+        0.002516687149181962,
+        1.456536054611206,
+        -0.018546489998698235,
+        -1.3718687295913696,
+        -0.18558785381856957,
+        -0.2790493629358366
+      ],
+      "hand": {
+        "values": [
+          99.6078431372549,
+          24.705882352941178,
+          99.6078431372549,
+          99.6078431372549,
+          0.0,
+          0.0
+        ],
+        "sdk_timestamp_s": 1794488342.9042304,
+        "host_end_s": 639424.070178876,
+        "unit": "sdk_percent_not_urdf_rad"
+      }
+    },
+    {
+      "frame": "frame_006.npz",
+      "localize": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/issue37_scene_20261112_205857/localized/frame_006.json",
+      "localize_result": "RED_BLOCK_LOCALIZED_C35_FIT_ONLY",
+      "red_model_center_base_m": [
+        0.35153445977064474,
+        -0.05631165043830188,
+        -0.5048659200815391
+      ],
+      "red_top_center_base_m": [
+        0.35324098115063596,
+        -0.054787428375608814,
+        -0.47997084964815345
+      ],
+      "table_plane_camera": {
+        "n_points": 43363,
+        "unfiltered_p95_m": 0.006389815941277653,
+        "support_fraction": 0.9833771770682148,
+        "upward_normal_camera": [
+          -0.008507476494813246,
+          -0.7128210850587291,
+          -0.7012943201961543
+        ],
+        "residual_p95_m": 0.003593706532864262
+      },
+      "visible_support": {
+        "n_plane_points": 43363,
+        "residual_p95_m": 0.003593706532864262,
+        "support_fraction": 0.9833771770682148,
+        "brick_bbox_xywh": [
+          246,
+          398,
+          30,
+          27
+        ],
+        "brick_touches_image_border": false,
+        "brick_near_bottom_fov": true,
+        "touches_image_border": true,
+        "top_fit_height_m": 0.050539988319967664,
+        "note": "brick FOV flags only; full desk polygon still UNKNOWN without robot-side edge re-fit"
+      },
+      "host_receive_stamp_s": 639424.124023477,
+      "rgbd_skew_ms": 0.018999999156221747,
+      "nearest_feedback_offset_s": 0.02631016809027642,
+      "left_q_rad": [
+        0.005057343281805515,
+        0.08412925899028778,
+        0.09200665354728699,
+        -0.0240643247961998,
+        1.6430000066757202,
+        -0.2584496833752965,
+        0.14400701915007197
+      ],
+      "left_xyz_m": [
+        0.006408338423904319,
+        0.07920398179173184,
+        -0.6042535906787178
+      ],
+      "goal_distance_m": 0.518361739925458,
+      "right_q_rad": [
+        0.005656554363667965,
+        0.00256462418474257,
+        1.456525444984436,
+        -0.018557142466306686,
+        -1.3718687295913696,
+        -0.18558785381856957,
+        -0.2790493629358366
+      ],
+      "hand": {
+        "values": [
+          99.6078431372549,
+          24.705882352941178,
+          99.6078431372549,
+          99.6078431372549,
+          0.0,
+          0.0
+        ],
+        "sdk_timestamp_s": 1794488342.9852562,
+        "host_end_s": 639424.151135741,
+        "unit": "sdk_percent_not_urdf_rad"
+      }
+    },
+    {
+      "frame": "frame_007.npz",
+      "localize": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/issue37_scene_20261112_205857/localized/frame_007.json",
+      "localize_result": "RED_BLOCK_LOCALIZED_C35_FIT_ONLY",
+      "red_model_center_base_m": [
+        0.35056305326242915,
+        -0.054823918830654905,
+        -0.5051908865930193
+      ],
+      "red_top_center_base_m": [
+        0.35226758847594974,
+        -0.053302524029926225,
+        -0.48029550715091823
+      ],
+      "table_plane_camera": {
+        "n_points": 42920,
+        "unfiltered_p95_m": 0.006709902590611079,
+        "support_fraction": 0.988416277088179,
+        "upward_normal_camera": [
+          -0.008381990477197556,
+          -0.7127803121898066,
+          -0.7013372717817312
+        ],
+        "residual_p95_m": 0.0035919581905384736
+      },
+      "visible_support": {
+        "n_plane_points": 42920,
+        "residual_p95_m": 0.0035919581905384736,
+        "support_fraction": 0.988416277088179,
+        "brick_bbox_xywh": [
+          244,
+          397,
+          32,
+          36
+        ],
+        "brick_touches_image_border": false,
+        "brick_near_bottom_fov": true,
+        "touches_image_border": true,
+        "top_fit_height_m": 0.05028749750941868,
+        "note": "brick FOV flags only; full desk polygon still UNKNOWN without robot-side edge re-fit"
+      },
+      "host_receive_stamp_s": 639424.193414889,
+      "rgbd_skew_ms": 0.018999999156221747,
+      "nearest_feedback_offset_s": 0.037871258915401995,
+      "left_q_rad": [
+        0.0049614692106842995,
+        0.08420116454362869,
+        0.09196404367685318,
+        -0.024021713063120842,
+        1.6430213451385498,
+        -0.2584496833752965,
+        0.14400701915007197
+      ],
+      "left_xyz_m": [
+        0.006453396774284347,
+        0.07924907984897021,
+        -0.6042517779045853
+      ],
+      "goal_distance_m": 0.5183270989276864,
+      "right_q_rad": [
+        0.005632585845887661,
+        0.002540655666962266,
+        1.4565467834472656,
+        -0.018535839393734932,
+        -1.3718582391738892,
+        -0.18558785381856957,
+        -0.2790493629358366
+      ],
+      "hand": {
+        "values": [
+          99.6078431372549,
+          24.705882352941178,
+          99.6078431372549,
+          99.6078431372549,
+          0.0,
+          0.0
+        ],
+        "sdk_timestamp_s": 1794488343.0662236,
+        "host_end_s": 639424.232121951,
+        "unit": "sdk_percent_not_urdf_rad"
+      }
+    },
+    {
+      "frame": "frame_008.npz",
+      "localize": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/issue37_scene_20261112_205857/localized/frame_008.json",
+      "localize_result": "RED_BLOCK_LOCALIZED_C35_FIT_ONLY",
+      "red_model_center_base_m": [
+        0.3511622260617342,
+        -0.055014650941718174,
+        -0.504838220581822
+      ],
+      "red_top_center_base_m": [
+        0.35285867466437604,
+        -0.05348908096310091,
+        -0.47994254428293576
+      ],
+      "table_plane_camera": {
+        "n_points": 42962,
+        "unfiltered_p95_m": 0.00674712152405068,
+        "support_fraction": 0.989064622326588,
+        "upward_normal_camera": [
+          -0.00849058328388329,
+          -0.7125357797945906,
+          -0.7015844015569433
+        ],
+        "residual_p95_m": 0.0036202120645718533
+      },
+      "visible_support": {
+        "n_plane_points": 42962,
+        "residual_p95_m": 0.0036202120645718533,
+        "support_fraction": 0.989064622326588,
+        "brick_bbox_xywh": [
+          244,
+          397,
+          32,
+          36
+        ],
+        "brick_touches_image_border": false,
+        "brick_near_bottom_fov": true,
+        "touches_image_border": true,
+        "top_fit_height_m": 0.05067927289988933,
+        "note": "brick FOV flags only; full desk polygon still UNKNOWN without robot-side edge re-fit"
+      },
+      "host_receive_stamp_s": 639424.255834946,
+      "rgbd_skew_ms": 0.018999999156221747,
+      "nearest_feedback_offset_s": 0.024548797984607518,
+      "left_q_rad": [
+        0.0049614692106842995,
+        0.08420116454362869,
+        0.09196404367685318,
+        -0.024021713063120842,
+        1.6430213451385498,
+        -0.2584496833752965,
+        0.14400701915007197
+      ],
+      "left_xyz_m": [
+        0.006453396774284347,
+        0.07924907984897021,
+        -0.6042517779045853
+      ],
+      "goal_distance_m": 0.5183270989276864,
+      "right_q_rad": [
+        0.005632585845887661,
+        0.002540655666962266,
+        1.4565467834472656,
+        -0.018535839393734932,
+        -1.3718582391738892,
+        -0.18558785381856957,
+        -0.2790493629358366
+      ],
+      "hand": {
+        "values": [
+          99.6078431372549,
+          24.705882352941178,
+          99.6078431372549,
+          99.6078431372549,
+          0.0,
+          0.0
+        ],
+        "sdk_timestamp_s": 1794488343.0662236,
+        "host_end_s": 639424.232121951,
+        "unit": "sdk_percent_not_urdf_rad"
+      }
+    },
+    {
+      "frame": "frame_009.npz",
+      "localize": "e:/OneDrive/Desktop/brick-stacking-real/brick-stacking-h36/docs/team/B/evidence/line_h/issue37_scene_20261112_205857/localized/frame_009.json",
+      "localize_result": "RED_BLOCK_LOCALIZED_C35_FIT_ONLY",
+      "red_model_center_base_m": [
+        0.35022258214177715,
+        -0.05632948612879025,
+        -0.505028522821227
+      ],
+      "red_top_center_base_m": [
+        0.3519251862995279,
+        -0.05480225958129474,
+        -0.4801333683096633
+      ],
+      "table_plane_camera": {
+        "n_points": 43370,
+        "unfiltered_p95_m": 0.006435950038669006,
+        "support_fraction": 0.9843171966137855,
+        "upward_normal_camera": [
+          -0.008598860898554031,
+          -0.7126977277677385,
+          -0.7014185686349841
+        ],
+        "residual_p95_m": 0.003607304706080792
+      },
+      "visible_support": {
+        "n_plane_points": 43370,
+        "residual_p95_m": 0.003607304706080792,
+        "support_fraction": 0.9843171966137855,
+        "brick_bbox_xywh": [
+          246,
+          398,
+          30,
+          29
+        ],
+        "brick_touches_image_border": false,
+        "brick_near_bottom_fov": true,
+        "touches_image_border": true,
+        "top_fit_height_m": 0.0503057749245128,
+        "note": "brick FOV flags only; full desk polygon still UNKNOWN without robot-side edge re-fit"
+      },
+      "host_receive_stamp_s": 639424.316616223,
+      "rgbd_skew_ms": 0.018999999156221747,
+      "nearest_feedback_offset_s": 0.004383572959341109,
+      "left_q_rad": [
+        0.0049614692106842995,
+        0.08420116454362869,
+        0.09199599921703339,
+        -0.024032365530729294,
+        1.642967939376831,
+        -0.2584496833752965,
+        0.14400701915007197
+      ],
+      "left_xyz_m": [
+        0.0064573762240281015,
+        0.0792485504511428,
+        -0.6042516756997321
+      ],
+      "goal_distance_m": 0.5183236923655039,
+      "right_q_rad": [
+        0.0057044909335672855,
+        0.0024687503464519978,
+        1.4565787315368652,
+        -0.018557142466306686,
+        -1.3718369007110596,
+        -0.18558785381856957,
+        -0.2790493629358366
+      ],
+      "hand": {
+        "values": [
+          99.6078431372549,
+          24.705882352941178,
+          99.6078431372549,
+          99.6078431372549,
+          0.0,
+          0.0
+        ],
+        "sdk_timestamp_s": 1794488343.147218,
+        "host_end_s": 639424.313109503,
+        "unit": "sdk_percent_not_urdf_rad"
+      }
+    }
+  ],
+  "gaps_for_moveit": [
+    "measured desk polygon / thickness (visible FOV support only)",
+    "right-arm collision geometry binding beyond raw q_rad",
+    "left O6 URDF rad / fingertip envelope for new path (percent only here)",
+    "attachments / cables / other obstacles"
+  ],
+  "reproduce_command": "python tools/review_scene_feedback.py --field docs/team/B/evidence/line_h/issue37_scene_20261112_205857/field --localized docs/team/B/evidence/line_h/issue37_scene_20261112_205857/localized --calibration calibration/candidates/C35_left_head_fit_only_user10mm_20261108.json --urdf config/models/p7_left/p7__left.urdf --request docs/team/B/evidence/line_h/left_auto_preposition_20261112/planning_request.json --output docs/team/B/evidence/line_h/issue37_scene_20261112_205857/scene_packet.json"
+}

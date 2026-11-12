@@ -1,0 +1,31 @@
+{
+  "utc": "2026-11-12T12:58:58.048278+00:00",
+  "motion_commanded": false,
+  "control_ready": false,
+  "scene_ready": false,
+  "camera": "CP2L863000KL",
+  "left_arm": "can2",
+  "right_arm": "can3",
+  "left_hand": "can1",
+  "errors": [],
+  "hand_info": {
+    "serial_number": "LHO6-04-322-L-Z-1-D",
+    "pcb_version": {
+      "major": 3,
+      "minor": 0,
+      "patch": 0
+    },
+    "firmware_version": {
+      "major": 3,
+      "minor": 0,
+      "patch": 4
+    },
+    "mechanical_version": {
+      "major": 4,
+      "minor": 0,
+      "patch": 0
+    },
+    "timestamp": 1794488338.286645
+  },
+  "capture_status": "CAPTURED_FOR_REVIEW"
+}
