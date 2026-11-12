@@ -1,5 +1,6 @@
 {
   "schema_version": "fixed-red-block-local-check-draft-0.1",
+  "phase": "S5",
   "status": "DRAFT_AWAITING_PLANNING_SIGNOFF",
   "executable": false,
   "motion_enabled": false,
@@ -41,23 +42,57 @@
   },
   "hand": {
     "owner": "H",
-    "preshape_preset_version": null,
-    "close_preset_version": null,
+    "side": "left",
+    "model": "O6",
+    "interface": "can1",
+    "serial_number": "LHO6-04-322-L-Z-1-D",
+    "standard_can_id": 40,
+    "identity_ref": "config/observed/hardware_20261107.json",
+    "snapshot_ref": "docs/team/B/evidence/line_h/left_preshape_20261112_100523/hand_teach_state.json",
+    "snapshot_sha256": "f782b8a638d08c3c4a3c263f4faf42939c1097bf38e673741e096a77fbbdec68",
+    "channel_names": ["thumb_flex", "thumb_abd", "index", "middle", "ring", "pinky"],
+    "position_unit": "percent",
+    "presets": {
+      "preshape": {
+        "name": "抓取闭指前",
+        "snapshot_field": "state.angles_percent",
+        "position_percent": [69.80, 31.37, 69.80, 65.10, 0.0, 0.0]
+      },
+      "close": {
+        "name": "抓取",
+        "snapshot_field": "state.presets.抓取",
+        "position_percent": [60.39, 31.76, 60.39, 56.08, 0.0, 0.0],
+        "grasp_stability_verified": false
+      },
+      "release": {
+        "name": "释放",
+        "snapshot_field": "state.presets.释放",
+        "position_percent": [69.80, 31.76, 69.80, 65.10, 0.0, 0.0]
+      }
+    },
     "proposed_close_speed_percent": 10.0,
-    "speed_semantics": "Hand Teach 速度百分比，H 确认预设、速度及闭合超时",
+    "snapshot_max_speed_percent": 15.0,
+    "legacy_close_speed_percent": 20.0,
+    "legacy_speed_ref": "docs/team/B/evidence/line_h/grasp_relative_field_mid_0.1.json",
+    "speed_semantics": "S5 采用更慢的 Hand Teach 闭合速度 10%，低于快照上限 15% 和旧包闭合速度 20%。",
     "close_timeout_s": null,
     "tactile_evidence": "UNAVAILABLE",
     "offline_hand_commands": false
+  },
+  "offline_review": {
+    "current_table_direction": "PENDING_FIELD_REVIEW",
+    "o6_closure_swept_volume": "PENDING_FIELD_REVIEW",
+    "site_clearance": "PENDING_FIELD_REVIEW"
   },
   "field_sequence_after_new_authorization": [
     "现场核对新鲜且完整的左臂七轴、锁定 FK 腕姿、固定红块位置/朝向、桌面向上法线与所有版本。两次读数与目视确认停稳，超差停下复审。",
     "操作员与看臂人确认 preshape 已在核对的起点停稳、三指将触未触，工作区无人手。",
     "臂保持静止，由 H 按冻结预设闭合。",
     "对照闭合前后的块角点与桌面标记，确认块未被推走、未转动、仍居指间。异常或看不清即停止。",
-    "按已复核局部路径沿桌面向上法线微抬 10 mm，保持腕姿，无侧移。",
+    "按已复核局部路径沿桌面向上法线用 4 s 微抬 10 mm，保持腕姿，无侧移。",
     "在顶点保持 2 s，保存能看到块底及指间相对位置的连续视觉记录。",
     "视觉核对块底离桌，整段保持无下滑、转动或人手支撑。遮挡或证据不清记为未判定。",
-    "正常结束时由现场负责人执行规划预审并签字选定的受控落回或现场安全结束方案。"
+    "正常结束时由现场负责人执行规划预审并签字选定的受控落回或现场安全结束方案。若获签方案含释放，待块稳定着桌后才采用冻结的释放预设。"
   ],
   "failure_response": {
     "triggers": "起点/版本不符、反馈缺失或超时、推块、滑移、转动、未离桌、遮挡、腕姿或路径超差、干涉、人员进入工作区或看臂/急停条件丢失",
