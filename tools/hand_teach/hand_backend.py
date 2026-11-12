@@ -2,9 +2,21 @@
 
 from __future__ import annotations
 
+import sys
 import threading
 import time
+from pathlib import Path
 from typing import Any
+
+_SRC = Path(__file__).resolve().parents[2] / "src"
+if str(_SRC) not in sys.path:
+    sys.path.insert(0, str(_SRC))
+
+from brick_stacking.manual_teach.presets import (  # noqa: E402
+    GRASP_PERCENT,
+    RELEASE_PERCENT,
+    as_percent_list,
+)
 
 CHANNEL_NAMES = (
     "thumb_flex",
@@ -15,10 +27,10 @@ CHANNEL_NAMES = (
     "pinky",
 )
 
+# Previous grasp / draft poses are retired. Release is the non-grasp pose.
 PRESETS = {
-    "open": [100.0, 100.0, 100.0, 100.0, 100.0, 100.0],
-    "thumb_abd_retract": [100.0, 45.0, 100.0, 100.0, 100.0, 100.0],
-    "three_finger_soft_draft": [50.0, 45.0, 55.0, 55.0, 100.0, 100.0],
+    "抓取": as_percent_list(GRASP_PERCENT),
+    "松开": as_percent_list(RELEASE_PERCENT),
 }
 
 

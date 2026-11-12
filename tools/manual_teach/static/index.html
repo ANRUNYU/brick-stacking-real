@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>示教记录</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <main>
+    <header class="top">
+      <div>
+        <h1>示教记录</h1>
+        <p class="lede">先开始，再挪手臂。抓取和松开写进同一份记录。结束后再开始，会新建文件。</p>
+      </div>
+      <div class="status">
+        <span id="modeBadge" class="badge">…</span>
+        <strong id="recordState" class="state"><i id="dot" hidden></i><span id="stateWord">空闲</span></strong>
+      </div>
+    </header>
+
+    <section class="transport">
+      <div class="actions">
+        <button id="btnStart" type="button" class="primary">开始</button>
+        <button id="btnPause" type="button">暂停</button>
+        <button id="btnEnd" type="button">结束</button>
+      </div>
+      <div class="filebox">
+        <div class="fileline">
+          <span id="fileLabel">文件</span>
+          <code id="fileName">尚未开始</code>
+        </div>
+        <p class="meta">
+          <span id="sampleCount">0</span> 行
+          · <span id="elapsed">0.0</span> s
+          · <span id="measuredHz">—</span>
+        </p>
+        <p id="directory" class="meta"></p>
+      </div>
+    </section>
+
+    <section class="hands">
+      <div class="actions">
+        <button id="btnReady" type="button">准备手</button>
+        <button id="btnGrasp" type="button" class="grasp">抓取</button>
+        <button id="btnRelease" type="button" class="release">松开</button>
+      </div>
+      <label class="speed">速度
+        <input id="speed" type="range" min="1" max="15" step="1" value="12" />
+        <b id="speedVal">12</b>
+      </label>
+      <p id="handSession" class="meta">手未准备</p>
+      <p class="poses">
+        <span>抓取 <code id="poseGrasp">—</code></span>
+        <span>松开 <code id="poseRelease">—</code></span>
+      </p>
+    </section>
+
+    <div class="cols">
+      <section>
+        <h2>左臂七轴 <small id="armAge"></small></h2>
+        <div id="arm"></div>
+      </section>
+      <section>
+        <h2>手 <small id="handAge"></small></h2>
+        <p class="scale"><span>0 弯到底</span><span>100 张开</span></p>
+        <div id="hand"></div>
+      </section>
+    </div>
+
+    <section class="files">
+      <h2>已保存</h2>
+      <ul id="fileList"></ul>
+    </section>
+
+    <p id="error" class="error" hidden></p>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>
