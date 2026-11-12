@@ -1,0 +1,173 @@
+{
+  "schema": "h-shadow-robot-side-table-edge-0.1",
+  "issue": "#36",
+  "control_ready": false,
+  "motion_commanded": false,
+  "motion_enabled": false,
+  "frame": "frame_009.npz",
+  "verdict": "UNDERHANG_OUTSIDE_ROBOT_SIDE_EDGE",
+  "table_half_thickness_m": 0.012,
+  "n_edge_samples": 37,
+  "edge_mean_base_m": [
+    0.27606298725248113,
+    -0.06236598480681106,
+    -0.524884203363717
+  ],
+  "edge_dir_base": [
+    -0.1530210279230449,
+    -0.9856923840596833,
+    0.07067594371575618
+  ],
+  "inward_base": [
+    0.9929582365752482,
+    -0.10073252993910978,
+    -0.0623449904117396
+  ],
+  "table_normal_base": [
+    0.06868424667771013,
+    0.06073711658017409,
+    0.9957878674335422
+  ],
+  "min_signed_robot_edge_clearance_m": -0.2885757804077439,
+  "min_height_plane_m": -0.09020650309007941,
+  "n_samples": 9,
+  "n_outside_robot_edge": 9,
+  "n_into_board_candidate": 0,
+  "samples": [
+    {
+      "base_m": [
+        -0.0033277294658033574,
+        0.09853584106369072,
+        -0.6060154139172433
+      ],
+      "height_plane_m": -0.09020650309007941,
+      "height_audit_m": -0.0902065030900788,
+      "signed_robot_edge_clearance_m": -0.28857323683578784,
+      "outside_robot_edge": true,
+      "below_top_surface": true,
+      "within_slab_thickness_band": false,
+      "class": "underhang_outside_robot_edge"
+    },
+    {
+      "base_m": [
+        -0.003212689808381659,
+        0.09862605828673242,
+        -0.605611745313848
+      ],
+      "height_plane_m": -0.08979115384615298,
+      "height_audit_m": -0.08979115384615244,
+      "signed_robot_edge_clearance_m": -0.2884932617847474,
+      "outside_robot_edge": true,
+      "below_top_surface": true,
+      "within_slab_thickness_band": false,
+      "class": "underhang_outside_robot_edge"
+    },
+    {
+      "base_m": [
+        -0.0030921613611665107,
+        0.09873096507898779,
+        -0.6047878996872914
+      ],
+      "height_plane_m": -0.08895612822491827,
+      "height_audit_m": -0.08895612822491766,
+      "signed_robot_edge_clearance_m": -0.28843551224462355,
+      "outside_robot_edge": true,
+      "below_top_surface": true,
+      "within_slab_thickness_band": false,
+      "class": "underhang_outside_robot_edge"
+    },
+    {
+      "base_m": [
+        -0.0029669341030782977,
+        0.09884697478074897,
+        -0.6035446604857033
+      ],
+      "height_plane_m": -0.0877024784769935,
+      "height_audit_m": -0.08770247847699289,
+      "signed_robot_edge_clearance_m": -0.28840036249411954,
+      "outside_robot_edge": true,
+      "below_top_surface": true,
+      "within_slab_thickness_band": false,
+      "class": "underhang_outside_robot_edge"
+    },
+    {
+      "base_m": [
+        -0.002837829228303501,
+        0.09897024716657285,
+        -0.6018831394120597
+      ],
+      "height_plane_m": -0.08603160127003882,
+      "height_audit_m": -0.08603160127003823,
+      "signed_robot_edge_clearance_m": -0.2883881718000308,
+      "outside_robot_edge": true,
+      "below_top_surface": true,
+      "within_slab_thickness_band": false,
+      "class": "underhang_outside_robot_edge"
+    },
+    {
+      "base_m": [
+        -0.0027056982962945075,
+        0.0990967166455458,
+        -0.5998047768239438
+      ],
+      "height_plane_m": -0.08394523631564918,
+      "height_audit_m": -0.0839452363156486,
+      "signed_robot_edge_clearance_m": -0.2883992863889913,
+      "outside_robot_edge": true,
+      "below_top_surface": true,
+      "within_slab_thickness_band": false,
+      "class": "underhang_outside_robot_edge"
+    },
+    {
+      "base_m": [
+        -0.002571422606778389,
+        0.09922212179907959,
+        -0.5973113417152751
+      ],
+      "height_plane_m": -0.08144546451419253,
+      "height_audit_m": -0.08144546451419193,
+      "signed_robot_edge_clearance_m": -0.2884340418034396,
+      "outside_robot_edge": true,
+      "below_top_surface": true,
+      "within_slab_thickness_band": false,
+      "class": "underhang_outside_robot_edge"
+    },
+    {
+      "base_m": [
+        -0.002435912777247252,
+        0.09934203611449646,
+        -0.5944049312294322
+      ],
+      "height_plane_m": -0.07853470557429462,
+      "height_audit_m": -0.07853470557429398,
+      "signed_robot_edge_clearance_m": -0.28849276560831005,
+      "outside_robot_edge": true,
+      "below_top_surface": true,
+      "within_slab_thickness_band": false,
+      "class": "underhang_outside_robot_edge"
+    },
+    {
+      "base_m": [
+        -0.0023001084939773334,
+        0.09945189976679907,
+        -0.5910879696570842
+      ],
+      "height_plane_m": -0.07521571506745742,
+      "height_audit_m": -0.07521571506745686,
+      "signed_robot_edge_clearance_m": -0.2885757804077439,
+      "outside_robot_edge": true,
+      "below_top_surface": true,
+      "within_slab_thickness_band": false,
+      "class": "underhang_outside_robot_edge"
+    }
+  ],
+  "missing_for_full_36": [
+    "O6 fingertip frames at live hand angles",
+    "palm envelope / O6 collision mesh binding",
+    "P7 link capsules along lift/transfer/descend",
+    "measured full desk polygon (not FOV-limited depth edge)",
+    "right-arm / brick / cable obstacles"
+  ],
+  "overlay_png": "E:/OneDrive/Desktop/brick-stacking-real/brick-stacking-real/docs/team/B/evidence/line_h/readonly_shadow/live_A_164356/robot_side_table_edge/robot_side_edge_overlay.png",
+  "note": "Robot-side edge is the end of contiguous 8 mm plane-support in depth walking toward L_arm_root. FOV may still truncate the true desk edge; treat as lower-bound interior. REJECT_TABLE flange-plane gate unchanged."
+}

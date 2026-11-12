@@ -1,0 +1,1298 @@
+{
+  "schema": "h-shadow-lift-part-proximity-0.1",
+  "issue": "#36",
+  "control_ready": false,
+  "motion_commanded": false,
+  "motion_enabled": false,
+  "approved_for_motion": false,
+  "phase": "first_lift_subinterval",
+  "geometry_scope": "link_origins_only_L1_to_L8_plus_lh_hand_base",
+  "mapping": {
+    "path": "E:/OneDrive/Desktop/brick-stacking-real/brick-stacking-real/config/planning/p7_sdk_to_vendor_collision_candidate.json",
+    "approved_for_motion": false,
+    "source_model_sha256": "233a0fd9e6ce53a5aca9001b77714598ae5d9d996b084546f5efc55230f7edce",
+    "target_model_sha256": "b898b9597d7d075cc5e7114d76a90d0ec514c387a5fd59411555455a6d722daa"
+  },
+  "mount": {
+    "path": "E:/OneDrive/Desktop/brick-stacking-real/brick-stacking-real/config/planning/p7_o6_left_mount_candidate.json",
+    "assembly_sha256": "4aca70b641295ceb0e0c6d489a54003d06afe46ed588e3f534e7dc174a0494ca",
+    "approved_for_motion": false
+  },
+  "edge_report": "E:/OneDrive/Desktop/brick-stacking-real/brick-stacking-real/docs/team/B/evidence/line_h/readonly_shadow/live_A_164356/robot_side_table_edge/robot_side_edge_report.json",
+  "edge_note": "signed_robot_edge_clearance_m < 0 means outside robot-side near edge (same convention as robot_side_table_edge). Not a palm/arm safety margin.",
+  "closest_part": {
+    "sample_index": 4,
+    "q_sdk_rad": [
+      0.11159364743764436,
+      0.09599175504311663,
+      0.08051851128305612,
+      -0.24208449761906692,
+      1.63109593654079,
+      -0.11026499615156551,
+      -0.2502227368660129
+    ],
+    "part": "L7_Link",
+    "score_m": 0.2851234381689336,
+    "xyz_base_m": [
+      0.003256533349979697,
+      0.09872819894750363,
+      -0.5567937745955103
+    ],
+    "height_plane_m": -0.0407282734436631,
+    "signed_robot_edge_clearance_m": -0.2851234381689336,
+    "planar_distance_to_edge_line_m": 0.29240686205848376,
+    "outside_edge": true,
+    "abs_edge_gap_m": 0.2851234381689336
+  },
+  "focus_part_minima": [
+    {
+      "part": "L6_Link",
+      "xyz_base_m": [
+        0.0025993278940408485,
+        0.09935272668050592,
+        -0.4954351754683095
+      ],
+      "height_plane_m": 0.02036466748199502,
+      "signed_robot_edge_clearance_m": -0.28966432727235586,
+      "planar_distance_to_edge_line_m": 0.29673675332177357,
+      "outside_edge": true,
+      "abs_edge_gap_m": 0.28966432727235586
+    },
+    {
+      "part": "L7_Link",
+      "xyz_base_m": [
+        0.003256533349979697,
+        0.09872819894750363,
+        -0.5567937745955103
+      ],
+      "height_plane_m": -0.0407282734436631,
+      "signed_robot_edge_clearance_m": -0.2851234381689336,
+      "planar_distance_to_edge_line_m": 0.29240686205848376,
+      "outside_edge": true,
+      "abs_edge_gap_m": 0.2851234381689336
+    },
+    {
+      "part": "L8_Link",
+      "xyz_base_m": [
+        -0.002837829228303501,
+        0.09897024716657285,
+        -0.6018831394120597
+      ],
+      "height_plane_m": -0.08603160127003846,
+      "signed_robot_edge_clearance_m": -0.2883881718000308,
+      "planar_distance_to_edge_line_m": 0.29581938797368007,
+      "outside_edge": true,
+      "abs_edge_gap_m": 0.2883881718000308
+    },
+    {
+      "part": "lh_hand_base_link",
+      "xyz_base_m": [
+        -0.002570127426122467,
+        0.0989585064283125,
+        -0.5999011712235184
+      ],
+      "height_plane_m": -0.08404030759622114,
+      "signed_robot_edge_clearance_m": -0.2882447382040518,
+      "planar_distance_to_edge_line_m": 0.2956693944246098,
+      "outside_edge": true,
+      "abs_edge_gap_m": 0.2882447382040518
+    }
+  ],
+  "samples": [
+    {
+      "sample_index": 0,
+      "q_sdk_rad": [
+        0.005009406246244907,
+        0.084225133061409,
+        0.09198535233736038,
+        -0.0240643247961998,
+        1.6429893970489502,
+        -0.10013733119706991,
+        -0.13866636148622824
+      ],
+      "parts": [
+        {
+          "xyz_base_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "height_plane_m": 0.5075000732919231,
+          "signed_robot_edge_clearance_m": -0.31312520106363756,
+          "planar_distance_to_edge_line_m": 0.3126150690949841,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.31312520106363756,
+          "part": "L1_Link"
+        },
+        {
+          "xyz_base_m": [
+            0.0,
+            0.058,
+            0.0
+          ],
+          "height_plane_m": 0.5110228260535732,
+          "signed_robot_edge_clearance_m": -0.31896768780010587,
+          "planar_distance_to_edge_line_m": 0.3217344559021632,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.31896768780010587,
+          "part": "L2_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.0006389879085305523,
+            0.0683474473210322,
+            -0.12256232151151322
+          ],
+          "height_plane_m": 0.38956133899903045,
+          "signed_robot_edge_clearance_m": -0.31300335389453676,
+          "planar_distance_to_edge_line_m": 0.31683277217970085,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.31300335389453676,
+          "part": "L3_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.001423967614339918,
+            0.08198198397161245,
+            -0.28408598481219727
+          ],
+          "height_plane_m": 0.22949224148310093,
+          "signed_robot_edge_clearance_m": -0.3050860560905748,
+          "planar_distance_to_edge_line_m": 0.31031620981950336,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.3050860560905748,
+          "part": "L4_Link"
+        },
+        {
+          "xyz_base_m": [
+            0.0009281712024409169,
+            0.09213743939783965,
+            -0.4076470392268975
+          ],
+          "height_plane_m": 0.10723001057250625,
+          "signed_robot_edge_clearance_m": -0.2960700524439027,
+          "planar_distance_to_edge_line_m": 0.3023772536397839,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.2960700524439027,
+          "part": "L5_Link"
+        },
+        {
+          "xyz_base_m": [
+            0.0025993278940408485,
+            0.09935272668050592,
+            -0.4954351754683095
+          ],
+          "height_plane_m": 0.02036466748199502,
+          "signed_robot_edge_clearance_m": -0.28966432727235586,
+          "planar_distance_to_edge_line_m": 0.29673675332177357,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.28966432727235586,
+          "part": "L6_Link"
+        },
+        {
+          "xyz_base_m": [
+            0.002767091750314586,
+            0.09828027884168816,
+            -0.5609261856644769
+          ],
+          "height_plane_m": -0.04490410055263944,
+          "signed_robot_edge_clearance_m": -0.2853066779827022,
+          "planar_distance_to_edge_line_m": 0.29257757925393246,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.2853066779827022,
+          "part": "L7_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.0033277294658033574,
+            0.09853584106369072,
+            -0.6060154139172433
+          ],
+          "height_plane_m": -0.09020650309007903,
+          "signed_robot_edge_clearance_m": -0.28857323683578784,
+          "planar_distance_to_edge_line_m": 0.29599269010345336,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.28857323683578784,
+          "part": "L8_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.0030600093493770505,
+            0.09852350660912378,
+            -0.6040334518084464
+          ],
+          "height_plane_m": -0.08821525027311379,
+          "signed_robot_edge_clearance_m": -0.28842972486894086,
+          "planar_distance_to_edge_line_m": 0.29584258479399617,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.28842972486894086,
+          "part": "lh_hand_base_link"
+        }
+      ]
+    },
+    {
+      "sample_index": 1,
+      "q_sdk_rad": [
+        0.03165546654409477,
+        0.0871667885568359,
+        0.08911864207378432,
+        -0.07856936800191658,
+        1.6400160319219101,
+        -0.1026692474356938,
+        -0.16655545533117438
+      ],
+      "parts": [
+        {
+          "xyz_base_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "height_plane_m": 0.5075000732919231,
+          "signed_robot_edge_clearance_m": -0.31312520106363756,
+          "planar_distance_to_edge_line_m": 0.3126150690949841,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.31312520106363756,
+          "part": "L1_Link"
+        },
+        {
+          "xyz_base_m": [
+            0.0,
+            0.058,
+            0.0
+          ],
+          "height_plane_m": 0.5110228260535732,
+          "signed_robot_edge_clearance_m": -0.31896768780010587,
+          "planar_distance_to_edge_line_m": 0.3217344559021632,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.31896768780010587,
+          "part": "L2_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.0039031974695661817,
+            0.0687079430501045,
+            -0.12247083583878088
+          ],
+          "height_plane_m": 0.38945013501840675,
+          "signed_robot_edge_clearance_m": -0.3162865949842857,
+          "planar_distance_to_edge_line_m": 0.320112762721401,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.3162865949842857,
+          "part": "L3_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.008990060472206844,
+            0.08281764161918294,
+            -0.28387545417409804
+          ],
+          "height_plane_m": 0.2292329693859686,
+          "signed_robot_edge_clearance_m": -0.31269617375210335,
+          "planar_distance_to_edge_line_m": 0.31791880281780693,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.31269617375210335,
+          "part": "L4_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.0032010065357946146,
+            0.09271642061065413,
+            -0.4073440778361415
+          ],
+          "height_plane_m": 0.1072832520367932,
+          "signed_robot_edge_clearance_m": -0.3002473638567227,
+          "planar_distance_to_edge_line_m": 0.30655666291495287,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.3002473638567227,
+          "part": "L5_Link"
+        },
+        {
+          "xyz_base_m": [
+            0.0009120229141885905,
+            0.09974934342636875,
+            -0.49506654351860946
+          ],
+          "height_plane_m": 0.02063994479112912,
+          "signed_robot_edge_clearance_m": -0.2914026852133111,
+          "planar_distance_to_edge_line_m": 0.29848404577429605,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.2914026852133111,
+          "part": "L6_Link"
+        },
+        {
+          "xyz_base_m": [
+            0.0028822578491016536,
+            0.09837596032597914,
+            -0.5605225035127444
+          ],
+          "height_plane_m": -0.04448839724944071,
+          "signed_robot_edge_clearance_m": -0.28522712865419747,
+          "planar_distance_to_edge_line_m": 0.2925026668290203,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.28522712865419747,
+          "part": "L7_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.003212689808381659,
+            0.09862605828673242,
+            -0.605611745313848
+          ],
+          "height_plane_m": -0.0897911538461526,
+          "signed_robot_edge_clearance_m": -0.2884932617847474,
+          "planar_distance_to_edge_line_m": 0.29591704238710304,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.2884932617847474,
+          "part": "L8_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.002944963352707355,
+            0.09861396388953793,
+            -0.6036297825819319
+          ],
+          "height_plane_m": -0.08779988539289381,
+          "signed_robot_edge_clearance_m": -0.2883497677437268,
+          "planar_distance_to_edge_line_m": 0.2957669686090141,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.2883497677437268,
+          "part": "lh_hand_base_link"
+        }
+      ]
+    },
+    {
+      "sample_index": 2,
+      "q_sdk_rad": [
+        0.05830152684194463,
+        0.09010844405226281,
+        0.08625193181020825,
+        -0.13307441120763336,
+        1.63704266679487,
+        -0.10520116367431771,
+        -0.19444454917612056
+      ],
+      "parts": [
+        {
+          "xyz_base_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "height_plane_m": 0.5075000732919231,
+          "signed_robot_edge_clearance_m": -0.31312520106363756,
+          "planar_distance_to_edge_line_m": 0.3126150690949841,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.31312520106363756,
+          "part": "L1_Link"
+        },
+        {
+          "xyz_base_m": [
+            0.0,
+            0.058,
+            0.0
+          ],
+          "height_plane_m": 0.5110228260535732,
+          "signed_robot_edge_clearance_m": -0.31896768780010587,
+          "planar_distance_to_edge_line_m": 0.3217344559021632,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.31896768780010587,
+          "part": "L2_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.0071629247173021346,
+            0.06906834611980324,
+            -0.12229139319497027
+          ],
+          "height_plane_m": 0.3894268197588881,
+          "signed_robot_edge_clearance_m": -0.3195708596668303,
+          "planar_distance_to_edge_line_m": 0.32339345722634266,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.3195708596668303,
+          "part": "L3_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.016545804594088512,
+            0.08365308449368307,
+            -0.2834610477850033
+          ],
+          "height_plane_m": 0.2291774120385797,
+          "signed_robot_edge_clearance_m": -0.3203087045481034,
+          "planar_distance_to_edge_line_m": 0.32552306778939283,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.3203087045481034,
+          "part": "L4_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.007322038521640085,
+            0.09330120572457017,
+            -0.40674055093193706
+          ],
+          "height_plane_m": 0.10763670498982544,
+          "signed_robot_edge_clearance_m": -0.3044359102733093,
+          "planar_distance_to_edge_line_m": 0.3107465096643442,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.3044359102733093,
+          "part": "L5_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.0007687014975860012,
+            0.10015604024425688,
+            -0.4943286495387505
+          ],
+          "height_plane_m": 0.02128399296567021,
+          "signed_robot_edge_clearance_m": -0.293158545953879,
+          "planar_distance_to_edge_line_m": 0.3002480034480798,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.293158545953879,
+          "part": "L6_Link"
+        },
+        {
+          "xyz_base_m": [
+            0.0030027496460027143,
+            0.09848497162954402,
+            -0.5596986303521897
+          ],
+          "height_plane_m": -0.043653097431302086,
+          "signed_robot_edge_clearance_m": -0.28516983068072016,
+          "planar_distance_to_edge_line_m": 0.2924491423116338,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.28516983068072016,
+          "part": "L7_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.0030921613611665107,
+            0.09873096507898779,
+            -0.6047878996872914
+          ],
+          "height_plane_m": -0.08895612822491791,
+          "signed_robot_edge_clearance_m": -0.28843551224462355,
+          "planar_distance_to_edge_line_m": 0.29586283477480413,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.28843551224462355,
+          "part": "L8_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.002824435942083765,
+            0.09871905100474555,
+            -0.6028059357231821
+          ],
+          "height_plane_m": -0.08696484766355739,
+          "signed_robot_edge_clearance_m": -0.2882920374741033,
+          "planar_distance_to_edge_line_m": 0.29571279044291404,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.2882920374741033,
+          "part": "lh_hand_base_link"
+        }
+      ]
+    },
+    {
+      "sample_index": 3,
+      "q_sdk_rad": [
+        0.0849475871397945,
+        0.09305009954768972,
+        0.0833852215466322,
+        -0.18757945441335014,
+        1.63406930166783,
+        -0.10773307991294162,
+        -0.22233364302106673
+      ],
+      "parts": [
+        {
+          "xyz_base_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "height_plane_m": 0.5075000732919231,
+          "signed_robot_edge_clearance_m": -0.31312520106363756,
+          "planar_distance_to_edge_line_m": 0.3126150690949841,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.31312520106363756,
+          "part": "L1_Link"
+        },
+        {
+          "xyz_base_m": [
+            0.0,
+            0.058,
+            0.0
+          ],
+          "height_plane_m": 0.5110228260535732,
+          "signed_robot_edge_clearance_m": -0.31896768780010587,
+          "planar_distance_to_edge_line_m": 0.3217344559021632,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.31896768780010587,
+          "part": "L2_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.01041577275805085,
+            0.06942865341144144,
+            -0.12202417049484138
+          ],
+          "height_plane_m": 0.3894913814903203,
+          "signed_robot_edge_clearance_m": -0.322853756582939,
+          "planar_distance_to_edge_line_m": 0.32667248193372384,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.322853756582939,
+          "part": "L3_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.02408564418068724,
+            0.08448830536397375,
+            -0.2828431746182486
+          ],
+          "height_plane_m": 0.2293255433469395,
+          "signed_robot_edge_clearance_m": -0.32791810557605205,
+          "planar_distance_to_edge_line_m": 0.33312350261896595,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.32791810557605205,
+          "part": "L4_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.01143214491366846,
+            0.09389016053901429,
+            -0.40583705282186944
+          ],
+          "height_plane_m": 0.10828986930200356,
+          "signed_robot_edge_clearance_m": -0.3086327297579624,
+          "planar_distance_to_edge_line_m": 0.31494376176938654,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.3086327297579624,
+          "part": "L5_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.0024420377731494726,
+            0.1005700269980552,
+            -0.49322221951331296
+          ],
+          "height_plane_m": 0.02229597508136762,
+          "signed_robot_edge_clearance_m": -0.2949307812936585,
+          "planar_distance_to_edge_line_m": 0.30202734911738693,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.2949307812936585,
+          "part": "L6_Link"
+        },
+        {
+          "xyz_base_m": [
+            0.0031277804937245406,
+            0.09860367961185268,
+            -0.558455349961144
+          ],
+          "height_plane_m": -0.04239925627193302,
+          "signed_robot_edge_clearance_m": -0.28513515033008946,
+          "planar_distance_to_edge_line_m": 0.2924171641846309,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.28513515033008946,
+          "part": "L7_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.0029669341030782977,
+            0.09884697478074897,
+            -0.6035446604857033
+          ],
+          "height_plane_m": -0.08770247847699313,
+          "signed_robot_edge_clearance_m": -0.28840036249411954,
+          "planar_distance_to_edge_line_m": 0.2958302363613464,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.28840036249411954,
+          "part": "L8_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.002699216959601499,
+            0.09883517925318867,
+            -0.601562694694668
+          ],
+          "height_plane_m": -0.08571118946462203,
+          "signed_robot_edge_clearance_m": -0.28825690799633724,
+          "planar_distance_to_edge_line_m": 0.2956802189337199,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.28825690799633724,
+          "part": "lh_hand_base_link"
+        }
+      ]
+    },
+    {
+      "sample_index": 4,
+      "q_sdk_rad": [
+        0.11159364743764436,
+        0.09599175504311663,
+        0.08051851128305612,
+        -0.24208449761906692,
+        1.63109593654079,
+        -0.11026499615156551,
+        -0.2502227368660129
+      ],
+      "parts": [
+        {
+          "xyz_base_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "height_plane_m": 0.5075000732919231,
+          "signed_robot_edge_clearance_m": -0.31312520106363756,
+          "planar_distance_to_edge_line_m": 0.3126150690949841,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.31312520106363756,
+          "part": "L1_Link"
+        },
+        {
+          "xyz_base_m": [
+            0.0,
+            0.058,
+            0.0
+          ],
+          "height_plane_m": 0.5110228260535732,
+          "signed_robot_edge_clearance_m": -0.31896768780010587,
+          "planar_distance_to_edge_line_m": 0.3217344559021632,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.31896768780010587,
+          "part": "L2_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.013659351061540722,
+            0.06978886180716092,
+            -0.12166941066582666
+          ],
+          "height_plane_m": 0.3896437423109146,
+          "signed_robot_edge_clearance_m": -0.32613289657651057,
+          "planar_distance_to_edge_line_m": 0.3299474655005056,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.32613289657651057,
+          "part": "L3_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.031604038152866706,
+            0.08532329700083699,
+            -0.28202239666014844
+          ],
+          "height_plane_m": 0.22967718383765873,
+          "signed_robot_edge_clearance_m": -0.3355188390105326,
+          "planar_distance_to_edge_line_m": 0.3407146107660539,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.3355188390105326,
+          "part": "L4_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.015528565518159319,
+            0.09448153827945767,
+            -0.40463440992252553
+          ],
+          "height_plane_m": 0.10924200552549505,
+          "signed_robot_edge_clearance_m": -0.31283485407364114,
+          "planar_distance_to_edge_line_m": 0.31914537522387276,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.31283485407364114,
+          "part": "L5_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.0041072014930164085,
+            0.10098832099434865,
+            -0.4917482677323273
+          ],
+          "height_plane_m": 0.02367475383757873,
+          "signed_robot_edge_clearance_m": -0.2967182486467045,
+          "planar_distance_to_edge_line_m": 0.303820781262049,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.2967182486467045,
+          "part": "L6_Link"
+        },
+        {
+          "xyz_base_m": [
+            0.003256533349979697,
+            0.09872819894750363,
+            -0.5567937745955103
+          ],
+          "height_plane_m": -0.0407282734436631,
+          "signed_robot_edge_clearance_m": -0.2851234381689336,
+          "planar_distance_to_edge_line_m": 0.29240686205848376,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.2851234381689336,
+          "part": "L7_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.002837829228303501,
+            0.09897024716657285,
+            -0.6018831394120597
+          ],
+          "height_plane_m": -0.08603160127003846,
+          "signed_robot_edge_clearance_m": -0.2883881718000308,
+          "planar_distance_to_edge_line_m": 0.29581938797368007,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.2883881718000308,
+          "part": "L8_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.002570127426122467,
+            0.0989585064283125,
+            -0.5999011712235184
+          ],
+          "height_plane_m": -0.08404030759622114,
+          "signed_robot_edge_clearance_m": -0.2882447382040518,
+          "planar_distance_to_edge_line_m": 0.2956693944246098,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.2882447382040518,
+          "part": "lh_hand_base_link"
+        }
+      ]
+    },
+    {
+      "sample_index": 5,
+      "q_sdk_rad": [
+        0.1382397077354942,
+        0.09893341053854353,
+        0.07765180101948006,
+        -0.2965895408247837,
+        1.62812257141375,
+        -0.11279691239018941,
+        -0.278111830710959
+      ],
+      "parts": [
+        {
+          "xyz_base_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "height_plane_m": 0.5075000732919231,
+          "signed_robot_edge_clearance_m": -0.31312520106363756,
+          "planar_distance_to_edge_line_m": 0.3126150690949841,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.31312520106363756,
+          "part": "L1_Link"
+        },
+        {
+          "xyz_base_m": [
+            0.0,
+            0.058,
+            0.0
+          ],
+          "height_plane_m": 0.5110228260535732,
+          "signed_robot_edge_clearance_m": -0.31896768780010587,
+          "planar_distance_to_edge_line_m": 0.3217344559021632,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.31896768780010587,
+          "part": "L2_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.01689127729678707,
+            0.07014896818995926,
+            -0.12122742243033434
+          ],
+          "height_plane_m": 0.3898837582379337,
+          "signed_robot_edge_clearance_m": -0.32940589453109237,
+          "planar_distance_to_edge_line_m": 0.3332160408239934,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.32940589453109237,
+          "part": "L3_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.03909546440711585,
+            0.08615805217703856,
+            -0.28099942840619807
+          ],
+          "height_plane_m": 0.23023200086735035,
+          "signed_robot_edge_clearance_m": -0.3431053763601479,
+          "planar_distance_to_edge_line_m": 0.3482909054896193,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.3431053763601479,
+          "part": "L4_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.019608562005351566,
+            0.09507349222165562,
+            -0.40313368061905996
+          ],
+          "height_plane_m": 0.11049213564861492,
+          "signed_robot_edge_clearance_m": -0.31703931216303693,
+          "planar_distance_to_edge_line_m": 0.32334829831193773,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.31703931216303693,
+          "part": "L5_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.0057634321537754895,
+            0.10140776857593597,
+            -0.48990809690900455
+          ],
+          "height_plane_m": 0.025418892698852114,
+          "signed_robot_edge_clearance_m": -0.29851979397137984,
+          "planar_distance_to_edge_line_m": 0.3056269782123108,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.29851979397137984,
+          "part": "L6_Link"
+        },
+        {
+          "xyz_base_m": [
+            0.0033881614270893957,
+            0.09885442043308923,
+            -0.5547153453753996
+          ],
+          "height_plane_m": -0.03864189173855466,
+          "signed_robot_edge_clearance_m": -0.28513503124497797,
+          "planar_distance_to_edge_line_m": 0.2924183404590081,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.28513503124497797,
+          "part": "L7_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.0027056982962945075,
+            0.0990967166455458,
+            -0.5998047768239438
+          ],
+          "height_plane_m": -0.0839452363156488,
+          "signed_robot_edge_clearance_m": -0.2883992863889913,
+          "planar_distance_to_edge_line_m": 0.29583040574355834,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.2883992863889913,
+          "part": "L8_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.0024380187000670834,
+            0.09908496502353266,
+            -0.5978228057007032
+          ],
+          "height_plane_m": -0.08195394190574051,
+          "signed_robot_edge_clearance_m": -0.2882558739292127,
+          "planar_distance_to_edge_line_m": 0.29568043254600096,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.2882558739292127,
+          "part": "lh_hand_base_link"
+        }
+      ]
+    },
+    {
+      "sample_index": 6,
+      "q_sdk_rad": [
+        0.1648857680333441,
+        0.10187506603397044,
+        0.074785090755904,
+        -0.3510945840305005,
+        1.62514920628671,
+        -0.11532882862881332,
+        -0.3060009245559052
+      ],
+      "parts": [
+        {
+          "xyz_base_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "height_plane_m": 0.5075000732919231,
+          "signed_robot_edge_clearance_m": -0.31312520106363756,
+          "planar_distance_to_edge_line_m": 0.3126150690949841,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.31312520106363756,
+          "part": "L1_Link"
+        },
+        {
+          "xyz_base_m": [
+            0.0,
+            0.058,
+            0.0
+          ],
+          "height_plane_m": 0.5110228260535732,
+          "signed_robot_edge_clearance_m": -0.31896768780010587,
+          "planar_distance_to_edge_line_m": 0.3217344559021632,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.31896768780010587,
+          "part": "L2_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.02010917916073849,
+            0.07050896944371682,
+            -0.12069858003654312
+          ],
+          "height_plane_m": 0.3902112193501657,
+          "signed_robot_edge_clearance_m": -0.33267037120243625,
+          "planar_distance_to_edge_line_m": 0.3364758468603057,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.33267037120243625,
+          "part": "L3_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.04655442405428857,
+            0.08699256366739051,
+            -0.27977513623787886
+          ],
+          "height_plane_m": 0.23098950895206802,
+          "signed_robot_edge_clearance_m": -0.3506722027152719,
+          "planar_distance_to_edge_line_m": 0.3558469140631598,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.3506722027152719,
+          "part": "L4_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.02366942023893629,
+            0.09566408890473825,
+            -0.40133615486815094
+          ],
+          "height_plane_m": 0.112039044133723,
+          "signed_robot_edge_clearance_m": -0.3212431338174051,
+          "planar_distance_to_edge_line_m": 0.3275494760052445,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.3212431338174051,
+          "part": "L5_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.007409994141093262,
+            0.10182506772256354,
+            -0.4877032979433684
+          ],
+          "height_plane_m": 0.027526657436173052,
+          "signed_robot_edge_clearance_m": -0.30033425502787237,
+          "planar_distance_to_edge_line_m": 0.30744460267538687,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.30033425502787237,
+          "part": "L6_Link"
+        },
+        {
+          "xyz_base_m": [
+            0.0035217885797742005,
+            0.09897804063171464,
+            -0.5522218322484864
+          ],
+          "height_plane_m": -0.03614219520475485,
+          "signed_robot_edge_clearance_m": -0.2851702556904376,
+          "planar_distance_to_edge_line_m": 0.29245168310823794,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.2851702556904376,
+          "part": "L7_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.002571422606778389,
+            0.09922212179907959,
+            -0.5973113417152751
+          ],
+          "height_plane_m": -0.08144546451419216,
+          "signed_robot_edge_clearance_m": -0.2884340418034396,
+          "planar_distance_to_edge_line_m": 0.2958633851367192,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.2884340418034396,
+          "part": "L8_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.0023037718628333244,
+            0.09921029177473857,
+            -0.5953293671619557
+          ],
+          "height_plane_m": -0.07945417343228164,
+          "signed_robot_edge_clearance_m": -0.28829065030895573,
+          "planar_distance_to_edge_line_m": 0.2957134282557798,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.28829065030895573,
+          "part": "lh_hand_base_link"
+        }
+      ]
+    },
+    {
+      "sample_index": 7,
+      "q_sdk_rad": [
+        0.19153182833119395,
+        0.10481672152939735,
+        0.07191838049232793,
+        -0.40559962723621723,
+        1.6221758411596698,
+        -0.11786074486743722,
+        -0.33389001840085136
+      ],
+      "parts": [
+        {
+          "xyz_base_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "height_plane_m": 0.5075000732919231,
+          "signed_robot_edge_clearance_m": -0.31312520106363756,
+          "planar_distance_to_edge_line_m": 0.3126150690949841,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.31312520106363756,
+          "part": "L1_Link"
+        },
+        {
+          "xyz_base_m": [
+            0.0,
+            0.058,
+            0.0
+          ],
+          "height_plane_m": 0.5110228260535732,
+          "signed_robot_edge_clearance_m": -0.31896768780010587,
+          "planar_distance_to_edge_line_m": 0.3217344559021632,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.31896768780010587,
+          "part": "L2_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.023310696198242033,
+            0.07086886245322363,
+            -0.1200833229379234
+          ],
+          "height_plane_m": 0.3906258499820515,
+          "signed_robot_edge_clearance_m": -0.3359239550456306,
+          "planar_distance_to_edge_line_m": 0.339724530437278,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.3359239550456306,
+          "part": "L3_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.05397544563824288,
+            0.08782682424881384,
+            -0.2783505376806128
+          ],
+          "height_plane_m": 0.23194907021647615,
+          "signed_robot_edge_clearance_m": -0.35821382098325055,
+          "planar_distance_to_edge_line_m": 0.36337718197693253,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.35821382098325055,
+          "part": "L4_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.027708452705761645,
+            0.09625132187007707,
+            -0.39924335352222645
+          ],
+          "height_plane_m": 0.11388127925772798,
+          "signed_robot_edge_clearance_m": -0.3254433535152418,
+          "planar_distance_to_edge_line_m": 0.3317458545579113,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.3254433535152418,
+          "part": "L5_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.00904617788841006,
+            0.1022367915509907,
+            -0.48513574929356645
+          ],
+          "height_plane_m": 0.029996018100746473,
+          "signed_robot_edge_clearance_m": -0.30216046493514837,
+          "planar_distance_to_edge_line_m": 0.3092723066093969,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.30216046493514837,
+          "part": "L6_Link"
+        },
+        {
+          "xyz_base_m": [
+            0.003656509455561589,
+            0.0990945927134817,
+            -0.5493153334796597
+          ],
+          "height_plane_m": -0.033231606754803474,
+          "signed_robot_edge_clearance_m": -0.28522942971112614,
+          "planar_distance_to_edge_line_m": 0.29250695765503104,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.28522942971112614,
+          "part": "L7_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.002435912777247252,
+            0.09934203611449646,
+            -0.5944049312294322
+          ],
+          "height_plane_m": -0.07853470557429426,
+          "signed_robot_edge_clearance_m": -0.28849276560831005,
+          "planar_distance_to_edge_line_m": 0.29591840539706527,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.28849276560831005,
+          "part": "L8_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.002168297308232041,
+            0.09933005839859287,
+            -0.592422952799862
+          ],
+          "height_plane_m": -0.0765434220256519,
+          "signed_robot_edge_clearance_m": -0.2883493945046784,
+          "planar_distance_to_edge_line_m": 0.29576846029606035,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.2883493945046784,
+          "part": "lh_hand_base_link"
+        }
+      ]
+    },
+    {
+      "sample_index": 8,
+      "q_sdk_rad": [
+        0.2181778886290438,
+        0.10775837702482426,
+        0.06905167022875187,
+        -0.46010467044193404,
+        1.6192024760326298,
+        -0.12039266110606112,
+        -0.3617791122457975
+      ],
+      "parts": [
+        {
+          "xyz_base_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "height_plane_m": 0.5075000732919231,
+          "signed_robot_edge_clearance_m": -0.31312520106363756,
+          "planar_distance_to_edge_line_m": 0.3126150690949841,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.31312520106363756,
+          "part": "L1_Link"
+        },
+        {
+          "xyz_base_m": [
+            0.0,
+            0.058,
+            0.0
+          ],
+          "height_plane_m": 0.5110228260535732,
+          "signed_robot_edge_clearance_m": -0.31896768780010587,
+          "planar_distance_to_edge_line_m": 0.3217344559021632,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.31896768780010587,
+          "part": "L2_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.02649348161187845,
+            0.07122864410420643,
+            -0.11938215542176153
+          ],
+          "height_plane_m": 0.39112730896929077,
+          "signed_robot_edge_clearance_m": -0.3391642840353538,
+          "planar_distance_to_edge_line_m": 0.3429597480603603,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.3391642840353538,
+          "part": "L3_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.06135308933102123,
+            0.08866082670040101,
+            -0.27672680054350596
+          ],
+          "height_plane_m": 0.23310989496234352,
+          "signed_robot_edge_clearance_m": -0.36572475610768024,
+          "planar_distance_to_edge_line_m": 0.370876277123958,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.36572475610768024,
+          "part": "L4_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.031723001029727485,
+            0.09683312586039727,
+            -0.3968570273546506
+          ],
+          "height_plane_m": 0.11601715477254322,
+          "signed_robot_edge_clearance_m": -0.32963701440956344,
+          "planar_distance_to_edge_line_m": 0.33593438627426675,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.32963701440956344,
+          "part": "L5_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.010671301196308304,
+            0.10263941260229785,
+            -0.4822076159196655
+          ],
+          "height_plane_m": 0.03282465146027379,
+          "signed_robot_edge_clearance_m": -0.30399725599340144,
+          "planar_distance_to_edge_line_m": 0.31110873640444586,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.30399725599340144,
+          "part": "L6_Link"
+        },
+        {
+          "xyz_base_m": [
+            0.0037913894389720176,
+            0.09919947834452766,
+            -0.5459982746204766
+          ],
+          "height_plane_m": -0.029912885206413123,
+          "signed_robot_edge_clearance_m": -0.2853128669183902,
+          "planar_distance_to_edge_line_m": 0.2925842208042232,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.2853128669183902,
+          "part": "L7_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.0023001084939773334,
+            0.09945189976679907,
+            -0.5910879696570842
+          ],
+          "height_plane_m": -0.07521571506745706,
+          "signed_robot_edge_clearance_m": -0.2885757804077439,
+          "planar_distance_to_edge_line_m": 0.29599553435681725,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.2885757804077439,
+          "part": "L8_Link"
+        },
+        {
+          "xyz_base_m": [
+            -0.00203253450688864,
+            0.09943970337903109,
+            -0.5891059869604456
+          ],
+          "height_plane_m": -0.07322444340037307,
+          "signed_robot_edge_clearance_m": -0.28843242873259317,
+          "planar_distance_to_edge_line_m": 0.2958455960173464,
+          "outside_edge": true,
+          "abs_edge_gap_m": 0.28843242873259317,
+          "part": "lh_hand_base_link"
+        }
+      ]
+    }
+  ],
+  "missing": [
+    "fingertip frames (need bound live hand pose; can0 vs can1 teach remap open)",
+    "mesh/capsule sweep vs table slab (origins only here)",
+    "continuous articulated sweep certificate",
+    "full measured desk polygon (edge is depth-support terminus estimate)"
+  ],
+  "reject_table_unchanged": true,
+  "flange_audit_crosscheck": {
+    "n_samples_expected": 9,
+    "n_samples": 9,
+    "independent_first_base_m": [
+      -0.0033277294658033574,
+      0.09853584106369072,
+      -0.6060154139172433
+    ]
+  }
+}

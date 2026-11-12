@@ -24,7 +24,10 @@ def matrix(pose):
 
 model = root/"config/models/p7_left/p7__left.urdf"
 lock = load(model.with_name("LOCK.json"))["urdf_sha256"]
-assert hashlib.sha256(model.read_bytes()).hexdigest()==lock
+_raw = model.read_bytes()
+_sha = hashlib.sha256(_raw).hexdigest()
+_sha_lf = hashlib.sha256(_raw.replace(b"\r\n", b"\n")).hexdigest()
+assert _sha == lock or _sha_lf == lock, (_sha, _sha_lf, lock)
 names = [f"L{i}_Joint" for i in range(1,8)]
 limits_xml = {j.get("name"):j.find("limit") for j in ET.parse(model).findall("joint")}
 limits = SimpleNamespace(joint_names=names,model_version=lock,
