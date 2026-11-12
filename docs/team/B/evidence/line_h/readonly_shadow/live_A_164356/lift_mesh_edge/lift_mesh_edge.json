@@ -1,0 +1,119 @@
+{
+  "frame": "frame_009.npz",
+  "source_sha256_lf": {
+    "offline_replay.json": "6c8b7d4b94a0b838d624666a5cd0d6354d3a8f0b0c69adeb85bb34d970f4861e",
+    "robot_side_table_edge/robot_side_edge_report.json": "7f971d0c2fcd77c9adfa4e819b4676b6dbb3145e050210ea6130665553628063",
+    "lift_part_proximity/lift_part_proximity.json": "a25a77f583571597b04bafbcadf03994a7e5c49c15a77e4c1a261ac78d49a568"
+  },
+  "samples": 9,
+  "per_part": {
+    "L1_Link": {
+      "sample": 2,
+      "signed_perpendicular_m": -0.26887356456947004,
+      "height_at_this_vertex_m": 0.5082412900939914,
+      "vertex_base_m": [
+        0.04443524190087627,
+        0.001300000469200313,
+        -0.002399851084796175
+      ]
+    },
+    "L2_Link": {
+      "sample": 8,
+      "signed_perpendicular_m": -0.262993200318901,
+      "height_at_this_vertex_m": 0.5289824514613614,
+      "vertex_base_m": [
+        0.05572311434763183,
+        0.027827959107226293,
+        0.016032418714437488
+      ]
+    },
+    "L3_Link": {
+      "sample": 0,
+      "signed_perpendicular_m": -0.2759771765466309,
+      "height_at_this_vertex_m": 0.2254941374442626,
+      "vertex_base_m": [
+        0.026845604667434818,
+        0.04214581567867605,
+        -0.28762111958570113
+      ]
+    },
+    "L4_Link": {
+      "sample": 0,
+      "signed_perpendicular_m": -0.2668996539939212,
+      "height_at_this_vertex_m": 0.15275775138256512,
+      "vertex_base_m": [
+        0.03767832224491229,
+        0.08061627749233664,
+        -0.3637588297462523
+      ]
+    },
+    "L5_Link": {
+      "sample": 0,
+      "signed_perpendicular_m": -0.25408563674409446,
+      "height_at_this_vertex_m": -0.0024157141649510157,
+      "vertex_base_m": [
+        0.04420564015998871,
+        0.09850385941855729,
+        -0.5211299272813283
+      ]
+    },
+    "L6_Link": {
+      "sample": 3,
+      "signed_perpendicular_m": -0.26189158760405085,
+      "height_at_this_vertex_m": -0.0402973534831828,
+      "vertex_base_m": [
+        0.03653087768479396,
+        0.11432317177227466,
+        -0.5596073226291841
+      ]
+    },
+    "L7_Link": {
+      "sample": 4,
+      "signed_perpendicular_m": -0.26089474799152457,
+      "height_at_this_vertex_m": -0.037386421247087645,
+      "vertex_base_m": [
+        0.03955027769638131,
+        0.12617473625265446,
+        -0.5576152144380179
+      ]
+    },
+    "L8_Link": {
+      "sample": 4,
+      "signed_perpendicular_m": -0.278792666659364,
+      "height_at_this_vertex_m": -0.08631537493694508,
+      "vertex_base_m": [
+        0.013912727575795262,
+        0.09617630612049155,
+        -0.6031530656290296
+      ]
+    },
+    "lh_hand_base_link": {
+      "sample": 4,
+      "signed_perpendicular_m": -0.2766376730907949,
+      "height_at_this_vertex_m": -0.0941638389760532,
+      "vertex_base_m": [
+        0.015075976037775983,
+        0.09264148297318252,
+        -0.6108993599655035
+      ]
+    }
+  },
+  "all_sampled_meshes_outside": true,
+  "scope": "A first lift only; discrete P7 collision meshes and rigid O6 palm",
+  "table": "depth-fitted near-edge half-plane; finite board and uncertainty unmeasured",
+  "modeled_interpolation": {
+    "method": "nearest sample plus global revolute lever-arm bound",
+    "assumption": "joint-linear interpolation of this SDK seed to first IK waypoint",
+    "lever_arm_bound_m": 0.865674722632903,
+    "half_step_joint_l1_rad": 0.06017692223658988,
+    "displacement_bound_m": 0.05209364046606172,
+    "max_signed_upper_bound_m": -0.20199199627803274,
+    "covered_meshes_outside_fitted_halfplane": true
+  },
+  "whole_robot_sweep": "UNKNOWN",
+  "fingers": "UNKNOWN",
+  "planner_status": "REJECT_TABLE",
+  "approved_for_motion": false,
+  "control_ready": false,
+  "motion_commanded": false
+}
