@@ -9,7 +9,13 @@ import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from brick_stacking.manual_teach.presets import GRASP_PERCENT, RELEASE_PERCENT
+from brick_stacking.manual_teach.presets import (
+    GRASP_PERCENT,
+    RELEASE_PERCENT,
+    VICTORY_PERCENT,
+    VICTORY_RAW_U8,
+    VICTORY_SOURCE_URL,
+)
 from brick_stacking.manual_teach.recorder import StreamRecorder, sleep_until
 from brick_stacking.manual_teach.session import TeachSession
 
@@ -33,6 +39,7 @@ def test_percent_raw_mapping_matches_live_feedback() -> None:
     assert percent_to_raw_u8(raw_u8_to_percent(213)) == 213
     assert [percent_to_raw_u8(v) for v in GRASP_PERCENT] == [104, 61, 195, 186, 0, 0]
     assert [percent_to_raw_u8(v) for v in RELEASE_PERCENT] == [213, 61, 215, 215, 0, 0]
+    assert [percent_to_raw_u8(v) for v in VICTORY_PERCENT] == list(VICTORY_RAW_U8)
 
 
 def test_presets_match_operator_readings() -> None:
@@ -40,6 +47,8 @@ def test_presets_match_operator_readings() -> None:
     assert RELEASE_PERCENT == (83.5, 23.9, 84.3, 84.3, 0.0, 0.0)
     assert hand_backend.PRESETS["抓取"] == [40.8, 23.9, 76.5, 72.9, 0.0, 0.0]
     assert hand_backend.PRESETS["松开"] == [83.5, 23.9, 84.3, 84.3, 0.0, 0.0]
+    assert hand_backend.PRESETS["胜利手势"] == list(VICTORY_PERCENT)
+    assert "github.com/linker-bot/primitive/blob/5d0599e" in VICTORY_SOURCE_URL
     assert "three_finger_soft_draft" not in hand_backend.PRESETS
 
 

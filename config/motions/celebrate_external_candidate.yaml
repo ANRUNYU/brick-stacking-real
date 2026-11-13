@@ -1,0 +1,95 @@
+schema_version: celebration-motion-source-0.2
+motion_id: celebrate_asymmetric_loop_v2
+status: asymmetric_loop_hardware_validated_default_closed
+live_motion_enabled: false
+
+arm_motion_source:
+  repository: https://github.com/YauhenBichel/humanoid-companion
+  commit: b0fe0079fa1c81a182ea4491c8509cb71ef4fe59
+  path: src/humanoid_companion/gestures.py
+  license: Apache-2.0
+  source_robot: ROBOTIS OP3
+  source_gesture: celebrate
+  duration_s: 2.2
+  envelope:
+    kind: cosine_ramp_hold_cosine_ramp
+    ramp_s: 0.35
+  elbow_oscillation:
+    frequency_hz: 2.5
+    center_rad: 0.3
+    amplitude_rad: 0.25
+  semantic_motion:
+    - raise_both_arms
+    - oscillate_both_elbows_in_phase
+    - return_to_start
+
+implemented_motion:
+  runner: tools/run_celebration.py
+  entry_point: brick-stacking-celebrate
+  personality: playful_asymmetric
+  entrance_once: true
+  loop_boundary: same_asymmetric_anchor
+  loop_count:
+    required_per_execution: true
+    minimum: 1
+    maximum: 10
+  cycle:
+    - left_high_wave_twice
+    - right_chest_fist_pump_twice
+    - asymmetric_two_arm_finale_accent
+    - return_exactly_to_loop_anchor
+  exit_once: true
+  return_to_measured_start: true
+
+hand_pose_source:
+  repository: https://github.com/linker-bot/primitive
+  commit: 5d0599eaf56e3f4cec9ff22dae57f4bddab40bd9
+  path: hand_gesture_primitives/hand_gesture_primitives/config/o6.yaml
+  license: MIT
+  model: O6
+  preset: v_sign
+  channel_order: [thumb_flex, thumb_abd, index, middle, ring, pinky]
+  raw_u8: [60, 140, 255, 255, 0, 0]
+
+retarget_target:
+  robot: LinkerBot P7 dual arm with O6 hands
+  simulator_repository: https://github.com/linker-bot/linker-sim
+  simulator_commit_reviewed: faf9d7e66bfa68120718138f852717a13e138aa3
+  asset_repository: https://github.com/linker-bot/linker-sim-assets
+  asset_commit_reviewed: d0224b8da58802fe7cb2e35dcc9771693c4543b6
+  workstation: p7_i1_o6_bimanual
+  joint_mapping:
+    left:
+      hero_lift: J2
+      high_wave: J4
+    right:
+      shoulder_lift: J2
+      elbow_plane: J3
+      fist_pump: J4
+  collision_validation: urdf_limits_and_endpoint_clearance_passed
+  hardware_validation:
+    date: 2026-11-13
+    verdict: PASS
+    loops_requested: 5
+    loops_completed: 5
+    left_return_max_error_rad: 0.05035477225909801
+    right_return_max_error_rad: 0.04806591897459356
+    return_tolerance_rad: 0.08
+    can2_error_count: 0
+    can3_error_count: 0
+    conditions: [empty_hands, clear_workspace, physical_stop_ready]
+  remaining_validation: none_for_validated_empty_hand_choreography
+
+safety:
+  require_stationary_base: true
+  require_empty_hands: true
+  require_clear_workspace: true
+  require_simulation_pass: true
+  require_return_to_measured_start: true
+  permit_live_execution: false
+  live_gate:
+    - explicit_enable_live_motion
+    - nonempty_authorization_ref
+    - empty_hands_confirmation
+    - clear_workspace_confirmation
+    - physical_stop_confirmation

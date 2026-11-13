@@ -15,6 +15,7 @@ if str(_SRC) not in sys.path:
 from brick_stacking.manual_teach.presets import (  # noqa: E402
     GRASP_PERCENT,
     RELEASE_PERCENT,
+    VICTORY_PERCENT,
     as_percent_list,
 )
 
@@ -31,6 +32,7 @@ CHANNEL_NAMES = (
 PRESETS = {
     "抓取": as_percent_list(GRASP_PERCENT),
     "松开": as_percent_list(RELEASE_PERCENT),
+    "胜利手势": as_percent_list(VICTORY_PERCENT),
 }
 
 

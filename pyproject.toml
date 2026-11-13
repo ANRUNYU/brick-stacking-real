@@ -17,6 +17,7 @@ planning = ["python-fcl==0.7.0.11"]
 [project.scripts]
 brick-stacking-offline = "brick_stacking.app.offline_runner:main"
 brick-stacking-task-mock = "brick_stacking.app.task_runner:main"
+brick-stacking-celebrate = "brick_stacking.motion.celebration_cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

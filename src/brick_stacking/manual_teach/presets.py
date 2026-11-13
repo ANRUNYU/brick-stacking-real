@@ -1,4 +1,4 @@
-"""Operator-locked left O6 poses from the 2026-11-13 teach panel.
+"""Operator-locked left O6 poses and attributed vendor gesture poses.
 
 Channel order: thumb_flex, thumb_abd, index, middle, ring, pinky. Unit: percent.
 0 is fully flexed, 100 is open, matching the panel scale 「0 弯到底 / 100 张开」.
@@ -6,6 +6,10 @@ Channel order: thumb_flex, thumb_abd, index, middle, ring, pinky. Unit: percent.
 Grasp replaces the previous close pose (about 60 / 32 / 60 / 56 / 0 / 0).
 Release is the non-grasp pose: the panel 读数 in the operator screenshot.
 Use release whenever the hand is not holding a block.
+
+Victory is the O6 ``v_sign`` pose published by LinkerBot in the MIT-licensed
+``primitive`` repository.  The upstream pose is expressed as raw 0--255 bytes;
+this module converts it to the panel's percent scale without changing it.
 """
 
 from __future__ import annotations
@@ -25,6 +29,17 @@ ARM_JOINTS = ("J1", "J2", "J3", "J4", "J5", "J6", "J7")
 GRASP_PERCENT = (40.8, 23.9, 76.5, 72.9, 0.0, 0.0)
 # Screenshot 读数 for the pose used whenever not grasping.
 RELEASE_PERCENT = (83.5, 23.9, 84.3, 84.3, 0.0, 0.0)
+
+# LinkerBot ``primitive`` commit 5d0599eaf56e3f4cec9ff22dae57f4bddab40bd9,
+# hand_gesture_primitives/hand_gesture_primitives/config/o6.yaml#gestures.v_sign.
+# License: MIT. Channel order matches HAND_CHANNELS.
+VICTORY_SOURCE_URL = (
+    "https://github.com/linker-bot/primitive/blob/"
+    "5d0599eaf56e3f4cec9ff22dae57f4bddab40bd9/"
+    "hand_gesture_primitives/hand_gesture_primitives/config/o6.yaml"
+)
+VICTORY_RAW_U8 = (60, 140, 255, 255, 0, 0)
+VICTORY_PERCENT = tuple(raw * 100.0 / 255.0 for raw in VICTORY_RAW_U8)
 
 DEFAULT_SPEED_PERCENT = 12.0
 MAX_SPEED_PERCENT = 15.0
