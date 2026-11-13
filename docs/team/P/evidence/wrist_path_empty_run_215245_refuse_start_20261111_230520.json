@@ -1,0 +1,55 @@
+{
+  "schema_version": "wrist-path-empty-run-abort-0.1",
+  "timestamp_local": "2026-11-11T23:05:20+08:00",
+  "player_commit": "d0425f19d5a99f1495fe9be21c805af65aa6c981",
+  "pr": 34,
+  "authorization_ref": "empty-run-215245-20261111",
+  "motion_started": false,
+  "completed": false,
+  "verdict": "REFUSE_START_POSE",
+  "finger_commands_issued": false,
+  "hand_touched": false,
+  "rest_issued": false,
+  "right_arm_commands_issued": false,
+  "assume_at_path_start_used": false,
+  "path_file": "docs/team/P/evidence/wrist_path_layer1_grasp_to_place_20261111_215245.json",
+  "path_sha256_lf": "349adb65352c820dc13ece77da26b575b269ab31af821244ec60e426758d16a3",
+  "preflight": {
+    "q_rad": [
+      -0.026101641356945038,
+      0.011744540184736252,
+      -1.366191029548645,
+      -0.021497035399079323,
+      1.3692803382873535,
+      -0.14248111696040233,
+      0.07724879835202536
+    ],
+    "tip_m": [
+      0.032962500900909894,
+      0.07538357363415486,
+      -0.6059087564434478
+    ],
+    "grasp_ready_m": [
+      0.43704060430410385,
+      0.03568436322969936,
+      -0.319015465944929
+    ],
+    "error_m": 0.4971548059606052,
+    "within_10mm": false,
+    "j2_rad": 0.011744540184736252
+  },
+  "can_conflict_handling": {
+    "paused": "host_monitor pid 510888 (readonly left-arm can2)",
+    "briefly_restarted_by_mistake": "pid 515310 at 23:03, then killed per operator",
+    "restored_host_monitor": false,
+    "operator_said_do_not_restart_monitor": true,
+    "host_monitor_now": "stopped",
+    "hand_teach_8091": "left running, untouched",
+    "worktree": "/home/qwer/brick-stacking-real-wrist-player"
+  },
+  "notes": [
+    "P7.get_angles full 7-axis; L8 FK error ~497mm > 10mm; refuse empty-run.",
+    "No enable/move/Rest/hand; no approach path invented.",
+    "host_monitor left stopped per operator (mistaken restart 515310 killed)."
+  ]
+}

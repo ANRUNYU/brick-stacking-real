@@ -1,0 +1,8 @@
+{
+  "sample_id": "left-preshape-20261112-100523",
+  "phase": "preshape_at_block",
+  "hand_pose_name": "抓取闭指前",
+  "hand_pose_name_operator_said": "抓取必指前",
+  "brick_moved_between_capture_and_q_read": false,
+  "teach_dir_host": "/home/qwer/captures/left-preshape-20261112-100523"
+}

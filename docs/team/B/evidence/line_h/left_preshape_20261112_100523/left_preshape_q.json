@@ -1,0 +1,53 @@
+{
+  "sample_id": "left-preshape-20261112-100523",
+  "phase": "preshape_at_block",
+  "side": "left",
+  "interface": "can2",
+  "read_utc": "2026-11-12T02:35:13.734667+00:00",
+  "joint_names": [
+    "J1",
+    "J2",
+    "J3",
+    "J4",
+    "J5",
+    "J6",
+    "J7"
+  ],
+  "q_rad": [
+    -0.0511726438999176,
+    -0.004673847928643227,
+    0.33557960391044617,
+    -1.4567917585372925,
+    1.7294782400131226,
+    0.2161058976119623,
+    -0.49725337605859465
+  ],
+  "camera_report": "rgbd/camera_report.json",
+  "hand_teach_state": "hand_teach_state.json",
+  "motion_commanded": false,
+  "enabled": false,
+  "rest_issued": false,
+  "hand_pose_name": "抓取闭指前",
+  "hand_pose_name_operator_said": "抓取必指前",
+  "hand_pose_source": "operator_named; Hand Teach /api/state angles_percent at read time",
+  "hand_angles_percent": [
+    69.80392156862744,
+    31.372549019607842,
+    69.80392156862744,
+    65.09803921568627,
+    0.0,
+    0.0
+  ],
+  "hand_channel_names": [
+    "thumb_flex",
+    "thumb_abd",
+    "index",
+    "middle",
+    "ring",
+    "pinky"
+  ],
+  "hand_interface_observed": "can1",
+  "brick_moved_between_capture_and_q_read": false,
+  "operator_confirmed_brick_unmoved": true,
+  "notes_operator_utc": "2026-11-12T02:37:24.307503+00:00"
+}
